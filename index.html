@@ -88,8 +88,7 @@ function drawEq(){const c=$('#eq'),ctx=c.getContext('2d');const W=c.clientWidth,
  c.onmousemove=ev=>{const r=c.getBoundingClientRect();const mx=ev.clientX-r.left;let best=0,bd=1e9;eqData.forEach((d,i)=>{const dd=Math.abs(X(d[0])-mx);if(dd<bd){bd=dd;best=i}});const d=eqData[best];const t=$('#tip');t.style.display='block';t.style.left=(ev.clientX+12)+'px';t.style.top=(ev.clientY+12)+'px';t.textContent=new Date(d[0]).toLocaleString('ru-RU')+' — $'+f(d[1]);};
  c.onmouseleave=()=>$('#tip').style.display='none';}
 async function tick(){try{const d=await (await fetch(window.DATA_URL||'/api',{cache:'no-store'})).json();$('#mode').textContent=(d.mode==='paper'?'Симуляция (бумажная торговля)':'Реальная торговля')+' · '+d.chain.toUpperCase();$('#mode').className='badge '+d.mode;
- tiles(d);rules(d.config);openTable(d.state,d.now);tradesTable(d.trades);drawEq();$('#log').textContent=d.log.slice().reverse().join('\
-');$('#upd').textContent='данные от '+new Date(d.now).toLocaleString('ru-RU');}
+ tiles(d);rules(d.config);openTable(d.state,d.now);tradesTable(d.trades);drawEq();$('#log').textContent=d.log.slice().reverse().join(String.fromCharCode(10));$('#upd').textContent='данные от '+new Date(d.now).toLocaleString('ru-RU');}
  catch(e){$('#upd').textContent=window.DATA_URL?'нет данных (бот ещё не публиковал)':'бот не отвечает';}}
 tick();setInterval(tick,5000);addEventListener('resize',drawEq);
 </script></body></html>
