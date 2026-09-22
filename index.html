@@ -179,10 +179,56 @@ th .eye{margin-right:2px}
 .card.bigchart{position:fixed;inset:12px;z-index:75;overflow:auto;box-shadow:0 0 0 100vmax #000c}.card.bigchart .resz{display:none}
 .drawer{overflow-x:hidden}.drawer .kv{grid-template-columns:minmax(0,1fr) auto}.drawer .kv span:nth-child(even){text-align:right}.dlinks .mini{flex:1 1 auto}
 .eyesort{margin-left:14px;display:inline-flex;align-items:center;gap:4px;cursor:pointer}.eyesort:hover,th .sortable:hover{color:var(--text)}th span.sortable{cursor:pointer}
+.arwrap{display:grid;gap:18px}
+.arbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.arscore{display:flex;gap:10px;flex-wrap:wrap}.arscore div{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:8px 14px;min-width:120px}.arscore div>span{display:block;color:var(--muted);font-size:12px}.arscore b{font-family:var(--font-display);font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
+.arctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.arcard{padding:0}.arscroll{overflow-x:auto}.arena{position:relative;overflow:hidden;background:radial-gradient(600px 260px at 90% 20%,#7cc4ff0c,transparent 70%)}
+.gate{position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(#ffffff00 58px,#ffffff1a 70px,#ffffff1a 330px,#ffffff00 360px)}
+.glbl{position:absolute;top:10px;transform:translateX(-50%);text-align:center;font-size:11px;color:var(--muted);line-height:1.2;hyphens:manual;overflow-wrap:break-word}.glbl b{display:block;color:var(--text);font-family:var(--font-display);font-size:16px;font-weight:600;margin-top:2px}
+.bin{position:absolute;bottom:8px;height:76px;border:1px dashed #ffffff12;border-top:0;border-radius:0 0 12px 12px;background:#ffffff03}
+.finish{position:absolute;top:0;bottom:0;width:88px;background:linear-gradient(90deg,#7cc4ff00,#7cc4ff10);border-left:1px solid #7cc4ff40}.finish .glbl{left:44px}.finish .glbl b{color:var(--accent)}
+.spawn{position:absolute;left:12px;top:24px;color:var(--muted);font-size:11.5px;line-height:1.3}
+.ach{position:absolute;left:0;top:0;width:34px;height:34px;will-change:transform;cursor:pointer;transition:opacity .4s,filter .3s;z-index:2}
+.ach img,.ach .alet{width:34px;height:34px;border-radius:50%;display:block;object-fit:cover;background:#222;border:2px solid #1a1a1a}
+.alet{display:flex!important;align-items:center;justify-content:center;font:600 12px var(--font-ui);color:#c9ccc4;text-transform:uppercase}
+.atk{position:absolute;top:36px;left:50%;transform:translateX(-50%);font-size:10.5px;font-weight:600;white-space:nowrap;color:#dfe2da;text-shadow:0 1px 3px #000}
+.aview{position:absolute;top:-8px;left:24px;display:flex;align-items:center;gap:2px;font-size:9.5px;color:#c9ccc4;background:#0b0b0bdd;border:1px solid #2a2a2a;border-radius:999px;padding:0 5px;white-space:nowrap}.aview .eye{width:10px;height:10px}
+.ach.hit img,.ach.hit .alet{border-color:#e05c5c}.ach.dim{opacity:.38;filter:grayscale(.7)}.ach.dim .atk,.ach.dim .aview{display:none}
+.ach.pass img,.ach.pass .alet{border-color:#7cc4ff;box-shadow:0 0 0 3px #7cc4ff33,0 0 18px #7cc4ff88}
+.ach.held img,.ach.held .alet{border-color:#4caf6d}
+.afloat{position:absolute;font:600 16px var(--font-display);white-space:nowrap;transition:transform 2.4s cubic-bezier(.22,1,.36,1),opacity 2.4s;z-index:5;text-shadow:0 2px 8px #000}
+.afloat.up{transform:translateY(-70px);opacity:0}.afloat.down{transform:translateY(90px);opacity:0}
+.arfoot{padding:12px 18px;border-top:1px solid #1f1f1f;color:var(--muted);font-size:13px}.arfoot b{color:var(--text);font-weight:500}
+.apos{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #1c1c1c}.apos:last-child{border-bottom:0}
+.apl img,.apl .alet{width:38px;height:38px;border-radius:50%;background:#222}.apm{flex:1;min-width:0}.aptop{display:flex;justify-content:space-between;font-size:15px}
+.apbar{position:relative;height:6px;border-radius:999px;background:linear-gradient(90deg,#e05c5c55,#1c1c1c 40%,#1c1c1c 60%,#4caf6d55);margin:8px 0 5px}.apbar i{position:absolute;top:50%;transform:translate(-50%,-50%);border-radius:50%}.apbar .z{width:2px;height:12px;border-radius:2px;background:#8f938a}.apbar .p{width:12px;height:12px;border:2px solid #111;transition:left .8s}.apbar .p.g{background:#4caf6d}.apbar .p.b{background:#e05c5c}
+.apsub{display:flex;justify-content:space-between;color:var(--muted);font-size:11.5px}
+.afe{display:grid;grid-template-columns:44px 96px 1fr;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #1c1c1c;font-size:13px}.afe:last-child{border-bottom:0}.afe .t{color:var(--muted)}
+.afe .k{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11.5px;border:1px solid var(--border2);color:var(--muted);text-align:center}
+.afe .k.buy{color:var(--accent);border-color:#2b475a}.afe .k.sell-win{color:var(--good);border-color:#2b5a3a}.afe .k.sell-loss{color:var(--bad);border-color:#5a2b2b}.afe .k.cand{color:#e0b85a;border-color:#5a4a2b}.afe .k.risk,.afe .k.warn{color:#e0b85a;border-color:#5a4a2b}
+.afe .m{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.racehead{display:grid;grid-template-columns:34px minmax(200px,300px) 1fr 100px;gap:14px;color:var(--muted);font-size:12px;padding:0 4px 10px;border-bottom:1px solid #1f1f1f;margin-bottom:8px}
+.racescale{position:relative;height:14px}.racescale span{position:absolute;transform:translateX(-50%);white-space:nowrap}.racescale span:first-child{transform:none}.racescale span:last-child{transform:translateX(-100%)}
+.race{position:relative}
+.lane{position:absolute;left:0;right:0;height:50px;display:grid;grid-template-columns:34px minmax(200px,300px) 1fr 100px;gap:14px;align-items:center;padding:0 4px;border-radius:12px;cursor:pointer;transition:top .45s cubic-bezier(.22,1,.36,1),background .15s}
+.lane:hover,.lane.sel{background:#ffffff06}.lane.curl{box-shadow:inset 0 0 0 1px #3e6f95}.lane.crown{box-shadow:inset 0 0 0 1px #e0b85a}.lane.crown .lrank{background:#e0b85a;color:#1a1204;border-color:#e0b85a}
+.lane.enter{animation:laneIn .7s cubic-bezier(.22,1,.36,1)}@keyframes laneIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+.lrank{width:28px;height:28px;border-radius:50%;border:1px solid #333;display:flex;align-items:center;justify-content:center;font:600 13px var(--font-display);color:#c9ccc4}
+.lname{min-width:0}.lnm{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lmeta{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px;margin-top:3px}.lmeta .rel{padding:1px 8px;font-size:11px}
+.track{position:relative;margin:0 12px;height:16px;border-radius:999px;background:#0f0f0f;border:1px solid #1f1f1f}
+.track .zero{position:absolute;top:-4px;bottom:-4px;width:1px;background:#ffffff40}
+.track .trail{position:absolute;top:3px;bottom:3px;border-radius:999px;background:#4caf6d55;transition:left .8s,width .8s}.track .trail.b{background:#e05c5c55}
+.track .car{position:absolute;top:50%;width:26px;height:14px;border-radius:999px;transform:translate(-50%,-50%);background:linear-gradient(90deg,#a9dbff,#e8f5ff);box-shadow:0 0 12px #7cc4ff99;transition:left .8s cubic-bezier(.22,1,.36,1)}
+.lane.racing .car,.lane.racing .trail{transition:none}
+.curl .car{background:linear-gradient(90deg,#3e7fb8,#7cc4ff)}
+.lpnl{text-align:right;font-family:var(--font-display);font-size:16px;font-weight:500;font-variant-numeric:tabular-nums}
+@media(max-width:700px){.racehead,.lane{grid-template-columns:28px 1fr 70px}.racehead .racescale,.lane .track{display:none}}
+@media(prefers-reduced-motion:reduce){.lane,.track .car,.track .trail,.afloat{transition:none}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
-  <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill" data-view="trending">В тренде</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="trades">Сделки</button><button class="pill" data-view="rules">Правила</button><button class="pill" data-view="log">Журнал</button></nav>
+  <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill" data-view="trending">В тренде</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="trades">Сделки</button><button class="pill" data-view="rules">Правила</button><button class="pill" data-view="log">Журнал</button></nav>
   <div class="badges"><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span></div>
 </header>
 <main>
@@ -213,6 +259,20 @@ th .eye{margin-right:2px}
    <p><b>Как выбирается лучшая.</b> Не по максимальной прибыли (её легко получить случайно на трёх сделках), а по «осторожной» прибыли на сделку — средней прибыли за вычетом разброса. Дополнительно каждый вариант проверяется на последних 30% его сделок, которые не влияли на выбор: если там он в минусе — это подгонка, а не закономерность.</p>
    <p><b>Метки надёжности.</b> <span class="rel solid">надёжно</span> — достаточно сделок, в плюсе и на проверке тоже. <span class="rel maybe">похоже на правду</span> — в плюсе, но сделок пока мало. <span class="rel few">мало данных</span> — выводы делать рано.</p>
    <p><b>Применение.</b> Кнопка «Применить к боту» ставит все параметры гипотезы в правила. Если в Правилах включено самообучение, бот сам применит лучшую гипотезу за 7 дней, но только надёжную, с profit factor от 1,3 и заметно лучше текущих правил — не чаще раза в сутки.</p></div></div>
+</section>
+<section class="view" id="v-arena">
+  <div class="titlebar"><h1 class="h1">Арена</h1><div class="pills small" id="arMode"><button class="pill on" data-m="funnel">Воронка отбора</button><button class="pill" data-m="race">Гонка гипотез</button></div></div>
+  <div id="arFunnel" class="arwrap">
+    <div class="arbar"><div class="arscore" id="arScore"></div><div class="arctl"><button class="mini wide" id="arPause">Пауза</button><div class="pills small" id="arSpeed"><button class="pill on" data-s="1">×1</button><button class="pill" data-s="2">×2</button><button class="pill" data-s="4">×4</button></div><button class="mini wide" id="arReplay">Перемотать последний час</button></div></div>
+    <div class="card arcard"><div class="arscroll"><div class="arena" id="arena"><div id="arGates"></div><div id="arChips"></div><div id="arFx"></div></div></div><div class="arfoot" id="arFoot"></div></div>
+    <div class="grid2"><div class="card"><h2>В позиции</h2><div id="arPos"></div></div><div class="card"><h2>События</h2><div id="arFeed"></div></div></div>
+  </div>
+  <div id="arRace" class="arwrap" style="display:none">
+    <div class="arbar"><div class="pills small" id="raceW"><button class="pill" data-w="24h">24 часа</button><button class="pill on" data-w="7d">7 дней</button><button class="pill" data-w="30d">30 дней</button><button class="pill" data-w="all">Всё время</button></div><button class="btn primary" id="raceGo">Воспроизвести гонку</button></div>
+    <div class="hstatus" id="raceStatus"></div>
+    <div class="card"><div class="racehead"><span></span><span>Гипотеза</span><span class="racescale" id="raceScale"></span><span class="num">Итог</span></div><div class="race" id="race"></div></div>
+    <div class="card" id="raceDet" style="display:none"></div>
+  </div>
 </section>
 <section class="view" id="v-trades">
   <div class="titlebar"><h1 class="h1">Сделки</h1><div class="sub" id="tradesSub" style="color:var(--muted)"></div></div>
@@ -260,7 +320,7 @@ function render(){if(!D)return;const s=D.state,c=D.config,t=ptrades(),m=metrics(
   ['Время в сделке',Number.isNaN(m.avgHold)?'—':dur(m.avgHold),'в среднем',''],
   ['Открыто позиций',open.length,'из '+c.max_open_positions+' возможных','']
  ].map(([l,v,s2,k])=>'<div class="tile"><div class="l">'+l+'</div><div class="v '+k+'">'+v+'</div><div class="s">'+s2+'</div></div>').join('');
- openTable(open,s);tradesTable(t);rules(c);renderLog();drawChart(t,m);renderTrending();renderHyp();
+ openTable(open,s);tradesTable(t);rules(c);renderLog();drawChart(t,m);renderTrending();renderHyp();try{renderArena();}catch(e){console.error(e);}
  $('#tradesSub').textContent=t.length+' сделок '+plabel;}
 function openTable(p,s){if(!p.length){$('#open').innerHTML='<tr><td class="empty">Нет открытых позиций</td></tr>';return;}
  $('#open').innerHTML='<tr><th>Токен</th><th class="num">Вход</th><th class="num">Размер</th><th class="num">В сделке</th><th>Режим</th><th>Адрес</th></tr>'+
@@ -476,9 +536,9 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.4';
+const APP_VERSION='2.5';
 const CHANGELOG=[
- ['2.5','22.09.2026',['«В тренде»: убраны колонки Цена / 5м / 1ч — таблица стала уже и читается легче']],
+ ['2.5','22.09.2026',['Новая вкладка «Арена»: «Воронка отбора» — монеты с логотипами и тикерами проходят ворота фильтров в реальном времени, отсеянные падают в корзины, прошедшие вспыхивают на финише, закрытые сделки улетают с суммой; счёт дня, позиции с полоской стоп–тейк, лента событий, пауза, скорость и повтор последнего часа','«Гонка гипотез»: лучшие гипотезы едут по дорожкам по накопленной прибыли, кнопка «Воспроизвести гонку» показывает обгоны во времени, клик по дорожке — детали и «Применить к боту»']],
  ['2.4','22.09.2026',['«В тренде»: число зрителей стоит прямо рядом с названием монеты, отдельная колонка убрана; сортировка по зрителям — кликом по глазу в заголовке']],
  ['2.3','22.09.2026',['Вкладка «Гипотезы» переделана: периоды 24 часа / 7 / 30 дней / всё время, карточка лучшей гипотезы с понятным списком «что поменять», сравнение с текущими правилами и кнопка «Применить к боту»','Непрерывный перебор всех параметров: бот меняет по одному параметру, скрещивает и развивает лучшие комбинации (~150 вариантов каждые 10 минут)','Метки надёжности: надёжно / похоже на правду / мало данных','Раздел «Итоги суток»: каждую ночь фиксируется лучшая гипотеза за 24 часа, 7 и 30 дней','Время везде в минутах и секундах (например, 6 мин 42 с)','«В тренде»: крупный логотип и название монеты, число зрителей с иконкой глаза','График на «Обзоре» можно растягивать по высоте (полоска под графиком) и разворачивать на весь экран']],
  ['2.2','22.09.2026',['Версия сайта в левом верхнем углу, по клику — что нового','Аккуратные полосы прокрутки','График: масштаб колесом мыши и кнопками, сдвиг перетаскиванием, двойной клик — весь период, перекрестие с подсказкой','Галочка «Сделки на графике»: точки сделок (зелёные — в плюс, красные — в минус), клик открывает карточку сделки','Карточка сделки: результат, путь цены внутри сделки, все параметры токена на входе, ссылки на GMGN и BscScan; открывается и из вкладки «Сделки»']],
@@ -492,14 +552,14 @@ addEventListener('click',e=>{if(!e.target.closest('#verpop'))$('#verpop').classL
 // ---- в тренде ----
 const EYE='<svg class="eye" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
 let trFilter='all',trSort={k:'age_min',d:1};
-const TRC=[['symbol','Токен',0],['ok','Фильтр',0],['launchpad','Площадка',0],['age_min','Возраст',1],['mcap','Mcap',1],['liq','Ликв.',1],['holders','Холд.',1],['vol','Объём',1],['swaps','Сделки',1],['smart','Smart',1],['renowned','Изв.',1],['top10','Топ-10',1],['bundler','Бандл.',1],['snipers','Снайп.',1],['insider','Инсайд.',1],['tg_calls','TG',1]];
+const TRC=[['symbol','Токен',0],['ok','Фильтр',0],['launchpad','Площадка',0],['age_min','Возраст',1],['price','Цена',1],['chg5m','5м',1],['chg1h','1ч',1],['mcap','Mcap',1],['liq','Ликв.',1],['holders','Холд.',1],['vol','Объём',1],['swaps','Сделки',1],['smart','Smart',1],['renowned','Изв.',1],['top10','Топ-10',1],['bundler','Бандл.',1],['snipers','Снайп.',1],['insider','Инсайд.',1],['tg_calls','TG',1]];
 function renderTrending(){const ls=D.lastScan;if(!ls||!ls.tokens){$('#trTable').innerHTML='<tr><td class="empty">Скан ещё не выполнялся</td></tr>';return;}
  let rows=ls.tokens;if(trFilter==='ok')rows=rows.filter(t=>t.ok);if(trFilter==='trenches')rows=rows.filter(t=>t.source==='trenches');if(trFilter==='fresh')rows=rows.filter(t=>t.age_min<=30);
  rows=[...rows].sort((a,b)=>{const va=a[trSort.k],vb=b[trSort.k];if(typeof va==='string')return trSort.d*String(va).localeCompare(String(vb));return trSort.d*((+va||0)-(+vb||0));});
  $('#trMeta').textContent=ls.tokens.length+' токенов, '+ls.tokens.filter(t=>t.ok).length+' прошли фильтр · скан '+new Date(ls.at).toLocaleTimeString('ru-RU');
  const pc=v=>'<span class="'+cls(v)+'">'+(v>0?'+':'')+f(v,0)+'%</span>';const mk=v=>v>=1e6?'$'+f(v/1e6,2)+'M':v>=1000?'$'+f(v/1000,1)+'k':'$'+f(v,0);const pr=v=>v>=1?f(v,2):v>0?(+v).toPrecision(4):'—';const ageF=v=>v<60?f(v,0)+' м':v<1440?f(v/60,1)+' ч':f(v/1440,0)+' д';
  $('#trTable').innerHTML='<tr>'+TRC.map(([k,l,n])=>(k==='symbol'?'<th><span class="sortable" data-k="symbol">Токен'+(trSort.k==='symbol'?(trSort.d>0?' ↑':' ↓'):'')+'</span><span class="sortable eyesort" data-k="viewers" title="сортировать по зрителям">'+EYE+'зрители'+(trSort.k==='viewers'?(trSort.d>0?' ↑':' ↓'):'')+'</span></th>':'<th class="sortable'+(n?' num':'')+'" data-k="'+k+'">'+l+(trSort.k===k?(trSort.d>0?' ↑':' ↓'):'')+'</th>')).join('')+'</tr>'+
-  rows.map(t=>'<tr><td><div class="tok">'+(t.logo?'<img src="'+esc(t.logo)+'" loading="lazy" onerror="this.style.visibility=\'hidden\'">':'<span class="tlogo"></span>')+'<div class="tname"><a target="_blank" href="https://gmgn.ai/bsc/token/'+t.address+'" title="'+esc(t.name||'')+'">'+esc(t.symbol||t.address.slice(0,8))+'</a><span class="tview" title="зрителей на GMGN">'+EYE+f(t.viewers,0)+'</span></div></div></td><td>'+(t.held?'<span class="tr-held">в позиции</span>':t.ok?'<span class="tr-ok">прошёл</span>':'<span class="tr-no" title="'+esc((t.failed||[]).join(', '))+'">'+esc((t.failed||[]).slice(0,2).map(x=>x.split(' ')[0]).join(', '))+'</span>')+'</td><td>'+esc(t.launchpad||'—')+(t.source==='trenches'?' <span class="tag" style="padding:1px 6px">лп</span>':'')+'</td><td class="num">'+ageF(t.age_min)+'</td><td class="num">'+mk(t.mcap)+'</td><td class="num">'+mk(t.liq)+'</td><td class="num">'+f(t.holders,0)+'</td><td class="num">'+mk(t.vol)+'</td><td class="num">'+f(t.swaps,0)+'</td><td class="num">'+f(t.smart,0)+'</td><td class="num">'+f(t.renowned,0)+'</td><td class="num">'+f(t.top10*100,0)+'%</td><td class="num">'+f(t.bundler*100,0)+'%</td><td class="num">'+f(t.snipers,0)+'</td><td class="num">'+f(t.insider*100,0)+'%</td><td class="num">'+f(t.tg_calls,0)+'</td></tr>').join('');
+  rows.map(t=>'<tr><td><div class="tok">'+(t.logo?'<img src="'+esc(t.logo)+'" loading="lazy" onerror="this.style.visibility=\'hidden\'">':'<span class="tlogo"></span>')+'<div class="tname"><a target="_blank" href="https://gmgn.ai/bsc/token/'+t.address+'" title="'+esc(t.name||'')+'">'+esc(t.symbol||t.address.slice(0,8))+'</a><span class="tview" title="зрителей на GMGN">'+EYE+f(t.viewers,0)+'</span></div></div></td><td>'+(t.held?'<span class="tr-held">в позиции</span>':t.ok?'<span class="tr-ok">прошёл</span>':'<span class="tr-no" title="'+esc((t.failed||[]).join(', '))+'">'+esc((t.failed||[]).slice(0,2).map(x=>x.split(' ')[0]).join(', '))+'</span>')+'</td><td>'+esc(t.launchpad||'—')+(t.source==='trenches'?' <span class="tag" style="padding:1px 6px">лп</span>':'')+'</td><td class="num">'+ageF(t.age_min)+'</td><td class="num">$'+pr(t.price)+'</td><td class="num">'+pc(t.chg5m)+'</td><td class="num">'+pc(t.chg1h)+'</td><td class="num">'+mk(t.mcap)+'</td><td class="num">'+mk(t.liq)+'</td><td class="num">'+f(t.holders,0)+'</td><td class="num">'+mk(t.vol)+'</td><td class="num">'+f(t.swaps,0)+'</td><td class="num">'+f(t.smart,0)+'</td><td class="num">'+f(t.renowned,0)+'</td><td class="num">'+f(t.top10*100,0)+'%</td><td class="num">'+f(t.bundler*100,0)+'%</td><td class="num">'+f(t.snipers,0)+'</td><td class="num">'+f(t.insider*100,0)+'%</td><td class="num">'+f(t.tg_calls,0)+'</td></tr>').join('');
  $('#trTable').querySelectorAll('.sortable').forEach(th=>th.onclick=()=>{const k=th.dataset.k;trSort=trSort.k===k?{k,d:-trSort.d}:{k,d:(k==='symbol'||k==='launchpad'||k==='ok')?1:-1};renderTrending();});}
 document.querySelectorAll('#trFilter .pill').forEach(b=>b.onclick=()=>{trFilter=b.dataset.f;document.querySelectorAll('#trFilter .pill').forEach(x=>x.classList.toggle('on',x===b));renderTrending();});
 // ---- гипотезы ----
@@ -563,6 +623,112 @@ function drawHyp(list){const c=$('#hypChart'),ctx=c.getContext('2d');const W=c.c
 const H_champ=()=>D.hypotheses?.champions?.[hypW]?.id;
 document.querySelectorAll('#hypPeriod .pill').forEach(b=>b.onclick=()=>{hypW=b.dataset.w;hypSel=null;document.querySelectorAll('#hypPeriod .pill').forEach(x=>x.classList.toggle('on',x===b));renderHyp(true);});
 document.querySelectorAll('#hypFilter .pill').forEach(b=>b.onclick=()=>{hypF=b.dataset.f;document.querySelectorAll('#hypFilter .pill').forEach(x=>x.classList.toggle('on',x===b));renderHyp(true);});
+// ---- арена ----
+const GATES=[['Возраст',['age']],['Ликвид­ность',['liq']],['Mcap',['mcap']],['Холдеры',['holders']],['Объём, сделки',['swaps','vol']],['Топ-10',['top10']],['Бандлеры',['bundler']],['Снайперы',['snipers']],['Налоги',['tax','honeypot']],['Лок, контракт',['lock/burn','renounced','open_source','rug']],['Покупки/ продажи',['buys/sells']],['Создатель',['creator','wash']],['Актив­ность',['smart','renowned','viewers','tg','x','insider','fresh','chg5m','source','launchpad']]];
+const gateOf=t=>{if(!t.failed||!t.failed.length)return -1;const k=t.failed[0].split(' ')[0];const i=GATES.findIndex(g=>g[1].includes(k));return i<0?GATES.length-1:i;};
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let arCnt=null,arPass=0,arMode='funnel',arSpeed=1,arPaused=false,arRun=false,arLast=0,arScanAt=0,arSeen=new Set(),arQueue=[],arChips=[],arBins={},arFin=[],arTradeKeys=null,arSpawnT=0,arGeo=null,arReplayQ=[],arLogoCache={};
+function arActive(){return $('#v-arena').classList.contains('on')&&arMode==='funnel';}
+function arGeom(){const el=$('#arena');const W=Math.max(1100,el.parentElement.clientWidth),H=460;el.style.width=W+'px';el.style.height=H+'px';
+ const x0=120,x1=W-150,n=GATES.length,gx=GATES.map((_,i)=>x0+(x1-x0)*(i+.5)/n);arGeo={W,H,gx,fin:W-80,laneTop:92,laneBot:300,binY:H-34,gw:(x1-x0)/n};
+ $('#arGates').innerHTML=GATES.map((g,i)=>'<div class="gate" style="left:'+(gx[i]-1)+'px"><div class="glbl" style="width:'+Math.max(60,arGeo.gw-6)+'px">'+g[0]+'<b id="gc'+i+'">0</b></div></div><div class="bin" style="left:'+(gx[i]-arGeo.gw/2+3)+'px;width:'+(arGeo.gw-6)+'px"></div>').join('')+'<div class="finish" style="left:'+(arGeo.fin-44)+'px"><div class="glbl">Прошли<b id="gcF">0</b></div></div><div class="spawn">Новые<br>монеты</div>';arPaintCnt();}
+function arPaintCnt(){if(!arCnt)return;arCnt.forEach((v,i)=>{const e=$('#gc'+i);if(e)e.textContent=v;});const f=$('#gcF');if(f)f.textContent=arPass;}
+function chipEl(t,cls){const d=document.createElement('div');d.className='ach '+(cls||'');const lg=t.logo||arLogoCache[t.address];if(lg)arLogoCache[t.address]=lg;
+ d.innerHTML=(lg?'<img src="'+esc(lg)+'" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{className:\'alet\',textContent:\''+esc((t.symbol||'?').slice(0,2)).replace(/'/g,'')+'\'}))">':'<span class="alet">'+esc((t.symbol||'?').slice(0,2))+'</span>')+'<div class="atk">'+esc((t.symbol||'').slice(0,9))+'</div>'+(t.viewers?'<div class="aview">'+EYE+f(t.viewers,0)+'</div>':'');
+ d.onmouseenter=e=>arTip(e,t);d.onmousemove=e=>arTipMove(e);d.onmouseleave=()=>{$('#tip').style.display='none';};
+ d.onclick=()=>{const tr=D.trades.slice().reverse().find(x=>x.address===t.address);if(tr)openTrade(tr);};$('#arChips').appendChild(d);return d;}
+function arTip(e,t){const tip=$('#tip');const g=gateOf(t);
+ tip.innerHTML='<b>'+esc(t.symbol||'')+'</b> · '+esc(t.launchpad||'')+(t.age_min!=null?' · возраст '+dur(t.age_min):'')+'<br>'+(t.ok?'<span class="good">прошёл все фильтры</span>':t.replay?'кандидат из журнала':'<span class="bad">отсеян: '+esc(GATES[g]?.[0]||'')+'</span> <span style="color:#8f938a">('+esc((t.failed||[]).slice(0,3).join(', '))+')</span>')+
+ (t.liq!=null?'<br>ликв '+money(t.liq)+' · mcap '+money(t.mcap)+' · холдеров '+f(t.holders,0)+'<br>зрителей '+f(t.viewers,0)+' · smart '+f(t.smart,0)+' · топ-10 '+f((t.top10||0)*100,0)+'% · бандлеры '+f((t.bundler||0)*100,0)+'%':'');
+ tip.style.display='block';arTipMove(e);}
+function arTipMove(e){const tip=$('#tip');tip.style.left=Math.min(e.clientX+14,innerWidth-tip.offsetWidth-12)+'px';tip.style.top=(e.clientY+16)+'px';}
+function arSpawn(t){const G=arGeo;const g=t.ok||t.replay?-1:gateOf(t);const el=chipEl(t,t.held?'held':'');const y=G.laneTop+Math.random()*(G.laneBot-G.laneTop);
+ const c={t,el,x:30,y,vy:0,g,tx:g<0?G.fin-18:G.gx[g]-30,phase:'run',v:170+Math.random()*60,life:0};arChips.push(c);place(c);}
+function place(c){c.el.style.transform='translate('+(c.x-17)+'px,'+(c.y-17)+'px)'+(c.phase==='fall'||c.phase==='gone'&&c.g>=0?' scale(.7)':'');}
+function arStep(dt){const G=arGeo;if(!G)return;
+ arSpawnT-=dt;if(arSpawnT<=0&&(arQueue.length||arReplayQ.length)){const t=arQueue.length?arQueue.shift():arReplayQ.shift();arSpawn(t);arSpawnT=.28;}
+ for(const c of arChips){c.life+=dt;
+  if(c.phase==='run'){c.x+=c.v*dt;if(c.x>=c.tx){c.x=c.tx;if(c.g<0){c.phase='fin';c.el.classList.add('pass');arFin.push(c);if(arFin.length>6){const o=arFin.shift();o.phase='gone';}const i=arFin.length-1;c.fy=G.laneTop-40+i*46;}else{c.phase='bounce';c.bt=0;c.el.classList.add('hit');}}}
+  else if(c.phase==='bounce'){c.bt+=dt;c.x-=90*dt*(1-c.bt/.25);if(c.bt>.25){c.phase='fall';const b=(arBins[c.g]=arBins[c.g]||[]);b.push(c);if(b.length>6){b.shift().phase='gone';}c.el.classList.add('dim');}}
+  else if(c.phase==='fall'){const b=arBins[c.g]||[];const i=b.indexOf(c);const tx=G.gx[c.g]-G.gw/2+16+(i%3)*((G.gw-32)/2),ty=G.binY-(Math.floor(i/3))*26;c.x+=(tx-c.x)*Math.min(1,dt*6);c.y+=(ty-c.y)*Math.min(1,dt*5);if(Math.abs(ty-c.y)<1&&i<0)c.phase='gone';}
+  else if(c.phase==='fin'){const i=arFin.indexOf(c);const tx=G.fin,ty=G.laneTop-8+i*52;c.x+=(tx-c.x)*Math.min(1,dt*6);c.y+=(ty-c.y)*Math.min(1,dt*6);}
+  if(c.phase==='gone'){c.el.style.opacity=0;c.dead=(c.dead||0)+dt;}
+  place(c);}
+ arChips=arChips.filter(c=>{if(c.dead>.5){c.el.remove();return false;}return true;});}
+function arLoop(ts){if(!arActive()){arRun=false;return;}const dt=Math.min(.05,(ts-(arLast||ts))/1000)*(arPaused?0:arSpeed);arLast=ts;
+ if(RM){for(let i=0;i<40&&(arQueue.length||arReplayQ.length);i++){arSpawn(arQueue.length?arQueue.shift():arReplayQ.shift());}for(let i=0;i<60;i++)arStep(.05);}else arStep(dt);
+ requestAnimationFrame(arLoop);}
+function arFloat(text,good,y){const G=arGeo;if(!G)return;const d=document.createElement('div');d.className='afloat '+(good?'good':'bad');d.textContent=text;d.style.left=(G.fin-90)+'px';d.style.top=(y||G.laneTop+60)+'px';$('#arFx').appendChild(d);requestAnimationFrame(()=>d.classList.add(good?'up':'down'));setTimeout(()=>d.remove(),2600);}
+function renderArena(){if(!$('#v-arena').classList.contains('on'))return;
+ if(arMode==='race'){renderRace();return;}
+ if(!arGeo||Math.abs(arGeo.W-Math.max(1100,$('#arena').parentElement.clientWidth))>4)arGeom();
+ const ls=D.lastScan;
+ if(ls&&ls.at&&ls.at!==arScanAt){const first=!arScanAt;arScanAt=ls.at;
+  const cnt=new Array(GATES.length).fill(0);let pass=0;for(const t of ls.tokens){const g=t.ok?-1:gateOf(t);if(g<0)pass++;else cnt[g]++;}
+  arCnt=cnt;arPass=pass;arPaintCnt();
+  let fresh=ls.tokens.filter(t=>!arSeen.has(t.address)||(t.ok&&!arSeen.has(t.address+'#ok')));
+  if(first){fresh=[...fresh].sort((a,b)=>a.age_min-b.age_min);fresh=[...fresh.filter(t=>t.ok),...fresh.filter(t=>!t.ok).slice(0,40)];}
+  ls.tokens.forEach(t=>{arSeen.add(t.address);if(t.ok)arSeen.add(t.address+'#ok');});
+  arQueue.push(...fresh.slice(0,60));
+  const top=cnt.map((v,i)=>[v,i]).sort((a,b)=>b[0]-a[0])[0];
+  $('#arFoot').innerHTML='Последний скан в '+new Date(ls.at).toLocaleTimeString('ru-RU')+': <b>'+ls.tokens.length+'</b> монет, прошли все фильтры <b>'+pass+'</b>'+(top&&top[0]?' · главное сито — <b>'+GATES[top[1]][0].toLowerCase()+'</b> ('+top[0]+')':'')+' · числа над воротами — сколько монет из этого скана остановилось на них';}
+ // сделки: новые закрытия → улёт с суммой
+ const keys=new Set(D.trades.map(tkey));
+ if(arTradeKeys){D.trades.filter(x=>!arTradeKeys.has(tkey(x))).forEach((x,i)=>setTimeout(()=>arFloat((+x.pnl_usd>0?'+$':'−$')+f(Math.abs(x.pnl_usd))+' '+x.symbol,+x.pnl_usd>0),i*600));}
+ arTradeKeys=keys;
+ // счёт дня (МСК)
+ const dk=d=>new Date(+new Date(d)+3*36e5).toISOString().slice(0,10),today=dk(Date.now());const td=D.trades.filter(x=>dk(x.closed)===today);const w=td.filter(x=>+x.pnl_usd>0).length,sum=td.reduce((a,x)=>a+ +x.pnl_usd,0);
+ $('#arScore').innerHTML='<div><span>Сделок сегодня</span><b>'+td.length+'</b></div><div><span>В плюс / в минус</span><b><span class="good">'+w+'</span> / <span class="bad">'+(td.length-w)+'</span></b></div><div><span>Итог дня</span><b class="'+cls(sum)+'">'+mny(sum)+'</b></div><div><span>Депозит</span><b>$'+f(D.state.balance_usd)+'</b></div>';
+ // позиции
+ const ps=Object.values(D.state.positions||{}),x=D.config.exit;
+ $('#arPos').innerHTML=ps.length?ps.map(p=>{const pct=p.last?(p.last/p.entry-1)*100:0;const lo=-x.stop_loss_pct,hi=x.take_profit_pct,pos=Math.max(0,Math.min(100,(pct-lo)/(hi-lo)*100)),z=(0-lo)/(hi-lo)*100;const lg=arLogoCache[p.address];
+  return '<div class="apos"><div class="apl">'+(lg?'<img src="'+esc(lg)+'">':'<span class="alet">'+esc((p.symbol||'?').slice(0,2))+'</span>')+'</div><div class="apm"><div class="aptop"><b>'+esc(p.symbol)+'</b><span class="'+cls(pct)+'">'+(p.last?(pct>0?'+':'')+f(pct,1)+'%':'—')+'</span></div><div class="apbar"><i class="z" style="left:'+z+'%"></i><i class="p '+(pct>=0?'g':'b')+'" style="left:'+pos+'%"></i></div><div class="apsub"><span>стоп −'+x.stop_loss_pct+'%</span><span>'+dur((D.now/1000-p.opened)/60)+' в сделке</span><span>тейк +'+x.take_profit_pct+'%</span></div></div></div>';}).join(''):'<div class="empty">Сейчас бот ничего не держит</div>';
+ // лента
+ const evs=D.log.map(parseLine).filter(e=>e&&(e.cat==='trades'||e.k==='кандидат')).slice(-10).reverse();
+ $('#arFeed').innerHTML=evs.length?evs.map(e=>'<div class="afe"><span class="t">'+e.ts.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+'</span><span class="k '+e.kc+'">'+e.k+'</span><span class="m">'+e.html.replace(/<div class="chips">.*$/,'')+'</span></div>').join(''):'<div class="empty">Пока тихо</div>';
+ if(!arRun){arRun=true;arLast=0;requestAnimationFrame(arLoop);}}
+function arReplay(){const from=Date.now()-36e5;const evs=D.log.map(parseLine).filter(e=>e&&+e.ts>=from);const cands=D.log.filter(l=>/CANDIDATE /.test(l)).map(l=>{const m=l.match(/^\[([^\]]+)\] CANDIDATE (.+?) \((.*?)\)/);return m&&{ts:new Date(m[1].replace(' ','T')+'Z'),symbol:m[2],launchpad:m[3]};}).filter(x=>x&&+x.ts>=from);
+ if(!cands.length&&!evs.length){$('#arFoot').textContent='За последний час в журнале нет кандидатов и сделок — перематывать нечего.';return;}
+ cands.forEach(c=>{const tr=D.trades.find(x=>x.symbol===c.symbol);arReplayQ.push({symbol:c.symbol,launchpad:c.launchpad,address:tr?tr.address:c.symbol,replay:true,ok:true});});
+ D.trades.filter(x=>+new Date(x.closed)>=from).forEach((x,i)=>setTimeout(()=>arFloat((+x.pnl_usd>0?'+$':'−$')+f(Math.abs(x.pnl_usd))+' '+x.symbol,+x.pnl_usd>0),1500+i*900/arSpeed));
+ $('#arFoot').textContent='Повтор последнего часа: '+cands.length+' кандидатов из журнала, затем закрытия сделок с результатом.';}
+$('#arPause').onclick=()=>{arPaused=!arPaused;$('#arPause').textContent=arPaused?'Продолжить':'Пауза';};
+document.querySelectorAll('#arSpeed .pill').forEach(b=>b.onclick=()=>{arSpeed=+b.dataset.s;document.querySelectorAll('#arSpeed .pill').forEach(x=>x.classList.toggle('on',x===b));});
+$('#arReplay').onclick=arReplay;
+document.querySelectorAll('#arMode .pill').forEach(b=>b.onclick=()=>{arMode=b.dataset.m;document.querySelectorAll('#arMode .pill').forEach(x=>x.classList.toggle('on',x===b));$('#arFunnel').style.display=arMode==='funnel'?'':'none';$('#arRace').style.display=arMode==='race'?'':'none';renderArena();});
+addEventListener('resize',()=>{if(arActive()){arGeom();}});
+// ---- гонка гипотез ----
+let raceW='7d',raceIds=null,racePrev=new Set(),raceAnim=null,raceSel=null,raceKey='';
+function raceList(){const H=D.hypotheses;if(!H||!H.list||!H.list[0]||!H.list[0].win)return null;const rk=m=>m.score>-1e9?m.score:-1e6+m.exp;
+ const cur=H.list.find(r=>r.id==='current');const top=H.list.filter(r=>r.id!=='current'&&r.win[raceW].n>0).sort((a,b)=>rk(b.win[raceW])-rk(a.win[raceW])).slice(0,11);return {H,list:[cur,...top].filter(Boolean)};}
+function eqAt(cv,T){if(!cv.length||T<cv[0][0])return 0;let lo=0,hi=cv.length-1;while(lo<hi){const m=(lo+hi+1)>>1;if(cv[m][0]<=T)lo=m;else hi=m-1;}return cv[lo][1];}
+function renderRace(force){const R=raceList();
+ if(!R){$('#race').innerHTML='<div class="empty">Гипотезы ещё не посчитаны — первые результаты через ~2 часа после запуска.</div>';$('#raceStatus').innerHTML='';return;}
+ const {H,list}=R;const key=H.generated_at+'|'+raceW;if(key===raceKey&&!force)return;raceKey=key;
+ const nextIn=Math.max(0,Math.round((H.generated_at+600e3-Date.now())/60e3));
+ const ids=new Set(list.map(r=>r.id));const gone=[...racePrev].filter(id=>!ids.has(id)).length;
+ $('#raceStatus').innerHTML='<span>Перебрано вариантов всего: <b>'+f(H.tested_total,0)+'</b></span><span>в последнем прогоне: <b>'+f(H.tested_now,0)+'</b></span><span>следующий прогон через ~<b>'+nextIn+'</b> мин</span>'+(racePrev.size&&gone?'<span>выбыли из десятки: <b>'+gone+'</b></span>':'');
+ const all=list.flatMap(r=>r.win[raceW].curve.map(p=>p[1]));const mn=Math.min(0,...all,list.reduce((a,r)=>Math.min(a,r.win[raceW].pnl),0)),mx=Math.max(1,...all,...list.map(r=>r.win[raceW].pnl));
+ const P=v=>(v-mn)/(mx-mn)*100;const z=P(0);
+ $('#raceScale').innerHTML='<span style="left:0">'+mny(mn)+'</span><span style="left:'+z+'%">$0</span><span style="left:100%">'+mny(mx)+'</span>';
+ const order=[...list].sort((a,b)=>b.win[raceW].pnl-a.win[raceW].pnl);
+ $('#race').style.height=(list.length*56)+'px';
+ $('#race').innerHTML=list.map((r,i)=>{const m=r.win[raceW];const rank=order.indexOf(r);const isNew=racePrev.size&&!racePrev.has(r.id);const crown=rank===0&&m.rel==='solid';
+  return '<div class="lane'+(r.id==='current'?' curl':'')+(crown?' crown':'')+(isNew?' enter':'')+(raceSel===r.id?' sel':'')+'" data-id="'+r.id+'" style="top:'+rank*56+'px"><span class="lrank">'+(rank+1)+'</span><div class="lname"><div class="lnm">'+(r.id==='current'?'Текущие правила':esc(r.diff.map(d=>d.text).join(' · ')))+'</div><div class="lmeta">'+relTag(m.rel)+'<span>'+m.n+' сделок</span></div></div><div class="track"><i class="zero" style="left:'+z+'%"></i><i class="trail" style="left:'+Math.min(z,P(m.pnl))+'%;width:'+Math.abs(P(m.pnl)-z)+'%"></i><i class="car" style="left:'+P(m.pnl)+'%"></i></div><b class="lpnl '+cls(m.pnl)+'">'+mny(m.pnl)+'</b></div>';}).join('');
+ racePrev=ids;
+ $('#race').querySelectorAll('.lane').forEach(l=>l.onclick=()=>{raceSel=l.dataset.id;const r=list.find(x=>x.id===raceSel);$('#race').querySelectorAll('.lane').forEach(x=>x.classList.toggle('sel',x===l));
+  const canApply=D.editable&&!window.DATA_URL&&r.diff.length;$('#raceDet').style.display='';$('#raceDet').innerHTML='<div class="chead"><div class="big" style="font-size:22px">'+(r.id==='current'?'Текущие правила':'Гипотеза #'+(order.indexOf(r)+1))+'</div>'+relTag(r.win[raceW].rel)+'</div>'+detail(r)+(canApply?'<div class="cbtns" style="margin-top:16px"><button class="btn primary" id="raceApply">Применить к боту</button><span class="note" id="raceNote">Кнопка сработает со второго нажатия — защита от случайного клика.</span></div>':'');
+  const b=$('#raceApply');if(b){let armed=false;b.onclick=async()=>{if(!armed){armed=true;b.textContent='Точно применить? Нажми ещё раз';b.classList.add('danger');return;}b.disabled=true;$('#raceNote').textContent='Применяю…';try{const pw=(()=>{try{return localStorage.getItem('dash_pwd')||'';}catch{return '';}})();const res=await fetch('/api/config',{method:'POST',headers:{'Content-Type':'application/json','X-Password':pw},body:JSON.stringify({entry:r.entry,exit:r.exit})});const j=await res.json();if(!res.ok)throw new Error(j.error||res.status);$('#raceNote').textContent='Готово: '+j.changes.length+' изменений, бот перезапускается.';$('#raceNote').className='note ok';}catch(e){$('#raceNote').textContent='Не удалось: '+e.message;$('#raceNote').className='note err';b.disabled=false;}};}});
+ raceIds={list,P,z,mn,mx};}
+function raceReplay(){const R=raceIds;if(!R)return;if(raceAnim)cancelAnimationFrame(raceAnim);const ts=R.list.flatMap(r=>r.win[raceW].curve.map(p=>p[0]));if(!ts.length)return;const t0=Math.min(...ts),t1=Math.max(...ts);const dur=RM?1:10000,start=performance.now();$('#raceGo').textContent='Идёт гонка…';
+ const lanes=[...$('#race').querySelectorAll('.lane')];lanes.forEach(l=>l.classList.add('racing'));
+ const step=now=>{const k=Math.min(1,(now-start)/dur);const T=t0+(t1-t0)*k;const vals=R.list.map(r=>eqAt(r.win[raceW].curve,T));const ord=vals.map((v,i)=>[v,i]).sort((a,b)=>b[0]-a[0]).map(x=>x[1]);
+  lanes.forEach((l,i)=>{const v=vals[i],p=R.P(v);l.querySelector('.car').style.left=p+'%';const tr=l.querySelector('.trail');tr.style.left=Math.min(R.z,p)+'%';tr.style.width=Math.abs(p-R.z)+'%';tr.className='trail '+(v>=0?'g':'b');l.querySelector('.lpnl').textContent=mny(v);l.querySelector('.lpnl').className='lpnl '+cls(v);const rank=ord.indexOf(i);l.style.top=rank*56+'px';l.querySelector('.lrank').textContent=rank+1;});
+  $('#raceStatus').querySelector('.rtime')?.remove();$('#raceStatus').insertAdjacentHTML('beforeend','<span class="rtime">время гонки: <b>'+new Date(T*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</b></span>');
+  if(k<1)raceAnim=requestAnimationFrame(step);else{raceAnim=null;$('#raceGo').textContent='Воспроизвести гонку';lanes.forEach(l=>l.classList.remove('racing'));raceKey='';renderRace(true);}};
+ lanes.forEach(l=>{l.querySelector('.car').style.left=R.z+'%';const tr=l.querySelector('.trail');tr.style.width='0%';});raceAnim=requestAnimationFrame(step);}
+$('#raceGo').onclick=raceReplay;
+document.querySelectorAll('#raceW .pill').forEach(b=>b.onclick=()=>{raceW=b.dataset.w;racePrev=new Set();document.querySelectorAll('#raceW .pill').forEach(x=>x.classList.toggle('on',x===b));renderRace(true);});
 // ---- навигация ----
 document.querySelectorAll('nav .pill').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav .pill').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+b.dataset.view));render();});
 document.querySelectorAll('#period .pill').forEach(b=>b.onclick=()=>{period=b.dataset.p;zoom=null;document.querySelectorAll('#period .pill').forEach(x=>x.classList.toggle('on',x===b));render();});
