@@ -1,0 +1,353 @@
+[2026-09-22 13:21:10] === старт: mode=paper chain=bsc size=$20 balance=$1000.00 ===
+[2026-09-22 13:21:10] панель: http://localhost:8787
+[2026-09-22 13:24:49] === старт: mode=paper chain=bsc size=$20 balance=$1000.00 ===
+[2026-09-22 13:24:49] панель: listen EADDRINUSE: address already in use 127.0.0.1:8787
+[2026-09-22 13:24:49] скан: 0 токенов, 0 прошли фильтр; главные причины отсева: -
+[2026-09-22 13:27:12] === старт: mode=paper chain=bsc size=$20 balance=$1000.00 ===
+[2026-09-22 13:27:12] панель: http://localhost:8787
+[2026-09-22 13:27:12] скан: 0 токенов, 0 прошли фильтр; главные причины отсева: -
+[2026-09-22 13:28:12] === старт: mode=paper chain=bsc size=$20 balance=$1000.00 ===
+[2026-09-22 13:28:12] панель: http://localhost:8787
+[2026-09-22 13:28:12] скан: 0 токенов, 0 прошли фильтр; главные причины отсева: -
+[2026-09-22 13:30:22] файлы обновлены — перезапуск
+[2026-09-22 13:30:27] === старт: mode=paper chain=bsc size=$20 balance=$1000.00 ===
+[2026-09-22 13:30:27] панель: http://localhost:8787
+[2026-09-22 13:30:27] скан: пустой ответ API: {"code":0,"data":{"rank":[{"id":0,"chain":"bsc","address":"0x3a0cbbb7a70bd11b2c3cb04804dc576561247777","name":"otis tasks","symbol":"otis","logo":"https://gmgn.ai/external-res/584511a45768b8c5ad6edab6a0e34111_v2.webp","price":0.0000104062,"price_change_percent":133.676,"price_change_percent1m":133.6
+[2026-09-22 13:30:27] скан: 0 токенов, 0 прошли фильтр; главные причины отсева: -
+[2026-09-22 13:30:48] скан: пустой ответ API: {"code":0,"data":{"rank":[{"id":0,"chain":"bsc","address":"0xbf7e47e05e24d2f66adb219068ca3b6c75d27777","name":"美股人生","symbol":"美股人生","logo":"https://gmgn.ai/external-res/d38631bad79c89c1f95b868cb8a1b6c9_v2.webp","price":0.0000762943,"price_change_percent":1598.98,"price_change_percent1m":1598.98,"pr
+[2026-09-22 13:31:08] скан: пустой ответ API: {"code":0,"data":{"rank":[{"id":0,"chain":"bsc","address":"0xbf7e47e05e24d2f66adb219068ca3b6c75d27777","name":"美股人生","symbol":"美股人生","logo":"https://gmgn.ai/external-res/d38631bad79c89c1f95b868cb8a1b6c9_v2.webp","price":0.0000740939,"price_change_percent":1549.98,"price_change_percent1m":1549.98,"pr
+[2026-09-22 13:31:17] файлы обновлены — перезапуск
+[2026-09-22 13:31:22] === старт: mode=paper chain=bsc size=$20 balance=$1000.00 ===
+[2026-09-22 13:31:22] панель: http://localhost:8787
+[2026-09-22 13:31:22] скан: 100 токенов, 0 прошли фильтр; главные причины отсева: age:93 buys/sells:3 liq:1 top10:1
+[2026-09-22 13:32:13] файлы обновлены — перезапуск
+[2026-09-22 13:32:18] === старт: mode=paper chain=bsc size=$20 balance=$1000.00 ===
+[2026-09-22 13:32:18] панель: http://localhost:8787
+[2026-09-22 13:32:18] скан: 100 токенов, 0 прошли фильтр; главные причины отсева: age:93 mcap:3 vol:2 liq:1
+[2026-09-22 13:32:55] файлы обновлены — перезапуск
+[2026-09-22 13:33:00] === старт: mode=paper chain=bsc size=$20 balance=$1000.00 ===
+[2026-09-22 13:33:00] панель: http://localhost:8787
+[2026-09-22 13:33:00] скан: 100 токенов, 0 прошли фильтр; главные причины отсева: age:94 mcap:3 vol:2 liq:1
+[2026-09-22 13:33:50] файлы обновлены — перезапуск
+[2026-09-22 13:33:55] === старт: mode=paper chain=bsc size=$20 balance=$1000.00 ===
+[2026-09-22 13:33:55] панель: http://localhost:8787
+[2026-09-22 13:33:55] скан: 100 токенов, 0 прошли фильтр; отсев: age:92 mcap:4 vol:2 top10:1; возраст мин/медиана/макс: 2/1867/37199 мин
+[2026-09-22 13:35:08] файлы обновлены — перезапуск
+[2026-09-22 13:35:13] === старт: mode=paper chain=bsc size=$20 balance=$1000.00 ===
+[2026-09-22 13:35:13] панель: http://localhost:8787
+[2026-09-22 13:35:14] скан: 198 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:189 vol:3 mcap:2 buys/sells:1; возраст мин/медиана/макс: 0/1979/26534 мин
+[2026-09-22 13:36:05] файлы обновлены — перезапуск
+[2026-09-22 13:36:10] === старт: mode=paper chain=bsc size=$20 balance=$1000.00 ===
+[2026-09-22 13:36:10] панель: http://localhost:8787
+[2026-09-22 13:36:11] trench sample: {"burn_status":"yes","complete_timestamp":1790083837,"created_timestamp":1790083837,"creator_token_status":"creator_close","holder_count":769,"launchpad":"flap","launchpad_platform":"flap","launchpad_status":1,"liquidity":28356.223685218567,"market_cap":77620.25,"open_timestamp":1790083837,"progress":1,"status":1,"swaps_24h":5037,"top_10_holder_rate":0.2333,"volume_24h":145837.62}
+[2026-09-22 13:36:11] скан: 193 токенов (из них trenches: 116), 0 прошли фильтр; отсев: age:185 mcap:3 vol:2 snipers:1; возраст мин/медиана/макс: 0/1794/26006 мин
+[2026-09-22 13:36:53] CANDIDATE АLPАCА (flap) age 2.1m | liq 8868 | mcap 16039 | holders 126 | swaps 526 | vol 38760 | top10 0.19 | bundler 0.14 | snipers 3 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 290/236 | creator creator_close | wash | smart 7
+[2026-09-22 13:36:53] BUY paper АLPАCА @0.0000165201 $20 | mcap 16039 liq 8868 holders 126
+[2026-09-22 13:36:59] файлы обновлены — перезапуск
+[2026-09-22 13:37:05] === старт: mode=paper chain=bsc size=$20 balance=$979.70 ===
+[2026-09-22 13:37:05] панель: http://localhost:8787
+[2026-09-22 13:37:06] trench sample keys: address,bot_degen_count,bot_degen_rate,bundler_mhr,bundler_trader_amount_rate,burn_status,buy_tax,buys_24h,callout_count,chain,co_d,complete_timestamp,created_timestamp,creation_tool,creator,creator_balance_rate,creator_created_count,creator_created_inner_count,creator_created_open_count,creator_created_open_ratio,creator_token_status,cto_flag,dev_team_hold_rate,dev_token_burn_amount,dev_token_burn_ratio,dexscr_ad,dexscr_boost_fee,dexscr_trending_bar,dexscr_update_link,entrapment_ratio,exchange,fee_params,fresh_wallet_rate,fund_from,fund_from_address,fund_from_ts,holder_count,image_dup,instagram,is_honeypot,is_og,launch_flag,launchpad,launchpad_platform,launchpad_status,liquidity,logo,logo_small_base64,market_cap,mk,name,net_buy_24h,open_source,open_timestamp,owner_renounced,price,progress,quote_address,quote_address_type,rat_trader_amount_rate,renowned_count,s_qsafe,sell_tax,sells_24h,seq_index,smart_degen_count,status,suspected_insider_hold_rate,swaps_24h,symbol,tax_allocation,telegram,telegram_dup,tg_call_count,tiktok,top70_sniper_hold_rate,top_10_holder_rate,total_buy_tax,total_fee,total_sell_tax,total_supply,trans_name,trans_name_zhcn,trans_symbol,trans_symbol_zhcn,twitter,twitter_community_id,twitter_community_name,twitter_create_token_count,twitter_del_post_token_count,twitter_dup,twitter_handle,twitter_is_tweet,visiting_count,volume_24h,website,website_dup,x_user_follower,x_user_following
+[2026-09-22 13:37:06] trench sample: {"address":"0xbf7e47e05e24d2f66adb219068ca3b6c75d27777","bot_degen_count":23,"bot_degen_rate":0.0035,"bundler_mhr":0.8272779171575522,"bundler_trader_amount_rate":0.1919,"burn_status":"yes","buy_tax":0.01,"buys_24h":3038,"callout_count":0,"chain":"bsc","co_d":false,"complete_timestamp":1790083837,"created_timestamp":1790083837,"creation_tool":"","creator":"0x235f45a0b2bcdcd04d578ccc7c4b6689e5de4acb","creator_balance_rate":0,"creator_created_count":2,"creator_created_inner_count":1,"creator_created_open_count":1,"creator_created_open_ratio":0.5,"creator_token_status":"creator_close","cto_flag":false,"dev_team_hold_rate":0.1919027467,"dev_token_burn_amount":0,"dev_token_burn_ratio":0,"dexscr_ad":false,"dexscr_boost_fee":0,"dexscr_trending_bar":0,"dexscr_update_link":false,"entrapment_ratio":0.0002,"exchange":"pancake_v2","fee_params":[],"fresh_wallet_rate":0.0017,"fund_from":"","fund_from_address":"","fund_from_ts":0,"holder_count":979,"image_dup":0,"instagram":"","is_honeypot":"no","is_og":false,"launch_flag":true,"launchpad":"flap","launchpad_platform":"flap","launchpad_status":1,"liquidity":29271.334492700295,"logo":"https://gmgn.ai/external-res-asia/d38631bad79c89c1f95b868cb8a1b6c9_v2.webp","logo_small_base64":"UklGRgQBAABXRUJQVlA4IPgAAACQBwCdASpAAEAAP3GmyFk0rSijsBv5ApAuCUAabIEDsBrQwpBEsFCoRTMUiymlk2qXwp01EdA6NWFgFFmiuOZk976ZhAAA/u/54J6TrtOybCoIu0ydm20rpeds49nmiLZ+zyRBXT2+yr716ixSfKWDzvv3X3kfOoQ1mNtJWV5xGUxdz6oO49Sop+OyXUP5KYcP6qNEhFsk3bupuKwkdCkJJxatGdoycfID0mONb6deaxbl5c1
+[2026-09-22 13:37:06] скан: 196 токенов (из них trenches: 117), 0 прошли фильтр; отсев: age:188 mcap:3 swaps:2 liq:1; возраст мин/медиана/макс: 1/2716/37202 мин
+[2026-09-22 13:37:49] SELL paper АLPАCА stop_loss pnl -7.25$ (-34.7%) hold 1m | balance 992.45
+[2026-09-22 13:38:01] файлы обновлены — перезапуск
+[2026-09-22 13:38:06] === старт: mode=paper chain=bsc size=$20 balance=$992.45 ===
+[2026-09-22 13:38:06] панель: http://localhost:8787
+[2026-09-22 13:38:07] скан: 199 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 liq:5 mcap:3 snipers:1; возраст мин/медиана/макс: 0/653/37997 мин
+[2026-09-22 13:43:19] скан: 197 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 mcap:4 liq:4 snipers:1; возраст мин/медиана/макс: 0/641/31620 мин
+[2026-09-22 13:48:31] скан: 198 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:187 liq:6 mcap:2 snipers:1; возраст мин/медиана/макс: 1/672/26547 мин
+[2026-09-22 13:53:43] скан: 200 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:193 liq:5 mcap:1 snipers:1; возраст мин/медиана/макс: 0/683/44796 мин
+[2026-09-22 13:58:52] скан: 199 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:192 liq:4 mcap:1 snipers:1; возраст мин/медиана/макс: 1/673/42723 мин
+[2026-09-22 14:00:58] CANDIDATE AiliAili (flap) age 3.0m | liq 10349 | mcap 18926 | holders 124 | swaps 442 | vol 27123 | top10 0.22 | bundler 0.19 | snipers 10 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 251/191 | creator creator_close | wash | smart 4
+[2026-09-22 14:00:58] BUY paper AiliAili @0.0000194935 $20 | mcap 18926 liq 10349 holders 124
+[2026-09-22 14:01:42] SELL paper AiliAili stop_loss pnl -7.74$ (-37.2%) hold 1m | balance 984.41
+[2026-09-22 14:04:09] скан: 199 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:187 liq:10 bundler:1; возраст мин/медиана/макс: 2/688/35570 мин
+[2026-09-22 14:07:18] CANDIDATE 猫病 (geniusfun) age 4.1m | liq 9693 | mcap 19367 | holders 80 | swaps 219 | vol 16394 | top10 0.19 | bundler 0.09 | snipers 0 | tax 0/0 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 138/81 | creator creator_close | wash | smart 3
+[2026-09-22 14:07:18] BUY paper 猫病 @0.0000199484 $20 | mcap 19367 liq 9693 holders 80
+[2026-09-22 14:08:02] SELL paper 猫病 stop_loss pnl -11.49$ (-55.9%) hold 1m | balance 972.63
+[2026-09-22 14:09:23] скан: 193 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:184 liq:6 tax:1 bundler:1; возраст мин/медиана/макс: 0/645/25206 мин
+[2026-09-22 14:09:44] CANDIDATE 神经回购 (flap) age 9.1m | liq 8408 | mcap 15428 | holders 122 | swaps 90 | vol 6561 | top10 0.21 | bundler 0.05 | snipers 15 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 71/19 | creator creator_close | wash | smart 5
+[2026-09-22 14:09:44] BUY paper 神经回购 @0.0000158909 $20 | mcap 15428 liq 8408 holders 122
+[2026-09-22 14:14:28] скан: 197 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:188 liq:4 mcap:1 vol:1; возраст мин/медиана/макс: 2/672/42738 мин
+[2026-09-22 14:19:29] скан: 197 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 liq:5 mcap:2 vol:1; возраст мин/медиана/макс: 0/655/19864 мин
+[2026-09-22 14:24:42] скан: 192 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:182 liq:4 snipers:2 mcap:1; возраст мин/медиана/макс: 1/682/38044 мин
+[2026-09-22 14:24:47] файлы обновлены — перезапуск
+[2026-09-22 14:24:52] === старт: mode=paper chain=bsc size=$20 balance=$952.33 ===
+[2026-09-22 14:24:52] панель: http://localhost:8787
+[2026-09-22 14:24:54] скан: 191 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:181 liq:4 snipers:2 mcap:1; возраст мин/медиана/макс: 1/683/35971 мин
+[2026-09-22 14:27:33] SELL paper 神经回购 stop_loss pnl -6.35$ (-30.3%) hold 18m | balance 965.97
+[2026-09-22 14:30:08] скан: 197 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 liq:5 mcap:1 snipers:1; возраст мин/медиана/макс: 1/714/35976 мин
+[2026-09-22 14:31:08] CANDIDATE CATTO (flap) age 29.6m | liq 16614 | mcap 25379 | holders 488 | swaps 208 | vol 12461 | top10 0.18 | bundler 0.22 | snipers 6 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 114/94 | creator creator_close | wash | smart 71
+[2026-09-22 14:31:08] BUY paper CATTO @0.0000261408 $20 | mcap 25379 liq 16614 holders 488
+[2026-09-22 14:31:22] файлы обновлены — перезапуск
+[2026-09-22 14:31:27] === старт: mode=paper chain=bsc size=$20 balance=$945.67 ===
+[2026-09-22 14:31:27] панель: http://localhost:8787
+[2026-09-22 14:31:28] скан: 198 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:191 liq:3 snipers:1 tax:1; возраст мин/медиана/макс: 0/715/44809 мин
+[2026-09-22 14:36:45] CANDIDATE BLOCKMINE (flap) age 5.3m | liq 10190 | mcap 17898 | holders 75 | swaps 199 | vol 12427 | top10 0.29 | bundler 0.27 | snipers 8 | tax 3/3 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 114/85 | creator creator_hold | wash | smart 2
+[2026-09-22 14:36:45] BUY paper BLOCKMINE @0.0000184346 $20 | mcap 17898 liq 10190 holders 75
+[2026-09-22 14:36:45] скан: 196 токенов (из них trenches: 120), 1 прошли фильтр; отсев: age:192 snipers:1; возраст мин/медиана/макс: 1/726/56550 мин
+[2026-09-22 14:37:14] SELL paper BLOCKMINE stop_loss pnl -8.31$ (-40.1%) hold 0m | balance 937.06
+[2026-09-22 14:39:49] файлы обновлены — перезапуск
+[2026-09-22 14:39:54] === старт: mode=paper chain=bsc size=$20 balance=$937.06 ===
+[2026-09-22 14:39:54] панель: http://localhost:8787
+[2026-09-22 14:39:55] скан: 191 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:182 liq:4 top10:2 snipers:1; возраст мин/медиана/макс: 0/662/32346 мин
+[2026-09-22 14:42:00] CANDIDATE ANTHROPIG (flap) age 5.1m | liq 32353 | mcap 96854 | holders 277 | swaps 1155 | vol 104836 | top10 0.24 | bundler 0.09 | snipers 1 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 689/466 | creator creator_close | wash | smart 16
+[2026-09-22 14:42:00] BUY paper ANTHROPIG @0.0000997596 $20 | mcap 96854 liq 32353 holders 277
+[2026-09-22 14:42:27] SELL paper ANTHROPIG stop_loss pnl -7.36$ (-35.3%) hold 0m | balance 929.40
+[2026-09-22 14:44:27] CANDIDATE 龙虾 (flap) age 2.3m | liq 14065 | mcap 24485 | holders 45 | swaps 94 | vol 15895 | top10 0.23 | bundler 0.20 | snipers 9 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 76/18 | creator creator_close | wash | smart 2
+[2026-09-22 14:44:27] BUY paper 龙虾 @0.0000252190 $20 | mcap 24485 liq 14065 holders 45
+[2026-09-22 14:44:48] CANDIDATE CATGPT (flap) age 2.1m | liq 17208 | mcap 31115 | holders 57 | swaps 160 | vol 21700 | top10 0.27 | bundler 0.24 | snipers 0 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 112/48 | creator creator_close | wash | smart 6
+[2026-09-22 14:44:48] BUY paper CATGPT @0.0000320488 $20 | mcap 31115 liq 17208 holders 57
+[2026-09-22 14:45:10] CANDIDATE 克劳德 (flap) age 2.5m | liq 11144 | mcap 19066 | holders 47 | swaps 163 | vol 8146 | top10 0.33 | bundler 0.07 | snipers 0 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 148/15 | creator creator_hold | wash | smart 5
+[2026-09-22 14:45:10] BUY paper 克劳德 @0.0000196379 $20 | mcap 19066 liq 11144 holders 47
+[2026-09-22 14:45:10] скан: 188 токенов (из них trenches: 120), 1 прошли фильтр; отсев: age:168 liq:8 buys/sells:2 top10:1; возраст мин/медиана/макс: 0/593/33312 мин
+[2026-09-22 14:45:51] SELL paper CATGPT stop_loss pnl -7.28$ (-34.9%) hold 1m | balance 881.22
+[2026-09-22 14:45:52] SELL paper 克劳德 take_profit pnl 33.06$ (166.8%) hold 1m | balance 934.28
+[2026-09-22 14:47:11] SELL paper 龙虾 stop_loss pnl -5.99$ (-28.4%) hold 3m | balance 948.29
+[2026-09-22 14:48:23] CANDIDATE clawd (flap) age 9.3m | liq 13012 | mcap 20405 | holders 78 | swaps 115 | vol 10719 | top10 0.28 | bundler 0.11 | snipers 1 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 64/51 | creator creator_close | wash | smart 3
+[2026-09-22 14:48:23] BUY paper clawd @0.0000210176 $20 | mcap 20405 liq 13012 holders 78
+[2026-09-22 14:50:07] SELL paper clawd take_profit pnl 11.36$ (58.3%) hold 2m | balance 959.36
+[2026-09-22 14:50:30] скан: 196 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:174 liq:12 mcap:2 bundler:1; возраст мин/медиана/макс: 2/673/27645 мин
+[2026-09-22 14:52:06] файлы обновлены — перезапуск
+[2026-09-22 14:52:11] === старт: mode=paper chain=bsc size=$20 balance=$959.36 ===
+[2026-09-22 14:52:11] панель: http://localhost:8787
+[2026-09-22 14:52:12] скан: 187 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:165 liq:12 mcap:2 buys/sells:1; возраст мин/медиана/макс: 0/588/17175 мин
+[2026-09-22 14:52:33] skip BRIAN: лимит сделок в час
+[2026-09-22 14:52:54] skip BRIAN: лимит сделок в час
+[2026-09-22 14:53:15] skip BRIAN: лимит сделок в час
+[2026-09-22 14:53:19] файлы обновлены — перезапуск
+[2026-09-22 14:53:24] === старт: mode=paper chain=bsc size=$20 balance=$959.36 ===
+[2026-09-22 14:53:24] панель: http://localhost:8787
+[2026-09-22 14:53:25] skip BRIAN: лимит сделок в час
+[2026-09-22 14:53:25] скан: 188 токенов (из них trenches: 120), 1 прошли фильтр; отсев: age:169 liq:9 mcap:2 buys/sells:1; возраст мин/медиана/макс: 0/584/26083 мин
+[2026-09-22 14:58:37] скан: 190 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:167 liq:12 buys/sells:2 mcap:2; возраст мин/медиана/макс: 1/594/45289 мин
+[2026-09-22 14:59:39] skip 菊花: лимит сделок в час
+[2026-09-22 15:01:24] CANDIDATE SENSEI (flap) age 3.9m | liq 17780 | mcap 31218 | holders 80 | swaps 309 | vol 21020 | top10 0.21 | bundler 0.19 | snipers 8 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 214/95 | creator creator_close | wash | smart 5
+[2026-09-22 15:01:24] BUY paper SENSEI @0.0000329060 $20 | mcap 31218 liq 17780 holders 80
+[2026-09-22 15:02:04] SELL paper SENSEI take_profit pnl 10.90$ (56.0%) hold 1m | balance 969.95
+[2026-09-22 15:03:50] скан: 193 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:170 liq:11 mcap:3 buys/sells:1; возраст мин/медиана/макс: 1/587/21422 мин
+[2026-09-22 15:04:52] skip 螃蟹: лимит сделок в час
+[2026-09-22 15:09:03] скан: 187 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:165 liq:12 mcap:2 buys/sells:1; возраст мин/медиана/макс: 0/592/15976 мин
+[2026-09-22 15:12:31] CANDIDATE 蚂蚁 (flap) age 9.9m | liq 8739 | mcap 15654 | holders 49 | swaps 110 | vol 9653 | top10 0.30 | bundler 0.02 | snipers 8 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 72/38 | creator  | wash | smart 2
+[2026-09-22 15:12:32] BUY paper 蚂蚁 @0.0000163959 $20 | mcap 15654 liq 8739 holders 49
+[2026-09-22 15:13:46] SELL paper 蚂蚁 stop_loss pnl -8.11$ (-39.0%) hold 1m | balance 961.54
+[2026-09-22 15:14:20] скан: 183 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:166 liq:7 buys/sells:1 mcap:1; возраст мин/медиана/макс: 0/536/8775 мин
+[2026-09-22 15:15:11] файлы обновлены — перезапуск
+[2026-09-22 15:15:16] === старт: mode=paper chain=bsc size=$20 balance=$961.54 ===
+[2026-09-22 15:15:16] панель: http://localhost:8787
+[2026-09-22 15:15:17] скан: 187 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:169 liq:7 mcap:2 buys/sells:1; возраст мин/медиана/макс: 1/545/11667 мин
+[2026-09-22 15:16:16] гипотезы: токенов 29, с историей 0; лучшая: данных мало
+[2026-09-22 15:17:44] CANDIDATE SI (flap) age 2.3m | liq 26505 | mcap 71850 | holders 375 | swaps 1235 | vol 98683 | top10 0.23 | bundler 0.17 | snipers 2 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 681/554 | creator creator_close | wash | smart 24 | renowned 3 | viewers 441 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 889 | source rank | launchpad flap
+[2026-09-22 15:17:44] BUY paper SI @0.0000771674 $20 | mcap 71850 liq 26505 holders 375
+[2026-09-22 15:19:28] SELL paper SI take_profit pnl 13.17$ (67.3%) hold 2m | balance 974.41
+[2026-09-22 15:20:32] скан: 190 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:175 snipers:2 liq:2 buys/sells:1; возраст мин/медиана/макс: 1/557/13604 мин
+[2026-09-22 15:24:41] skip SGI: лимит сделок в час
+[2026-09-22 15:25:23] skip SGI: лимит сделок в час
+[2026-09-22 15:25:45] skip SGI: лимит сделок в час
+[2026-09-22 15:25:45] скан: 191 токенов (из них trenches: 120), 1 прошли фильтр; отсев: age:174 liq:4 snipers:2 buys/sells:1; возраст мин/медиана/макс: 1/547/10652 мин
+[2026-09-22 15:26:06] skip SGI: лимит сделок в час
+[2026-09-22 15:26:16] гипотезы: токенов 41, с историей 0; лучшая: данных мало
+[2026-09-22 15:27:09] skip micro: лимит сделок в час
+[2026-09-22 15:27:30] skip micro: лимит сделок в час
+[2026-09-22 15:28:12] skip micro: лимит сделок в час
+[2026-09-22 15:28:33] skip micro: лимит сделок в час
+[2026-09-22 15:28:38] SELL paper CATTO stop_loss pnl -6.79$ (-32.5%) hold 58m | balance 987.62
+[2026-09-22 15:30:58] скан: 191 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:175 liq:4 swaps:1 snipers:1; возраст мин/медиана/макс: 9/568/14581 мин
+[2026-09-22 15:34:23] CANDIDATE AI (flap) age 9.2m | liq 10195 | mcap 18551 | holders 71 | swaps 121 | vol 12187 | top10 0.27 | bundler 0.14 | snipers 5 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 91/30 | creator creator_close | wash | smart 3 | renowned 0 | viewers 72 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 377 | source rank | launchpad flap
+[2026-09-22 15:34:23] BUY paper AI @0.0000193714 $20 | mcap 18551 liq 10195 holders 71
+[2026-09-22 15:34:23] skip 螃蟹: лимит сделок в час
+[2026-09-22 15:34:43] skip 螃蟹: лимит сделок в час
+[2026-09-22 15:34:58] SELL paper AI take_profit pnl 12.97$ (66.4%) hold 1m | balance 1000.29
+[2026-09-22 15:35:04] skip 螃蟹: лимит сделок в час
+[2026-09-22 15:35:26] skip 螃蟹: лимит сделок в час
+[2026-09-22 15:35:48] skip 螃蟹: лимит сделок в час
+[2026-09-22 15:36:09] скан: 197 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:183 liq:4 swaps:1 snipers:1; возраст мин/медиана/макс: 0/566/9010 мин
+[2026-09-22 15:36:16] гипотезы: токенов 51, с историей 0; лучшая: данных мало
+[2026-09-22 15:37:55] CANDIDATE 超级天柴 (geniusfun) age 2.2m | liq 28993 | mcap 93647 | holders 303 | swaps 761 | vol 58785 | top10 0.15 | bundler 0.14 | snipers 5 | tax 0/0 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 416/345 | creator creator_close | wash | smart 19 | renowned 12 | viewers 457 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 368 | source rank | launchpad geniusfun
+[2026-09-22 15:37:55] BUY paper 超级天柴 @0.0000986393 $20 | mcap 93647 liq 28993 holders 303
+[2026-09-22 15:41:24] скан: 198 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 swaps:1 snipers:1 liq:1; возраст мин/медиана/макс: 6/618/20942 мин
+[2026-09-22 15:41:30] SELL paper 超级天柴 stop_loss pnl -7.87$ (-37.8%) hold 4m | balance 992.12
+[2026-09-22 15:43:49] CANDIDATE 超级智能 (geniusfun) age 2.0m | liq 23057 | mcap 59744 | holders 325 | swaps 1078 | vol 125429 | top10 0.16 | bundler 0.14 | snipers 7 | tax 0/0 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 611/467 | creator creator_close | wash | smart 19 | renowned 10 | viewers 611 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 340 | source rank | launchpad geniusfun
+[2026-09-22 15:43:50] BUY paper 超级智能 @0.0000617556 $20 | mcap 59744 liq 23057 holders 325
+[2026-09-22 15:44:55] SELL paper 超级智能 stop_loss pnl -6.47$ (-30.8%) hold 1m | balance 985.35
+[2026-09-22 15:46:17] гипотезы: токенов 58, с историей 0; лучшая: данных мало
+[2026-09-22 15:46:38] скан: 197 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:185 swaps:1 liq:1; возраст мин/медиана/макс: 2/642/20772 мин
+[2026-09-22 15:47:20] CANDIDATE 智脑 (flap) age 2.0m | liq 9743 | mcap 16520 | holders 81 | swaps 232 | vol 19488 | top10 0.30 | bundler 0.15 | snipers 0 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 128/104 | creator creator_close | wash | smart 2 | renowned 3 | viewers 176 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 347 | source rank | launchpad flap
+[2026-09-22 15:47:20] BUY paper 智脑 @0.0000153037 $20 | mcap 16520 liq 9743 holders 81
+[2026-09-22 15:47:32] SELL paper 智脑 stop_loss pnl -9.08$ (-43.9%) hold 0m | balance 975.98
+[2026-09-22 15:51:50] скан: 201 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:189 liq:1; возраст мин/медиана/макс: 0/604/20952 мин
+[2026-09-22 15:56:17] гипотезы: токенов 64, с историей 0; лучшая: данных мало
+[2026-09-22 15:57:07] скан: 203 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:189 liq:2; возраст мин/медиана/макс: 2/656/20958 мин
+[2026-09-22 16:02:18] скан: 195 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:181 liq:2; возраст мин/медиана/макс: 7/614/21873 мин
+[2026-09-22 16:06:17] гипотезы: токенов 78, с историей 0; лучшая: данных мало
+[2026-09-22 16:07:35] CANDIDATE SI (geniusfun) age 5.7m | liq 9435 | mcap 18872 | holders 77 | swaps 178 | vol 16175 | top10 0.17 | bundler 0.10 | snipers 0 | tax 0/0 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 124/54 | creator  | wash | smart 3 | renowned 2 | viewers 106 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 201 | source rank | launchpad geniusfun
+[2026-09-22 16:07:35] BUY paper SI @0.0000194814 $20 | mcap 18872 liq 9435 holders 77
+[2026-09-22 16:07:35] скан: 195 токенов (из них trenches: 120), 1 прошли фильтр; отсев: age:181 liq:1; возраст мин/медиана/макс: 0/597/26157 мин
+[2026-09-22 16:08:08] SELL paper SI stop_loss pnl -9.49$ (-45.9%) hold 1m | balance 966.19
+[2026-09-22 16:10:23] CANDIDATE necessary (flap) age 2.0m | liq 9763 | mcap 17535 | holders 92 | swaps 395 | vol 50707 | top10 0.24 | bundler 0.29 | snipers 12 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 225/170 | creator creator_close | wash | smart 6 | renowned 5 | viewers 300 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 206 | source rank | launchpad flap
+[2026-09-22 16:10:23] BUY paper necessary @0.0000184588 $20 | mcap 17535 liq 9763 holders 92
+[2026-09-22 16:10:47] SELL paper necessary take_profit pnl 15.10$ (77.0%) hold 0m | balance 980.99
+[2026-09-22 16:12:47] скан: 201 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:182 liq:5 mcap:1; возраст мин/медиана/макс: 2/594/24518 мин
+[2026-09-22 16:16:17] гипотезы: токенов 103, с историей 0; лучшая: данных мало
+[2026-09-22 16:17:58] скан: 205 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:187 liq:3 buys/sells:1 mcap:1; возраст мин/медиана/макс: 3/655/44915 мин
+[2026-09-22 16:23:13] скан: 200 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:185 mcap:1 liq:1; возраст мин/медиана/макс: 12/620/20888 мин
+[2026-09-22 16:26:17] гипотезы: токенов 109, с историей 0; лучшая: данных мало
+[2026-09-22 16:28:28] скан: 202 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:188 mcap:1 liq:1; возраст мин/медиана/макс: 13/665/68109 мин
+[2026-09-22 16:33:43] скан: 202 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:189 mcap:1; возраст мин/медиана/макс: 1/689/68410 мин
+[2026-09-22 16:36:10] CANDIDATE 8STOCK (flap) age 2.3m | liq 9146 | mcap 16402 | holders 114 | swaps 248 | vol 16829 | top10 0.23 | bundler 0.18 | snipers 6 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 156/92 | creator creator_close | wash | smart 1 | renowned 5 | viewers 219 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 250 | source rank | launchpad flap
+[2026-09-22 16:36:10] BUY paper 8STOCK @0.0000154996 $20 | mcap 16402 liq 9146 holders 114
+[2026-09-22 16:36:17] гипотезы: токенов 114, с историей 0; лучшая: данных мало
+[2026-09-22 16:36:34] SELL paper 8STOCK stop_loss pnl -7.20$ (-34.5%) hold 0m | balance 973.49
+[2026-09-22 16:38:53] скан: 199 токенов (из них trenches: 113), 0 прошли фильтр; отсев: age:185 liq:2; возраст мин/медиана/макс: 6/635/74462 мин
+[2026-09-22 16:44:06] скан: 202 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:190 vol:1; возраст мин/медиана/макс: 12/641/82281 мин
+[2026-09-22 16:44:27] CANDIDATE 青蛙 (flap) age 12.6m | liq 10316 | mcap 19667 | holders 63 | swaps 84 | vol 5317 | top10 0.22 | bundler 0.03 | snipers 5 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 69/15 | creator creator_close | wash | smart 2 | renowned 7 | viewers 90 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 73 | source rank | launchpad flap
+[2026-09-22 16:44:27] BUY paper 青蛙 @0.0000206961 $20 | mcap 19667 liq 10316 holders 63
+[2026-09-22 16:46:17] гипотезы: токенов 115, с историей 0; лучшая: данных мало
+[2026-09-22 16:49:04] SELL paper 青蛙 stop_loss pnl -6.00$ (-28.5%) hold 5m | balance 967.18
+[2026-09-22 16:49:21] скан: 204 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:191; возраст мин/медиана/макс: 17/705/334504 мин
+[2026-09-22 16:54:37] скан: 201 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:189; возраст мин/медиана/макс: 1/651/324497 мин
+[2026-09-22 16:55:35] история цен: запрошено 15, получено 15
+[2026-09-22 16:56:17] гипотезы: токенов 118, с историей 15; лучшая: данных мало
+[2026-09-22 16:59:49] скан: 203 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:187 liq:2 top10:1; возраст мин/медиана/макс: 3/649/68436 мин
+[2026-09-22 17:00:10] CANDIDATE MARSCZ (flap) age 6.1m | liq 33438 | mcap 108079 | holders 821 | swaps 2401 | vol 195790 | top10 0.28 | bundler 0.27 | snipers 0 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 1670/731 | creator creator_close | wash | smart 2 | renowned 0 | viewers 43 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 0 | source trenches | launchpad flap
+[2026-09-22 17:00:10] BUY paper MARSCZ @0.000111817 $20 | mcap 108079 liq 33438 holders 821
+[2026-09-22 17:00:35] история цен: запрошено 15, получено 15
+[2026-09-22 17:04:49] скан: 201 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:187 liq:1; возраст мин/медиана/макс: 0/661/111809 мин
+[2026-09-22 17:05:33] история цен: запрошено 10, получено 10
+[2026-09-22 17:06:18] гипотезы: токенов 121, с историей 34; лучшая: данных мало
+[2026-09-22 17:06:51] SELL paper MARSCZ take_profit pnl 11.59$ (59.4%) hold 7m | balance 978.47
+[2026-09-22 17:10:08] скан: 206 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:191 liq:2; возраст мин/медиана/макс: 8/707/327217 мин
+[2026-09-22 17:10:23] история цен: запрошено 3, получено 3
+[2026-09-22 17:15:27] история цен: запрошено 7, получено 7
+[2026-09-22 17:15:29] скан: 203 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:188 mcap:1 liq:1; возраст мин/медиана/макс: 1/687/362779 мин
+[2026-09-22 17:16:18] гипотезы: токенов 122, с историей 40; лучшая: Без фильтров безопасности (n=10, PF 6.76, $4.77/сделку)
+[2026-09-22 17:20:25] история цен: запрошено 4, получено 4
+[2026-09-22 17:20:41] скан: 193 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:177 liq:2 mcap:1; возраст мин/медиана/макс: 5/661/114027 мин
+[2026-09-22 17:25:24] история цен: запрошено 3, получено 3
+[2026-09-22 17:25:57] скан: 199 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:185 mcap:1; возраст мин/медиана/макс: 12/682/352192 мин
+[2026-09-22 17:26:19] гипотезы: токенов 124, с историей 47; лучшая: Без фильтров безопасности (n=12, PF 4.76, $4.39/сделку)
+[2026-09-22 17:30:24] история цен: запрошено 3, получено 3
+[2026-09-22 17:31:11] скан: 198 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:183 mcap:1; возраст мин/медиана/макс: 0/664/66220 мин
+[2026-09-22 17:35:24] история цен: запрошено 3, получено 3
+[2026-09-22 17:36:19] гипотезы: токенов 131, с историей 53; лучшая: Без фильтров безопасности (n=13, PF 5.52, $4.88/сделку)
+[2026-09-22 17:36:25] скан: 199 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:183 liq:2 buys/sells:1 mcap:1; возраст мин/медиана/макс: 2/693/368715 мин
+[2026-09-22 17:40:25] история цен: запрошено 4, получено 4
+[2026-09-22 17:41:33] скан: 198 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:179 liq:4 mcap:1 buys/sells:1; возраст мин/медиана/макс: 0/682/362805 мин
+[2026-09-22 17:45:28] история цен: запрошено 7, получено 7
+[2026-09-22 17:46:19] гипотезы: токенов 147, с историей 62; лучшая: Без фильтров безопасности (n=13, PF 5.52, $4.88/сделку)
+[2026-09-22 17:46:33] скан: 202 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:181 liq:7 buys/sells:1; возраст мин/медиана/макс: 2/655/334561 мин
+[2026-09-22 17:50:38] история цен: запрошено 15, получено 15
+[2026-09-22 17:51:44] скан: 201 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:180 liq:7 buys/sells:1; возраст мин/медиана/макс: 4/693/334566 мин
+[2026-09-22 17:55:35] история цен: запрошено 13, получено 13
+[2026-09-22 17:56:18] CANDIDATE sPL.001 (flap) age 23.7m | liq 40217 | mcap 166711 | holders 841 | swaps 307 | vol 32956 | top10 0.20 | bundler 0.23 | snipers 3 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 173/134 | creator creator_close | wash | smart 41 | renowned 7 | viewers 485 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m -27 | source rank | launchpad flap
+[2026-09-22 17:56:18] BUY paper sPL.001 @0.000180359 $20 | mcap 166711 liq 40217 holders 841
+[2026-09-22 17:56:20] гипотезы: токенов 151, с историей 73; лучшая: Без фильтров безопасности (n=15, PF 4.46, $4.56/сделку)
+[2026-09-22 17:56:59] скан: 203 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:183 liq:8; возраст мин/медиана/макс: 1/714/417868 мин
+[2026-09-22 17:59:41] SELL paper sPL.001 stop_loss pnl -5.98$ (-28.4%) hold 3m | balance 972.20
+[2026-09-22 18:00:26] история цен: запрошено 5, получено 5
+[2026-09-22 18:02:13] скан: 201 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:182 liq:6 holders:1; возраст мин/медиана/макс: 1/671/472336 мин
+[2026-09-22 18:05:23] история цен: запрошено 1, получено 1
+[2026-09-22 18:06:20] гипотезы: токенов 155, с историей 77; лучшая: Возраст 1–3 мин без фильтров (n=27, PF 3.49, $3.39/сделку)
+[2026-09-22 18:07:28] скан: 206 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 liq:5 swaps:1; возраст мин/медиана/макс: 2/724/417878 мин
+[2026-09-22 18:10:24] история цен: запрошено 2, получено 2
+[2026-09-22 18:12:21] файлы обновлены — перезапуск
+[2026-09-22 18:12:26] === старт: mode=paper chain=bsc size=$20 balance=$972.20 ===
+[2026-09-22 18:12:26] панель: http://localhost:8787
+[2026-09-22 18:12:26] скан: 199 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:181 liq:4 swaps:1; возраст мин/медиана/макс: 7/713/327280 мин
+[2026-09-22 18:12:27] история цен: запрошено 1, получено 1
+[2026-09-22 18:13:26] гипотезы: токенов 156, с историей 80; лучшая: Покупок/продаж ≥ 1 (n=10, PF 5.39, $5.55/сделку)
+[2026-09-22 18:17:29] история цен: запрошено 3, получено 3
+[2026-09-22 18:17:31] скан: 203 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:184 liq:3 buys/sells:1 swaps:1; возраст мин/медиана/макс: 0/718/368185 мин
+[2026-09-22 18:22:27] история цен: запрошено 1, получено 1
+[2026-09-22 18:22:45] скан: 201 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:183 liq:4 swaps:1; возраст мин/медиана/макс: 6/732/843917 мин
+[2026-09-22 18:23:27] CANDIDATE 蝴蝶圆梦 (flap) age 21.9m | liq 22890 | mcap 51916 | holders 105 | swaps 339 | vol 18142 | top10 0.18 | bundler 0.00 | snipers 0 | tax 2/2 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 294/45 | creator creator_hold | wash | smart 2 | renowned 0 | viewers 2 | tg 0 | x 0 | insider 0.26 | fresh 0.02 | chg5m 0 | source trenches | launchpad flap
+[2026-09-22 18:23:27] BUY paper 蝴蝶圆梦 @0.0000534731 $20 | mcap 51916 liq 22890 holders 105
+[2026-09-22 18:23:28] гипотезы: токенов 161, с историей 83; лучшая: Покупок/продаж ≥ 1 (n=11, PF 5.48, $5.15/сделку)
+[2026-09-22 18:25:56] price 蝴蝶圆梦: fetch failed
+[2026-09-22 18:25:57] ошибка цикла: TypeError: fetch failed
+[2026-09-22 18:27:46] скан: 204 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 liq:4; возраст мин/медиана/макс: 1/729/595391 мин
+[2026-09-22 18:29:56] файлы обновлены — перезапуск
+[2026-09-22 18:30:01] === старт: mode=paper chain=bsc size=$20 balance=$951.90 ===
+[2026-09-22 18:30:01] панель: http://localhost:8787
+[2026-09-22 18:30:02] скан: 205 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:188 liq:4; возраст мин/медиана/макс: 13/731/656079 мин
+[2026-09-22 18:31:01] гипотезы: проверено сейчас 143, всего 143; токенов с историей 83; лучшая за 7 дней: покупок/продаж от 0 (n=14, PF 4.17, $4.16/сделку)
+[2026-09-22 18:35:04] история цен: запрошено 2, получено 2
+[2026-09-22 18:35:17] скан: 206 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:188 liq:5; возраст мин/медиана/макс: 1/792/464337 мин
+[2026-09-22 18:38:19] файлы обновлены — перезапуск
+[2026-09-22 18:38:24] === старт: mode=paper chain=bsc size=$20 balance=$951.90 ===
+[2026-09-22 18:38:24] панель: http://localhost:8787
+[2026-09-22 18:38:25] скан: 205 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 liq:6; возраст мин/медиана/макс: 1/755/504510 мин
+[2026-09-22 18:38:26] история цен: запрошено 1, получено 1
+[2026-09-22 18:39:24] гипотезы: проверено сейчас 157, всего 300; токенов с историей 85; лучшая за 7 дней: покупок/продаж от 0, тейк +200% (n=15, PF 7.61, $9.02/сделку)
+[2026-09-22 18:42:56] CANDIDATE sPL.001 (flap) age 2.5m | liq 9366 | mcap 16821 | holders 58 | swaps 127 | vol 9569 | top10 0.30 | bundler 0.23 | snipers 0 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 85/42 | creator  | wash | smart 2 | renowned 3 | viewers 86 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 277 | source rank | launchpad flap
+[2026-09-22 18:42:56] BUY paper sPL.001 @0.0000177620 $20 | mcap 16821 liq 9366 holders 58
+[2026-09-22 18:43:27] история цен: запрошено 2, получено 2
+[2026-09-22 18:43:38] скан: 202 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:185 liq:3; возраст мин/медиана/макс: 1/744/503735 мин
+[2026-09-22 18:44:38] SELL paper sPL.001 stop_loss pnl -9.72$ (-47.1%) hold 2m | balance 941.88
+[2026-09-22 18:47:06] файлы обновлены — перезапуск
+[2026-09-22 18:47:11] === старт: mode=paper chain=bsc size=$20 balance=$941.88 ===
+[2026-09-22 18:47:11] панель: http://localhost:8787
+[2026-09-22 18:47:12] скан: 203 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:187 liq:1; возраст мин/медиана/макс: 7/748/656096 мин
+[2026-09-22 18:47:13] история цен: запрошено 1, получено 1
+[2026-09-22 18:47:17] файлы обновлены — перезапуск
+[2026-09-22 18:47:22] === старт: mode=paper chain=bsc size=$20 balance=$941.88 ===
+[2026-09-22 18:47:22] панель: http://localhost:8787
+[2026-09-22 18:47:22] скан: 202 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 liq:1; возраст мин/медиана/макс: 7/741/801670 мин
+[2026-09-22 18:48:22] гипотезы: проверено сейчас 180, всего 480; токенов с историей 87; лучшая за 7 дней: покупок/продаж от 0, тейк +200% (n=15, PF 7.61, $9.02/сделку)
+[2026-09-22 18:50:33] файлы обновлены — перезапуск
+[2026-09-22 18:50:38] === старт: mode=paper chain=bsc size=$20 balance=$941.88 ===
+[2026-09-22 18:50:38] панель: http://localhost:8787
+[2026-09-22 18:50:39] скан: 205 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:188 liq:2; возраст мин/медиана/макс: 10/751/656100 мин
+[2026-09-22 18:51:28] файлы обновлены — перезапуск
+[2026-09-22 18:51:33] === старт: mode=paper chain=bsc size=$20 balance=$941.88 ===
+[2026-09-22 18:51:33] панель: http://localhost:8787
+[2026-09-22 18:51:34] скан: 204 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 liq:2; возраст мин/медиана/макс: 3/722/801674 мин
+[2026-09-22 18:52:33] гипотезы: проверено сейчас 185, всего 665; токенов с историей 87; лучшая за 7 дней: бандлеры без ограничения, снайперов без ограничения, покупок/продаж от 1 (n=15, PF 0.49, $-2.00/сделку)
+[2026-09-22 18:54:25] файлы обновлены — перезапуск
+[2026-09-22 18:54:30] === старт: mode=paper chain=bsc size=$20 balance=$941.88 ===
+[2026-09-22 18:54:30] панель: http://localhost:8787
+[2026-09-22 18:54:31] скан: 204 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:187 liq:1; возраст мин/медиана/макс: 14/756/525918 мин
+[2026-09-22 18:54:43] файлы обновлены — перезапуск
+[2026-09-22 18:54:48] === старт: mode=paper chain=bsc size=$20 balance=$941.88 ===
+[2026-09-22 18:54:48] панель: http://localhost:8787
+[2026-09-22 18:54:49] скан: 206 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:189 liq:1; возраст мин/медиана/макс: 14/764/659573 мин
+[2026-09-22 18:54:50] история цен: запрошено 1, получено 1
+[2026-09-22 18:55:48] гипотезы: проверено сейчас 172, всего 837; токенов с историей 88; лучшая за 7 дней: бандлеры без ограничения, снайперов без ограничения, покупок/продаж от 1 (n=15, PF 0.49, $-2.00/сделку)
+[2026-09-22 18:56:51] файлы обновлены — перезапуск
+[2026-09-22 18:56:56] === старт: mode=paper chain=bsc size=$20 balance=$941.88 ===
+[2026-09-22 18:56:56] панель: http://localhost:8787
+[2026-09-22 18:56:57] скан: 202 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:185 liq:1; возраст мин/медиана/макс: 0/726/392735 мин
+[2026-09-22 18:56:59] история цен: запрошено 1, получено 1
+[2026-09-22 18:57:56] гипотезы: проверено сейчас 187, всего 1024; токенов с историей 89; лучшая за 7 дней: бандлеры без ограничения, снайперов без ограничения, покупок/продаж от 1 (n=15, PF 0.49, $-2.00/сделку)
+[2026-09-22 19:01:59] история цен: запрошено 1, получено 1
+[2026-09-22 19:02:10] скан: 203 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:182 liq:5 top10:1; возраст мин/медиана/макс: 1/705/630915 мин
+[2026-09-22 19:07:27] скан: 209 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:191 liq:2 mcap:1; возраст мин/медиана/макс: 1/695/801690 мин
+[2026-09-22 19:07:56] гипотезы: проверено сейчас 185, всего 1209; токенов с историей 90; лучшая за 7 дней: капитализация от $0, снайперов без ограничения, покупок/продаж от 1, зрителей от 30, стоп −15% (n=14, PF 0.34, $-1.97/сделку)
+[2026-09-22 19:10:36] CANDIDATE 蚂蚁 (flap) age 4.9m | liq 20898 | mcap 51195 | holders 284 | swaps 772 | vol 57450 | top10 0.18 | bundler 0.16 | snipers 3 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 422/350 | creator creator_close | wash | smart 7 | renowned 6 | viewers 292 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 142 | source rank | launchpad flap
+[2026-09-22 19:10:36] BUY paper 蚂蚁 @0.0000527307 $20 | mcap 51195 liq 20898 holders 284
+[2026-09-22 19:11:12] price 蝴蝶圆梦: fetch failed
+[2026-09-22 19:12:00] ошибка цикла: TypeError: fetch failed
+[2026-09-22 19:12:11] история цен: запрошено 4, получено 4
+[2026-09-22 19:12:27] скан: 204 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:183 liq:5; возраст мин/медиана/макс: 0/715/595436 мин
+[2026-09-22 19:12:36] SELL paper 蚂蚁 trailing pnl 5.38$ (28.4%) hold 2m | balance 946.96
+[2026-09-22 19:17:11] история цен: запрошено 4, получено 4
+[2026-09-22 19:17:41] скан: 206 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:185 liq:4 mcap:1; возраст мин/медиана/макс: 6/708/843972 мин
+[2026-09-22 19:17:56] гипотезы: проверено сейчас 191, всего 1400; токенов с историей 97; лучшая за 7 дней: капитализация от $0, снайперов без ограничения, покупок/продаж от 0, smart money от 3, зрителей от 30, стоп −15% (n=16, PF 0.78, $-0.61/сделку)
+[2026-09-22 19:22:16] история цен: запрошено 8, получено 8
+[2026-09-22 19:23:00] скан: 208 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:189 liq:4; возраст мин/медиана/макс: 2/753/804107 мин
+[2026-09-22 19:27:17] история цен: запрошено 7, получено 7
+[2026-09-22 19:27:56] гипотезы: проверено сейчас 182, всего 1582; токенов с историей 101; лучшая за 7 дней: капитализация от $0, снайперов без ограничения, покупок/продаж от 0, smart money от 3, зрителей от 30, стоп −15% (n=16, PF 0.78, $-0.61/сделку)
+[2026-09-22 19:28:13] скан: 205 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 liq:3; возраст мин/медиана/макс: 0/731/504560 мин
+[2026-09-22 19:29:17] CANDIDATE OPAI (flap) age 5.4m | liq 21945 | mcap 37519 | holders 45 | swaps 61 | vol 10722 | top10 0.24 | bundler 0.16 | snipers 3 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 54/7 | creator  | wash | smart 3 | renowned 0 | viewers 79 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 207 | source rank | launchpad flap
+[2026-09-22 19:29:18] BUY paper OPAI @0.0000367710 $20 | mcap 37519 liq 21945 holders 45
+[2026-09-22 19:32:13] история цен: запрошено 3, получено 3
+[2026-09-22 19:33:01] SELL paper OPAI take_profit pnl 10.97$ (56.3%) hold 4m | balance 957.63
+[2026-09-22 19:33:18] скан: 205 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 liq:3; возраст мин/медиана/макс: 5/736/804117 мин
+[2026-09-22 19:37:13] история цен: запрошено 2, получено 2
+[2026-09-22 19:37:22] === старт: mode=paper chain=bsc size=$20 balance=$957.63 ===
+[2026-09-22 19:37:22] панель: http://<ip сервера>:8787
+[2026-09-22 19:37:23] скан: 209 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:191 liq:2; возраст мин/медиана/макс: 10/740/804122 мин
+[2026-09-22 19:37:38] история цен: запрошено 15, получено 15
+[2026-09-22 19:38:22] гипотезы: проверено сейчас 190, всего 1772; токенов с историей 15; лучшая за 7 дней: данных мало
+[2026-09-22 19:42:37] история цен: запрошено 15, получено 15
+[2026-09-22 19:42:39] скан: 208 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:189 liq:2; возраст мин/медиана/макс: 2/803/850999 мин

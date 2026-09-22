@@ -1,0 +1,76 @@
+{
+  "rules_version": "v1.1",
+  "mode": "paper",
+  "chain": "bsc",
+  "scan_every_sec": 20,
+  "price_check_every_sec": 10,
+  "paper_start_balance_usd": 1000,
+  "position_size_usd": 20,
+  "max_open_positions": 8,
+  "max_positions_per_hour": 10,
+  "fees": {
+    "slippage_pct": 3,
+    "gas_usd": 0.3
+  },
+  "risk": {
+    "daily_loss_limit_usd": 80,
+    "pause_after_losses": 5,
+    "pause_min": 30
+  },
+  "entry": {
+    "max_age_min": 30,
+    "min_age_min": 2,
+    "min_liquidity_usd": 8000,
+    "min_market_cap_usd": 15000,
+    "max_market_cap_usd": 300000,
+    "min_holders": 40,
+    "min_swaps": 40,
+    "min_volume_usd": 5000,
+    "max_top10_holder_rate": 0.35,
+    "max_bundler_rate": 0.3,
+    "max_sniper_count": 15,
+    "max_buy_tax_pct": 3,
+    "max_sell_tax_pct": 3,
+    "min_lock_or_burn": 0.9,
+    "require_renounced": true,
+    "require_open_source": true,
+    "max_rug_ratio": 0.2,
+    "min_buy_sell_ratio": 1.2,
+    "block_creator_status": [
+      "creator_sell",
+      "creator_remove_liquidity"
+    ],
+    "block_wash_trading": true,
+    "min_smart_degen_count": 0,
+    "min_renowned_count": 0,
+    "min_viewers": 0,
+    "min_tg_calls": 0,
+    "min_x_followers": 0,
+    "max_insider_rate": 1,
+    "max_fresh_wallet_rate": 1,
+    "max_chg5m": 100000,
+    "min_chg5m": -100000,
+    "source_only": "",
+    "launchpads": []
+  },
+  "exit": {
+    "take_profit_pct": 60,
+    "stop_loss_pct": 25,
+    "trailing_activate_pct": 30,
+    "trailing_drawdown_pct": 15,
+    "max_hold_min": 90
+  },
+  "live": {
+    "wallet_address": "",
+    "slippage": 15,
+    "anti_mev": true,
+    "gas_level": "high",
+    "attach_tp_sl_orders": true
+  },
+  "hypotheses": {
+    "auto_adopt": true,
+    "min_trades": 100,
+    "min_pf": 1.3,
+    "adopt_cooldown_h": 24
+  }
+}
