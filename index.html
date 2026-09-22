@@ -1,1 +1,95 @@
-GMGN bot: no data published yet. Start the bot with start.bat. 
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GMGN bot — панель</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--line:#262a33;--text:#e6e8ee;--muted:#8b919e;--accent:#6ea8fe;--good:#3fb950;--bad:#f0605d;--warn:#d9a441}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 -apple-system,Segoe UI,Roboto,sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line)}
+h1{font-size:16px;margin:0;font-weight:600}.badge{padding:3px 8px;border-radius:6px;font-size:12px;border:1px solid var(--line);color:var(--muted)}
+.badge.paper{color:var(--warn);border-color:var(--warn)}.badge.live{color:var(--good);border-color:var(--good)}
+main{padding:16px 20px;display:grid;gap:16px;max-width:1400px;margin:0 auto}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.tile .l{color:var(--muted);font-size:12px}.tile .v{font-size:22px;font-weight:600;margin-top:4px;font-variant-numeric:tabular-nums}
+.tile .s{color:var(--muted);font-size:12px;margin-top:2px}
+.good{color:var(--good)}.bad{color:var(--bad)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card h2{font-size:13px;color:var(--muted);font-weight:600;margin:0 0 10px;text-transform:uppercase;letter-spacing:.04em}
+.grid2{display:grid;grid-template-columns:2fr 1fr;gap:16px}@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:500}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tablewrap{overflow:auto;max-height:420px}
+canvas{width:100%;height:220px;display:block}
+.tip{position:fixed;pointer-events:none;background:#0b0d11;border:1px solid var(--line);padding:6px 8px;border-radius:6px;font-size:12px;display:none}
+pre{margin:0;font:12px/1.5 Consolas,monospace;color:var(--muted);white-space:pre-wrap;max-height:260px;overflow:auto}
+.kv{display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-size:13px}.kv span:nth-child(odd){color:var(--muted)}
+.empty{color:var(--muted);padding:12px 0}
+</style></head><body>
+<header><h1>GMGN bot — панель</h1><div><span id="mode" class="badge">…</span> <span id="upd" class="badge">обновление…</span></div></header>
+<main>
+<section class="tiles" id="tiles"></section>
+<div class="grid2">
+  <section class="card"><h2>Кривая депозита</h2><canvas id="eq"></canvas><div id="eqEmpty" class="empty" style="display:none">Пока нет закрытых сделок</div></section>
+  <section class="card"><h2>Правила входа</h2><div class="kv" id="rules"></div></section>
+</div>
+<section class="card"><h2>Открытые позиции</h2><div class="tablewrap"><table id="open"></table></div></section>
+<section class="card"><h2>Закрытые сделки</h2><div class="tablewrap"><table id="trades"></table></div></section>
+<section class="card"><h2>Журнал</h2><pre id="log"></pre></section>
+</main>
+<div class="tip" id="tip"></div>
+<script>window.DATA_URL='data.json?t='+Date.now();
+const $=s=>document.querySelector(s);const f=(n,d=2)=>Number.isFinite(+n)?(+n).toLocaleString('ru-RU',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';
+const cls=n=>+n>0?'good':+n<0?'bad':'';
+let eqData=[];
+function tiles(d){const s=d.state,t=d.trades;const wins=t.filter(x=>+x.pnl_usd>0),loss=t.filter(x=>+x.pnl_usd<=0);
+ const gw=wins.reduce((a,x)=>a+ +x.pnl_usd,0),gl=Math.abs(loss.reduce((a,x)=>a+ +x.pnl_usd,0));
+ let peak=d.config.paper_start_balance_usd,eq=peak,mdd=0;eqData=[[+new Date(t[0]?.opened||Date.now()),eq]];
+ for(const x of t){eq+= +x.pnl_usd;peak=Math.max(peak,eq);mdd=Math.max(mdd,(peak-eq)/peak*100);eqData.push([+new Date(x.closed),eq]);}
+ const start=d.config.paper_start_balance_usd;const ret=(s.balance_usd/start-1)*100;
+ const openCount=Object.keys(s.positions||{}).length;const inPos=Object.values(s.positions||{}).reduce((a,p)=>a+p.size_usd,0);
+ const items=[
+  ['Депозит',(d.mode==='paper'?'$':'$')+f(s.balance_usd),'в позициях $'+f(inPos)],
+  ['Доходность',f(ret,1)+'%','старт $'+f(start,0),cls(ret)],
+  ['PnL всего','$'+f(s.pnl_usd),'после комиссий',cls(s.pnl_usd)],
+  ['Сделок закрыто',t.length,'открыто '+openCount],
+  ['Win rate',t.length?f(wins.length/t.length*100,0)+'%':'—',wins.length+' / '+loss.length],
+  ['Средняя прибыль',wins.length?'$'+f(gw/wins.length):'—','на выигрышную',''],
+  ['Средний убыток',loss.length?'-$'+f(gl/loss.length):'—','на убыточную',''],
+  ['Profit factor',gl?f(gw/gl):(gw?'∞':'—'),'прибыль / убыток',gl&&gw/gl>=1?'good':(gl?'bad':'')],
+  ['Макс. просадка',f(mdd,1)+'%','от пика депозита',mdd>20?'bad':''],
+  ['Ср. время в сделке',t.length?f(t.reduce((a,x)=>a+ +x.hold_min,0)/t.length,0)+' мин':'—','',''],
+ ];
+ $('#tiles').innerHTML=items.map(([l,v,s2,c])=>'<div class="tile"><div class="l">'+l+'</div><div class="v '+(c||'')+'">'+v+'</div><div class="s">'+(s2||'')+'</div></div>').join('');
+}
+function rules(c){const e=c.entry,x=c.exit;const r=[
+ ['Возраст токена',e.min_age_min+'–'+e.max_age_min+' мин'],['Ликвидность','≥ $'+f(e.min_liquidity_usd,0)],['Капитализация','$'+f(e.min_market_cap_usd,0)+' – $'+f(e.max_market_cap_usd,0)],
+ ['Холдеров','≥ '+e.min_holders],['Сделок / объём','≥ '+e.min_swaps+' / $'+f(e.min_volume_usd,0)],['Топ-10 холдеров','≤ '+f(e.max_top10_holder_rate*100,0)+'%'],
+ ['Бандлеры','≤ '+f(e.max_bundler_rate*100,0)+'%'],['Снайперов','≤ '+e.max_sniper_count],['Налог buy/sell','≤ '+e.max_buy_tax_pct+'% / '+e.max_sell_tax_pct+'%'],
+ ['Лок / сжигание LP','≥ '+f(e.min_lock_or_burn*100,0)+'%'],['Покупок / продаж','≥ '+e.min_buy_sell_ratio],['Тейк-профит / стоп','+'+x.take_profit_pct+'% / −'+x.stop_loss_pct+'%'],
+ ['Трейлинг','после +'+x.trailing_activate_pct+'%, откат '+x.trailing_drawdown_pct+'%'],['Макс. удержание',x.max_hold_min+' мин'],['Размер позиции','$'+c.position_size_usd+', до '+c.max_open_positions+' одновременно'],
+ ['Симуляция комиссий','проскальзывание '+c.fees.slippage_pct+'%, газ $'+c.fees.gas_usd]];
+ $('#rules').innerHTML=r.map(([k,v])=>'<span>'+k+'</span><span>'+v+'</span>').join('');}
+function openTable(s,now){const p=Object.values(s.positions||{});if(!p.length){$('#open').innerHTML='<tr><td class="empty">Нет открытых позиций</td></tr>';return;}
+ $('#open').innerHTML='<tr><th>Токен</th><th class="num">Вход</th><th class="num">Размер</th><th class="num">В сделке</th><th>Режим</th><th>Адрес</th></tr>'+
+ p.map(x=>'<tr><td>'+esc(x.symbol)+'</td><td class="num">'+(+x.entry).toPrecision(5)+'</td><td class="num">$'+f(x.size_usd,0)+'</td><td class="num">'+Math.round((now/1000-x.opened)/60)+' мин</td><td>'+x.mode+'</td><td><a style="color:var(--accent)" target="_blank" href="https://gmgn.ai/bsc/token/'+x.address+'">'+x.address.slice(0,10)+'…</a></td></tr>').join('');}
+function tradesTable(t){if(!t.length){$('#trades').innerHTML='<tr><td class="empty">Пока нет закрытых сделок</td></tr>';return;}
+ $('#trades').innerHTML='<tr><th>Закрыта</th><th>Токен</th><th class="num">Вход</th><th class="num">Выход</th><th class="num">PnL $</th><th class="num">PnL %</th><th>Причина</th><th class="num">Мин</th><th>Режим</th></tr>'+
+ [...t].reverse().map(x=>'<tr><td>'+new Date(x.closed).toLocaleString('ru-RU')+'</td><td><a style="color:var(--accent)" target="_blank" href="https://gmgn.ai/bsc/token/'+x.address+'">'+esc(x.symbol)+'</a></td><td class="num">'+x.entry_usd+'</td><td class="num">'+x.exit_usd+'</td><td class="num '+cls(x.pnl_usd)+'">'+f(x.pnl_usd)+'</td><td class="num '+cls(x.pnl_pct)+'">'+f(x.pnl_pct,1)+'%</td><td>'+rs(x.reason)+'</td><td class="num">'+f(x.hold_min,0)+'</td><td>'+x.mode+'</td></tr>').join('');}
+const rs=r=>({take_profit:'тейк-профит',stop_loss:'стоп-лосс',trailing:'трейлинг',timeout:'по времени'})[r]||r;
+const esc=s=>String(s??'').replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+function drawEq(){const c=$('#eq'),ctx=c.getContext('2d');const W=c.clientWidth,H=220;c.width=W*devicePixelRatio;c.height=H*devicePixelRatio;ctx.scale(devicePixelRatio,devicePixelRatio);ctx.clearRect(0,0,W,H);
+ if(eqData.length<2){$('#eqEmpty').style.display='';c.style.display='none';return;}$('#eqEmpty').style.display='none';c.style.display='block';
+ const P={l:56,r:12,t:12,b:24};const xs=eqData.map(d=>d[0]),ys=eqData.map(d=>d[1]);const x0=Math.min(...xs),x1=Math.max(...xs)||x0+1,y0=Math.min(...ys),y1=Math.max(...ys);const pad=(y1-y0)*0.1||1;
+ const X=v=>P.l+(v-x0)/(x1-x0||1)*(W-P.l-P.r),Y=v=>P.t+(1-(v-(y0-pad))/((y1+pad)-(y0-pad)))*(H-P.t-P.b);
+ ctx.strokeStyle='#262a33';ctx.fillStyle='#8b919e';ctx.font='11px sans-serif';ctx.textAlign='right';
+ for(let i=0;i<=4;i++){const v=(y0-pad)+((y1+pad)-(y0-pad))*i/4;ctx.beginPath();ctx.moveTo(P.l,Y(v));ctx.lineTo(W-P.r,Y(v));ctx.stroke();ctx.fillText('$'+f(v,0),P.l-6,Y(v)+4);}
+ const start=eqData[0][1];ctx.setLineDash([3,3]);ctx.strokeStyle='#4a5060';ctx.beginPath();ctx.moveTo(P.l,Y(start));ctx.lineTo(W-P.r,Y(start));ctx.stroke();ctx.setLineDash([]);
+ ctx.strokeStyle='#6ea8fe';ctx.lineWidth=2;ctx.lineJoin='round';ctx.beginPath();eqData.forEach((d,i)=>i?ctx.lineTo(X(d[0]),Y(d[1])):ctx.moveTo(X(d[0]),Y(d[1])));ctx.stroke();
+ const last=eqData[eqData.length-1];ctx.fillStyle='#6ea8fe';ctx.beginPath();ctx.arc(X(last[0]),Y(last[1]),4,0,7);ctx.fill();
+ c.onmousemove=ev=>{const r=c.getBoundingClientRect();const mx=ev.clientX-r.left;let best=0,bd=1e9;eqData.forEach((d,i)=>{const dd=Math.abs(X(d[0])-mx);if(dd<bd){bd=dd;best=i}});const d=eqData[best];const t=$('#tip');t.style.display='block';t.style.left=(ev.clientX+12)+'px';t.style.top=(ev.clientY+12)+'px';t.textContent=new Date(d[0]).toLocaleString('ru-RU')+' — $'+f(d[1]);};
+ c.onmouseleave=()=>$('#tip').style.display='none';}
+async function tick(){try{const d=await (await fetch(window.DATA_URL||'/api',{cache:'no-store'})).json();$('#mode').textContent=(d.mode==='paper'?'Симуляция (бумажная торговля)':'Реальная торговля')+' · '+d.chain.toUpperCase();$('#mode').className='badge '+d.mode;
+ tiles(d);rules(d.config);openTable(d.state,d.now);tradesTable(d.trades);drawEq();$('#log').textContent=d.log.slice().reverse().join('\
+');$('#upd').textContent='данные от '+new Date(d.now).toLocaleString('ru-RU');}
+ catch(e){$('#upd').textContent=window.DATA_URL?'нет данных (бот ещё не публиковал)':'бот не отвечает';}}
+tick();setInterval(tick,5000);addEventListener('resize',drawEq);
+</script></body></html>
