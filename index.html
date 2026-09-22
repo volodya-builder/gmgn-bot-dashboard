@@ -269,7 +269,7 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
   <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill" data-view="trending">В тренде</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="trades">Сделки</button><button class="pill" data-view="rules">Правила</button><button class="pill" data-view="log">Журнал</button></nav>
-  <div class="badges"><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span></div>
+  <div class="badges"><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span><a id="modeSwitch" class="badge" style="display:none"></a></div>
 </header>
 <main>
 <section class="view on" id="v-overview">
@@ -581,8 +581,9 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.9';
+const APP_VERSION='2.10';
 const CHANGELOG=[
+ ['2.10','23.09.2026',['Второй экземпляр бота на реальные деньги (порт 8788): переключатель «Реальные деньги / Симуляция» в шапке','Живой режим: подтверждение ордера на покупку без остановки цикла, снятие позиции при неудачной покупке, защита от бесконечных попыток продажи']],
  ['2.9','23.09.2026',['На графиках сделок вместо цены токена везде капитализация: в объяснении, в подсказке под курсором и у уровней входа, тейка и стопа']],
  ['2.8','23.09.2026',['Графики сделок гипотезы интерактивные: сдвиг мышью или пальцем, масштаб колесом и кнопками, перекрестие с ценой и % от входа, вся история монеты, кнопка «Развернуть»']],
  ['2.7','23.09.2026',['Кнопка «Сделки на графиках» у любой гипотезы (в «Гипотезах» и в «Гонке гипотез»): экран со всеми монетами гипотезы — свечи, точка входа, точка выхода, уровни тейка и стопа, что было после выхода, объяснение каждой сделки словами и параметры монеты на входе']],
@@ -595,6 +596,7 @@ const CHANGELOG=[
  ['2.0','22.09.2026',['Новый дизайн, вкладки, выбор периода, графики PnL и числа сделок']],
  ['1.0','22.09.2026',['Первая панель бота']]];
 $('#ver').textContent='v'+APP_VERSION;
+(()=>{if(window.DATA_URL)return;const p=location.port;const other=p==='8787'?'8788':p==='8788'?'8787':null;if(!other)return;const a=$('#modeSwitch');a.style.display='';a.href=location.protocol+'//'+location.hostname+':'+other+'/';a.innerHTML='<b>'+(other==='8788'?'Реальные деньги →':'Симуляция →')+'</b>';})();
 $('#verpop').innerHTML=CHANGELOG.map(([v,d,items])=>'<h4>v'+v+' <span class="d">· '+d+'</span></h4><ul>'+items.map(i=>'<li>'+i+'</li>').join('')+'</ul>').join('');
 $('#ver').onclick=e=>{e.stopPropagation();$('#verpop').classList.toggle('on');};
 addEventListener('click',e=>{if(!e.target.closest('#verpop'))$('#verpop').classList.remove('on');});
