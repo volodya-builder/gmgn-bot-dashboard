@@ -225,6 +225,19 @@ th .eye{margin-right:2px}
 .lpnl{text-align:right;font-family:var(--font-display);font-size:16px;font-weight:500;font-variant-numeric:tabular-nums}
 @media(max-width:700px){.racehead,.lane{grid-template-columns:28px 1fr 70px}.racehead .racescale,.lane .track{display:none}}
 @media(prefers-reduced-motion:reduce){.lane,.track .car,.track .trail,.afloat{transition:none}}
+
+/* В тренде: вся таблица на экране без горизонтальной прокрутки */
+body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
+#v-trending .card{padding:14px 12px}
+#v-trending table{font-size:12.5px;table-layout:auto}
+#v-trending th,#v-trending td{padding:8px 6px}
+#v-trending th{font-size:11.5px}
+#v-trending .tok{gap:8px}#v-trending .tok img,#v-trending .tlogo{width:26px;height:26px}
+#v-trending .tname{gap:6px}#v-trending .tname a{font-size:13.5px;max-width:110px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom}
+#v-trending .tview{font-size:11.5px;padding:1px 7px}
+#v-trending .tr-no{max-width:96px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom}
+#v-trending .tablewrap{overflow-x:hidden}
+@media(max-width:1200px){#v-trending .tablewrap{overflow-x:auto}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -552,14 +565,14 @@ addEventListener('click',e=>{if(!e.target.closest('#verpop'))$('#verpop').classL
 // ---- в тренде ----
 const EYE='<svg class="eye" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
 let trFilter='all',trSort={k:'age_min',d:1};
-const TRC=[['symbol','Токен',0],['ok','Фильтр',0],['launchpad','Площадка',0],['age_min','Возраст',1],['price','Цена',1],['chg5m','5м',1],['chg1h','1ч',1],['mcap','Mcap',1],['liq','Ликв.',1],['holders','Холд.',1],['vol','Объём',1],['swaps','Сделки',1],['smart','Smart',1],['renowned','Изв.',1],['top10','Топ-10',1],['bundler','Бандл.',1],['snipers','Снайп.',1],['insider','Инсайд.',1],['tg_calls','TG',1]];
+const TRC=[['symbol','Токен',0],['ok','Фильтр',0],['launchpad','Площадка',0],['age_min','Возраст',1],['mcap','Mcap',1],['liq','Ликв.',1],['holders','Холд.',1],['vol','Объём',1],['swaps','Сделки',1],['smart','Smart',1],['renowned','Изв.',1],['top10','Топ-10',1],['bundler','Бандл.',1],['snipers','Снайп.',1],['insider','Инсайд.',1],['tg_calls','TG',1]];
 function renderTrending(){const ls=D.lastScan;if(!ls||!ls.tokens){$('#trTable').innerHTML='<tr><td class="empty">Скан ещё не выполнялся</td></tr>';return;}
  let rows=ls.tokens;if(trFilter==='ok')rows=rows.filter(t=>t.ok);if(trFilter==='trenches')rows=rows.filter(t=>t.source==='trenches');if(trFilter==='fresh')rows=rows.filter(t=>t.age_min<=30);
  rows=[...rows].sort((a,b)=>{const va=a[trSort.k],vb=b[trSort.k];if(typeof va==='string')return trSort.d*String(va).localeCompare(String(vb));return trSort.d*((+va||0)-(+vb||0));});
  $('#trMeta').textContent=ls.tokens.length+' токенов, '+ls.tokens.filter(t=>t.ok).length+' прошли фильтр · скан '+new Date(ls.at).toLocaleTimeString('ru-RU');
  const pc=v=>'<span class="'+cls(v)+'">'+(v>0?'+':'')+f(v,0)+'%</span>';const mk=v=>v>=1e6?'$'+f(v/1e6,2)+'M':v>=1000?'$'+f(v/1000,1)+'k':'$'+f(v,0);const pr=v=>v>=1?f(v,2):v>0?(+v).toPrecision(4):'—';const ageF=v=>v<60?f(v,0)+' м':v<1440?f(v/60,1)+' ч':f(v/1440,0)+' д';
  $('#trTable').innerHTML='<tr>'+TRC.map(([k,l,n])=>(k==='symbol'?'<th><span class="sortable" data-k="symbol">Токен'+(trSort.k==='symbol'?(trSort.d>0?' ↑':' ↓'):'')+'</span><span class="sortable eyesort" data-k="viewers" title="сортировать по зрителям">'+EYE+'зрители'+(trSort.k==='viewers'?(trSort.d>0?' ↑':' ↓'):'')+'</span></th>':'<th class="sortable'+(n?' num':'')+'" data-k="'+k+'">'+l+(trSort.k===k?(trSort.d>0?' ↑':' ↓'):'')+'</th>')).join('')+'</tr>'+
-  rows.map(t=>'<tr><td><div class="tok">'+(t.logo?'<img src="'+esc(t.logo)+'" loading="lazy" onerror="this.style.visibility=\'hidden\'">':'<span class="tlogo"></span>')+'<div class="tname"><a target="_blank" href="https://gmgn.ai/bsc/token/'+t.address+'" title="'+esc(t.name||'')+'">'+esc(t.symbol||t.address.slice(0,8))+'</a><span class="tview" title="зрителей на GMGN">'+EYE+f(t.viewers,0)+'</span></div></div></td><td>'+(t.held?'<span class="tr-held">в позиции</span>':t.ok?'<span class="tr-ok">прошёл</span>':'<span class="tr-no" title="'+esc((t.failed||[]).join(', '))+'">'+esc((t.failed||[]).slice(0,2).map(x=>x.split(' ')[0]).join(', '))+'</span>')+'</td><td>'+esc(t.launchpad||'—')+(t.source==='trenches'?' <span class="tag" style="padding:1px 6px">лп</span>':'')+'</td><td class="num">'+ageF(t.age_min)+'</td><td class="num">$'+pr(t.price)+'</td><td class="num">'+pc(t.chg5m)+'</td><td class="num">'+pc(t.chg1h)+'</td><td class="num">'+mk(t.mcap)+'</td><td class="num">'+mk(t.liq)+'</td><td class="num">'+f(t.holders,0)+'</td><td class="num">'+mk(t.vol)+'</td><td class="num">'+f(t.swaps,0)+'</td><td class="num">'+f(t.smart,0)+'</td><td class="num">'+f(t.renowned,0)+'</td><td class="num">'+f(t.top10*100,0)+'%</td><td class="num">'+f(t.bundler*100,0)+'%</td><td class="num">'+f(t.snipers,0)+'</td><td class="num">'+f(t.insider*100,0)+'%</td><td class="num">'+f(t.tg_calls,0)+'</td></tr>').join('');
+  rows.map(t=>'<tr><td><div class="tok">'+(t.logo?'<img src="'+esc(t.logo)+'" loading="lazy" onerror="this.style.visibility=\'hidden\'">':'<span class="tlogo"></span>')+'<div class="tname"><a target="_blank" href="https://gmgn.ai/bsc/token/'+t.address+'" title="'+esc(t.name||'')+'">'+esc(t.symbol||t.address.slice(0,8))+'</a><span class="tview" title="зрителей на GMGN">'+EYE+f(t.viewers,0)+'</span></div></div></td><td>'+(t.held?'<span class="tr-held">в позиции</span>':t.ok?'<span class="tr-ok">прошёл</span>':'<span class="tr-no" title="'+esc((t.failed||[]).join(', '))+'">'+esc((t.failed||[]).slice(0,2).map(x=>x.split(' ')[0]).join(', '))+'</span>')+'</td><td>'+esc(t.launchpad||'—')+(t.source==='trenches'?' <span class="tag" style="padding:1px 6px">лп</span>':'')+'</td><td class="num">'+ageF(t.age_min)+'</td><td class="num">'+mk(t.mcap)+'</td><td class="num">'+mk(t.liq)+'</td><td class="num">'+f(t.holders,0)+'</td><td class="num">'+mk(t.vol)+'</td><td class="num">'+f(t.swaps,0)+'</td><td class="num">'+f(t.smart,0)+'</td><td class="num">'+f(t.renowned,0)+'</td><td class="num">'+f(t.top10*100,0)+'%</td><td class="num">'+f(t.bundler*100,0)+'%</td><td class="num">'+f(t.snipers,0)+'</td><td class="num">'+f(t.insider*100,0)+'%</td><td class="num">'+f(t.tg_calls,0)+'</td></tr>').join('');
  $('#trTable').querySelectorAll('.sortable').forEach(th=>th.onclick=()=>{const k=th.dataset.k;trSort=trSort.k===k?{k,d:-trSort.d}:{k,d:(k==='symbol'||k==='launchpad'||k==='ok')?1:-1};renderTrending();});}
 document.querySelectorAll('#trFilter .pill').forEach(b=>b.onclick=()=>{trFilter=b.dataset.f;document.querySelectorAll('#trFilter .pill').forEach(x=>x.classList.toggle('on',x===b));renderTrending();});
 // ---- гипотезы ----
@@ -730,7 +743,7 @@ function raceReplay(){const R=raceIds;if(!R)return;if(raceAnim)cancelAnimationFr
 $('#raceGo').onclick=raceReplay;
 document.querySelectorAll('#raceW .pill').forEach(b=>b.onclick=()=>{raceW=b.dataset.w;racePrev=new Set();document.querySelectorAll('#raceW .pill').forEach(x=>x.classList.toggle('on',x===b));renderRace(true);});
 // ---- навигация ----
-document.querySelectorAll('nav .pill').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav .pill').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+b.dataset.view));render();});
+document.querySelectorAll('nav .pill').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav .pill').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+b.dataset.view));document.body.classList.toggle('wide-trending',b.dataset.view==='trending');render();});
 document.querySelectorAll('#period .pill').forEach(b=>b.onclick=()=>{period=b.dataset.p;zoom=null;document.querySelectorAll('#period .pill').forEach(x=>x.classList.toggle('on',x===b));render();});
 document.querySelectorAll('#chartTabs .pill').forEach(b=>b.onclick=()=>{chart=b.dataset.c;zoom=null;hov=null;document.querySelectorAll('#chartTabs .pill').forEach(x=>x.classList.toggle('on',x===b));render();});
 async function tick(){try{const d=await (await fetch(window.DATA_URL||'/api',{cache:'no-store'})).json();D=d;
