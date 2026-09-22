@@ -44,5 +44,6 @@
   "key": "2026-09-22",
   "pnl": -10.394619113529675
  },
- "stop_streak": 2
+ "stop_streak": 2,
+ "last_hyp_report": "2026-09-22"
 }

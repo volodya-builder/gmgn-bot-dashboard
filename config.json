@@ -51,7 +51,9 @@
     "max_chg5m": 100000,
     "min_chg5m": -100000,
     "source_only": "",
-    "launchpads": []
+    "launchpads": [],
+    "min_viewers_per_holder": 0,
+    "min_chg1m": -100000
   },
   "exit": {
     "take_profit_pct": 60,
