@@ -581,8 +581,9 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.10';
+const APP_VERSION='2.11';
 const CHANGELOG=[
+ ['2.11','23.09.2026',['Бот записывает цены свежих монет каждые 5 секунд (до 10 монет одновременно, первый час жизни) — основа для честной симуляции; счётчик в блоке «Данные» на вкладке «Гипотезы»']],
  ['2.10','23.09.2026',['Второй экземпляр бота на реальные деньги (порт 8788): переключатель «Реальные деньги / Симуляция» в шапке','Живой режим: подтверждение ордера на покупку без остановки цикла, снятие позиции при неудачной покупке, защита от бесконечных попыток продажи']],
  ['2.9','23.09.2026',['На графиках сделок вместо цены токена везде капитализация: в объяснении, в подсказке под курсором и у уровней входа, тейка и стопа']],
  ['2.8','23.09.2026',['Графики сделок гипотезы интерактивные: сдвиг мышью или пальцем, масштаб колесом и кнопками, перекрестие с ценой и % от входа, вся история монеты, кнопка «Развернуть»']],
@@ -653,7 +654,7 @@ function renderHyp(force){const H=D.hypotheses;
  const tile=(v,lim,l,s)=>'<div class="dt"><div class="v">'+v+'<span> / '+lim+'</span></div><div class="l">'+l+'</div><div class="s">'+s+'</div></div>';
  $('#hypData').innerHTML=tile(f(d.with_paths,0),d.thresholds.tokens,'токенов с историей цены',d.need.tokens>0?'нужно ещё '+d.need.tokens:'порог пройден'+(d.tokens_used&&d.tokens_used<d.tokens?' · в перебор идут '+f(d.tokens_used,0)+' самых свежих':''))+
   tile(f(d.days,1),d.thresholds.days,'дней данных',d.first_t?'с '+dt(d.first_t*1000)+(d.need.days>0?' · нужно ещё '+f(d.need.days,1):''):'—')+
-  tile(f(d.real_trades,0),d.thresholds.trades,'реальных закрытых сделок по правилам '+esc(d.real_rules),d.need.trades>0?'нужно ещё '+d.need.trades+' до порога':'порог пройден')+
+  (d.with_ticks!=null?'<div class="dt"><div class="v">'+f(d.with_ticks,0)+'<span> / 300</span></div><div class="l">монет с 5-секундными ценами</div><div class="s">копится с 23.09; нужны для честной симуляции быстрых стопов и тейков</div></div>':'')+tile(f(d.real_trades,0),d.thresholds.trades,'реальных закрытых сделок по правилам '+esc(d.real_rules),d.need.trades>0?'нужно ещё '+d.need.trades+' до порога':'порог пройден')+
   '<div class="dt"><div class="v">'+f(H.tested_total,0)+'</div><div class="l">вариантов проверено всего</div><div class="s">'+f(H.tested_now,0)+' в последнем прогоне за '+f((H.took_ms||0)/1000,1)+' с · пересчёт '+new Date(H.generated_at).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+(nextIn?', следующий через ~'+nextIn+' мин':'')+'</div></div>';
  // минута входа
  drawMinutes(H.entry_minute||[]);
