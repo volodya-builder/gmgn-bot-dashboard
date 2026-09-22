@@ -1,39 +1,6 @@
 {
- "balance_usd": 957.6294809608083,
- "positions": {
-  "0x383034b1603e46dfcdbb2cc96f40c445a85d7777": {
-   "symbol": "蝴蝶圆梦",
-   "name": "蝴蝶圆梦",
-   "address": "0x383034b1603e46dfcdbb2cc96f40c445a85d7777",
-   "opened": 1790101407,
-   "entry": 0.00005347309169,
-   "size_usd": 20,
-   "peak": 0.000054807384,
-   "trough": 0.000051844883,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "trenches",
-    "launchpad": "flap",
-    "age_min": "21.9",
-    "liq": "22890",
-    "mcap": "51916",
-    "holders": 105,
-    "smart": 2,
-    "renowned": 0,
-    "bundler": "0.000",
-    "snipers": 0,
-    "top10": "0.184",
-    "buys": 294,
-    "sells": 45,
-    "list_price": "0.0000519156",
-    "hour_utc": 18
-   },
-   "last": 0.000054541393,
-   "last_t": 1790106501
-  }
- },
+ "balance_usd": 977.7157629308083,
+ "positions": {},
  "seen": {
   "0xb18870450cead02867b2f7515522a84411887777": 1790084213,
   "0x08aa17a10afd4d8a3b2de3afec9f415b33407777": 1790085658,
@@ -64,9 +31,9 @@
   "0x0d1626c24943a4239265041a263200809c127777": 1790104236,
   "0xa980aea6c36cfccf9ff9cdac288f8e9c82077777": 1790105357
  },
- "closed": 27,
- "wins": 9,
- "pnl_usd": -13.970519039193032,
+ "closed": 28,
+ "wins": 10,
+ "pnl_usd": -13.884237069193109,
  "opened_at": [
   1790102576,
   1790104236,
@@ -74,7 +41,7 @@
  ],
  "day": {
   "key": "2026-09-22",
-  "pnl": 3.374472241235747
+  "pnl": 3.4607542112356713
  },
  "stop_streak": 0
 }
