@@ -491,6 +491,25 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 .rb-body{transform-box:view-box;transform-origin:32px 40px}
 @media(max-width:900px){.rbw{order:3;margin:10px 0 0;width:100%}}
 @media(prefers-reduced-motion:reduce){.rbw *{animation:none!important}}
+.hero{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding-bottom:22px;border-bottom:0}
+@media(max-width:1100px){.hero{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.hero{grid-template-columns:1fr}}
+.kc{background:var(--card,#141414);border:1px solid var(--border,#1f1f1f);border-radius:18px;padding:18px 20px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.kct{color:var(--muted);font-size:13px;letter-spacing:.02em}
+.kcb{font-family:var(--font-display);font-size:38px;font-weight:500;letter-spacing:-.02em;line-height:1.05;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kcb:empty{display:none}
+.kcb small{font-size:16px;color:var(--muted);letter-spacing:0;font-weight:400}
+.kcl{font-size:14px;color:#b9bdb5}
+.kcl b{font-weight:600;font-variant-numeric:tabular-nums}
+.kcs{font-size:12.5px;color:#7d8179;margin-top:auto}
+.kbar{display:flex;gap:3px;height:8px;border-radius:6px;overflow:hidden;margin:4px 0 2px}
+.kbar i{display:block;background:#2a2a2a}
+.kbar i.g{background:#4caf6d}.kbar i.r{background:#e05c5c}
+.kavg{display:grid;grid-template-columns:58px 1fr auto;align-items:center;gap:10px;font-size:13px;color:#9a9e96}
+.kavg i{display:block;height:8px;background:#222;border-radius:6px;overflow:hidden}
+.kavg i b{display:block;height:100%;border-radius:6px}
+.kavg i b.g{background:#4caf6d}.kavg i b.r{background:#e05c5c}
+.kavg em{font-style:normal;font-family:var(--font-display);font-size:20px;font-variant-numeric:tabular-nums;min-width:74px;text-align:right}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -638,20 +657,16 @@ function renderOvHyp(){const rl=$('#raceCurLbl');if(rl)rl.textContent=D&&D.mode=
 function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{renderOvHyp();}catch(e){console.error(e);}const s=D.state,c=D.config,t=ptrades(),m=metrics(t);const start=c.paper_start_balance_usd;
  const open=Object.values(s.positions||{});const inPos=open.reduce((a,p)=>a+p.size_usd,0);
  const plabel={'24h':'за 24 часа','7d':'за неделю','30d':'за месяц','all':'за всё время'}[period];
- $('#hero').innerHTML=[
-  ['$'+f(s.balance_usd),'Депозит','<i>·</i> в позициях $'+f(inPos,0),''],
-  [(m.pnl>=0?'+':'')+money(m.pnl),'PnL после комиссий','<i>·</i> '+plabel.replace('за ',''),cls(m.pnl)],
-  [t.length,'Сделок','<i>·</i> '+m.wins.length+' в плюс, '+m.loss.length+' в минус',''],
-  [Number.isNaN(m.wr)?'—':f(m.wr,0)+'%','Win rate','<i>·</i> profit factor '+(Number.isFinite(m.pf)?f(m.pf):(m.pf===Infinity?'∞':'—')),'']
- ].map(([n,l,s2,k])=>'<div class="stat"><div class="n '+k+'">'+n+'</div><div class="l">'+l+' '+s2+'</div></div>').join('');
- $('#tiles').innerHTML=[
-  ['Доходность',f((s.balance_usd/start-1)*100,1)+'%','от старта $'+f(start,0),cls(s.balance_usd-start)],
-  ['Средняя прибыль',m.wins.length?'$'+f(m.gw/m.wins.length):'—','на выигрышную сделку',''],
-  ['Средний убыток',m.loss.length?'-$'+f(m.gl/m.loss.length):'—','на убыточную сделку',''],
-  ['Макс. просадка',f(m.mdd,1)+'%','от пика депозита',m.mdd>20?'bad':''],
-  ['Время в сделке',Number.isNaN(m.avgHold)?'—':dur(m.avgHold),'в среднем',''],
-  ['Открыто позиций',open.length,'из '+c.max_open_positions+' возможных','']
- ].map(([l,v,s2,k])=>'<div class="tile"><div class="l">'+l+'</div><div class="v '+k+'">'+v+'</div><div class="s">'+s2+'</div></div>').join('');
+ {const bal=+s.balance_usd,dd=bal-start,wn=m.wins.length,ls=m.loss.length,n=t.length,aw=wn?m.gw/wn:0,al=ls?m.gl/ls:0,mx=Math.max(aw,al)||1;
+  const best=n?Math.max(...t.map(x=>+x.pnl_usd)):0,worst=n?Math.min(...t.map(x=>+x.pnl_usd)):0;
+  const pfTxt=Number.isFinite(m.pf)?'на каждый потерянный $1 заработано $'+f(m.pf):(m.pf===Infinity?'убыточных сделок нет':'');
+  const card=(ttl,big,bk,body)=>'<div class="kc"><div class="kct">'+ttl+'</div><div class="kcb '+(bk||'')+'">'+big+'</div>'+body+'</div>';
+  $('#hero').innerHTML=
+   card('Депозит','$'+f(bal),'','<div class="kcl">старт $'+f(start,0)+' → <b class="'+cls(dd)+'">'+mny(dd)+' ('+(dd>0?'+':'')+f(dd/start*100,1)+'%)</b></div><div class="kcs">'+(open.length?'в сделках $'+f(inPos,0)+' · открыто '+open.length+' из '+c.max_open_positions:'сейчас все деньги свободны')+'</div>')+
+   card('Итог сделок '+plabel,(m.pnl>=0?'+':'')+money(m.pnl),cls(m.pnl),'<div class="kcl">уже с комиссиями и газом</div><div class="kcs">'+(n?'лучшая <span class="good">'+mny(best)+'</span> · худшая <span class="bad">'+mny(worst)+'</span>':'сделок пока нет')+'</div>')+
+   card('Сделки',n+'<small>'+(n?' · '+f(m.wr,0)+'% в плюс':'')+'</small>','','<div class="kbar">'+(n?'<i class="g" style="flex:'+wn+'"></i><i class="r" style="flex:'+ls+'"></i>':'<i style="flex:1"></i>')+'</div><div class="kcs"><span class="good">'+wn+' в плюс</span> · <span class="bad">'+ls+' в минус</span> · в среднем '+(Number.isNaN(m.avgHold)?'—':dur(m.avgHold))+'</div>')+
+   card('Средняя сделка','','','<div class="kavg"><span>в плюс</span><i><b class="g" style="width:'+(aw/mx*100)+'%"></b></i><em class="good">'+(wn?'+$'+f(aw):'—')+'</em></div><div class="kavg"><span>в минус</span><i><b class="r" style="width:'+(al/mx*100)+'%"></b></i><em class="bad">'+(ls?'−$'+f(al):'—')+'</em></div><div class="kcs">'+pfTxt+(n?' · макс. просадка <span class="'+(m.mdd>20?'bad':'')+'">'+f(m.mdd,1)+'%</span>':'')+'</div>');
+  $('#tiles').innerHTML='';$('#tiles').style.display='none';}
  openTable(open,s);try{openLive(open);}catch(e){console.error(e);}tradesTable(t);try{ovTrades(t);}catch(e){console.error(e);}rules(c);renderLog();drawChart(t,m);renderTrending();renderHyp();try{renderArena();}catch(e){console.error(e);}
  $('#tradesSub').textContent=t.length+' сделок '+plabel;}
 function openTable(p,s){if(!p.length){$('#open').innerHTML='<tr><td class="empty">Нет открытых позиций</td></tr>';return;}
@@ -935,8 +950,9 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.38';
+const APP_VERSION='2.39';
 const CHANGELOG=[
+ ['2.39','23.09.2026',['Обзор: верх страницы — четыре понятные карточки вместо двух рядов цифр: «Депозит» (сколько было и сколько сейчас), «Итог сделок» (с лучшей и худшей), «Сделки» (полоска плюс/минус), «Средняя сделка» (средний плюс против среднего минуса полосками, простыми словами про profit factor и просадку)']],
  ['2.38','23.09.2026',['В карточке сделки при наведении на точку графика теперь показывается логотип монеты']],
  ['2.37','23.09.2026',['Робот-статус рядом с депозитом: зелёный и покачивается — бот работает (в сделке — быстрее), жёлтый и дремлет — пауза (дневной лимит, риск-пауза, мало BNB), красный и трясётся — нет связи, бот завис или критическая ошибка; при наведении — подробности']],
  ['2.36','23.09.2026',['Обзор: история сделок стала проще — логотип монеты, название, крупно результат в $ и % (зелёный — плюс, красный — минус), под названием время, как закрылась и сколько длилась; сделки разбиты по дням с итогом дня; подробности (mcap, ликвидность, холдеры) — при наведении и в карточке по клику']],
@@ -1550,7 +1566,7 @@ function renderBot(){const w=document.getElementById('rbw');if(!w||!D)return;if(
  const open=Object.values(s.positions||{}),lim=c.risk&&c.risk.daily_loss_limit_usd,dayPnl=s.day&&s.day.pnl;
  const crit=(D.log||[]).slice(-80).filter(l=>/КРИТИЧ|LIVE SELL FAILED|state\.json повреждён/.test(l)).filter(l=>{const m=l.match(/^\[([^\]]+)\]/);return m&&(Date.now()-new Date(m[1].replace(' ','T')+'Z'))<15*60e3;});
  let st='g',title='Бот работает',sub='';const ago=x=>x<60?Math.round(x)+' с назад':Math.round(x/60)+' мин назад';
- if(since>stat){st='r';title='Нет связи с ботом';sub='данные не обновлялись '+ago(since);}
+ if(since>stat){st='r';title='Нет связи с ботом';sub='нет данных уже '+(since<60?Math.round(since)+' с':Math.round(since/60)+' мин');}
  else if(scanAge!=null&&scanAge>(window.DATA_URL?900:120)){st='r';title='Бот завис';sub='последняя проверка монет '+ago(scanAge);}
  else if(crit.length){st='r';title='Ошибка в работе';sub=crit[crit.length-1].replace(/^\[[^\]]+\]\s*/,'').slice(0,90);}
  else if(s.paused_until&&s.paused_until>nowS){st='y';title='Пауза';sub='до '+new Date(s.paused_until*1000).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}
