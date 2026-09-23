@@ -374,10 +374,25 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
   .pill,.btn{touch-action:manipulation}
 }
 .racescroll{max-height:76vh;overflow-y:auto;overflow-x:hidden;padding-right:6px}
+/* вкладка «Сервер» */
+.systiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.systile{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 18px;min-width:0}
+.systile .k{color:var(--muted);font-size:12.5px}.systile .v{font:600 26px/1.2 var(--font-display);margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.systile .s{color:var(--muted);font-size:12px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sysbar{height:6px;border-radius:99px;background:#222;overflow:hidden;margin-top:10px}.sysbar i{display:block;height:100%;border-radius:99px;background:var(--accent);transition:width .6s}
+.sysbar i.w{background:#e0b35c}.sysbar i.b{background:var(--bad)}
+.sysgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.syskv{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:13.5px}.syskv span:nth-child(odd){color:var(--muted)}.syskv span:nth-child(even){text-align:right;font-family:var(--font-mono);font-size:12.5px}
+.syscore{display:grid;grid-template-columns:70px 1fr 56px;align-items:center;gap:10px;font-size:12.5px;margin:6px 0}.syscore .sysbar{margin:0}.syscore b{font:500 12.5px var(--font-mono);text-align:right}
+.syschart{margin-top:6px}.syschart .cap{display:flex;justify-content:space-between;color:var(--muted);font-size:12.5px;margin:12px 0 4px}.syschart .cap b{color:var(--text);font-weight:500}
+.syschart svg{width:100%;height:70px;display:block;background:#101010;border:1px solid var(--border);border-radius:10px}
+.sysleg{display:inline-flex;align-items:center;gap:6px;margin-left:12px}.sysleg i{width:10px;height:3px;border-radius:2px;display:inline-block}
+.syslive{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}.syslive i{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 0 #4caf6d88;animation:syspulse 2s infinite}
+@keyframes syspulse{0%{box-shadow:0 0 0 0 #4caf6d88}70%{box-shadow:0 0 0 8px #4caf6d00}100%{box-shadow:0 0 0 0 #4caf6d00}}
+@media(max-width:900px){.systiles{grid-template-columns:repeat(2,minmax(0,1fr))}.sysgrid{grid-template-columns:1fr}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
-  <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill" data-view="trending">В тренде</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="trades">Сделки</button><button class="pill" data-view="rules">Правила</button><button class="pill" data-view="log">Журнал</button></nav>
+  <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill" data-view="trending">В тренде</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="trades">Сделки</button><button class="pill" data-view="rules">Правила</button><button class="pill" data-view="log">Журнал</button><button class="pill" data-view="sys">Сервер</button></nav>
   <div class="badges"><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span><a id="modeSwitch" class="badge" style="display:none"></a><span id="hypBadge" class="badge"></span></div>
 </header>
 <main>
@@ -453,6 +468,20 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 <section class="view" id="v-log">
   <div class="titlebar"><h1 class="h1">Журнал</h1><div class="pills small" id="logFilter"><button class="pill on" data-f="all">Всё</button><button class="pill" data-f="trades">Сделки</button><button class="pill" data-f="cand">Кандидаты</button><button class="pill" data-f="scan">Сканы</button><button class="pill" data-f="sys">Система</button></div></div>
   <div class="card"><div class="events" id="events"></div></div>
+</section>
+<section class="view" id="v-sys">
+  <div class="titlebar"><h1 class="h1">Сервер</h1><div class="syslive" id="sysLive"><i></i><span>обновляется каждые 2 с</span></div></div>
+  <div class="sub" id="sysSub" style="color:var(--muted);margin:-6px 0 16px"></div>
+  <div class="systiles" id="sysTiles"></div>
+  <div class="sysgrid">
+    <div class="card"><h2>Нагрузка за 15 минут</h2><div id="sysCharts"></div></div>
+    <div class="card"><h2>Процессор</h2><div id="sysCpu"></div></div>
+  </div>
+  <div class="sysgrid">
+    <div class="card"><h2>Оперативная память</h2><div id="sysMem"></div></div>
+    <div class="card"><h2>Сеть и диск</h2><div id="sysNet"></div></div>
+  </div>
+  <div class="card"><h2>Процессы</h2><div class="tablewrap"><table id="sysProcs"></table></div></div>
 </section>
 </main>
 <div class="hview" id="hypView"><div class="hvtop"><div><div class="big" style="font-size:22px" id="hvTitle"></div><div class="sub" id="hvSub"></div></div><button class="dx" id="hvX" title="Закрыть">×</button></div><div class="hvscroll" id="hvBody"></div></div><div class="tip" id="tip"></div><div class="drawer-bg" id="drawerBg"></div><aside class="drawer" id="drawer"><button class="dx" id="drawerX" title="Закрыть">×</button><div id="drawerBody"></div></aside>
@@ -726,8 +755,9 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.23';
+const APP_VERSION='2.24';
 const CHANGELOG=[
+ ['2.24','23.09.2026',['Новая вкладка «Сервер»: процессор и ядра, оперативная память, диск, сеть в реальном времени, аптайм, процессорное время и процессы ботов (обновление каждые 2 с, графики за 15 минут).']],
  ['2.23','23.09.2026',['«Гонка гипотез» и «Все варианты» показывают все пронумерованные гипотезы (сейчас ~390), а не только лучшие 11/40; гонка прокручивается внутри карточки','Для гипотез вне лучших 40 — краткие цифры по периодам и «Сделки на графиках»; подробные проверки считаются только для лучших']],
  ['2.22','23.09.2026',['«Гипотезы» → «Итог»: число проверенных вариантов крупно; видно, по каким свечам считает симуляция (минутные или секундные) и для скольких монет уже скачаны секундные свечи; полоска «Монет с секундными свечами» в блоке накопленных данных']],
  ['2.21','23.09.2026',['Телефон: шапка больше не растягивается из-за плашек (вкладки в две строки на живой панели тоже)','Арена на телефоне облегчена: не больше 28 фишек на экране, реже выпуск — вкладки переключаются без задержки']],
@@ -1179,4 +1209,43 @@ tick();setInterval(tick,5000);addEventListener('resize',()=>D&&render());
 
 (function(){function mob(){const m=window.innerWidth<=700;document.documentElement.classList.toggle('is-mobile',m);document.querySelectorAll('nav.pills,.titlebar .pills,#trFilter,.htabs .pills').forEach(el=>{if(m){el.style.setProperty('flex-wrap','wrap','important');el.style.setProperty('overflow','visible','important');el.style.setProperty('display','flex','important');}else{el.style.removeProperty('flex-wrap');el.style.removeProperty('overflow');el.style.removeProperty('display');}});}
 window.addEventListener('resize',mob);window.addEventListener('load',mob);document.addEventListener('DOMContentLoaded',mob);mob();setTimeout(mob,600);setTimeout(mob,2500);})();
+// ---- вкладка «Сервер»: ресурсы VPS в реальном времени ----
+let SYSD=null,sysBusy=false;
+const sysB=b=>{if(b==null||!isFinite(b))return '—';const u=['Б','КБ','МБ','ГБ','ТБ'];let i=0;while(b>=1024&&i<u.length-1){b/=1024;i++;}return (b>=100||i===0?b.toFixed(0):b.toFixed(1)).replace('.',',')+' '+u[i];};
+const sysR=b=>b==null?'—':sysB(b)+'/с';
+const sysP=v=>v==null||!isFinite(v)?'—':(v<10?v.toFixed(1):v.toFixed(0)).replace('.',',')+'%';
+const sysDur=s=>{if(s==null)return '—';s=Math.floor(s);const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);return d?d+' д '+h+' ч '+m+' мин':h?h+' ч '+m+' мин':m?m+' мин '+(s%60)+' с':s+' с';};
+const sysHrs=s=>{if(s==null)return '—';const h=s/3600;return h>=1?(h.toFixed(1).replace('.',','))+' ч':(s/60).toFixed(0)+' мин';};
+const sysCls=p=>p>=85?'b':p>=65?'w':'';
+const sysBar=p=>'<div class="sysbar"><i class="'+sysCls(p||0)+'" style="width:'+Math.max(0,Math.min(100,p||0)).toFixed(1)+'%"></i></div>';
+function sysLine(pts,key,max,color,fill){if(!pts.length)return '';const W=600,H=70,n=pts.length,t0=pts[0][0],t1=pts[n-1][0]||t0+1;const x=t=>((t-t0)/Math.max(1,t1-t0))*W,y=v=>H-3-(Math.min(v,max)/max)*(H-8);let d='';pts.forEach((p,i)=>{d+=(i?'L':'M')+x(p[0]).toFixed(1)+' '+y(p[key]).toFixed(1);});return (fill?'<path d="'+d+'L'+W+' '+H+'L0 '+H+'Z" fill="'+color+'22"/>':'')+'<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="1.6" vector-effect="non-scaling-stroke"/>';}
+function renderSys(){const S=SYSD;if(!S)return;const c=S.cur||{},m=c.mem||{},dk=c.disk||{};const memP=m.total?m.used/m.total*100:null,dkP=dk.total?dk.used/dk.total*100:null;
+ $('#sysSub').textContent=[S.host,S.os,'ядро '+S.kernel,'Node '+S.node].join(' · ');
+ const tile=(k,v,s,p)=>'<div class="systile"><div class="k">'+k+'</div><div class="v">'+v+'</div><div class="s">'+s+'</div>'+(p!=null?sysBar(p):'')+'</div>';
+ $('#sysTiles').innerHTML=tile('Процессор',sysP(c.cpu),S.cores+' '+(S.cores===1?'ядро':S.cores<5?'ядра':'ядер')+' · нагрузка '+(c.load?c.load[0].toFixed(2):'—'),c.cpu)
+  +tile('Оперативная память',sysP(memP),sysB(m.used)+' из '+sysB(m.total),memP)
+  +tile('Диск',sysP(dkP),sysB(dk.used)+' из '+sysB(dk.total),dkP)
+  +tile('Сеть сейчас','↓ '+sysR(c.rx),'↑ '+sysR(c.tx),null)
+  +tile('Аптайм сервера',sysDur(S.uptime),'запущен '+new Date(S.boot).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}),null);
+ const H=S.hist||[];const maxNet=Math.max(1024,...H.map(p=>Math.max(p[3],p[4])));
+ const cap=(a,b)=>'<div class="cap"><span>'+a+'</span><b>'+b+'</b></div>';
+ $('#sysCharts').innerHTML=H.length<2?'<div class="sub" style="color:var(--muted)">Собираю данные…</div>':'<div class="syschart">'+cap('Процессор, %',sysP(c.cpu))+'<svg viewBox="0 0 600 70" preserveAspectRatio="none">'+sysLine(H,1,100,'#7cc4ff',1)+'</svg>'
+  +cap('Оперативная память, %',sysP(memP))+'<svg viewBox="0 0 600 70" preserveAspectRatio="none">'+sysLine(H,2,100,'#b58cff',1)+'</svg>'
+  +'<div class="cap"><span>Сеть<span class="sysleg"><i style="background:#4caf6d"></i>входящий</span><span class="sysleg"><i style="background:#e0b35c"></i>исходящий</span></span><b>пик '+sysR(maxNet)+'</b></div><svg viewBox="0 0 600 70" preserveAspectRatio="none">'+sysLine(H,3,maxNet,'#4caf6d',1)+sysLine(H,4,maxNet,'#e0b35c',0)+'</svg>'
+  +'<div class="cap"><span>'+new Date(H[0][0]).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+'</span><span>сейчас</span></div></div>';
+ const pp=c.cpu_parts||{},ct=S.cpu_time||{};
+ $('#sysCpu').innerHTML='<div class="syskv"><span>Модель</span><span>'+esc(S.cpu_model||'—')+'</span><span>Ядер</span><span>'+S.cores+'</span><span>Средняя нагрузка 1 / 5 / 15 мин</span><span>'+(c.load?c.load.map(x=>x.toFixed(2)).join(' / '):'—')+'</span></div>'
+  +'<div class="sub" style="color:var(--muted);margin:14px 0 4px">Загрузка по ядрам</div>'+(c.cores||[]).map((v,i)=>'<div class="syscore"><span>ядро '+(i+1)+'</span>'+sysBar(v)+'<b>'+sysP(v)+'</b></div>').join('')
+  +'<div class="sub" style="color:var(--muted);margin:14px 0 6px">Куда уходит процессор сейчас</div><div class="syskv"><span>Программы</span><span>'+sysP(pp.user)+'</span><span>Система</span><span>'+sysP(pp.system)+'</span><span>Ожидание диска</span><span>'+sysP(pp.iowait)+'</span><span>Отобрано хостингом (steal)</span><span>'+sysP(pp.steal)+'</span></div>'
+  +'<div class="sub" style="color:var(--muted);margin:14px 0 6px">Процессорное время с момента запуска сервера</div><div class="syskv"><span>Программы</span><span>'+sysHrs(ct.user)+'</span><span>Система</span><span>'+sysHrs(ct.system)+'</span><span>Простой</span><span>'+sysHrs(ct.idle)+'</span><span>Ожидание диска</span><span>'+sysHrs(ct.iowait)+'</span><span>Отобрано хостингом</span><span>'+sysHrs(ct.steal)+'</span></div>';
+ $('#sysMem').innerHTML='<div class="syskv"><span>Занято программами</span><span>'+sysB(m.used)+' ('+sysP(memP)+')</span><span>Доступно</span><span>'+sysB(m.available)+'</span><span>Кэш системы (освобождается сам)</span><span>'+sysB(m.cached)+'</span><span>Всего</span><span>'+sysB(m.total)+'</span><span>Файл подкачки</span><span>'+(m.swapTotal?sysB(m.swapUsed)+' из '+sysB(m.swapTotal):'нет')+'</span></div>'+sysBar(memP)
+  +(memP>=85?'<div class="note err" style="margin-top:10px">Памяти почти не осталось — при нехватке система может остановить бота.</div>':'');
+ const nt=c.net_total||{};
+ $('#sysNet').innerHTML='<div class="syskv"><span>Входящий сейчас</span><span>'+sysR(c.rx)+'</span><span>Исходящий сейчас</span><span>'+sysR(c.tx)+'</span><span>Принято с запуска сервера</span><span>'+sysB(nt.rx)+'</span><span>Отправлено с запуска сервера</span><span>'+sysB(nt.tx)+'</span><span>Сетевой интерфейс</span><span>'+esc((nt.iface||[]).join(', ')||'—')+'</span></div>'
+  +'<div class="sub" style="color:var(--muted);margin:16px 0 6px">Диск</div><div class="syskv"><span>Занято</span><span>'+sysB(dk.used)+' ('+sysP(dkP)+')</span><span>Свободно</span><span>'+sysB(dk.free)+'</span><span>Чтение сейчас</span><span>'+sysR(c.dr)+'</span><span>Запись сейчас</span><span>'+sysR(c.dw)+'</span></div>'+sysBar(dkP);
+ const pr=c.procs||[];
+ $('#sysProcs').innerHTML='<tr><th>Процесс</th><th>PID</th><th class="num">Процессор</th><th class="num">Процессорное время</th><th class="num">Память</th><th class="num">Работает</th></tr>'+(pr.length?pr.map(p=>'<tr><td>'+esc(p.name)+(p.name!==p.script?' <span style="color:var(--muted)">'+esc(p.script)+'</span>':'')+'</td><td>'+p.pid+'</td><td class="num">'+sysP(p.cpu)+'</td><td class="num">'+(p.cpu_time>=3600?sysHrs(p.cpu_time):p.cpu_time.toFixed(0)+' с')+'</td><td class="num">'+sysB(p.rss)+'</td><td class="num">'+sysDur(p.uptime)+'</td></tr>').join(''):'<tr><td colspan="6" style="color:var(--muted)">Процессы бота не найдены</td></tr>');}
+async function loadSys(){const v=$('#v-sys');if(!v||!v.classList.contains('on'))return;if(window.DATA_URL){$('#sysTiles').innerHTML='';$('#sysSub').textContent='Мониторинг сервера доступен только в панели на самом сервере (не в копии на GitHub).';$('#sysLive').style.display='none';return;}if(sysBusy)return;sysBusy=true;try{const r=await fetch('/api/sys',{cache:'no-store'});if(r.ok){SYSD=await r.json();renderSys();$('#sysLive').style.opacity=1;}else $('#sysLive').style.opacity=.4;}catch{$('#sysLive').style.opacity=.4;}sysBusy=false;}
+setInterval(loadSys,2000);document.querySelectorAll('nav .pill').forEach(b=>b.addEventListener('click',()=>setTimeout(loadSys,0)));
+
 </script></body></html>
