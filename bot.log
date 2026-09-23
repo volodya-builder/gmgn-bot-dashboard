@@ -885,3 +885,6 @@
 [2026-09-23 06:16:35] 5с-цены: отслеживаю 10/10 монет, всего монет 79, точек 43797, пропущено (нет места) 2169, ошибок 0
 [2026-09-23 06:16:40] CANDIDATE 甲亢蛙 (flap) age 20.9m | liq 19331 | mcap 40191 | holders 540 | swaps 710 | vol 43806 | top10 0.18 | bundler 0.10 | snipers 2 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 393/317 | creator creator_close | wash | smart 19 | renowned 11 | viewers 427 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m -51 | chg1m -33 | viewers/holders 0.79 | source rank | launchpad flap
 [2026-09-23 06:16:40] BUY paper 甲亢蛙 @0.0000413967 $20 | mcap 40191 liq 19331 holders 540
+[2026-09-23 06:19:52] SELL paper 甲亢蛙 stop_loss pnl -6.84$ (-32.7%) hold 3m | balance 800.50
+[2026-09-23 06:20:06] скан: 209 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:177 liq:2; возраст мин/медиана/макс: 0/1116/83097 мин
+[2026-09-23 06:20:24] история цен: запрошено 5, получено 5

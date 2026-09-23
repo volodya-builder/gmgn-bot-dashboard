@@ -1,5 +1,5 @@
 {
- "balance_usd": 787.3389701015323,
+ "balance_usd": 800.4963858234712,
  "positions": {
   "0x0794250fdcf100ba6131031586a252c2a1df7777": {
    "symbol": "螃蟹AI",
@@ -8,7 +8,7 @@
    "opened": 1790143390,
    "entry": 0.000020053348100000003,
    "size_usd": 20,
-   "peak": 0.000020789049,
+   "peak": 0.000021611882,
    "trough": 0.00001716534,
    "mode": "paper",
    "order_id": null,
@@ -30,8 +30,8 @@
     "list_price": "0.0000193737",
     "hour_utc": 6
    },
-   "last": 0.000019869411,
-   "last_t": 1790144297
+   "last": 0.000020738739,
+   "last_t": 1790144624
   },
   "0xeaf0193cf1e68922004037470c317cee0f977777": {
    "symbol": "龙虾人生",
@@ -62,40 +62,8 @@
     "list_price": "0.0000510384",
     "hour_utc": 6
    },
-   "last": 0.000054079667,
-   "last_t": 1790144297
-  },
-  "0xe4dbe4c28556ec6a1adecf19af387d7da6b27777": {
-   "symbol": "甲亢蛙",
-   "name": "错版审美吉蛙",
-   "address": "0xe4dbe4c28556ec6a1adecf19af387d7da6b27777",
-   "opened": 1790144200,
-   "entry": 0.00004139673103,
-   "size_usd": 20,
-   "peak": 0.00004263446,
-   "trough": 0.000038653742,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "rank",
-    "launchpad": "flap",
-    "age_min": "20.9",
-    "liq": "19331",
-    "mcap": "40191",
-    "holders": 540,
-    "smart": 19,
-    "renowned": 11,
-    "bundler": "0.100",
-    "snipers": 2,
-    "top10": "0.177",
-    "buys": 393,
-    "sells": 317,
-    "list_price": "0.0000401910",
-    "hour_utc": 6
-   },
-   "last": 0.000042126438,
-   "last_t": 1790144298
+   "last": 0.000055580794,
+   "last_t": 1790144625
   }
  },
  "seen": {
@@ -167,9 +135,9 @@
   "0xeaf0193cf1e68922004037470c317cee0f977777": 1790143763,
   "0xe4dbe4c28556ec6a1adecf19af387d7da6b27777": 1790144200
  },
- "closed": 64,
+ "closed": 65,
  "wins": 18,
- "pnl_usd": -132.5610298984707,
+ "pnl_usd": -139.40361417653176,
  "opened_at": [
   1790141281,
   1790143390,
@@ -179,9 +147,9 @@
  ],
  "day": {
   "key": "2026-09-23",
-  "pnl": -72.42211262776402
+  "pnl": -79.26469690582508
  },
- "stop_streak": 1,
+ "stop_streak": 2,
  "last_hyp_report": "2026-09-22",
  "paused_until": 1790143316
 }
