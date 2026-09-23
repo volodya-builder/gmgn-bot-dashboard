@@ -592,7 +592,7 @@ main{padding-bottom:45vh!important}
 @keyframes eqp{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.2);opacity:0}}
 /* мини-график в карточке «Гипотез в гонке» */
 #raceKpi .kc{position:relative}
-.kspark{position:absolute;right:18px;top:16px;width:44%;max-width:240px;height:62px;display:flex;flex-direction:column;align-items:flex-end;gap:2px;pointer-events:auto}
+.kspark{cursor:crosshair;position:absolute;right:18px;top:16px;width:44%;max-width:240px;height:62px;display:flex;flex-direction:column;align-items:flex-end;gap:2px;pointer-events:auto}
 .kspark svg{width:100%;height:50px;display:block;overflow:visible}.kspark em{font-style:normal;font-size:10.5px;color:#6a6e66;white-space:nowrap}
 /* дорожки гонки — минимализм */
 .track{height:6px;margin:0 14px;background:#1b1b1b;border:0;box-shadow:none}
@@ -603,6 +603,17 @@ main{padding-bottom:45vh!important}
 .lane.crown .track .car{background:#e0b85a}
 .lane:hover .track .car,.lane.sel .track .car{transform:translate(-50%,-50%) scale(1.3)}
 .lane.racing{transition:top .3s cubic-bezier(.22,1,.36,1)!important}
+/* гонка: мини-графики вместо ползунков */
+.track.sp{height:36px;margin:0 14px;background:none;border:0;box-shadow:none;border-radius:0}
+.track.sp .trail,.track.sp .car,.track.sp .zero{display:none}
+.track.sp svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#race.replay .track.sp svg{clip-path:inset(-4px 100% -4px 0)}
+.track.sp .zl{stroke:#ffffff26;stroke-width:1;stroke-dasharray:3 4;vector-effect:non-scaling-stroke}
+.track.sp .ln{fill:none;stroke-width:1.7;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.track.sp .ar{opacity:.1}
+.track.sp .hd{position:absolute;width:7px;height:7px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 2px #141414;pointer-events:none}
+.lane.crown .track.sp .hd{background:#e0b85a!important}
+.lane:hover .track.sp .ln,.lane.sel .track.sp .ln{stroke-width:2.4}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -1201,8 +1212,11 @@ function drawTradeChart(x,d){
 }
 
 // ---- версия ----
-const APP_VERSION='2.58';
+const APP_VERSION='2.61';
 const CHANGELOG=[
+ ['2.61','23.09.2026',['Гипотезы: в карточке «Монет изучено» — мини-график, как росло число изученных монет (по первому появлению каждой монеты в наборе данных), как у «Гипотез в гонке»']],
+ ['2.60','23.09.2026',['Гипотезы: при наведении на мини-график роста гипотез показывается число гипотез и время в этой точке (с пунктирной линией и точкой на графике)']],
+ ['2.59','23.09.2026',['Гонка гипотез: вместо ползунков у каждой гипотезы мини-график прибыли во времени (у каждой своя шкала по высоте, пунктир — ноль); при воспроизведении графики прорисовываются слева направо, точка едет вверх-вниз, места меняются']],
  ['2.58','23.09.2026',['Гонка гипотез: плавное воспроизведение (значения меняются плавно между сделками, перерисовываются только видимые дорожки, места меняются с анимацией) и минималистичные дорожки — тонкая линия, простая точка без свечения']],
  ['2.57','23.09.2026',['Гипотезы: в карточке «Гипотез в гонке» мини-график роста числа гипотез','Гонка: дорожки тоньше и аккуратнее, прибыль — зелёный градиент, убыток — красный, бегунок — светящийся шарик (у лидера золотой)']],
  ['2.56','23.09.2026',['График в обзоре больше не тормозит: убрана постоянная перерисовка 12 раз в секунду (пульс последней точки теперь лёгкой CSS-анимацией)']],
@@ -1690,7 +1704,7 @@ function raceKpi(H,order,nextIn){const el=$('#raceKpi');if(!el)return;const dt=H
  let live='';if(D.mode==='live'&&D.trades){const tp=D.trades.reduce((a,x)=>a+ +x.pnl_usd,0);live='в реальности: '+D.trades.length+' сделок, <b class="'+cls(tp)+'">'+mny(tp)+'</b>';}
  el.innerHTML=
   (loadHypGrowth(),card('Гипотез в гонке',f(n,0)+hgSpark(),'','перебрано вариантов всего <b>'+f(H.tested_total,0)+'</b>','+'+f(H.tested_now,0)+' за прогон · следующий через ~'+nextIn+' мин'))+
-  card('Монет изучено',f(dt.tokens||0,0),'','с историей цены <b>'+f(dt.with_paths||0,0)+'</b> · с секундными ценами <b>'+f(dt.with_1s||0,0)+'</b>','данные за '+f(dt.days||0,1)+' дн'+(dt.premature&&dt.thresholds?' · для уверенных выводов нужно '+dt.thresholds.days+' дн':''))+
+  (loadTokGrowth(),card('Монет изучено',f(dt.tokens||0,0)+tgSpark(),'','с историей цены <b>'+f(dt.with_paths||0,0)+'</b> · с секундными ценами <b>'+f(dt.with_1s||0,0)+'</b>','данные за '+f(dt.days||0,1)+' дн'+(dt.premature&&dt.thresholds?' · для уверенных выводов нужно '+dt.thresholds.days+' дн':'')))+
   card('Лучшая за '+W,bw?mny(bw.pnl):'—',bw?cls(bw.pnl):'',best?'<b>#'+best.num+'</b> · '+bw.n+' сделок в симуляции':'','надёжных гипотез <b>'+sol+'</b> · похоже на правду <b>'+may+'</b>')+
   card('Живой бот',lnum?'#'+lnum:'—','',li>=0?'место <b>'+(li+1)+'</b> из '+f(hy.length,0)+' · в симуляции <b class="'+cls(lw.pnl)+'">'+mny(lw.pnl)+'</b>':(lnum?'в гонке за '+W+' сделок не было':'живая торговля не включена'),live||'ставка $'+f(D.config.position_size_usd,0)+' на сделку');}
 function renderRace(force){const R=raceList();
@@ -1718,18 +1732,18 @@ function raceReplay(){const R=raceIds;if(!R)return;if(raceAnim)cancelAnimationFr
  // плавное значение: линейно между точками кривой, а не ступеньками
  const lerpAt=(cv,T)=>{if(!cv.length||T<=cv[0][0])return 0;let lo=0,hi=cv.length-1;if(T>=cv[hi][0])return cv[hi][1];while(hi-lo>1){const m=(lo+hi)>>1;if(cv[m][0]<=T)lo=m;else hi=m;}const a=cv[lo],b=cv[hi];return a[1]+(b[1]-a[1])*((T-a[0])/Math.max(1e-9,b[0]-a[0]));};
  const curves=R.list.map(r=>r.win[raceW].curve);let lastTxt=0,lastSort=0;
- const step=now=>{const k=Math.min(1,(now-start)/dur),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2,T=t0+(t1-t0)*e;
+ const step=now=>{const k=Math.min(1,(now-start)/dur),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2,T=t0+(t1-t0)*e;const clipR=spG?(100-Math.max(0,Math.min(100,spG.X(T)))).toFixed(2):0;
   for(let i=0;i<n;i++)vals[i]=lerpAt(curves[i],T);
   if(now-lastSort>120||k>=1){lastSort=now;idx.sort((a,b)=>vals[b]-vals[a]);for(let r=0;r<n;r++)rankOf[idx[r]]=r;}
   const rr=race.getBoundingClientRect(),cr=sc.getBoundingClientRect(),top=Math.max(0,cr.top)-LH*2,bot=Math.min(innerHeight,cr.bottom)+LH*2;const txt=now-lastTxt>100||k>=1;if(txt)lastTxt=now;
   const vis=r=>{const y=rr.top+r*LH;return y>=top&&y<=bot;};
   for(let i=0;i<n;i++){const o=L[i],rk=rankOf[i];if(rk!==o.rank){if(k>=1||vis(rk)||(o.rank>=0&&vis(o.rank))||o.rank<0){o.rank=rk;o.l.style.top=rk*LH+'px';o.rk.textContent=rk+1;}}
    if(!vis(rk)){o.p=null;continue;}
-   const v=vals[i],p=R.P(v);if(o.p===null||Math.abs(p-o.p)>.02){o.p=p;o.car.style.left=p+'%';o.tr.style.left=Math.min(R.z,p)+'%';o.tr.style.width=Math.abs(p-R.z)+'%';const ng=v<0;if(ng!==o.neg){o.neg=ng;o.tr.className='trail '+(ng?'b':'g');}}
+   const v=vals[i];if(spG){if(!o.hd)o.hd=o.l.querySelector('.hd');if(!o.sv)o.sv=o.l.querySelector('.track.sp svg');if(o.sv)o.sv.style.clipPath='inset(-4px '+clipR+'% -4px 0)';if(o.hd){const Yf=o.hd.parentNode._Y||spG.Y;o.hd.style.left=spG.X(T)+'%';o.hd.style.top=Yf(v)+'%';}}
    if(txt){const t=mny(v);if(t!==o.txt){o.txt=t;o.pn.textContent=t;o.pn.className='lpnl '+cls(v);}}}
   if(txt){const st=$('#raceStatus');st.querySelector('.rtime')?.remove();st.insertAdjacentHTML('beforeend','<span class="rtime">время гонки: <b>'+new Date(T*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</b></span>');}
-  if(k<1)raceAnim=requestAnimationFrame(step);else{raceAnim=null;$('#raceGo').textContent='Воспроизвести гонку';L.forEach(o=>o.l.classList.remove('racing'));raceKey='';renderRace(true);}};
- L.forEach(o=>{o.car.style.left=R.z+'%';o.tr.style.width='0%';});raceAnim=requestAnimationFrame(step);}
+  if(k<1)raceAnim=requestAnimationFrame(step);else{raceAnim=null;$('#raceGo').textContent='Воспроизвести гонку';L.forEach(o=>{o.l.classList.remove('racing');if(o.sv)o.sv.style.clipPath='';});race.classList.remove('replay');raceKey='';renderRace(true);}};
+ if(!spG)try{raceSparks();}catch{}race.classList.add('replay');raceAnim=requestAnimationFrame(step);}
 $('#raceGo').onclick=raceReplay;
 document.querySelectorAll('#raceW .pill').forEach(b=>b.onclick=()=>{raceW=b.dataset.w;racePrev=new Set();document.querySelectorAll('#raceW .pill').forEach(x=>x.classList.toggle('on',x===b));renderRace(true);});
 // ---- навигация ----
@@ -1895,5 +1909,40 @@ async function loadHypGrowth(){if(window.DATA_URL||Date.now()-hgAt<60000)return;
 function hgSpark(){const P=hgPts;if(!P||P.length<2)return '';const W=220,H=58,t0=P[0][0],t1=P[P.length-1][0]||t0+1,v1=P[P.length-1][1]||1;
  const X=t=>((t-t0)/Math.max(1,t1-t0))*W,Y=v=>H-4-(v/v1)*(H-10);let d='';P.forEach((p,i)=>{d+=(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1);});
  const dt=new Date(t0*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
- return '<span class="kspark" title="Как росло число пронумерованных гипотез с '+dt+'"><svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none"><defs><linearGradient id="hgG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7cc4ff" stop-opacity=".35"/><stop offset="1" stop-color="#7cc4ff" stop-opacity="0"/></linearGradient></defs><path d="'+d+'L'+W+' '+H+'L0 '+H+'Z" fill="url(#hgG)"/><path d="'+d+'" fill="none" stroke="#7cc4ff" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="'+X(t1).toFixed(1)+'" cy="'+Y(v1).toFixed(1)+'" r="3" fill="#a9dbff"/></svg><em>рост с '+dt+'</em></span>';}
+ return '<span class="kspark"><svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none"><defs><linearGradient id="hgG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7cc4ff" stop-opacity=".35"/><stop offset="1" stop-color="#7cc4ff" stop-opacity="0"/></linearGradient></defs><path d="'+d+'L'+W+' '+H+'L0 '+H+'Z" fill="url(#hgG)"/><path d="'+d+'" fill="none" stroke="#7cc4ff" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="'+X(t1).toFixed(1)+'" cy="'+Y(v1).toFixed(1)+'" r="3" fill="#a9dbff"/><line class="hgl" x1="0" x2="0" y1="0" y2="'+H+'" stroke="#ffffff55" stroke-dasharray="2 3" vector-effect="non-scaling-stroke" style="display:none"/><circle class="hgd" r="3.5" fill="#e8f5ff" stroke="#0b0b0b" stroke-width="1.5" vector-effect="non-scaling-stroke" style="display:none"/></svg><em>рост с '+dt+'</em></span>';}
+
+// ---- мини-график: как росло число изученных монет (universe.jsonl) ----
+let tgPts=null,tgAt=0;
+async function loadTokGrowth(){if(window.DATA_URL||Date.now()-tgAt<60000)return;tgAt=Date.now();try{const r=await fetch('/api/tokgrowth',{cache:'no-store'});if(r.ok){const j=await r.json();tgPts=j.pts||null;try{renderRace(true);}catch{}}}catch{}}
+function tgSpark(){const P=tgPts;if(!P||P.length<2)return '';const W=220,H=58,t0=P[0][0],t1=P[P.length-1][0]||t0+1,v1=P[P.length-1][1]||1;
+ const X=t=>((t-t0)/Math.max(1,t1-t0))*W,Y=v=>H-4-(v/v1)*(H-10);let d='';P.forEach((p,i)=>{d+=(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1);});
+ const dt=new Date(t0*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+ return '<span class="kspark" title="Как росло число изученных монет с '+dt+'"><svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none"><defs><linearGradient id="tgG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ee0a8" stop-opacity=".35"/><stop offset="1" stop-color="#7ee0a8" stop-opacity="0"/></linearGradient></defs><path d="'+d+'L'+W+' '+H+'L0 '+H+'Z" fill="url(#tgG)"/><path d="'+d+'" fill="none" stroke="#7ee0a8" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="'+X(t1).toFixed(1)+'" cy="'+Y(v1).toFixed(1)+'" r="3" fill="#b5f0cf"/></svg><em>рост с '+dt+'</em></span>';}
+
+// ---- гонка: вместо ползунков — мини-графики прибыли во времени (в формате дорожки) ----
+let spG=null;
+function spGeom(){const R=raceIds;if(!R)return null;let t0=Infinity,t1=-Infinity,v0=0,v1=1;for(const r of R.list){const cv=r.win[raceW].curve;for(const p of cv){if(p[0]<t0)t0=p[0];if(p[0]>t1)t1=p[0];if(p[1]<v0)v0=p[1];if(p[1]>v1)v1=p[1];}}
+ if(!isFinite(t0)){t0=0;t1=1;}if(t1<=t0)t1=t0+1;const pad=(v1-v0)*.08;v0-=pad;v1+=pad;return {t0,t1,v0,v1,X:t=>(t-t0)/(t1-t0)*100,Y:v=>(1-(v-v0)/(v1-v0))*100};}
+function raceSparks(){const R=raceIds,race=document.getElementById('race');if(!R||!race)return;const G=spG=spGeom();if(!G)return;
+ const lanes=race.querySelectorAll('.lane');const zy=G.Y(0).toFixed(2);
+ lanes.forEach((l,i)=>{const r=R.list[i];if(!r)return;const cv=r.win[raceW].curve||[];const tr=l.querySelector('.track');if(!tr)return;
+  const key=raceKey+'|'+i;if(tr.dataset.sp===key)return;tr.dataset.sp=key;tr.classList.add('sp');
+  const fin=cv.length?cv[cv.length-1][1]:0,col=fin>=0?'#5fd3a0':'#ff7676';let a0=0,a1=0;for(const p of cv){if(p[1]<a0)a0=p[1];if(p[1]>a1)a1=p[1];}if(a1-a0<1e-9)a1=a0+1;const pd=(a1-a0)*.12;a0-=pd;a1+=pd;const Yl=v=>(1-(v-a0)/(a1-a0))*100;tr._Y=Yl;const zl=Yl(0).toFixed(2);
+  let d='';const pts=[[G.t0,0],...cv];pts.forEach((p,j)=>{d+=(j?'L':'M')+G.X(p[0]).toFixed(2)+' '+Yl(p[1]).toFixed(2);});
+  const last=pts[pts.length-1];
+  tr.querySelectorAll('svg,.hd').forEach(e=>e.remove());
+  tr.insertAdjacentHTML('beforeend','<svg viewBox="0 0 100 100" preserveAspectRatio="none"><line class="zl" x1="0" x2="100" y1="'+zl+'" y2="'+zl+'"/><path class="ar" d="'+d+'L'+G.X(last[0]).toFixed(2)+' '+zl+'L0 '+zl+'Z" fill="'+col+'"/><path class="ln" d="'+d+'" stroke="'+col+'"/></svg><i class="hd" style="left:'+G.X(last[0])+'%;top:'+Yl(last[1])+'%;background:'+col+'"></i>');});
+
+ const sc=document.getElementById('raceScale');if(sc){const fd=t=>new Date(t*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});sc.innerHTML='<span style="left:0">'+fd(G.t0)+'</span><span style="left:50%">время →</span><span style="left:100%">'+fd(G.t1)+'</span>';}}
+(function(){const orig=renderRace;renderRace=function(){const r=orig.apply(this,arguments);try{raceSparks();}catch(e){console.error(e);}return r;};})();
+// наведение на мини-график: число гипотез и время в этой точке
+document.addEventListener('mousemove',e=>{const sp=e.target.closest&&e.target.closest('.kspark');const tip=$('#tip');
+ if(!sp){if(hgHov){hgHov=false;tip.style.display='none';document.querySelectorAll('.kspark .hgl,.kspark .hgd').forEach(n=>n.style.display='none');}return;}
+ const P=hgPts;if(!P||P.length<2)return;const svg=sp.querySelector('svg'),rc=svg.getBoundingClientRect();const W=220,H=58,t0=P[0][0],t1=P[P.length-1][0]||t0+1,v1=P[P.length-1][1]||1;
+ const tx=t0+Math.max(0,Math.min(1,(e.clientX-rc.left)/rc.width))*(t1-t0);let b=P[0];for(const p of P){if(Math.abs(p[0]-tx)<Math.abs(b[0]-tx))b=p;}
+ const x=((b[0]-t0)/Math.max(1,t1-t0))*W,y=H-4-(b[1]/v1)*(H-10);const l=svg.querySelector('.hgl'),d=svg.querySelector('.hgd');
+ if(l){l.setAttribute('x1',x);l.setAttribute('x2',x);l.style.display='';}if(d){d.setAttribute('cx',x);d.setAttribute('cy',y);d.style.display='';}
+ hgHov=true;tip.classList.remove('tipcard');tip.innerHTML='<b>'+f(b[1],0)+'</b> гипотез<br><span style="color:#8f938a">'+new Date(b[0]*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</span>';
+ tip.style.display='block';tip.style.left=Math.min(e.clientX+14,innerWidth-tip.offsetWidth-12)+'px';tip.style.top=(e.clientY+16)+'px';});
+let hgHov=false;
 </script></body></html>
