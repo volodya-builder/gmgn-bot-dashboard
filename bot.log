@@ -740,3 +740,6 @@
 [2026-09-23 03:46:08] 5с-цены: отслеживаю 10/10 монет, всего монет 53, точек 28543, пропущено (нет места) 1732, ошибок 0
 [2026-09-23 03:47:15] CANDIDATE OH (flap) age 2.4m | liq 10227 | mcap 18397 | holders 69 | swaps 135 | vol 13458 | top10 0.25 | bundler 0.08 | snipers 4 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 93/42 | creator creator_close | wash | smart 4 | renowned 0 | viewers 155 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 378 | chg1m 91 | viewers/holders 2.25 | source rank | launchpad flap
 [2026-09-23 03:47:16] BUY paper OH @0.0000153403 $20 | mcap 18397 liq 10227 holders 69
+[2026-09-23 03:50:01] скан: 206 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:177 liq:3; возраст мин/медиана/макс: 3/988/247999 мин
+[2026-09-23 03:50:04] SELL paper OH stop_loss pnl -6.06$ (-28.8%) hold 3m | balance 909.58
+[2026-09-23 03:50:18] история цен: запрошено 2, получено 2

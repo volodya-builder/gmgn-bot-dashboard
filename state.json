@@ -1,39 +1,6 @@
 {
- "balance_usd": 895.6463412629927,
- "positions": {
-  "0xfa9e2378690cd13c0e36c16616d1d83ad92d7777": {
-   "symbol": "OH",
-   "name": "Brain Suck",
-   "address": "0xfa9e2378690cd13c0e36c16616d1d83ad92d7777",
-   "opened": 1790135236,
-   "entry": 0.000015340306030000002,
-   "size_usd": 20,
-   "peak": 0.000018685525,
-   "trough": 0.000014893501,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "rank",
-    "launchpad": "flap",
-    "age_min": "2.4",
-    "liq": "10227",
-    "mcap": "18397",
-    "holders": 69,
-    "smart": 4,
-    "renowned": 0,
-    "bundler": "0.080",
-    "snipers": 4,
-    "top10": "0.253",
-    "buys": 93,
-    "sells": 42,
-    "list_price": "0.0000183971",
-    "hour_utc": 3
-   },
-   "last": 0.000018685525,
-   "last_t": 1790135258
-  }
- },
+ "balance_usd": 909.5829951193695,
+ "positions": {},
  "seen": {
   "0xb18870450cead02867b2f7515522a84411887777": 1790084213,
   "0x08aa17a10afd4d8a3b2de3afec9f415b33407777": 1790085658,
@@ -90,9 +57,9 @@
   "0x22f6053a919d14f1ec1ee38b48d4be6351e4d7c5": 1790134079,
   "0xfa9e2378690cd13c0e36c16616d1d83ad92d7777": 1790135235
  },
- "closed": 53,
+ "closed": 54,
  "wins": 17,
- "pnl_usd": -68.1536587370098,
+ "pnl_usd": -74.217004880633,
  "opened_at": [
   1790132112,
   1790132484,
@@ -104,9 +71,9 @@
  ],
  "day": {
   "key": "2026-09-23",
-  "pnl": -8.01474146630311
+  "pnl": -14.078087609926296
  },
- "stop_streak": 0,
+ "stop_streak": 1,
  "last_hyp_report": "2026-09-22",
  "paused_until": 1790120967
 }
