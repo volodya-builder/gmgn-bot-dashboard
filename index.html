@@ -15,6 +15,24 @@ header{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:auto 
 .pills.small .pill{padding:6px 14px;font-size:13px}
 nav{justify-self:start}
 .badges{display:flex;gap:8px;align-items:center;justify-self:end}
+.hst{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
+.hseg{display:inline-flex;align-items:center;padding:3px;border:1px solid var(--border2);border-radius:12px;background:#101010}
+.hseg a{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:9px;font:500 13px var(--font-ui);color:var(--muted);text-decoration:none;white-space:nowrap;transition:background .15s,color .15s}
+.hseg a[href]:hover{color:var(--text);background:#1a1a1a}
+.hseg a.on{color:var(--text);background:#1c1c1c;box-shadow:inset 0 0 0 1px #2e2e2e;cursor:default}
+.hseg a i{display:none;width:7px;height:7px;border-radius:50%;flex:none}
+.hseg a.on i{display:inline-block;background:var(--good);animation:onpulse 2s infinite}.hseg a.on.paper i{background:#e0b85a;animation:none}
+.hseg .ch{font:11px var(--font-mono);color:var(--muted);padding:0 8px 0 7px;letter-spacing:.04em}
+.hchipx{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border:1px solid var(--border2);border-radius:12px;background:#101010;color:var(--text);font:500 13px var(--font-ui);cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s}
+.hchipx .k{color:var(--muted);font-weight:400}.hchipx b{color:var(--accent,#7cc4ff);font-weight:600}
+.hchipx:hover{border-color:#3a3a3a;background:#171717}.hchipx:focus-visible,.hseg a:focus-visible{outline:2px solid var(--accent,#7cc4ff);outline-offset:1px}
+.hfresh{display:inline-flex;align-items:center;gap:7px;font:12.5px var(--font-ui);color:var(--muted);white-space:nowrap;min-width:128px;font-variant-numeric:tabular-nums}
+.hfresh i{width:7px;height:7px;border-radius:50%;background:#555;flex:none}.hfresh.ok i{background:var(--good)}
+.hfresh.warn{color:#e0b85a}.hfresh.warn i{background:#e0b85a}.hfresh.bad{color:var(--bad,#e05c5c)}.hfresh.bad i{background:var(--bad,#e05c5c);animation:onpulse 1.2s infinite}
+@media(max-width:1400px){.hchipx .k{display:none}.hseg .ch{display:none}}
+@media(max-width:1180px){.hfresh{min-width:0}.hfresh .t2{display:none}}
+@media(max-width:700px){.hst{flex-wrap:wrap;gap:8px}.hseg a{padding:6px 10px;font-size:12.5px}}
+
 .badge{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:14px;font-size:13px;border:1px solid var(--border2);background:#161616;color:var(--muted);white-space:nowrap;font-family:var(--font-mono)}
 .badge b{font-weight:500;color:var(--text)}
 .badge.paper b{color:#e0b85a}.badge.live b{color:var(--good)}
@@ -669,11 +687,27 @@ main{padding-bottom:45vh!important}
 .rsel input{background:#161616;border:1px solid #2a2a2a;color:var(--text);border-radius:10px;height:36px;padding:0 12px;font:500 14px var(--font-ui);width:150px}
 .rsprev{margin:10px 0 4px;font-size:13.5px;color:#b9bdb5}
 .rsmsg{margin-top:8px;font-size:13.5px}
+/* v2.72: карточка гипотезы в узком окне — без горизонтальной прокрутки */
+#raceDet.hdrawer{overflow-x:hidden}
+#raceDet.hdrawer>*{min-width:0;max-width:100%}
+#raceDet.hdrawer .hdgrid>div{min-width:0;max-width:100%;overflow-x:hidden}
+#raceDet.hdrawer .note,#raceDet.hdrawer .hnote{white-space:normal;overflow-wrap:anywhere}
+.mini-t.mini-c td.pl{white-space:nowrap}.mini-t.mini-c .rl{margin-top:3px;line-height:1}.mini-t.mini-c .rl .rel{font-size:10.5px;padding:1px 7px}
+@media(max-width:560px){
+  #raceDet.hdrawer{padding:16px 14px 20px;right:8px;left:8px;width:auto}
+  #raceDet.hdrawer .crow.full{grid-template-columns:minmax(0,1fr) auto 14px auto!important;row-gap:2px;column-gap:6px}
+  #raceDet.hdrawer .crow.full>span:first-child{grid-column:1/-1;font-size:13.5px}
+  #raceDet.hdrawer .crow.full>.was{grid-column:2}
+  #raceDet.hdrawer .mini-t{font-size:12px;table-layout:auto}
+  #raceDet.hdrawer .mini-t th,#raceDet.hdrawer .mini-t td{padding:6px 3px;white-space:nowrap}
+  #raceDet.hdrawer .mini-c .rl .rel{font-size:10px;padding:0 6px}
+  #raceDet.hdrawer .cbtns{flex-wrap:wrap}
+}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
   <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill hid" data-view="trending">В тренде</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="rules" data-group="bot">Бот</button><button class="pill hid" data-view="trades">Сделки</button><button class="pill hid" data-view="rules">Правила</button><button class="pill hid" data-view="log">Журнал</button><button class="pill hid" data-view="sys">Сервер</button></nav>
-  <div class="badges"><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span><a id="modeSwitch" class="badge" style="display:none"></a><span id="hypBadge" class="badge"></span></div>
+  <div class="badges"><div class="hst" id="hst"><div class="hseg" id="hseg" role="group" aria-label="Какой бот показан"></div><button class="hchipx" id="hhyp" type="button" style="display:none"></button><span class="hfresh" id="hfresh" role="status" aria-live="polite"><i></i><span class="t">подключаюсь…</span></span></div><div class="hstold" hidden><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span><a id="modeSwitch" class="badge" style="display:none"></a><span id="hypBadge" class="badge"></span></div></div>
 </header>
 <main>
 <div class="subnav" id="subnav"></div>
@@ -951,6 +985,12 @@ function eqTrace(ctx,pts){const n=pts.length;if(!n)return;ctx.moveTo(pts[0].x,pt
  const dx=[],m=[],tg=[];for(let i=0;i<n-1;i++){dx[i]=pts[i+1].x-pts[i].x;m[i]=dx[i]>1e-6?(pts[i+1].y-pts[i].y)/dx[i]:0;}
  tg[0]=m[0];tg[n-1]=m[n-2];for(let i=1;i<n-1;i++){if(m[i-1]*m[i]<=0)tg[i]=0;else{const w1=2*dx[i]+dx[i-1],w2=dx[i]+2*dx[i-1];tg[i]=(w1+w2)/(w1/m[i-1]+w2/m[i]);}}
  for(let i=0;i<n-1;i++){const h=dx[i];if(h<=1e-6){ctx.lineTo(pts[i+1].x,pts[i+1].y);continue;}ctx.bezierCurveTo(pts[i].x+h/3,pts[i].y+tg[i]*h/3,pts[i+1].x-h/3,pts[i+1].y-tg[i+1]*h/3,pts[i+1].x,pts[i+1].y);}}
+// значение той же гладкой кривой, что рисует eqTrace (точка наведения ложится ровно на линию)
+function eqEval(pts,x){const n=pts.length;if(!n||x<pts[0].x)return null;if(x>=pts[n-1].x)return pts[n-1].y;if(n<3){for(let i=0;i<n-1;i++)if(x<=pts[i+1].x){const h=pts[i+1].x-pts[i].x;return h>1e-6?pts[i].y+(pts[i+1].y-pts[i].y)*(x-pts[i].x)/h:pts[i+1].y;}return pts[n-1].y;}
+ const dx=[],m=[],tg=[];for(let i=0;i<n-1;i++){dx[i]=pts[i+1].x-pts[i].x;m[i]=dx[i]>1e-6?(pts[i+1].y-pts[i].y)/dx[i]:0;}
+ tg[0]=m[0];tg[n-1]=m[n-2];for(let i=1;i<n-1;i++){if(m[i-1]*m[i]<=0)tg[i]=0;else{const w1=2*dx[i]+dx[i-1],w2=dx[i]+2*dx[i-1];tg[i]=(w1+w2)/(w1/m[i-1]+w2/m[i]);}}
+ let i=0;while(i<n-2&&x>pts[i+1].x)i++;const h=dx[i];if(h<=1e-6)return pts[i+1].y;const u=(x-pts[i].x)/h,u2=u*u,u3=u2*u;
+ return (2*u3-3*u2+1)*pts[i].y+(u3-2*u2+u)*h*tg[i]+(-2*u3+3*u2)*pts[i+1].y+(u3-u2)*h*tg[i+1];}
 function eqPill(ctx,x,y,txt,bg,fg,align){ctx.font='600 11.5px Inter,sans-serif';const w=ctx.measureText(txt).width+14,h=22;let bx=align==='center'?x-w/2:x;ctx.fillStyle=bg;ctx.beginPath();ctx.roundRect(bx,y-h/2,w,h,7);ctx.fill();ctx.fillStyle=fg;ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(txt,bx+7,y+.5);return w;}
 function eqOverlay(ctx,g){const {X,Y,P,PW,PH,W,H,vis,start,x0,x1,span}=g;const UP='#5fd3a0',DN='#ff7676';
  const lp=vis[vis.length-1];if(lp){const y=Math.max(P.t,Math.min(P.t+PH,Y(lp.v)));eqPill(ctx,W-P.r+8,y,'$'+f(lp.v),'#7cc4ff','#0b0b0b');}
@@ -1267,8 +1307,11 @@ function drawTradeChart(x,d){
 }
 
 // ---- версия ----
-const APP_VERSION='2.71';
+const APP_VERSION='2.74';
 const CHANGELOG=[
+ ['2.74','23.09.2026',['Шапка сайта: переключатель «Реальные деньги | Симуляция» — видно, какая панель открыта, второе нажатие открывает другую','Кнопка «Живой бот: гипотеза #N» — открывает гипотезы','Индикатор связи: «онлайн · обновлено N с назад» (зелёный), «данные запаздывают» (жёлтый), «нет связи с ботом» (красный); точное время — при наведении','Шапка больше не вылезает за край экрана на узких мониторах']],
+ ['2.73','23.09.2026',['График «Сравнение на графике»: точки при наведении теперь лежат ровно на линиях (значение берётся с той же гладкой кривой)']],
+ ['2.72','23.09.2026',['Карточка гипотезы (клик по дорожке) на телефоне и в узком окне: вся информация видна без горизонтальной прокрутки — изменения правил в две строки, таблица по периодам ужата, метка надёжности под названием периода']],
  ['2.71','23.09.2026',['«Что нового»: рядом с датой каждого обновления — время выхода (по времени твоего компьютера). Время новых версий записывается автоматически; у старых восстановлено по резервным копиям, «≈» — примерно']],
  ['2.70','23.09.2026',['Гонка гипотез: кнопка «Выбрать гипотезу» — вводишь номер (или кликаешь по строке в гонке), видишь её правила и результат в симуляции, двойным нажатием включаешь её на живом боте']],
  ['2.69','23.09.2026',['График депозита снова плавный: в режиме «По сделкам» линия тоже идёт мягкой кривой через каждую сделку, а не ломаной','Подписи времени под графиком стоят ровно под сделками и не повторяются, когда график отдалён или растянут']],
@@ -1571,7 +1614,7 @@ function drawHyp(list,cSel='#hypChart',legSel='#hypLegend',ids=[...hypSel]){cons
  // наведение
  const hv=hypHv[cSel];let hvVals=null;
  if(hv&&!hypDrag[cSel]){const t=x0+(hv.x-P.l)/PW*span;ctx.strokeStyle='#ffffff38';ctx.setLineDash([2,4]);ctx.beginPath();ctx.moveTo(hv.x,P.t);ctx.lineTo(hv.x,P.t+PH);ctx.stroke();ctx.setLineDash([]);
-  hvVals=series.map(s=>({s,v:hypValAt(s.pts,t)})).filter(o=>o.v!=null);hvVals.forEach(o=>{ctx.beginPath();ctx.arc(hv.x,Y(o.v),4.5,0,7);ctx.fillStyle=o.s.col;ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#141414';ctx.stroke();});hv.t=t;}
+  hvVals=series.map(s=>{const yy=eqEval(vis(s),hv.x);return yy==null?null:{s,v:y0+(1-(yy-P.t)/PH)*(y1-y0)};}).filter(Boolean);hvVals.forEach(o=>{ctx.beginPath();ctx.arc(hv.x,Y(o.v),4.5,0,7);ctx.fillStyle=o.s.col;ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#141414';ctx.stroke();});hv.t=t;}
  ctx.restore();
  // подписи значений справа (без наложения)
  const tags=(hvVals||series.map(s=>({s,v:s.pts[s.pts.length-1].v}))).map(o=>({col:o.s.col,v:o.v,y:Math.max(P.t,Math.min(P.t+PH,Y(o.v)))})).sort((a,b)=>a.y-b.y);
@@ -1776,7 +1819,7 @@ addEventListener('resize',()=>{if(arActive()){arGeom();}});
 let hypAll=null,hypAllGen=0,hypAllBusy=false;
 function mergedHyp(H){const m=new Map();for(const r of (hypAll||[]))m.set(r.id,r);for(const r of H.list)if(r.id!=='current')m.set(r.id,r);return [...m.values()];}
 async function loadHypAll(){const H=D&&D.hypotheses;if(!H||window.DATA_URL||hypAllBusy||hypAllGen===H.generated_at)return;hypAllBusy=true;try{const r=await fetch('/api/hypall',{cache:'no-store'});hypAllGen=H.generated_at;if(r.ok){const j=await r.json();hypAll=j.all||[];raceKey='';hypKey='';if(hypTab==='race')renderRace(true);else renderHyp(true);}}catch{}hypAllBusy=false;}
-function detailCompact(r,w){const ws=['24h','7d','30d','all'];return '<div class="hdgrid"><div><div class="h4">Изменения относительно текущих правил</div>'+(r.diff.length?r.diff.map(d=>'<div class="crow full"><span>'+esc(d.label||d.text)+'</span><span class="was">'+esc(d.was)+'</span><span class="arr">→</span><b>'+esc(d.val||'')+'</b></div>').join(''):'<div class="note">это текущие правила</div>')+'</div><div><div class="h4">По периодам</div><table class="mini-t"><tr><th></th><th class="num">Сделок</th><th class="num">На сделку</th><th class="num">Итог</th><th class="num">Прибыльных</th><th></th></tr>'+ws.map(x=>{const m=r.win[x]||{n:0};return '<tr><td>'+WLBL[x].replace('за ','')+'</td><td class="num">'+m.n+'</td><td class="num '+cls(m.exp)+'">'+(m.n?mny(m.exp):'—')+'</td><td class="num '+cls(m.pnl)+'">'+(m.n?mny(m.pnl):'—')+'</td><td class="num">'+(m.n?f(m.win,0)+'%':'—')+'</td><td>'+relTag(m.rel)+'</td></tr>';}).join('')+'</table><div class="note" style="margin-top:10px">Подробные проверки (разброс, шум, новые данные) считаются для 40 лучших вариантов; эта гипотеза сейчас не среди них.</div><div style="margin-top:14px"><button class="btn" data-hyptrades="'+r.id+'" data-w="'+w+'" data-name="'+esc(r.name)+'">Сделки на графиках</button></div></div></div>';}
+function detailCompact(r,w){const ws=['24h','7d','30d','all'];return '<div class="hdgrid"><div><div class="h4">Изменения относительно текущих правил</div>'+(r.diff.length?r.diff.map(d=>'<div class="crow full"><span>'+esc(d.label||d.text)+'</span><span class="was">'+esc(d.was)+'</span><span class="arr">→</span><b>'+esc(d.val||'')+'</b></div>').join(''):'<div class="note">это текущие правила</div>')+'</div><div><div class="h4">По периодам</div><table class="mini-t mini-c"><tr><th></th><th class="num">Сделок</th><th class="num">На сделку</th><th class="num">Итог</th><th class="num">В плюсе</th></tr>'+ws.map(x=>{const m=r.win[x]||{n:0};return '<tr><td class="pl">'+WLBL[x].replace('за ','')+'<div class="rl">'+relTag(m.rel)+'</div></td><td class="num">'+m.n+'</td><td class="num '+cls(m.exp)+'">'+(m.n?mny(m.exp):'—')+'</td><td class="num '+cls(m.pnl)+'">'+(m.n?mny(m.pnl):'—')+'</td><td class="num">'+(m.n?f(m.win,0)+'%':'—')+'</td></tr>';}).join('')+'</table><div class="note" style="margin-top:10px">Подробные проверки (разброс, шум, новые данные) считаются для 40 лучших вариантов; эта гипотеза сейчас не среди них.</div><div style="margin-top:14px"><button class="btn" data-hyptrades="'+r.id+'" data-w="'+w+'" data-name="'+esc(r.name)+'">Сделки на графиках</button></div></div></div>';}
 let raceW='7d',raceIds=null,racePrev=new Set(),raceAnim=null,raceSel=null,raceKey='';
 function raceList(){const H=D.hypotheses;if(!H||!H.list||!H.list[0]||!H.list[0].win)return null;const rk=m=>m.score>-1e9?m.score:-1e6+m.exp;
  const cur=H.list.find(r=>r.id==='current');loadHypAll();const top=mergedHyp(H).filter(r=>r.win[raceW]&&r.win[raceW].n>0).sort((a,b)=>b.win[raceW].pnl-a.win[raceW].pnl);return {H,list:[cur,...top].filter(Boolean)};}
@@ -1904,10 +1947,29 @@ function openLive(p){const el=$('#openLive');if(!el||!D)return;const x=(D.config
    (has?'<div class="opbar"><i class="f" style="left:'+Math.min(z,c)+'%;width:'+Math.abs(c-z)+'%;background:'+col+'"></i><i class="z" style="left:'+z+'%"></i>'+(pk!=null&&pk>0?'<i class="pk" style="left:'+pos(pk)+'%" title="пик +'+f(pk,1)+'%"></i>':'')+'<i class="cur" style="left:'+c+'%;background:'+col+'"></i></div>'+
    '<div class="opax"><span>стоп −'+SL+'%</span><span class="opz" style="left:'+z+'%">вход</span><span>тейк +'+TP+'%</span></div>':'')+
    '<div class="opm"><span>вход <b>'+fpx(ent)+'</b></span><span>сейчас <b>'+fpx(cur)+'</b></span>'+(pk!=null?'<span>пик <b>'+(pk>=0?'+':'')+f(pk,1)+'%</b></span>':'')+'<span>размер <b>$'+f(q.size_usd,2)+'</b></span>'+(trail?'<span>'+trail+'</span>':'')+(stale!=null&&stale>60?'<span class="bad">цена обновлялась '+ago(stale)+' назад</span>':'')+'</div></div>';}).join('')+'</div>';}
+
+// ---- шапка: режим, гипотеза живого бота, свежесть данных ----
+let hstOk=0,hstFail=false,hstTime=0;
+function hstRender(){const d=D;if(!d)return;const live=d.mode==='live';const p=location.port;const other=window.DATA_URL?null:(p==='8787'?'8788':p==='8788'?'8787':null);
+ const url=other?location.protocol+'//'+location.hostname+':'+other+'/':null;const liveUrl=live?null:url,paperUrl=live?url:null;
+ const seg=$('#hseg');if(seg){const a=(on,cls,txt,href,tip)=>'<a class="'+(on?'on '+cls:'')+'"'+(!on&&href?' href="'+href+'"':'')+' title="'+tip+'"><i></i>'+txt+'</a>';
+  const k=(live?'L':'P')+'|'+(url||'')+'|'+(d.chain||'');if(seg.dataset.k!==k){seg.dataset.k=k;
+   seg.innerHTML=a(live,'live','Реальные деньги',liveUrl,live?'Сейчас открыта панель живого бота — он торгует реальными деньгами':(liveUrl?'Открыть панель живого бота (реальные деньги)':'Панель живого бота недоступна отсюда'))+
+    a(!live,'paper','Симуляция',paperUrl,!live?'Сейчас открыта панель бота-симуляции — он торгует понарошку, без денег':(paperUrl?'Открыть панель бота-симуляции (без денег)':'Панель симуляции недоступна отсюда'))+
+    '<span class="ch" title="Сеть">'+esc(String(d.chain||'').toUpperCase())+'</span>';}}
+ const h=$('#hhyp');if(h){const L=d.liveHyp;if(!L||window.DATA_URL){h.style.display='none';}else{h.style.display='';h.innerHTML='<span class="k">Живой бот:</span> гипотеза <b>#'+L.num+'</b>';
+  h.title='Живой бот торгует по гипотезе #'+L.num+(L.name?' — '+L.name:'')+'. Нажми, чтобы открыть гипотезы и сменить.';h.onclick=()=>{const t=document.querySelector('nav .pill[data-view="hyp"]');if(t)t.click();try{setHypTab('sum');}catch{}scrollTo(0,0);};}}}
+function hstFresh(){const el=$('#hfresh');if(!el)return;const t=el.querySelector('.t');
+ if(!hstOk){el.className='hfresh'+(hstFail?' bad':'');t.innerHTML=hstFail?'бот не отвечает':'подключаюсь…';return;}
+ const age=Math.max(0,(Date.now()-hstOk)/1000);const ag=age<60?Math.floor(age)+' с':age<3600?Math.floor(age/60)+' мин':Math.floor(age/3600)+' ч';
+ const st=age<20&&!hstFail?'ok':age<90?'warn':'bad';el.className='hfresh '+st;
+ t.innerHTML=st==='ok'?'онлайн<span class="t2"> · обновлено '+(age<3?'только что':ag+' назад')+'</span>':st==='warn'?'данные запаздывают<span class="t2"> · '+ag+'</span>':'нет связи с ботом<span class="t2"> · '+ag+'</span>';
+ el.title=(hstTime?'Последние данные от бота: '+new Date(hstTime).toLocaleTimeString('ru-RU')+'. ':'')+'Страница сама обновляется каждые 5 секунд.'+(st!=='ok'?' Если надпись не становится зелёной несколько минут — бот или сервер не отвечает.':'');}
+setInterval(()=>{try{hstFresh();}catch{}},1000);
 async function tick(){try{const d=await (await fetch(window.DATA_URL||'/api',{cache:'no-store'})).json();D=d;
  $('#mode').className='badge '+d.mode;$('#mode').innerHTML='<span class="dot"></span><b>'+(d.mode==='paper'?'симуляция':'live')+'</b> '+d.chain.toUpperCase();
- $('#upd').textContent='данные от '+new Date(d.now).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});hypBadge();render();}
- catch(e){$('#upd').textContent=window.DATA_URL?'нет данных':'бот не отвечает';}}
+ $('#upd').textContent='данные от '+new Date(d.now).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});try{hstOk=Date.now();hstFail=false;hstTime=d.now||Date.now();hstRender();hstFresh();}catch(e){console.error(e);}hypBadge();render();}
+ catch(e){$('#upd').textContent=window.DATA_URL?'нет данных':'бот не отвечает';try{hstFail=true;hstFresh();}catch{}}}
 tick();setInterval(tick,5000);addEventListener('resize',()=>D&&render());
 
 (function(){function mob(){const m=window.innerWidth<=700;document.documentElement.classList.toggle('is-mobile',m);document.querySelectorAll('nav.pills,.titlebar .pills,#trFilter,.htabs .pills').forEach(el=>{if(m){el.style.setProperty('flex-wrap','wrap','important');el.style.setProperty('overflow','visible','important');el.style.setProperty('display','flex','important');}else{el.style.removeProperty('flex-wrap');el.style.removeProperty('overflow');el.style.removeProperty('display');}});}
