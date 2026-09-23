@@ -1380,8 +1380,9 @@ function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label
  const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
  if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
 // ---- версия ----
-const APP_VERSION='2.84';
+const APP_VERSION='2.85';
 const CHANGELOG=[
+ ['2.85','24.09.2026',['«Объёмы»: к торгам на кривой four.meme и flap добавлены торги этих монет на PancakeSwap после выхода с площадки — во всех парах (BNB, доллары, другие токены), всё в долларах; у объёма показана доля PancakeSwap; исправлен подсчёт монет flap, торгующихся не за BNB']],
  ['2.84','24.09.2026',['«Объёмы» перенесены из «Арены» в «Обзор» — третьей подвкладкой рядом со «Сводкой» и «Всеми сделками»']],
  ['2.83','24.09.2026',['Объёмы BSC: у переключателей four.meme и flap — логотипы площадок']],
  ['2.82','24.09.2026',['Иконка вкладки браузера — голубой шар (логотип бота)']],
@@ -2264,10 +2265,10 @@ setInterval(()=>{try{if(hypTab==='help')faqLive();}catch{}},3000);document.addEv
  function data(){const H=ND?ND.hours:[];const now=Date.now(),hourly=per===24,nb=hourly?24:per===168?56:60;
   const d0=new Date(now);d0.setMinutes(0,0,0);if(!hourly)d0.setHours(0);const step=hourly?3600e3:864e5,t0=d0.getTime()-(nb-1)*step;
   const bins=Array.from({length:nb},(_,i)=>({from:t0+i*step,to:t0+(i+1)*step,v:0,t:0,c:0,b:0,has:false}));
-  const win=per>0?now-per*3600e3:0,prevFrom=per>0?now-2*per*3600e3:0;const tot={v:0,t:0,c:0,b:0,fl:0,fm:0},prev={v:0,t:0,c:0,has:false};let first=null;
-  for(const [h,fm,fl] of H){const ts=h*1000;if(first==null)first=ts;const X={fm,flap:fl};let v=0,t=0,c=0,b=0;for(const s of S()){v+=pk(X[s],'v');t+=pk(X[s],'t');c+=pk(X[s],'c');b+=X[s].b||0;}
+  const win=per>0?now-per*3600e3:0,prevFrom=per>0?now-2*per*3600e3:0;const tot={v:0,t:0,c:0,b:0,fl:0,fm:0,pv:0},prev={v:0,t:0,c:0,has:false};let first=null;
+  for(const [h,fm,fl] of H){const ts=h*1000;if(first==null)first=ts;const X={fm,flap:fl};let v=0,t=0,c=0,b=0,pv=0;for(const s of S()){const x=X[s]||{};pv+=x.pv||0;v+=(x.v||0)+(x.pv||0);t+=(x.b||0)+(x.s||0)+(x.pt||0);c+=x.c||0;b+=x.b||0;}
    const i=Math.floor((ts-t0)/step);if(i>=0&&i<nb){const B=bins[i];B.v+=v;B.t+=t;B.c+=c;B.has=true;}
-   if(ts+3600e3>win){tot.v+=v;tot.t+=t;tot.c+=c;tot.b+=b;tot.fl+=fl.c||0;tot.fm+=fm.c||0;}else if(per>0&&ts>=prevFrom){prev.v+=v;prev.t+=t;prev.c+=c;prev.has=true;}}
+   if(ts+3600e3>win){tot.v+=v;tot.t+=t;tot.c+=c;tot.b+=b;tot.pv+=pv;tot.fl+=fl.c||0;tot.fm+=fm.c||0;}else if(per>0&&ts>=prevFrom){prev.v+=v;prev.t+=t;prev.c+=c;prev.has=true;}}
   return {bins,tot,prev:per>0&&first!=null&&first<=win-per*3600e3+3600e3?prev:null,hourly,nb};}
  const delta=(now,was)=>{if(was==null)return '';if(was===0)return now>0?'<span class="ana-delta up">new</span>':'';const r=(now-was)/was*100;return isFinite(r)?'<span class="ana-delta '+(Math.abs(r)<.5?'flat':r>0?'up':'down')+'">'+(r>0?'+':'')+r.toFixed(1)+'%</span>':'';};
  function svg(bins,key,fmt){const vals=bins.map(b=>b[key]),s=Math.max(...vals,0),l=1e3,u=vals.length,d=(l-70)/u,gap=Math.max(3,Math.min(10,d*.28)),w=d-gap,g=v=>10+(1-(s>0?v/s:0))*264;
@@ -2279,7 +2280,7 @@ setInterval(()=>{try{if(hypTab==='help')faqLive();}catch{}},3000);document.addEv
   return o+'</svg>';}
  function draw(){if(!on())return;const {bins,tot,prev,hourly,nb}=data();
   const st=(n,l)=>'<div class="ana-stat"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>';
-  $('#netKpi').innerHTML=st(K(tot.v),'Объём '+delta(tot.v,prev&&prev.v))+st(N(tot.t),'Сделки '+delta(tot.t,prev&&prev.t))+st(N(tot.c),'Запуски '+(pf==='all'?'<span class="dim">· '+N(tot.fl)+' flap · '+N(tot.fm)+' four.meme</span>':delta(tot.c,prev&&prev.c)))+st(tot.t?K(tot.v/tot.t):'$0','Средняя сделка');
+  $('#netKpi').innerHTML=st(K(tot.v),'Объём '+delta(tot.v,prev&&prev.v)+(tot.v>0?'<span class="dim">· PancakeSwap '+f(tot.pv/tot.v*100,0)+'%</span>':''))+st(N(tot.t),'Сделки '+delta(tot.t,prev&&prev.t))+st(N(tot.c),'Запуски '+(pf==='all'?'<span class="dim">· '+N(tot.fl)+' flap · '+N(tot.fm)+' four.meme</span>':delta(tot.c,prev&&prev.c)))+st(tot.t?K(tot.v/tot.t):'$0','Средняя сделка');
   const key=met,fmt=key==='v'?(v,ax)=>ax?K(v).replace(/,00(?=\$|$)/,''):K(v):(v)=>N(Math.round(v)),name={v:'Объём',t:'Сделки',c:'Запуски'}[key];
   const sumC=bins.reduce((a,b)=>a+b[key],0),H=hov!==null&&bins[hov]?bins[hov]:null;
   $('#netBig').textContent=H?fmt(H[key]):fmt(sumC);
@@ -2287,7 +2288,7 @@ setInterval(()=>{try{if(hypTab==='help')faqLive();}catch{}},3000);document.addEv
   $('#netSvg').innerHTML=svg(bins,key,fmt);
   document.querySelectorAll('#netMet .seg-btn').forEach(x=>x.classList.toggle('on',x.dataset.m===met));
   const at=ND&&ND.started?new Date(ND.started*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'';
-  $('#netNote').textContent=ND?'Данные из блокчейна BSC (контракты four.meme и flap), обновление каждые 20 секунд. Сбор идёт с '+at+', раньше данных нет. Объём — торги на кривой площадки до перехода на PancakeSwap. BNB = $'+f(ND.bnb||0,0)+'.':'Читаю блокчейн…';}
+  $('#netNote').textContent=ND?'Данные из блокчейна BSC, обновление каждые 20 секунд: торги на кривой four.meme и flap плюс торги этих монет на PancakeSwap после выхода с площадки — во всех парах (BNB, доллары и другие токены, всё пересчитано в доллары). Сбор идёт с '+at+', раньше данных нет. BNB = $'+f(ND.bnb||0,0)+'.':'Читаю блокчейн…';}
  const box=$('#netSvg');if(box){box.addEventListener('mouseover',e=>{const g=e.target.closest&&e.target.closest('g[data-i]');if(!g)return;const i=+g.dataset.i;if(i!==hov){hov=i;draw();}});box.addEventListener('mouseleave',()=>{hov=null;draw();});}
  const grp=(sel,attr,get,set)=>document.querySelectorAll(sel+' .seg-btn').forEach(b=>{b.classList.toggle('on',b.dataset[attr]===String(get()));b.onclick=()=>{set(b.dataset[attr]);hov=null;document.querySelectorAll(sel+' .seg-btn').forEach(x=>x.classList.toggle('on',x===b));draw();};});
  grp('#netPf','p',()=>pf,v=>{pf=v;try{localStorage.setItem('netPf',v);}catch{}});
