@@ -653,3 +653,11 @@
 [2026-09-23 02:16:05] наблюдаемая гипотеза «Вход на 3-й минуте при зрителях ≥ 9, зрителей на холдера ≥ 0»: проверочных сделок 23, $-3.61/сделку, нижняя граница $-5.05 — мало данных
 [2026-09-23 02:16:31] SELL paper Buddy stop_loss pnl -8.54$ (-41.2%) hold 6m | balance 896.56
 [2026-09-23 02:16:57] скан: 209 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:179 liq:5 vol:1 tax:1; возраст мин/медиана/макс: 1/1002/390352 мин
+[2026-09-23 02:19:42] CANDIDATE 拉鸡 (flap) age 4.0m | liq 9324 | mcap 16867 | holders 113 | swaps 294 | vol 20479 | top10 0.20 | bundler 0.10 | snipers 7 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 187/107 | creator creator_close | wash | smart 2 | renowned 1 | viewers 216 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 274 | chg1m 33 | viewers/holders 1.91 | source rank | launchpad flap
+[2026-09-23 02:19:42] BUY paper 拉鸡 @0.0000168562 $20 | mcap 16867 liq 9324 holders 113
+[2026-09-23 02:20:03] CANDIDATE 云豹 (flap) age 4.0m | liq 8383 | mcap 15258 | holders 62 | swaps 164 | vol 13621 | top10 0.26 | bundler 0.05 | snipers 8 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 107/57 | creator creator_close | wash | smart 2 | renowned 2 | viewers 111 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 321 | chg1m 49 | viewers/holders 1.79 | source rank | launchpad flap
+[2026-09-23 02:20:03] BUY paper 云豹 @0.0000153122 $20 | mcap 15258 liq 8383 holders 62
+[2026-09-23 02:20:22] история цен: запрошено 6, получено 6
+[2026-09-23 02:20:38] SELL paper 拉鸡 take_profit pnl 12.52$ (64.1%) hold 1m | balance 888.48
+[2026-09-23 02:22:06] скан: 206 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:175 liq:4 swaps:1; возраст мин/медиана/макс: 2/975/251841 мин
+[2026-09-23 02:22:44] SELL paper 云豹 take_profit pnl 15.08$ (76.9%) hold 3m | balance 923.56
