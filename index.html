@@ -713,6 +713,7 @@ main{padding-bottom:45vh!important}
 .fprh{display:flex;justify-content:space-between;font-size:12.5px;color:#9a9e96;margin-bottom:6px}.fprh b{color:#e8e9e4;font-variant-numeric:tabular-nums}
 .fprb{height:10px;background:#222;border-radius:6px;overflow:hidden}.fprb i{display:block;height:100%;border-radius:6px}
 @media(max-width:900px){.faqg{grid-template-columns:1fr}.faqi2{max-width:420px}}
+.lnm .lmore{color:var(--muted);font-size:12px}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -1316,9 +1317,21 @@ function drawTradeChart(x,d){
  trGeom.PW=PW;
 }
 
+// короткое имя дорожки: только главное — возраст, выход (тейк/стоп/трейлинг/время) и число прочих условий входа; полный список — в подсказке и в карточке
+function laneShort(r){const D2=r.diff||[];const by=k=>D2.find(d=>d.k===k);const p=[];
+ const a0=by('min_age_min'),a1=by('max_age_min');const num=v=>String(v==null?'':v).replace(/[^\d.,]/g,'');
+ if(a0&&a1)p.push('возраст '+num(a0.val)+'–'+num(a1.val)+' мин');else if(a1)p.push(a1.text);else if(a0)p.push(a0.text);
+ for(const k of ['take_profit_pct','stop_loss_pct']){const d=by(k);if(d)p.push(d.text);}
+ const ta=by('trailing_activate_pct'),td=by('trailing_drawdown_pct');if(ta)p.push(ta.text);else if(td)p.push(td.text);
+ const mh=by('max_hold_min');if(mh)p.push(mh.text.replace('максимум в сделке','в сделке до'));
+ const used=new Set(['min_age_min','max_age_min','take_profit_pct','stop_loss_pct','trailing_activate_pct','trailing_drawdown_pct','max_hold_min']);
+ const rest=D2.filter(d=>!used.has(d.k));
+ if(rest.length){const n=rest.length,w=n%10===1&&n%100!==11?'условие входа':n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?'условия входа':'условий входа';p.push('<span class="lmore">+'+n+' '+w+'</span>');}
+ return p.length?p.map((x,i)=>x.startsWith('<span')?x:esc(x)).join(' · '):esc(D2.map(d=>d.text).join(' · '));}
 // ---- версия ----
-const APP_VERSION='2.75';
+const APP_VERSION='2.76';
 const CHANGELOG=[
+ ['2.76','23.09.2026',['Гонка гипотез: в строке дорожки только главное — возраст токена, тейк/стоп/трейлинг/время в сделке и число прочих условий входа («+3 условия входа»); полный список — при наведении и в карточке по клику']],
  ['2.75','23.09.2026',['Гипотезы → Справка: подробные ответы на 15 вопросов с иллюстрациями — как всё устроено, что такое гипотеза и откуда берутся новые, как считается прибыль, как читать гонку, метки, осторожная оценка, проверки, почему лидер меняется, проверка на новых, расхождение с реальностью (с живыми цифрами), выбор гипотезы для бота, таблица, периоды и сколько данных уже набрано (живые шкалы)']],
  ['2.74','23.09.2026',['Шапка сайта: переключатель «Реальные деньги | Симуляция» — видно, какая панель открыта, второе нажатие открывает другую','Кнопка «Живой бот: гипотеза #N» — открывает гипотезы','Индикатор связи: «онлайн · обновлено N с назад» (зелёный), «данные запаздывают» (жёлтый), «нет связи с ботом» (красный); точное время — при наведении','Шапка больше не вылезает за край экрана на узких мониторах']],
  ['2.73','23.09.2026',['График «Сравнение на графике»: точки при наведении теперь лежат ровно на линиях (значение берётся с той же гладкой кривой)']],
@@ -1859,7 +1872,7 @@ function renderRace(force){const R=raceList();
  const order=[...list].sort((a,b)=>b.win[raceW].pnl-a.win[raceW].pnl);try{raceKpi(H,order,nextIn);}catch(e){console.error(e);}
  $('#race').style.height=(list.length*56)+'px';
  $('#race').innerHTML=list.map((r,i)=>{const m=r.win[raceW];const rank=order.indexOf(r);const isNew=racePrev.size&&!racePrev.has(r.id);const crown=rank===0&&m.rel==='solid';
-  return '<div class="lane'+(r.id==='current'?' curl':'')+(crown?' crown':'')+(isNew?' enter':'')+(raceSel===r.id?' sel':'')+'" data-id="'+r.id+'" style="top:'+rank*56+'px"><span class="lrank" title="место в гонке">'+(rank+1)+'</span><div class="lname"><div class="lnm">'+(isLive(r)?'<i class="ondot"></i>':'')+(r.num&&r.id!=='current'?'<b class="hnum">#'+r.num+'</b> ':'')+(r.id==='current'?CURL():esc(r.diff.map(d=>d.text).join(' · ')))+'</div><div class="lmeta">'+relTag(m.rel)+(isLive(r)?onTag('включена'):'')+'<span>'+m.n+' сделок</span></div></div><div class="track"><i class="zero" style="left:'+z+'%"></i><i class="trail'+(m.pnl<0?' b':'')+'" style="left:'+Math.min(z,P(m.pnl))+'%;width:'+Math.abs(P(m.pnl)-z)+'%"></i><i class="car" style="left:'+P(m.pnl)+'%"></i></div><b class="lpnl '+cls(m.pnl)+'">'+mny(m.pnl)+'</b></div>';}).join('');
+  return '<div class="lane'+(r.id==='current'?' curl':'')+(crown?' crown':'')+(isNew?' enter':'')+(raceSel===r.id?' sel':'')+'" data-id="'+r.id+'" style="top:'+rank*56+'px"><span class="lrank" title="место в гонке">'+(rank+1)+'</span><div class="lname"><div class="lnm" title="'+esc(r.diff.map(d=>d.text).join(' · '))+'">'+(isLive(r)?'<i class="ondot"></i>':'')+(r.num&&r.id!=='current'?'<b class="hnum">#'+r.num+'</b> ':'')+(r.id==='current'?CURL():laneShort(r))+'</div><div class="lmeta">'+relTag(m.rel)+(isLive(r)?onTag('включена'):'')+'<span>'+m.n+' сделок</span></div></div><div class="track"><i class="zero" style="left:'+z+'%"></i><i class="trail'+(m.pnl<0?' b':'')+'" style="left:'+Math.min(z,P(m.pnl))+'%;width:'+Math.abs(P(m.pnl)-z)+'%"></i><i class="car" style="left:'+P(m.pnl)+'%"></i></div><b class="lpnl '+cls(m.pnl)+'">'+mny(m.pnl)+'</b></div>';}).join('');
  racePrev=ids;
  $('#race').querySelectorAll('.lane').forEach(l=>l.onclick=()=>{raceSel=l.dataset.id;const r=list.find(x=>x.id===raceSel);$('#race').querySelectorAll('.lane').forEach(x=>x.classList.toggle('sel',x===l));
   const canApply=D.editable&&!window.DATA_URL&&r.diff.length&&!r.compact;const rsolid=r.win[raceW].rel==='solid';$('#raceDet').style.display='';$('#raceDet').innerHTML='<div class="chead"><div class="big" style="font-size:22px">'+(r.id==='current'?CURL():'Гипотеза #'+(r.num||(order.indexOf(r)+1)))+'</div>'+relTag(r.win[raceW].rel)+'</div>'+(r.compact?detailCompact(r,raceW):detail(r,H.noise?.[raceW],H.walkforward?.[raceW],raceW))+'<div class="cbtns" style="margin-top:16px"><button class="btn primary" data-hyptrades="'+r.id+'" data-w="'+raceW+'" data-name="'+esc(r.id==='current'?CURL():r.name)+'">Сделки на графиках</button><span class="note">все монеты этой гипотезы: вход, выход и что было дальше</span></div>'+(canApply?'<div class="cbtns" style="margin-top:16px"><button class="btn'+(rsolid?' primary':'')+'" id="raceApply"'+(rsolid?'':' disabled')+'>Применить к боту</button><span class="note" id="raceNote">'+(rsolid?'Кнопка сработает со второго нажатия — защита от случайного клика.':'Кнопка неактивна: '+esc((r.win[raceW].why||[]).join('; ')))+'</span></div>':'');
