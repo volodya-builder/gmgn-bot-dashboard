@@ -277,7 +277,7 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 .hverd.ok{border-color:#2b5a3a;background:linear-gradient(100deg,#4caf6d14,var(--card) 60%)}.hverd.ok .vt{color:var(--good)}
 .hverd.warn{border-color:#5a4a2b;background:linear-gradient(100deg,#e0b85a12,var(--card) 60%)}.hverd.warn .vt{color:#e0b85a}
 .hverd .vx{color:#c9ccc4;font-size:15px;line-height:1.6}.hverd .vx b{color:var(--text);font-weight:600}.hverd .vx b.good{color:var(--good)}.hverd .vx b.bad{color:var(--bad)}
-.hverd .vmeta{color:var(--muted);font-size:13px;margin-top:16px}.hverd .vmeta b{color:var(--text);font-weight:500}
+.hverd .vmeta{color:var(--muted);font-size:13px;margin-top:16px}.vtested{display:flex;align-items:center;gap:16px;margin-top:22px;padding-top:18px;border-top:1px solid var(--border2);flex-wrap:wrap}.vtn{font-size:46px;font-weight:600;letter-spacing:-1px;line-height:1;font-variant-numeric:tabular-nums;color:var(--text)}.vtl{font-size:16px;color:var(--text);line-height:1.35}.vtl span{display:block;color:var(--muted);font-size:13px;margin-top:3px}.vbasis{margin-top:12px;color:var(--muted);font-size:13px;line-height:1.5}.vbasis b{color:var(--text);font-weight:500}.hverd .vmeta b{color:var(--text);font-weight:500}
 .rdy{display:grid;gap:14px;background:#0f0f0f;border:1px solid #1f1f1f;border-radius:16px;padding:16px 18px}
 .rdy1 .rl{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;color:#c9ccc4}.rdy1 .rl b{color:var(--text);font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
 .bar{height:6px;background:#232323;border-radius:99px;overflow:hidden;margin-top:7px}.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}.bar i.full{background:var(--good)}
@@ -725,8 +725,9 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.21';
+const APP_VERSION='2.22';
 const CHANGELOG=[
+ ['2.22','23.09.2026',['«Гипотезы» → «Итог»: число проверенных вариантов крупно; видно, по каким свечам считает симуляция (минутные или секундные) и для скольких монет уже скачаны секундные свечи; полоска «Монет с секундными свечами» в блоке накопленных данных']],
  ['2.21','23.09.2026',['Телефон: шапка больше не растягивается из-за плашек (вкладки в две строки на живой панели тоже)','Арена на телефоне облегчена: не больше 28 фишек на экране, реже выпуск — вкладки переключаются без задержки']],
  ['2.20','23.09.2026',['Телефон: перенос вкладок закреплён принудительно (CSS !important + проверка скриптом после загрузки)']],
  ['2.19','23.09.2026',['Телефон: вкладки и фильтры переносятся на вторую строку — все видны сразу, без прокрутки вбок']],
@@ -842,8 +843,9 @@ function renderHyp(force){const H=D.hypotheses;
  if(d.premature)vx+=' Данных пока мало, поэтому любые цифры ниже ещё могут сильно измениться.';
  const nextIn=Math.max(0,Math.round((H.generated_at+600e3-Date.now())/60e3));
  $('#hypVerdict').className='card hverd '+vc;
- $('#hypVerdict').innerHTML='<div><div class="vlbl">Главный вывод '+WLBL[hypW]+'</div><div class="vt">'+vt+'</div><div class="vx">'+vx+'</div><div class="vmeta">Проверено вариантов: <b>'+f(H.tested_total,0)+'</b> · пересчёт в '+new Date(H.generated_at).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+(nextIn?', следующий через ~'+nextIn+' мин':'')+'</div></div>'+
-  '<div class="rdy"><div class="vlbl">Сколько данных накоплено</div>'+bar('Монет с историей цены',d.with_paths,d.thresholds.tokens,f(d.with_paths,0)+' / '+d.thresholds.tokens)+bar('Дней наблюдений',d.days,d.thresholds.days,f(d.days,1)+' / '+d.thresholds.days)+(d.with_ticks!=null?bar('Монет с ценами каждые 5 секунд',d.with_ticks,300,f(d.with_ticks,0)+' / 300'):'')+bar('Реальных сделок по правилам '+esc(d.real_rules||''),d.real_trades,d.thresholds.trades,f(d.real_trades,0)+' / '+d.thresholds.trades)+'<div class="note">Пока полоски не заполнены, выводы предварительные.</div></div>';
+ $('#hypVerdict').innerHTML='<div><div class="vlbl">Главный вывод '+WLBL[hypW]+'</div><div class="vt">'+vt+'</div><div class="vx">'+vx+'</div><div class="vtested"><div class="vtn">'+f(H.tested_total,0)+'</div><div class="vtl">вариантов правил проверено<span>'+f(H.tested_now||0,0)+' новых в последнем пересчёте · пересчёт в '+new Date(H.generated_at).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+(nextIn?', следующий через ~'+nextIn+' мин':'')+'</span></div></div>'+
+  '<div class="vbasis">Симуляция считает сделки по <b>'+(d.sim_basis==='1s'?'секундным':'минутным')+' свечам</b>'+(d.with_1s!=null?'. Секундные свечи скачаны для <b>'+f(d.with_1s,0)+'</b> монет'+(d.queue_1s?', в очереди ещё '+f(d.queue_1s,0):'')+(d.sim_basis==='1s'?'':' — пока они используются для отдельного исследования, в перебор ещё не подключены'):'')+'.</div></div>'+
+  '<div class="rdy"><div class="vlbl">Сколько данных накоплено</div>'+bar('Монет с историей цены',d.with_paths,d.thresholds.tokens,f(d.with_paths,0)+' / '+d.thresholds.tokens)+bar('Дней наблюдений',d.days,d.thresholds.days,f(d.days,1)+' / '+d.thresholds.days)+(d.with_1s!=null?bar('Монет с секундными свечами',d.with_1s,300,f(d.with_1s,0)+' / 300'):'')+(d.with_ticks!=null?bar('Монет с ценами каждые 5 секунд',d.with_ticks,300,f(d.with_ticks,0)+' / 300'):'')+bar('Реальных сделок по правилам '+esc(d.real_rules||''),d.real_trades,d.thresholds.trades,f(d.real_trades,0)+' / '+d.thresholds.trades)+'<div class="note">Пока полоски не заполнены, выводы предварительные.</div></div>';
  const canApply=D.editable&&!window.DATA_URL;
  if(best){const m=bm,cm=cur?.win[hypW];const solid=m.rel==='solid';const dlt=cm&&cm.n?m.exp-cm.exp:null;
   $('#champ').innerHTML='<div class="chead"><div class="big" style="font-size:22px">Лучшая гипотеза '+WLBL[hypW]+(best.num?' <span class="hnum">#'+best.num+'</span>':'')+'</div>'+(isLive(best)?onTag('включена'):'')+relTag(m.rel)+'</div><div class="sub" style="margin-top:4px">Выбрана по осторожной оценке (среднее минус разброс), а не по самой большой прибыли.</div>'+
