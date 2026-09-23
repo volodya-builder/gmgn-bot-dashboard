@@ -1,71 +1,6 @@
 {
- "balance_usd": 885.6608183934844,
- "positions": {
-  "0xfb4d4808e09688fc345faece7fe3457804af7777": {
-   "symbol": "mOOnkey",
-   "name": "大奶猴",
-   "address": "0xfb4d4808e09688fc345faece7fe3457804af7777",
-   "opened": 1790125076,
-   "entry": 0.000016470202639999998,
-   "size_usd": 20,
-   "peak": 0.000018011476,
-   "trough": 0.000012405383,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "rank",
-    "launchpad": "flap",
-    "age_min": "2.6",
-    "liq": "8776",
-    "mcap": "15863",
-    "holders": 73,
-    "smart": 3,
-    "renowned": 3,
-    "bundler": "0.181",
-    "snipers": 3,
-    "top10": "0.254",
-    "buys": 136,
-    "sells": 80,
-    "list_price": "0.0000158633",
-    "hour_utc": 0
-   },
-   "last": 0.000012852322,
-   "last_t": 1790125161
-  },
-  "0xf0b654b8a8aeba15aed670431ef1fcb787bb7777": {
-   "symbol": "你的婚礼",
-   "name": "你的婚礼",
-   "address": "0xf0b654b8a8aeba15aed670431ef1fcb787bb7777",
-   "opened": 1790125160,
-   "entry": 0.00001575365121,
-   "size_usd": 20,
-   "peak": 0.000015312763,
-   "trough": 0.000015294807,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "rank",
-    "launchpad": "flap",
-    "age_min": "6.6",
-    "liq": "8408",
-    "mcap": "15295",
-    "holders": 75,
-    "smart": 2,
-    "renowned": 2,
-    "bundler": "0.072",
-    "snipers": 5,
-    "top10": "0.259",
-    "buys": 105,
-    "sells": 86,
-    "list_price": "0.0000152948",
-    "hour_utc": 0
-   },
-   "last": 0.000015312763,
-   "last_t": 1790125162
-  }
- },
+ "balance_usd": 913.1845852274542,
+ "positions": {},
  "seen": {
   "0xb18870450cead02867b2f7515522a84411887777": 1790084213,
   "0x08aa17a10afd4d8a3b2de3afec9f415b33407777": 1790085658,
@@ -106,9 +41,9 @@
   "0xfb4d4808e09688fc345faece7fe3457804af7777": 1790125076,
   "0xf0b654b8a8aeba15aed670431ef1fcb787bb7777": 1790125160
  },
- "closed": 36,
+ "closed": 38,
  "wins": 11,
- "pnl_usd": -62.9391816065173,
+ "pnl_usd": -75.41541477254746,
  "opened_at": [
   1790121995,
   1790122759,
@@ -118,9 +53,9 @@
  ],
  "day": {
   "key": "2026-09-23",
-  "pnl": -2.8002643358106116
+  "pnl": -15.276497501840776
  },
- "stop_streak": 2,
+ "stop_streak": 4,
  "last_hyp_report": "2026-09-22",
  "paused_until": 1790120967
 }
