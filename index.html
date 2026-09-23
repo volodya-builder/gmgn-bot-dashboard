@@ -581,6 +581,9 @@ main{padding-bottom:45vh!important}
 .tlwbar .pills{margin:0}
 .tlw{height:340px;border:1px solid #1f1f1f;border-radius:12px;overflow:hidden;background:#0f0f0f}
 .tlwh{color:#6a6e66;font-size:11.5px;margin:6px 2px 4px}
+.kcb small.kin{font-size:17px;font-weight:500;margin-left:6px;letter-spacing:0}
+/* обзор чуть уже остальных вкладок */
+@media(min-width:1300px){main:has(> #v-overview.on),main:has(> #v-trades.on){max-width:1480px}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -734,7 +737,7 @@ function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{r
   const pfTxt=Number.isFinite(m.pf)?'на каждый потерянный $1 заработано $'+f(m.pf):(m.pf===Infinity?'убыточных сделок нет':'');
   const card=(ttl,big,bk,body)=>'<div class="kc"><div class="kct">'+ttl+'</div><div class="kcb '+(bk||'')+'">'+big+'</div>'+body+'</div>';
   $('#hero').innerHTML=
-   card('Депозит','$'+f(bal),'','<div class="kcl">старт $'+f(start,0)+' → <b class="'+cls(dd)+'">'+mny(dd)+' ('+(dd>0?'+':'')+f(dd/start*100,1)+'%)</b></div><div class="kcs">'+(open.length?'в сделках $'+f(inPos,0)+' · открыто '+open.length+' из '+c.max_open_positions:'сейчас все деньги свободны')+'</div>')+
+   card('Депозит','$'+f(bal)+(open.length?(()=>{const cv=open.reduce((a,q)=>{const pt=q.path&&q.path.length?q.path[q.path.length-1][1]:null;return a+(pt&&q.entry>0?q.size_usd*pt/q.entry:q.size_usd);},0);return '<small class="kin '+(cv>=inPos?'good':'bad')+'" title="Сколько сейчас стоят открытые сделки (вложено $'+f(inPos,0)+'), до комиссий"> (в сделке $'+f(cv)+')</small>';})():''),'','<div class="kcl">старт $'+f(start,0)+' → <b class="'+cls(dd)+'">'+mny(dd)+' ('+(dd>0?'+':'')+f(dd/start*100,1)+'%)</b></div><div class="kcs">'+(open.length?'в сделках $'+f(inPos,0)+' · открыто '+open.length+' из '+c.max_open_positions:'сейчас все деньги свободны')+'</div>')+
    card('Итог сделок '+plabel,(m.pnl>=0?'+':'')+money(m.pnl),cls(m.pnl),'<div class="kcl">уже с комиссиями и газом</div><div class="kcs">'+(n?'лучшая <span class="good">'+mny(best)+'</span> · худшая <span class="bad">'+mny(worst)+'</span>':'сделок пока нет')+'</div>')+
    card('Сделки',n+'<small>'+(n?' · '+f(m.wr,0)+'% в плюс':'')+'</small>','','<div class="kbar">'+(n?'<i class="g" style="flex:'+wn+'"></i><i class="r" style="flex:'+ls+'"></i>':'<i style="flex:1"></i>')+'</div><div class="kcs"><span class="good">'+wn+' в плюс</span> · <span class="bad">'+ls+' в минус</span> · в среднем '+(Number.isNaN(m.avgHold)?'—':dur(m.avgHold))+'</div>')+
    card('Средняя сделка','','','<div class="kavg"><span>в плюс</span><i><b class="g" style="width:'+(aw/mx*100)+'%"></b></i><em class="good">'+(wn?'+$'+f(aw):'—')+'</em></div><div class="kavg"><span>в минус</span><i><b class="r" style="width:'+(al/mx*100)+'%"></b></i><em class="bad">'+(ls?'−$'+f(al):'—')+'</em></div><div class="kcs">'+pfTxt+(n?' · макс. просадка <span class="'+(m.mdd>20?'bad':'')+'">'+f(m.mdd,1)+'%</span>':'')+'</div>');
@@ -1073,7 +1076,7 @@ async function tlwShow(x,d){const el=$('#tlw');if(!el||window.DATA_URL)return;
   rightPriceScale:{borderColor:'#ffffff14',scaleMargins:{top:.08,bottom:.22}},timeScale:{borderColor:'#ffffff14',timeVisible:true,secondsVisible:res==='1s',rightOffset:4},
   crosshair:{mode:0},localization:{priceFormatter:fmt},handleScroll:true,handleScale:true});
  TLW=ch;
- const cs=ch.addCandlestickSeries({upColor:'#4caf6d',downColor:'#e05c5c',borderVisible:false,wickUpColor:'#4caf6d',wickDownColor:'#e05c5c',priceFormat:{type:'custom',formatter:fmt,minMove:mc?1:1e-12}});
+ const cs=ch.addCandlestickSeries({priceLineVisible:false,upColor:'#4caf6d',downColor:'#e05c5c',borderVisible:false,wickUpColor:'#4caf6d',wickDownColor:'#e05c5c',priceFormat:{type:'custom',formatter:fmt,minMove:mc?1:1e-12}});
  cs.setData(k.map(c=>({time:T(c[0]),open:c[1]*K,high:c[2]*K,low:c[3]*K,close:c[4]*K})));
  const vs=ch.addHistogramSeries({priceScaleId:'vol',priceFormat:{type:'volume'},lastValueVisible:false,priceLineVisible:false});ch.priceScale('vol').applyOptions({scaleMargins:{top:.82,bottom:0}});
  vs.setData(k.map(c=>({time:T(c[0]),value:c[5],color:c[4]>=c[1]?'#4caf6d55':'#e05c5c55'})));
@@ -1082,8 +1085,8 @@ async function tlwShow(x,d){const el=$('#tlw');if(!el||window.DATA_URL)return;
  if(x.closed&&exitP>0)mk.push({time:snap(closed),position:'aboveBar',color:+x.pnl_usd>0?'#5fd3a0':'#ff7676',shape:'arrowDown',text:'Выход '+fmt(exitP*K)+' ('+((exitP/entry-1)*100>0?'+':'')+f((exitP/entry-1)*100,1)+'%)'});
  mk.sort((a,b)=>a.time-b.time);cs.setMarkers(mk);
  if(entry>0){cs.createPriceLine({price:entry*K,color:'#8f938a',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'вход'});
-  if(+rules.take_profit_pct)cs.createPriceLine({price:entry*K*(1+rules.take_profit_pct/100),color:'#5fd3a0',lineWidth:1,lineStyle:2,axisLabelVisible:false,title:'тейк +'+rules.take_profit_pct+'%'});
-  if(+rules.stop_loss_pct)cs.createPriceLine({price:entry*K*(1-rules.stop_loss_pct/100),color:'#ff7676',lineWidth:1,lineStyle:2,axisLabelVisible:false,title:'стоп −'+rules.stop_loss_pct+'%'});}
+  if(+rules.take_profit_pct)cs.createPriceLine({price:entry*K*(1+rules.take_profit_pct/100),color:'#5fd3a0',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'тейк +'+rules.take_profit_pct+'%'});
+  if(+rules.stop_loss_pct)cs.createPriceLine({price:entry*K*(1-rules.stop_loss_pct/100),color:'#ff7676',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'стоп −'+rules.stop_loss_pct+'%'});}
  const fit=()=>{const pad=Math.max(res==='1s'?90:600,(closed-opened)*.35);ch.timeScale().setVisibleRange({from:T(Math.max(k[0][0],opened-pad)),to:T(Math.min(k[k.length-1][0],closed+pad))});};
  try{fit();}catch{ch.timeScale().fitContent();}$('#tlwFit').onclick=()=>{try{fit();}catch{}};
  new ResizeObserver(()=>{if(TLW===ch&&el.clientWidth)ch.applyOptions({width:el.clientWidth});}).observe(el);}
@@ -1175,8 +1178,10 @@ function drawTradeChart(x,d){
 }
 
 // ---- версия ----
-const APP_VERSION='2.50';
+const APP_VERSION='2.52';
 const CHANGELOG=[
+ ['2.52','23.09.2026',['Обзор стал уже (до 1480 пикселей по ширине), остальные вкладки без изменений']],
+ ['2.51','23.09.2026',['Карточка «Депозит»: рядом с суммой в скобках — сколько сейчас стоят открытые сделки (зелёным, если дороже вложенного, красным — если дешевле)']],
  ['2.50','23.09.2026',['Карточка сделки: вместо схемы — настоящий свечной график с GMGN (свечи по 1 секунде или 1 минуте, объём внизу), стрелки входа и выхода, линии входа, тейка и стопа; колесо — масштаб, перетаскивание — сдвиг, кнопка «К сделке» возвращает к сделке; ось в капитализации или в цене']],
  ['2.49','23.09.2026',['«Все сделки»: у каждой монеты логотип; таблица растянута вниз на всю высоту экрана']],
  ['2.48','23.09.2026',['Страницу можно прокрутить ниже последнего блока — снизу добавлен запас в половину экрана']],
