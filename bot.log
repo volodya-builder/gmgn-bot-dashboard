@@ -795,3 +795,5 @@
 [2026-09-23 04:50:22] история цен: запрошено 5, получено 5
 [2026-09-23 04:50:23] CANDIDATE ChineseGuy (flap) age 10.4m | liq 9252 | mcap 16869 | holders 120 | swaps 195 | vol 8457 | top10 0.21 | bundler 0.08 | snipers 1 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 141/54 | creator creator_close | wash | smart 1 | renowned 4 | viewers 166 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 203 | chg1m 27 | viewers/holders 1.38 | source rank | launchpad flap
 [2026-09-23 04:50:24] BUY paper ChineseGuy @0.0000174172 $20 | mcap 16869 liq 9252 holders 120
+[2026-09-23 04:52:05] скан: 207 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:181 liq:1; возраст мин/медиана/макс: 12/1069/78730 мин
+[2026-09-23 04:53:14] SELL paper ChineseGuy take_profit pnl 12.55$ (64.2%) hold 3m | balance 894.25
