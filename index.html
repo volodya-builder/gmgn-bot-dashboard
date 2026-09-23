@@ -265,6 +265,32 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 #v-trending .tr-no{max-width:96px;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:bottom}
 #v-trending .tablewrap{overflow-x:hidden}
 @media(max-width:1200px){#v-trending .tablewrap{overflow-x:auto}}
+.htabs{margin-top:-6px}.htabs .pills{flex-wrap:wrap}.htabs .pill .cnt{display:inline-block;margin-left:8px;font-size:11.5px;color:var(--muted);background:#1f1f1f;border-radius:999px;padding:1px 8px;font-variant-numeric:tabular-nums}.htabs .pill .cnt:empty{display:none}
+.hpane{display:none;gap:22px}.hpane.on{display:grid}
+.hverd{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:36px;align-items:start;padding:26px 30px}
+.hverd .vlbl{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.8px}
+.hverd .vt{font-family:var(--font-display);font-size:30px;font-weight:600;line-height:1.15;margin:10px 0 12px;letter-spacing:-.01em}
+.hverd.ok{border-color:#2b5a3a;background:linear-gradient(100deg,#4caf6d14,var(--card) 60%)}.hverd.ok .vt{color:var(--good)}
+.hverd.warn{border-color:#5a4a2b;background:linear-gradient(100deg,#e0b85a12,var(--card) 60%)}.hverd.warn .vt{color:#e0b85a}
+.hverd .vx{color:#c9ccc4;font-size:15px;line-height:1.6}.hverd .vx b{color:var(--text);font-weight:600}.hverd .vx b.good{color:var(--good)}.hverd .vx b.bad{color:var(--bad)}
+.hverd .vmeta{color:var(--muted);font-size:13px;margin-top:16px}.hverd .vmeta b{color:var(--text);font-weight:500}
+.rdy{display:grid;gap:14px;background:#0f0f0f;border:1px solid #1f1f1f;border-radius:16px;padding:16px 18px}
+.rdy1 .rl{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;color:#c9ccc4}.rdy1 .rl b{color:var(--text);font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar{height:6px;background:#232323;border-radius:99px;overflow:hidden;margin-top:7px}.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}.bar i.full{background:var(--good)}
+.h4{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin:0 0 10px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}.h4 span{text-transform:none;letter-spacing:0;font-size:13px;color:#c9ccc4}
+.lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;margin-top:20px}
+.lead .crow{grid-template-columns:minmax(120px,1fr) auto auto auto}
+.lcmp{color:#c9ccc4;font-size:14px;line-height:1.55;margin-top:14px;padding:10px 14px;border-left:2px solid var(--border2);background:#ffffff05;border-radius:0 10px 10px 0}.lcmp b{color:var(--text);font-weight:600}.lcmp b.good{color:var(--good)}.lcmp b.bad{color:var(--bad)}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.kpi{background:#0f0f0f;border:1px solid #1f1f1f;border-radius:14px;padding:12px 14px;min-width:0}.kpi .l{color:var(--muted);font-size:12.5px}.kpi .v{font-family:var(--font-display);font-size:26px;font-weight:500;font-variant-numeric:tabular-nums;margin-top:2px;white-space:nowrap}.kpi .s{color:var(--muted);font-size:12px;margin-top:2px}
+.cklist{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;margin-bottom:18px}
+.ck{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:start;padding:10px 12px;border-radius:12px;background:#0f0f0f;border:1px solid #1c1c1c}.ck svg{width:20px;height:20px;display:block}.ck .t{font-size:14px;line-height:1.35}.ck .v{font-size:12.5px;color:var(--muted);margin-top:3px}.ck.na .t{color:#b5b8b0}
+.more{margin-top:18px;border-top:1px solid #1f1f1f;padding-top:14px}.more summary{cursor:pointer;color:var(--accent);font-size:14px;list-style:none;width:max-content;max-width:100%}.more summary::-webkit-details-marker{display:none}.more summary::before{content:"▸ ";color:var(--muted)}.more[open] summary::before{content:"▾ "}
+.cks{display:inline-flex;gap:3px;vertical-align:middle}.cks i,.ckd{display:inline-block;width:9px;height:9px;border-radius:50%;background:#3a3d38}.cks i.ok,.ckd.ok{background:var(--good)}.cks i.no,.ckd.no{background:var(--bad)}
+.ckleg{margin:-4px 0 12px;font-size:12.5px}.ckleg .ckd{margin-right:6px;vertical-align:-1px}
+.hchips.flat{cursor:inherit;flex-wrap:wrap}.hchip.more{color:var(--muted);border-style:dashed}
+#hypTable .hx{white-space:nowrap}#hypTable td:nth-child(8){white-space:nowrap}.hdgrid .lead .crow,.hdgrid .crow.full{grid-template-columns:minmax(120px,1fr) auto auto auto}.hdgrid .crow.full .was{text-decoration:line-through;font-size:13px}
+@media(max-width:900px){.hverd,.lead{grid-template-columns:1fr;gap:22px}.hverd{padding:22px 20px}.hverd .vt{font-size:25px}}
+@media(max-width:700px){.htabs .pills{display:flex;flex-wrap:nowrap;overflow-x:auto;max-width:100%;scrollbar-width:none}.htabs .pills::-webkit-scrollbar{display:none}.cklist{grid-template-columns:1fr}.kpi .v{font-size:22px}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -288,22 +314,33 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 </section>
 <section class="view" id="v-hyp">
   <div class="titlebar"><h1 class="h1">Гипотезы</h1><div class="pills small" id="hypPeriod"><button class="pill" data-w="24h">24 часа</button><button class="pill on" data-w="7d">7 дней</button><button class="pill" data-w="30d">30 дней</button><button class="pill" data-w="all">Всё время</button></div></div>
-  <div id="hypPrem"></div>
-  <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Данные</div><div class="sub">На чём основаны все оценки ниже. Пока данных меньше порога, любой «лучший вариант» — скорее всего, случайность.</div></div></div><div class="dgrid" id="hypData"></div></div>
-  <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Минута входа</div><div class="sub">Что происходит с монетой через 30 минут после покупки, если купить её на N-й минуте жизни. Столбики — типичный результат на сделку $<span id="minSize">20</span> после всех издержек, линии — доля монет, упавших ниже −25% и доросших до +60%.</div></div></div><canvas id="minChart" style="height:280px"></canvas><div class="note" style="text-align:center;margin-top:2px">минута входа (n — сколько монет в оценке)</div><div class="hleg" id="minLegend" style="margin-top:10px"></div><div id="minNote" class="hnote"></div></div>
-  <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Наблюдаемые гипотезы</div><div class="sub">Гипотеза сначала предлагается на одних данных, а проверяется только на новых — тех, что пришли после даты предложения. Иначе это подгонка.</div></div></div><div id="hypWatch"></div></div>
-  <div class="card champ" id="champ"></div>
-  <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Модель против реальности</div><div class="sub">Симуляция считает по минутным свечам, а бот выходит за секунды. Здесь видно, насколько модель промахивается на последних реальных сделках, и как эту разницу учитываем в перебор.</div></div></div><div id="hypReal"></div></div>
-  <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Сравнение на графике</div><div class="sub" id="hypSub">Накопленная прибыль, если бы бот торговал по гипотезе</div></div><div class="hleg" id="hypLegend"></div></div><canvas id="hypChart"></canvas><div class="note" style="margin-top:8px">Кликни по строке в таблице ниже, чтобы добавить или убрать её с графика (до 5 линий).</div></div>
-  <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Все проверенные варианты</div><div class="sub" id="hypTblSub"></div></div><div class="pills small" id="hypFilter"><button class="pill on" data-f="all">Все</button><button class="pill" data-f="solid">Только надёжные</button><button class="pill" data-f="single">Одно изменение</button></div></div><div class="tablewrap" style="max-height:72vh"><table id="hypTable"></table></div></div>
-  <details class="card fold" id="hypUselessCard"><summary><span class="big" style="font-size:22px">Что не работает</span><span class="sub" id="hypUselessSub">Признаки, по которым лучшая и худшая треть монет отличаются меньше чем на $2 на сделку. Их не нужно перебирать заново.</span></summary><div id="hypUseless" style="margin-top:16px"></div></details>
-  <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Итоги суток</div><div class="sub">Каждую ночь после 00:00 МСК бот фиксирует лучшую гипотезу за 24 часа, 7 и 30 дней вместе с её нижней границей и статусом. Если лидер меняется день ото дня, перебор ловит шум, а не закономерность.</div></div></div><div id="hypReports"></div></div>
+  <div class="htabs"><div class="pills" id="hypTabs"><button class="pill on" data-t="sum">Итог</button><button class="pill" data-t="all">Все варианты<span class="cnt" id="hcAll"></span></button><button class="pill" data-t="watch">Под наблюдением<span class="cnt" id="hcWatch"></span></button><button class="pill" data-t="lab">Исследование</button><button class="pill" data-t="help">Как читать</button></div></div>
+  <div class="hpane on" data-p="sum">
+   <div class="card hverd" id="hypVerdict"></div>
+   <div class="card champ" id="champ"></div>
+   <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Лучшая против текущих правил</div><div class="sub" id="hypSub2">Накопленная прибыль, если бы бот торговал по каждому из вариантов</div></div><div class="hleg" id="hypLegend2"></div></div><canvas id="hypChart2"></canvas></div>
+  </div>
+  <div class="hpane" data-p="all">
+   <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Сравнение на графике</div><div class="sub">Накопленная прибыль выбранных вариантов (до 5 линий)</div></div><div class="hleg" id="hypLegend"></div></div><canvas id="hypChart"></canvas></div>
+   <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Все проверенные варианты</div><div class="sub" id="hypTblSub"></div></div><div class="pills small" id="hypFilter"><button class="pill on" data-f="all">Все</button><button class="pill" data-f="solid">Только надёжные</button><button class="pill" data-f="single">Одно изменение</button></div></div><div class="hleg ckleg"><span>Проверки:</span><span><i class="ckd ok"></i>пройдена</span><span><i class="ckd no"></i>не пройдена</span><span><i class="ckd na"></i>пока нечем проверить</span></div><div class="tablewrap" style="max-height:72vh"><table id="hypTable"></table></div></div>
+  </div>
+  <div class="hpane" data-p="watch">
+   <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Под наблюдением</div><div class="sub">Гипотеза проверяется только на монетах, которые появились после того, как её предложили. Так видно, работает ли она на самом деле, а не только на тех данных, где её нашли.</div></div></div><div id="hypWatch"></div></div>
+  </div>
+  <div class="hpane" data-p="lab">
+   <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Когда покупать</div><div class="sub">Что происходит через 30 минут, если купить монету на N-й минуте её жизни. Столбики — типичный результат на сделку $<span id="minSize">20</span> после издержек.</div></div></div><canvas id="minChart" style="height:280px"></canvas><div class="note" style="text-align:center;margin-top:2px">минута входа (n — сколько монет в оценке)</div><div class="hleg" id="minLegend" style="margin-top:10px"></div><div id="minNote" class="hnote"></div></div>
+   <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Симуляция против реальности</div><div class="sub">Насколько расчёт по минутным свечам расходится с реальными сделками бота и какая поправка вносится.</div></div></div><div id="hypReal"></div></div>
+   <details class="card fold" id="hypUselessCard" open><summary><span class="big" style="font-size:22px">Какие метрики не помогают</span><span class="sub" id="hypUselessSub"></span></summary><div id="hypUseless" style="margin-top:16px"></div></details>
+   <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Итоги по дням</div><div class="sub">Лучшая гипотеза, зафиксированная каждую ночь. Если лидер меняется каждый день — перебор ловит случайность.</div></div></div><div id="hypReports"></div></div>
+  </div>
+  <div class="hpane" data-p="help">
   <div class="card"><h2>Как читать эту вкладку</h2><div class="howto">
    <p><b>Откуда данные.</b> Бот записывает все свежие токены BSC со всеми метриками GMGN, а через полтора часа подтягивает их поминутную историю цены. На каждом токене можно проверить, что было бы, если купить его по одним правилам и продать по другим. Реальные сделки бота из trades.csv нужны, чтобы понять, насколько модель промахивается.</p>
    <p><b>Три уровня честности.</b> Первый — просто средний результат на сделку: его легко получить случайно. Второй — «с учётом разброса»: из среднего вычитаем стандартную ошибку и смотрим, остаётся ли плюс; рядом — интервал, в который результат попадёт в 90% случаев при повторении. Третий — «против шума»: тот же перебор запускаем на данных, где результаты монет перемешаны случайно, 20 раз, и смотрим, какой «лучший» результат даёт чистая случайность. Если наш лучший вариант не выше этого уровня, он ничем не отличается от шума.</p>
    <p><b>Проверка на подгонку.</b> Результат без трёх лучших сделок (если он рушится, всё держалось на удаче). Разделение по времени: подбираем на первых 70% данных, проверяем на последних 30%. Соседние параметры: если чуть другой тейк или стоп ломает результат, это подгонка под конкретные сделки.</p>
    <p><b>Метки.</b> <span class="rel solid">надёжно</span> — нижняя граница выше нуля, лучше шума, не меньше 100 проверочных сделок и больше 60% дней в плюсе. <span class="rel maybe">похоже на правду</span> — нижняя граница выше нуля хотя бы на 30 сделках. <span class="rel few">мало данных</span> — всё остальное. Кнопка «Применить к боту» работает только для «надёжно»; самообучение в Правилах подчиняется тем же условиям.</p>
    <p><b>Издержки.</b> Проскальзывание 3% на вход и на выход, газ $0,3. Стоп в симуляции считается не по заданному уровню, а по фактической глубине реальных стопов бота (медиана последних 30).</p></div></div>
+  </div>
 </section>
 <section class="view" id="v-arena">
   <div class="titlebar"><h1 class="h1">Арена</h1><div class="pills small" id="arMode"><button class="pill on" data-m="funnel">Воронка отбора</button><button class="pill" data-m="race">Гонка гипотез</button></div></div>
@@ -581,8 +618,9 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.11';
+const APP_VERSION='2.12';
 const CHANGELOG=[
+ ['2.12','23.09.2026',['Вкладка «Гипотезы» разбита на разделы: Итог, Все варианты, Под наблюдением, Исследование, Как читать','Наверху — один главный вывод простыми словами и полоски «сколько данных накоплено»','Лучшая гипотеза: что поменять (было → стало), 4 ключевые цифры и чек-лист «можно ли ей верить» с зелёными/красными отметками; подробные цифры спрятаны под «Подробнее»','Таблица вариантов короче: до 3 изменений в строке, колонка «Проверки» точками, кнопка «Подробнее» вместо клика по чипам']],
  ['2.11','23.09.2026',['Бот записывает цены свежих монет каждые 5 секунд (до 10 монет одновременно, первый час жизни) — основа для честной симуляции; счётчик в блоке «Данные» на вкладке «Гипотезы»']],
  ['2.10','23.09.2026',['Второй экземпляр бота на реальные деньги (порт 8788): переключатель «Реальные деньги / Симуляция» в шапке','Живой режим: подтверждение ордера на покупку без остановки цикла, снятие позиции при неудачной покупке, защита от бесконечных попыток продажи']],
  ['2.9','23.09.2026',['На графиках сделок вместо цены токена везде капитализация: в объяснении, в подсказке под курсором и у уровней входа, тейка и стопа']],
@@ -642,60 +680,97 @@ function overfit(m,wf){if(!m||!m.n)return '';const rows=[];
  if(wf)rows.push(['Если честно выбирать лучший вариант только по первым 70%','он даёт на последних 30%: <b class="'+cls(wf.test_exp)+'">'+mny(wf.test_exp)+'</b> на '+wf.test_n+' сделках'+(wf.best_train_name?' <span class="note">('+esc(wf.best_train_name.slice(0,70))+')</span>':''),wf.test_n>=30?(wf.test_exp>0?'выбор по прошлому работает':'выбор по прошлому не работает'):'сделок мало']);
  rows.push(['Соседние параметры (тейк/стоп ±10%)',m.neigh?'в среднем <b class="'+cls(m.neigh.exp)+'">'+mny(m.neigh.exp)+'</b>, худший сосед '+mny(m.neigh.min):'—',m.neigh?(Math.abs(m.neigh.exp-m.exp)<Math.max(1,Math.abs(m.exp)*0.5)?'устойчиво':'результат зависит от точных параметров — подгонка'):'']);
  return '<div class="ofit">'+rows.map(r=>'<div class="orow"><span>'+r[0]+'</span><span>'+r[1]+'</span><span class="note">'+r[2]+'</span></div>').join('')+'</div>';}
+// ---- вкладка «Гипотезы» v2.12: подвкладки, вердикт, чек-лист проверок ----
+let hypTab='sum';try{hypTab=localStorage.getItem('hypTab')||'sum';}catch{}
+const CKI={ok:'<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#4caf6d22" stroke="#4caf6d"/><path d="M6 10.3l2.6 2.6L14 7.6" fill="none" stroke="#4caf6d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ no:'<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#e05c5c1f" stroke="#e05c5c"/><path d="M7 7l6 6M13 7l-6 6" stroke="#e05c5c" stroke-width="1.8" stroke-linecap="round"/></svg>',
+ na:'<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="none" stroke="#4a4d47"/><path d="M6.5 10h7" stroke="#8f938a" stroke-width="1.8" stroke-linecap="round"/></svg>'};
+const sdl=n=>n%10===1&&n%100!==11?'сделка':n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?'сделки':'сделок';
+// проверки «можно ли верить»: ok=true/false, null — пока нечем проверить
+function hypChecks(m,nz,fresh,vs){if(!m||!m.n)return [];const C=[];const add=(ok,t,v,k)=>C.push({ok,t,v,k});
+ const vn=fresh?m.n:(m.holdout?.n||0);
+ add(vn>=100,'Хватает проверочных сделок',vn+' из 100 нужных','n');
+ add(m.expLB>0,'В плюсе даже при осторожной оценке','нижняя граница '+mny(m.expLB)+' на сделку','lb');
+ const v=vs||m.vs_noise;add(v==='better'?true:v==='within'?false:null,'Лучше, чем случайный перебор',nz?'случайность даёт до '+mny(nz.p95)+' на сделку':'пока не посчитано','noise');
+ if(!fresh){add(m.holdout?.n?m.holdout.exp>0:null,'Работает на новых данных',m.holdout?.n?'последние 30%: '+mny(m.holdout.exp)+' на '+m.holdout.n+' '+sdl(m.holdout.n):'новых сделок ещё нет','new');
+  add(m.no_top3?m.no_top3.exp>0:null,'Не держится на трёх удачных сделках',m.no_top3?'без них '+mny(m.no_top3.exp)+' на сделку':'мало сделок','top3');
+  add(m.neigh?Math.abs(m.neigh.exp-m.exp)<Math.max(1,Math.abs(m.exp)*0.5):null,'Не зависит от точных тейка и стопа',m.neigh?'тейк/стоп ±10%: в среднем '+mny(m.neigh.exp):'не посчитано','neigh');}
+ add(m.days&&m.days.n>=3?m.days.pos_pct>60:null,'Больше 60% дней в плюсе',m.days?m.days.pos_pct+'% из '+m.days.n+' дн.'+(m.days.n<3?' — дней пока мало':''):'—','days');
+ return C;}
+const ckState=c=>c.ok===true?'ok':c.ok===false?'no':'na';
+function ckList(C){return '<div class="cklist">'+C.map(c=>'<div class="ck '+ckState(c)+'">'+CKI[ckState(c)]+'<div><div class="t">'+c.t+'</div><div class="v">'+c.v+'</div></div></div>').join('')+'</div>';}
+function ckDots(C){const p=C.filter(c=>c.ok===true).length;return '<span class="cks" title="'+esc(C.map(c=>(c.ok===true?'да':c.ok===false?'нет':'—')+': '+c.t).join('\n'))+'">'+C.map(c=>'<i class="'+ckState(c)+'"></i>').join('')+'</span> <span class="note">'+p+'/'+C.length+'</span>';}
+function chipsShort(r,max=3){if(!r.diff.length)return '<span class="hchip cur">текущие правила</span>';const a=r.diff.slice(0,max).map(d=>'<span class="hchip" title="сейчас: '+esc(d.was)+'">'+esc(d.text)+'</span>');if(r.diff.length>max)a.push('<span class="hchip more">ещё '+(r.diff.length-max)+'</span>');return a.join('');}
+function kpis(m){return '<div class="kpis"><div class="kpi"><div class="l">На сделку в среднем</div><div class="v '+cls(m.exp)+'">'+mny(m.exp)+'</div><div class="s">при ставке $'+f(D.config.position_size_usd,0)+'</div></div>'+
+ '<div class="kpi"><div class="l">Сделок</div><div class="v">'+m.n+'</div><div class="s">прибыльных '+f(m.win,0)+'%</div></div>'+
+ '<div class="kpi"><div class="l">Осторожная оценка</div><div class="v '+cls(m.expLB)+'">'+mny(m.expLB)+'</div><div class="s">среднее минус разброс</div></div>'+
+ '<div class="kpi"><div class="l">Итог</div><div class="v '+cls(m.pnl)+'">'+mny(m.pnl)+'</div><div class="s">'+(m.dd?'худшая просадка −$'+f(m.dd):'без просадки')+'</div></div></div>';}
+function bar(l,v,lim,txt){const p=Math.max(0,Math.min(100,lim?v/lim*100:0));return '<div class="rdy1"><div class="rl"><span>'+l+'</span><b>'+txt+'</b></div><div class="bar"><i class="'+(p>=100?'full':'')+'" style="width:'+p+'%"></i></div></div>';}
+function setHypTab(t){hypTab=t;try{localStorage.setItem('hypTab',t);}catch{}document.querySelectorAll('#hypTabs .pill').forEach(x=>x.classList.toggle('on',x.dataset.t===t));document.querySelectorAll('#v-hyp .hpane').forEach(p=>p.classList.toggle('on',p.dataset.p===t));renderHyp(true);}
 function renderHyp(force){const H=D.hypotheses;
- if(!H||!H.list||!H.list[0]||!H.list[0].win||!H.engine){$('#hypPrem').innerHTML='<div class="prem"><b>Гипотезы ещё не посчитаны</b><span>'+(H&&H.list?'Движок проверки обновлён — первый пересчёт через несколько минут после перезапуска бота.':'Бот собирает данные. Первые результаты появятся примерно через 2 часа после запуска.')+'</span></div>';['#hypData','#champ','#hypTable','#hypReports','#hypWatch','#hypReal','#hypUseless','#minNote'].forEach(s=>$(s).innerHTML='');return;}
- const key=H.generated_at+'|'+hypW+'|'+hypF+'|'+[...(hypSel||[])].join()+'|'+[...hypOpen].join()+'|'+applyArm+'|'+watchArm+'|'+(D.editable||'');if(key===hypKey&&!force)return;hypKey=key;
+ document.querySelectorAll('#v-hyp .hpane').forEach(p=>p.classList.toggle('on',p.dataset.p===hypTab));document.querySelectorAll('#hypTabs .pill').forEach(x=>x.classList.toggle('on',x.dataset.t===hypTab));
+ if(!H||!H.list||!H.list[0]||!H.list[0].win||!H.engine){$('#hypVerdict').innerHTML='<div class="vlbl">Главный вывод</div><div class="vt">Гипотезы ещё не посчитаны</div><div class="vx">'+(H&&H.list?'Движок проверки обновлён — первый пересчёт через несколько минут после перезапуска бота.':'Бот собирает данные. Первые результаты появятся примерно через 2 часа после запуска.')+'</div>';['#champ','#hypTable','#hypReports','#hypWatch','#hypReal','#hypUseless','#minNote'].forEach(s=>{const e=$(s);if(e)e.innerHTML='';});return;}
+ const key=H.generated_at+'|'+hypW+'|'+hypF+'|'+hypTab+'|'+[...(hypSel||[])].join()+'|'+[...hypOpen].join()+'|'+applyArm+'|'+watchArm+'|'+(D.editable||'');if(key===hypKey&&!force)return;hypKey=key;
  const list=H.list,cur=list.find(r=>r.id==='current');const ch=H.champions?.[hypW];const best=ch&&list.find(r=>r.id===ch.id);const nz=H.noise?.[hypW]||null,wf=H.walkforward?.[hypW]||null,d=H.data;
  if(!hypSel){hypSel=new Set(['current']);if(best)hypSel.add(best.id);}
- // данные и плашка
- const need=[];if(d.need.tokens>0)need.push(d.need.tokens+' токенов с историей');if(d.need.days>0)need.push(f(d.need.days,1)+' дн. данных');
- $('#hypPrem').innerHTML=d.premature?'<div class="prem"><b>Выводы преждевременны</b><span>Нужно ещё '+need.join(' и ')+'. Все оценки ниже помечены «мало данных» и могут полностью измениться, когда данных станет больше.</span></div>':'<div class="prem ok"><b>Данных достаточно для первых выводов</b><span>Порог по токенам и дням пройден. Метка «надёжно» по-прежнему требует 100 проверочных сделок.</span></div>';
+ const W=H.watch||[];const nAll=list.filter(r=>r.id!=='current'&&r.win[hypW].n>0).length;
+ $('#hcAll').textContent=nAll;$('#hcWatch').textContent=W.filter(w=>w.status==='observing').length||'';
+ // ===== Итог =====
+ const bm=best?best.win[hypW]:null;const C=bm?hypChecks(bm,nz):[];const pass=C.filter(c=>c.ok===true).length;
+ let vc='no',vt='Преимущества пока нет',vx='';
+ if(bm&&bm.rel==='solid'){vc='ok';vt='Найдена стратегия, которой можно доверять';vx='Лучший вариант '+WLBL[hypW]+' прошёл все проверки: '+mny(bm.exp)+' на сделку на '+bm.n+' '+sdl(bm.n)+'. Его можно применить к боту на вкладке ниже.';}
+ else if(bm&&bm.n){const pri=['new','noise','lb','top3','n','neigh','days'];const fail=pri.map(k=>C.find(c=>c.k===k&&c.ok===false)).find(Boolean);
+  if(bm.exp>0){vc='warn';vt='Есть кандидат, но верить ему рано';}
+  vx='Лучший вариант '+WLBL[hypW]+' в симуляции даёт <b class="'+cls(bm.exp)+'">'+mny(bm.exp)+'</b> на сделку ('+bm.n+' '+sdl(bm.n)+'), но прошёл только <b>'+pass+' из '+C.length+'</b> проверок.'+(fail?' Главное: не выполнено «'+fail.t.toLowerCase()+'» — '+fail.v+'.':'');}
+ else vx='За этот период ни один вариант не набрал достаточно сделок. Выбери период подлиннее или подожди, пока бот соберёт историю.';
+ if(d.premature)vx+=' Данных пока мало, поэтому любые цифры ниже ещё могут сильно измениться.';
  const nextIn=Math.max(0,Math.round((H.generated_at+600e3-Date.now())/60e3));
- const tile=(v,lim,l,s)=>'<div class="dt"><div class="v">'+v+'<span> / '+lim+'</span></div><div class="l">'+l+'</div><div class="s">'+s+'</div></div>';
- $('#hypData').innerHTML=tile(f(d.with_paths,0),d.thresholds.tokens,'токенов с историей цены',d.need.tokens>0?'нужно ещё '+d.need.tokens:'порог пройден'+(d.tokens_used&&d.tokens_used<d.tokens?' · в перебор идут '+f(d.tokens_used,0)+' самых свежих':''))+
-  tile(f(d.days,1),d.thresholds.days,'дней данных',d.first_t?'с '+dt(d.first_t*1000)+(d.need.days>0?' · нужно ещё '+f(d.need.days,1):''):'—')+
-  (d.with_ticks!=null?'<div class="dt"><div class="v">'+f(d.with_ticks,0)+'<span> / 300</span></div><div class="l">монет с 5-секундными ценами</div><div class="s">копится с 23.09; нужны для честной симуляции быстрых стопов и тейков</div></div>':'')+tile(f(d.real_trades,0),d.thresholds.trades,'реальных закрытых сделок по правилам '+esc(d.real_rules),d.need.trades>0?'нужно ещё '+d.need.trades+' до порога':'порог пройден')+
-  '<div class="dt"><div class="v">'+f(H.tested_total,0)+'</div><div class="l">вариантов проверено всего</div><div class="s">'+f(H.tested_now,0)+' в последнем прогоне за '+f((H.took_ms||0)/1000,1)+' с · пересчёт '+new Date(H.generated_at).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+(nextIn?', следующий через ~'+nextIn+' мин':'')+'</div></div>';
- // минута входа
- drawMinutes(H.entry_minute||[]);
- // наблюдаемые
- renderWatch(H);
- // лучшая гипотеза
+ $('#hypVerdict').className='card hverd '+vc;
+ $('#hypVerdict').innerHTML='<div><div class="vlbl">Главный вывод '+WLBL[hypW]+'</div><div class="vt">'+vt+'</div><div class="vx">'+vx+'</div><div class="vmeta">Проверено вариантов: <b>'+f(H.tested_total,0)+'</b> · пересчёт в '+new Date(H.generated_at).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+(nextIn?', следующий через ~'+nextIn+' мин':'')+'</div></div>'+
+  '<div class="rdy"><div class="vlbl">Сколько данных накоплено</div>'+bar('Монет с историей цены',d.with_paths,d.thresholds.tokens,f(d.with_paths,0)+' / '+d.thresholds.tokens)+bar('Дней наблюдений',d.days,d.thresholds.days,f(d.days,1)+' / '+d.thresholds.days)+(d.with_ticks!=null?bar('Монет с ценами каждые 5 секунд',d.with_ticks,300,f(d.with_ticks,0)+' / 300'):'')+bar('Реальных сделок по правилам '+esc(d.real_rules||''),d.real_trades,d.thresholds.trades,f(d.real_trades,0)+' / '+d.thresholds.trades)+'<div class="note">Пока полоски не заполнены, выводы предварительные.</div></div>';
  const canApply=D.editable&&!window.DATA_URL;
- if(best){const m=best.win[hypW],cm=cur?.win[hypW];const better=cm&&cm.n?m.exp-cm.exp:null;const solid=m.rel==='solid';
-  $('#champ').innerHTML='<div class="chead"><div class="clbl">Лучшая гипотеза '+WLBL[hypW]+' (по нижней границе)</div>'+relTag(m.rel)+'</div>'+
-   '<div class="cbig '+cls(m.pnl)+'">'+mny(m.pnl)+'<span> · '+m.n+' сделок · '+(m.dd?'просадка −$'+f(m.dd):'без просадки')+'</span></div>'+
-   levels(m,m.holdout,nz,'4. Проверочная часть (последние 30%)')+
-   '<div class="ccmp">'+(cm&&cm.n?'Текущие правила '+WLBL[hypW]+': <b class="'+cls(cm.pnl)+'">'+mny(cm.pnl)+'</b> на '+cm.n+' сделках ('+mny(cm.exp)+' на сделку, нижняя граница '+mny(cm.expLB)+'). Гипотеза '+(better>0?'<b class="good">лучше на '+mny(better).replace('+','')+'</b>':'<b class="bad">хуже на '+mny(better).replace('−','')+'</b>')+' на каждой сделке в среднем.':'По текущим правилам '+WLBL[hypW]+' сделок в симуляции нет — сравнивать не с чем.')+'</div>'+
-   '<div class="clbl" style="margin-bottom:8px">Проверка на подгонку</div>'+overfit(m,wf)+
-   '<div class="cwhat" style="margin-top:18px"><div class="clbl" style="margin-bottom:8px">Что поменять в правилах</div>'+(best.diff.length?best.diff.map(dd=>'<div class="crow"><span>'+esc(dd.label||dd.text)+'</span><span class="was">'+esc(dd.was)+'</span><span class="arr">→</span><b>'+esc(dd.val||'')+'</b></div>').join(''):'<div class="note">ничего — текущие правила и есть лучший вариант</div>')+'</div>'+
-   '<div class="cbtns"><button class="btn" data-hyptrades="'+best.id+'" data-w="'+hypW+'" data-name="'+esc(best.name)+'">Сделки на графиках</button>'+(canApply&&best.diff.length?'<button class="btn '+(applyArm===best.id?'danger':'primary')+'" id="applyBtn"'+(solid?'':' disabled title="'+esc((m.why||[]).join('; '))+'"')+'>'+(applyArm===best.id?'Точно применить? Нажми ещё раз':'Применить к боту')+'</button><button class="btn" id="watchBtn">'+(watchArm===best.id?'Точно наблюдать? Нажми ещё раз':'Взять под наблюдение')+'</button>':'')+'<span class="note" id="applyNote">'+(solid?'Гипотеза прошла все проверки.':'Кнопка неактивна: '+esc((m.why||[]).join('; '))+'.')+'</span></div>';
+ if(best){const m=bm,cm=cur?.win[hypW];const solid=m.rel==='solid';const dlt=cm&&cm.n?m.exp-cm.exp:null;
+  $('#champ').innerHTML='<div class="chead"><div class="big" style="font-size:22px">Лучшая гипотеза '+WLBL[hypW]+'</div>'+relTag(m.rel)+'</div><div class="sub" style="margin-top:4px">Выбрана по осторожной оценке (среднее минус разброс), а не по самой большой прибыли.</div>'+
+   '<div class="lead"><div><div class="h4">Что поменять в правилах</div>'+(best.diff.length?best.diff.map(dd=>'<div class="crow"><span>'+esc(dd.label||dd.text)+'</span><span class="was">'+esc(dd.was)+'</span><span class="arr">→</span><b>'+esc(dd.val||'')+'</b></div>').join(''):'<div class="note">ничего — текущие правила и есть лучший вариант</div>')+
+   '<div class="lcmp">'+(dlt==null?'По текущим правилам '+WLBL[hypW]+' сделок в симуляции нет — сравнивать не с чем.':Math.abs(dlt)<0.01?'Результат <b>такой же, как у текущих правил</b> ('+mny(cm.exp)+' на сделку) — на этих данных изменение ничего не меняет.':'Текущие правила: '+mny(cm.exp)+' на сделку на '+cm.n+' '+sdl(cm.n)+'. Гипотеза '+(dlt>0?'<b class="good">лучше на '+mny(dlt).replace('+','')+'</b>':'<b class="bad">хуже на '+mny(dlt).replace('−','')+'</b>')+' на каждой сделке.')+'</div></div>'+
+   '<div><div class="h4">Результат в симуляции</div>'+kpis(m)+'</div></div>'+
+   '<div class="h4" style="margin-top:22px">Можно ли ей верить <span>пройдено '+pass+' из '+C.length+'</span></div>'+ckList(C)+
+   '<div class="cbtns"><button class="btn" data-hyptrades="'+best.id+'" data-w="'+hypW+'" data-name="'+esc(best.name)+'">Сделки на графиках</button>'+(canApply&&best.diff.length?'<button class="btn '+(applyArm===best.id?'danger':'primary')+'" id="applyBtn"'+(solid?'':' disabled')+'>'+(applyArm===best.id?'Точно применить? Нажми ещё раз':'Применить к боту')+'</button><button class="btn" id="watchBtn">'+(watchArm===best.id?'Точно наблюдать? Нажми ещё раз':'Взять под наблюдение')+'</button>':'')+'</div>'+
+   '<div class="note" id="applyNote" style="margin-top:10px">'+(solid?'Гипотеза прошла все проверки.':best.diff.length&&canApply?'Применить можно только гипотезу с меткой «надёжно» — когда все проверки выше станут зелёными.':'')+'</div>'+
+   '<details class="more"><summary>Подробные цифры и проверка на подгонку</summary><div style="margin-top:12px">'+levels(m,m.holdout,nz,'4. Последние 30% данных')+overfit(m,wf)+'</div></details>';
   const ab=$('#applyBtn');if(ab)ab.onclick=()=>applyHyp(best,{entry:best.entry,exit:best.exit});const wb=$('#watchBtn');if(wb)wb.onclick=()=>watchHyp(best);}
- else $('#champ').innerHTML='<div class="clbl">Лучшая гипотеза '+WLBL[hypW]+'</div><div class="cbig" style="font-size:26px">Пока нет</div><div class="note">За этот период ни один вариант не набрал 10 сделок. Выбери период подлиннее или подожди, пока бот соберёт больше истории.</div>';
- // модель против реальности
- renderReality(H);
- // таблица
+ else $('#champ').innerHTML='<div class="big" style="font-size:22px">Лучшая гипотеза '+WLBL[hypW]+'</div><div class="note" style="margin-top:8px">Пока нет: ни один вариант не набрал 10 сделок за этот период.</div>';
+ // ===== Все варианты =====
  let rows=list.filter(r=>r.id!=='current');if(hypF==='solid')rows=rows.filter(r=>r.win[hypW].rel==='solid');if(hypF==='single')rows=rows.filter(r=>r.diff.length===1);
  const rk=m=>m.score>-1e9?m.score:-1e6+m.exp;rows.sort((a,b)=>rk(b.win[hypW])-rk(a.win[hypW]));rows=rows.filter(r=>r.win[hypW].n>0).slice(0,60);if(cur)rows.unshift(cur);
- $('#hypTblSub').textContent='Показаны лучшие '+(rows.length-1)+' '+WLBL[hypW]+' · сортировка по нижней границе (среднее минус разброс), а не по средней прибыли'+(nz?' · p95 шума '+mny(nz.p95):'');
+ $('#hypTblSub').textContent=(rows.length-1)+' вариантов '+WLBL[hypW]+', лучшие сверху (по осторожной оценке). Нажми на строку — она появится на графике выше.';
  const selArr=[...hypSel];
- $('#hypTable').innerHTML='<tr><th></th><th>#</th><th>Что изменено относительно текущих правил</th><th>Статус</th><th class="num">Сделок</th><th class="num">В среднем</th><th class="num">Нижняя граница</th><th class="num">90% интервал</th><th>Против шума</th><th class="num">Проверка</th></tr>'+
-  rows.map((r,i)=>{const m=r.win[hypW],si=selArr.indexOf(r.id),open=hypOpen.has(r.id);
-   return '<tr class="hyp-row'+(si>=0?' sel':'')+(r.id==='current'?' currow':'')+'" data-id="'+r.id+'"><td>'+(si>=0?'<span class="sw" style="background:'+HCOL[si%HCOL.length]+'"></span>':'<span class="sw empty"></span>')+'</td><td class="note">'+(r.id==='current'?'—':i)+'</td><td><div class="hchips">'+chips(r)+'</div></td><td>'+relTag(m.rel)+'</td><td class="num">'+m.n+'</td><td class="num '+cls(m.exp)+'">'+(m.n?mny(m.exp):'—')+'</td><td class="num '+cls(m.expLB)+'">'+(m.n?mny(m.expLB):'—')+'</td><td class="num note">'+(m.boot?mny(m.boot[0])+' … '+mny(m.boot[1]):'—')+'</td><td>'+(m.vs_noise==='better'?'<span class="good">лучше</span>':m.vs_noise==='within'?'<span class="bad">внутри</span>':'—')+'</td><td class="num '+cls(m.holdout.exp)+'">'+(m.holdout.n?mny(m.holdout.exp)+' <span class="note">· '+m.holdout.n+'</span>':'—')+'</td></tr>'+
-    (open?'<tr class="hdet"><td colspan="10">'+detail(r,nz,wf)+'</td></tr>':'');}).join('');
- $('#hypTable').querySelectorAll('.hyp-row').forEach(tr=>tr.onclick=e=>{const id=tr.dataset.id;if(e.target.closest('.hchips')){hypOpen.has(id)?hypOpen.delete(id):hypOpen.add(id);}else{if(hypSel.has(id))hypSel.delete(id);else{if(hypSel.size>=5)hypSel.delete([...hypSel][hypSel.size-1]);hypSel.add(id);}}renderHyp(true);});
- renderUseless(H);renderReports();drawHyp(list);}
+ $('#hypTable').innerHTML='<tr><th></th><th>#</th><th>Что изменено</th><th>Надёжность</th><th class="num">Сделок</th><th class="num">На сделку</th><th class="num" title="среднее минус разброс — осторожная оценка">Осторожно</th><th>Проверки</th><th></th></tr>'+
+  (rows.length>1||hypF==='all'?'':'<tr><td colspan="9" class="empty">Таких вариантов пока нет</td></tr>')+
+  rows.map((r,i)=>{const m=r.win[hypW],si=selArr.indexOf(r.id),open=hypOpen.has(r.id);const Cr=hypChecks(m,nz);
+   return '<tr class="hyp-row'+(si>=0?' sel':'')+(r.id==='current'?' currow':'')+'" data-id="'+r.id+'"><td>'+(si>=0?'<span class="sw" style="background:'+HCOL[si%HCOL.length]+'"></span>':'<span class="sw empty"></span>')+'</td><td class="note">'+(r.id==='current'?'—':i)+'</td><td><div class="hchips flat">'+chipsShort(r)+'</div></td><td>'+relTag(m.rel)+'</td><td class="num">'+m.n+'</td><td class="num '+cls(m.exp)+'">'+(m.n?mny(m.exp):'—')+'</td><td class="num '+cls(m.expLB)+'">'+(m.n?mny(m.expLB):'—')+'</td><td>'+(m.n?ckDots(Cr):'—')+'</td><td class="num"><button class="mini wide hx" data-open="'+r.id+'">'+(open?'Свернуть':'Подробнее')+'</button></td></tr>'+
+    (open?'<tr class="hdet"><td colspan="9">'+detail(r,nz,wf)+'</td></tr>':'');}).join('');
+ $('#hypTable').querySelectorAll('.hyp-row').forEach(tr=>tr.onclick=e=>{const id=tr.dataset.id;if(e.target.closest('[data-open]')){hypOpen.has(id)?hypOpen.delete(id):hypOpen.add(id);}else{if(hypSel.has(id))hypSel.delete(id);else{if(hypSel.size>=5)hypSel.delete([...hypSel][hypSel.size-1]);hypSel.add(id);}}renderHyp(true);});
+ // ===== остальное =====
+ renderWatch(H);renderReality(H);renderUseless(H);renderReports();
+ if(hypTab==='sum'){drawHyp(list,'#hypChart2','#hypLegend2',best?['current',best.id]:['current']);const same=best&&cur&&cur.win[hypW].n&&Math.abs(best.win[hypW].pnl-cur.win[hypW].pnl)<0.01;$('#hypSub2').textContent=same?'Линии совпадают: у лучшей гипотезы и текущих правил одни и те же сделки':'Накопленная прибыль, если бы бот торговал по каждому из вариантов';}
+ if(hypTab==='all')drawHyp(list,'#hypChart','#hypLegend',[...hypSel]);
+ if(hypTab==='lab')drawMinutes(H.entry_minute||[]);}
 function detail(r,nz,wf,w=hypW){const ws=['24h','7d','30d','all'];const m=r.win[w];
- return '<div class="hdgrid"><div><div class="clbl">Изменения</div>'+(r.diff.length?r.diff.map(d=>'<div class="crow"><span>'+esc(d.text)+'</span><span class="was">было: '+esc(d.was)+'</span></div>').join(''):'<div class="note">это текущие правила</div>')+'<div class="clbl" style="margin-top:14px">Почему такой статус '+WLBL[w]+'</div>'+(m.why&&m.why.length?whyList(m.why):'<div class="note">все условия выполнены</div>')+'<div style="margin-top:14px"><button class="btn" data-hyptrades="'+r.id+'" data-w="'+w+'" data-name="'+esc(r.name)+'">Сделки на графиках</button></div><div class="clbl" style="margin-top:14px">По периодам</div><table class="mini-t"><tr><th></th><th class="num">Сделок</th><th class="num">В среднем</th><th class="num">Нижняя гр.</th><th></th></tr>'+ws.map(w=>{const x=r.win[w];return '<tr><td>'+WLBL[w].replace('за ','')+'</td><td class="num">'+x.n+'</td><td class="num '+cls(x.exp)+'">'+(x.n?mny(x.exp):'—')+'</td><td class="num '+cls(x.expLB)+'">'+(x.n?mny(x.expLB):'—')+'</td><td>'+relTag(x.rel)+'</td></tr>';}).join('')+'</table></div><div>'+levels(m,m.holdout,nz,'4. Проверочная часть')+'<div class="clbl" style="margin:14px 0 8px">Проверка на подгонку</div>'+overfit(m,wf)+'</div></div>';}
+ return '<div class="hdgrid"><div><div class="h4">Изменения относительно текущих правил</div>'+(r.diff.length?r.diff.map(d=>'<div class="crow full"><span>'+esc(d.label||d.text)+'</span><span class="was">'+esc(d.was)+'</span><span class="arr">→</span><b>'+esc(d.val||'')+'</b></div>').join(''):'<div class="note">это текущие правила</div>')+
+ '<div class="h4" style="margin-top:18px">По периодам</div><table class="mini-t"><tr><th></th><th class="num">Сделок</th><th class="num">На сделку</th><th class="num">Осторожно</th><th></th></tr>'+ws.map(w=>{const x=r.win[w];return '<tr><td>'+WLBL[w].replace('за ','')+'</td><td class="num">'+x.n+'</td><td class="num '+cls(x.exp)+'">'+(x.n?mny(x.exp):'—')+'</td><td class="num '+cls(x.expLB)+'">'+(x.n?mny(x.expLB):'—')+'</td><td>'+relTag(x.rel)+'</td></tr>';}).join('')+'</table>'+
+ '<div style="margin-top:16px"><button class="btn" data-hyptrades="'+r.id+'" data-w="'+w+'" data-name="'+esc(r.name)+'">Сделки на графиках</button></div></div>'+
+ '<div><div class="h4">Можно ли верить '+WLBL[w]+'</div>'+(m.n?ckList(hypChecks(m,nz)):'<div class="note">сделок нет</div>')+'<details class="more"><summary>Подробные цифры</summary><div style="margin-top:12px">'+levels(m,m.holdout,nz,'4. Последние 30% данных')+overfit(m,wf)+'</div></details></div></div>';}
 function renderWatch(H){const W=H.watch||[];const canApply=D.editable&&!window.DATA_URL;const nz=H.noise?.all||null;
- if(!W.length){$('#hypWatch').innerHTML='<div class="note">Под наблюдением пока ничего нет. Возьми гипотезу под наблюдение кнопкой в карточке лучшей гипотезы.</div>';return;}
- $('#hypWatch').innerHTML=W.slice().reverse().map(w=>{const st=WSTAT[w.status]||WSTAT.proposed;const fr=w.fresh||{n:0};const solid=w.rel==='solid'&&w.status==='observing';
-  return '<div class="wt"><div class="wthead"><div><span class="rel '+st[1]+'">'+st[0]+'</span> '+relTag(w.rel)+'</div><div class="note">предложена '+dt(w.proposed_at)+' на '+(w.proposed_on?.tokens||0)+' токенах'+(w.decided_at?' · решение '+dt(w.decided_at):'')+'</div></div>'+
-   '<div class="wtname">'+esc(w.name)+'</div><div class="hchips" style="cursor:default;max-width:none">'+chips(w)+'</div>'+(w.proposed_on?.note?'<div class="note" style="margin-top:6px">'+esc(w.proposed_on.note)+'</div>':'')+(w.reason?'<div class="note" style="margin-top:6px">Причина: '+esc(w.reason)+'</div>':'')+
-   '<div class="wtline">Проверочных сделок с момента предложения: <b>'+fr.n+'</b> из 100 нужных'+(fr.n<100?' · нужно ещё '+(100-fr.n):'')+'. На всех данных, включая те, на которых гипотеза была придумана: '+(w.all&&w.all.n?w.all.n+' сделок, '+mny(w.all.exp)+' на сделку, нижняя граница '+mny(w.all.expLB):'сделок нет')+'.</div>'+
-   (fr.n?levels(fr,null,nz):'<div class="note" style="margin-top:8px">Свежих сделок ещё нет — оценка появится, когда после даты предложения накопятся токены с историей.</div>')+
-   (w.rel!=='solid'&&w.status==='observing'?'<div class="clbl" style="margin-top:10px">Чего не хватает</div>'+whyList(fr.n?w.why:['нужно ещё '+(100-fr.n)+' проверочных сделок после даты предложения']):'')+
-   '<div class="cbtns" style="margin-top:12px"><button class="btn" data-hyptrades="'+w.id+'" data-w="all" data-name="'+esc(w.name)+'">Сделки на графиках</button></div>'+(canApply&&w.status==='observing'?'<div class="cbtns" style="margin-top:12px"><button class="btn '+(applyArm===w.id?'danger':'primary')+'" data-apply="'+w.id+'"'+(solid?'':' disabled title="'+esc((w.why||[]).join('; '))+'"')+'>'+(applyArm===w.id?'Точно применить? Нажми ещё раз':'Применить к боту')+'</button><button class="btn" data-reject="'+w.id+'">'+(watchArm==='rej'+w.id?'Точно отклонить? Нажми ещё раз':'Отклонить')+'</button><span class="note" id="wnote-'+w.id+'"></span></div>':'')+'</div>';}).join('');
+ if(!W.length){$('#hypWatch').innerHTML='<div class="note">Под наблюдением пока ничего нет. Взять гипотезу под наблюдение можно кнопкой в карточке лучшей гипотезы на вкладке «Итог».</div>';return;}
+ $('#hypWatch').innerHTML=W.slice().reverse().map(w=>{const st=WSTAT[w.status]||WSTAT.proposed;const fr=w.fresh||{n:0};const solid=w.rel==='solid'&&w.status==='observing';const Cw=fr.n?hypChecks(fr,nz,true,w.vs_noise):[];
+  return '<div class="wt"><div class="wthead"><div><span class="rel '+st[1]+'">'+st[0]+'</span> '+relTag(w.rel)+'</div><div class="note">предложена '+dt(w.proposed_at)+(w.decided_at?' · решение '+dt(w.decided_at):'')+'</div></div>'+
+   '<div class="wtname">'+esc(w.name)+'</div>'+
+   '<div style="max-width:520px;margin:14px 0 16px">'+bar('Проверочных сделок на новых монетах',fr.n,100,fr.n+' / 100')+'</div>'+
+   (fr.n?'<div class="lead"><div><div class="h4">Результат на новых данных</div>'+kpis(fr)+'</div><div><div class="h4">Можно ли верить <span>пройдено '+Cw.filter(c=>c.ok===true).length+' из '+Cw.length+'</span></div>'+ckList(Cw)+'</div></div>':'<div class="note">Новых сделок ещё нет — оценка появится, когда после даты предложения накопятся монеты с историей цены.</div>')+
+   (w.reason?'<div class="note" style="margin-top:6px">Причина решения: '+esc(w.reason)+'</div>':'')+
+   '<details class="more"><summary>Все параметры и откуда гипотеза</summary><div style="margin-top:12px"><div class="hchips flat" style="max-width:none">'+chips(w)+'</div>'+(w.proposed_on?.note?'<div class="note" style="margin-top:10px">Предложена на '+(w.proposed_on.tokens||0)+' монетах. '+esc(w.proposed_on.note)+'</div>':'')+'<div class="note" style="margin-top:6px">На всех данных, включая те, на которых её придумали: '+(w.all&&w.all.n?w.all.n+' '+sdl(w.all.n)+', '+mny(w.all.exp)+' на сделку':'сделок нет')+'.</div></div></details>'+
+   '<div class="cbtns" style="margin-top:14px"><button class="btn" data-hyptrades="'+w.id+'" data-w="all" data-name="'+esc(w.name)+'">Сделки на графиках</button>'+(canApply&&w.status==='observing'?'<button class="btn '+(applyArm===w.id?'danger':'primary')+'" data-apply="'+w.id+'"'+(solid?'':' disabled title="станет доступно при метке «надёжно»"')+'>'+(applyArm===w.id?'Точно применить? Нажми ещё раз':'Применить к боту')+'</button><button class="btn" data-reject="'+w.id+'">'+(watchArm==='rej'+w.id?'Точно отклонить? Нажми ещё раз':'Отклонить')+'</button><span class="note" id="wnote-'+w.id+'"></span>':'')+'</div></div>';}).join('');
  $('#hypWatch').querySelectorAll('[data-apply]').forEach(b=>b.onclick=()=>{const w=W.find(x=>x.id===b.dataset.apply);applyHyp({id:w.id,diff:w.diff},{entry:{...D.config.entry,...w.entry},exit:{...D.config.exit,...w.exit}},w.id);});
  $('#hypWatch').querySelectorAll('[data-reject]').forEach(b=>b.onclick=()=>{const id=b.dataset.reject;if(watchArm!=='rej'+id){watchArm='rej'+id;renderHyp(true);setTimeout(()=>{if(watchArm==='rej'+id){watchArm=null;renderHyp(true);}},6000);return;}watchArm=null;postWatch({id,status:'rejected',reason:'отклонена вручную из панели'},'#wnote-'+id);});}
 async function postWatch(body,noteSel){const note=noteSel&&$(noteSel);if(note)note.textContent='Сохраняю…';
@@ -741,9 +816,9 @@ function drawMinutes(E){const c=$('#minChart');if(!c)return;const ctx=c.getConte
  const worst=rows.reduce((a,r)=>r.below25_pct>a.below25_pct?r:a),bestR=rows.reduce((a,r)=>r.median_net>a.median_net?r:a),pos=rows.filter(r=>r.median_net>0);
  const total=rows.reduce((a,r)=>a+r.n,0);
  $('#minNote').innerHTML='<b>Главный вывод.</b> '+(pos.length?'Плюс по типичной сделке даёт вход на '+pos.map(r=>r.min).join(', ')+'-й минуте.':'Ни одна минута входа не даёт плюса по типичной сделке.')+' Самая опасная зона — '+worst.min+'-я минута: '+worst.below25_pct+'% монет уходят ниже −25%. '+(bestR!==worst?'Мягче всего на '+bestR.min+'-й минуте: типичный результат '+mny(bestR.median_net)+', ниже −25% уходят '+bestR.below25_pct+'%, до +60% доходят '+bestR.above60_pct+'%.':'')+(D.hypotheses?.data?.premature?' Оценка по '+total+' наблюдениям — мало, картина может измениться.':'');}
-function drawHyp(list){const c=$('#hypChart'),ctx=c.getContext('2d');const W=c.clientWidth,H=300,dpr=devicePixelRatio||1;if(!W)return;c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
- const selArr=[...hypSel];const sel=selArr.map((id,i)=>({r:list.find(x=>x.id===id),i})).filter(o=>o.r&&o.r.win[hypW].curve.length);
- $('#hypLegend').innerHTML=selArr.map((id,i)=>{const r=list.find(x=>x.id===id);if(!r)return '';return '<span><span class="sw" style="background:'+HCOL[i%HCOL.length]+'"></span>'+(r.id==='current'?'Текущие правила':(r.id===H_champ()?'Лучшая':'Вариант'))+'</span>';}).join('');
+function drawHyp(list,cSel='#hypChart',legSel='#hypLegend',ids=[...hypSel]){const c=$(cSel);if(!c)return;const ctx=c.getContext('2d');const W=c.clientWidth,H=300,dpr=devicePixelRatio||1;if(!W)return;c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+ const selArr=ids;const sel=selArr.map((id,i)=>({r:list.find(x=>x.id===id),i})).filter(o=>o.r&&o.r.win[hypW].curve.length);
+ $(legSel).innerHTML=selArr.map((id,i)=>{const r=list.find(x=>x.id===id);if(!r)return '';return '<span><span class="sw" style="background:'+HCOL[i%HCOL.length]+'"></span>'+(r.id==='current'?'Текущие правила':(r.id===H_champ()?'Лучшая гипотеза':'Вариант '+(i+1)))+'</span>';}).join('');
  if(!sel.length){ctx.fillStyle='#8f938a';ctx.font='14px Inter,sans-serif';ctx.fillText('Нет сделок '+WLBL[hypW]+' у выбранных вариантов',16,40);return;}
  const P={l:8,r:84,t:14,b:28};let xs=[],ys=[0];sel.forEach(o=>o.r.win[hypW].curve.forEach(p=>{xs.push(p[0]);ys.push(p[1]);}));const x0=Math.min(...xs),x1=Math.max(...xs,x0+60);let y0=Math.min(...ys),y1=Math.max(...ys);const pad=(y1-y0)*.1||1;y0-=pad;y1+=pad;
  const X=v=>P.l+(v-x0)/(x1-x0)*(W-P.l-P.r),Y=v=>P.t+(1-(v-y0)/(y1-y0))*(H-P.t-P.b);
@@ -754,6 +829,7 @@ function drawHyp(list){const c=$('#hypChart'),ctx=c.getContext('2d');const W=c.c
 const H_champ=()=>D.hypotheses?.champions?.[hypW]?.id;
 document.querySelectorAll('#hypPeriod .pill').forEach(b=>b.onclick=()=>{hypW=b.dataset.w;hypSel=null;document.querySelectorAll('#hypPeriod .pill').forEach(x=>x.classList.toggle('on',x===b));renderHyp(true);});
 document.querySelectorAll('#hypFilter .pill').forEach(b=>b.onclick=()=>{hypF=b.dataset.f;document.querySelectorAll('#hypFilter .pill').forEach(x=>x.classList.toggle('on',x===b));renderHyp(true);});
+document.querySelectorAll('#hypTabs .pill').forEach(b=>b.onclick=()=>setHypTab(b.dataset.t));
 // ---- сделки гипотезы на графиках ----
 let hvData=null,hvF='all';
 const HV_REASON={take_profit:'тейк-профит',stop_loss:'стоп-лосс',trailing:'трейлинг',timeout:'по времени'};
