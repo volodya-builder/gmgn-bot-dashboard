@@ -662,6 +662,13 @@ main{padding-bottom:45vh!important}
 #raceDet.hdrawer .hdgrid{grid-template-columns:minmax(0,1fr)!important}
 #raceDet.hdrawer .hdgrid>div{min-width:0;overflow-x:auto}
 #raceDet.hdrawer .mini-t th,#raceDet.hdrawer .mini-t td{padding-left:6px;padding-right:6px}
+.rsbtns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.rsel{margin:0 0 14px;padding:14px 16px;border:1px solid var(--border,#1f1f1f);border-radius:14px;background:#101010}
+.rsrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.rsl{color:var(--muted);font-size:13px}
+.rsel input{background:#161616;border:1px solid #2a2a2a;color:var(--text);border-radius:10px;height:36px;padding:0 12px;font:500 14px var(--font-ui);width:150px}
+.rsprev{margin:10px 0 4px;font-size:13.5px;color:#b9bdb5}
+.rsmsg{margin-top:8px;font-size:13.5px}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -703,8 +710,8 @@ main{padding-bottom:45vh!important}
   </div>
   <div class="hpane" data-p="race">
    <div class="hero rkpi" id="raceKpi"></div>
-   <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Гонка гипотез</div><div class="sub"><span id="raceCurLbl">Текущие правила</span> и все пронумерованные гипотезы (прокрути список): дорожка — накопленная прибыль в симуляции за выбранный период. Клик по дорожке — подробности, «Сделки на графиках» и «Применить к боту».</div></div><button class="btn primary" id="raceGo">Воспроизвести гонку</button></div>
-    <div class="hstatus" id="raceStatus" style="margin-bottom:12px"></div>
+   <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Гонка гипотез</div><div class="sub"><span id="raceCurLbl">Текущие правила</span> и все пронумерованные гипотезы (прокрути список): дорожка — накопленная прибыль в симуляции за выбранный период. Клик по дорожке — подробности, «Сделки на графиках» и «Применить к боту».</div></div><div class="rsbtns"><button class="btn primary" id="raceGo">Воспроизвести гонку</button><button class="btn" id="raceSelBtn">Выбрать гипотезу</button></div></div>
+    <div class="rsel" id="raceSelBox" style="display:none"></div><div class="hstatus" id="raceStatus" style="margin-bottom:12px"></div>
     <div class="racehead"><span title="место в гонке">Место</span><span>Гипотеза</span><span class="racescale" id="raceScale"></span><span class="num">Итог</span></div><div class="racescroll"><div class="race" id="race"></div></div></div>
    <div class="card" id="raceDet" style="display:none"></div>
   </div>
@@ -1260,8 +1267,10 @@ function drawTradeChart(x,d){
 }
 
 // ---- версия ----
-const APP_VERSION='2.69';
+const APP_VERSION='2.71';
 const CHANGELOG=[
+ ['2.71','23.09.2026',['«Что нового»: рядом с датой каждого обновления — время выхода (по времени твоего компьютера). Время новых версий записывается автоматически; у старых восстановлено по резервным копиям, «≈» — примерно']],
+ ['2.70','23.09.2026',['Гонка гипотез: кнопка «Выбрать гипотезу» — вводишь номер (или кликаешь по строке в гонке), видишь её правила и результат в симуляции, двойным нажатием включаешь её на живом боте']],
  ['2.69','23.09.2026',['График депозита снова плавный: в режиме «По сделкам» линия тоже идёт мягкой кривой через каждую сделку, а не ломаной','Подписи времени под графиком стоят ровно под сделками и не повторяются, когда график отдалён или растянут']],
  ['2.66','23.09.2026',['Обзор: рядом с роботом — мини-арена: монеты последнего скана точками бегут через четыре ворот (возраст, рынок, безопасность, активность); красная — отсеяна, зелёная — прошла все фильтры; под воротами — сколько монет на них остановилось; клик открывает Арену']],
  ['2.65','23.09.2026',['Мини-график «Монет изучено»: при наведении показывает число монет и время (раньше ошибочно показывал число гипотез)']],
@@ -1333,7 +1342,8 @@ const CHANGELOG=[
  ['1.0','22.09.2026',['Первая панель бота']]];
 $('#ver').textContent='v'+APP_VERSION;
 (()=>{if(window.DATA_URL)return;const p=location.port;const other=p==='8787'?'8788':p==='8788'?'8787':null;if(!other)return;const a=$('#modeSwitch');a.style.display='';a.href=location.protocol+'//'+location.hostname+':'+other+'/';a.innerHTML='<b>'+(other==='8788'?'Реальные деньги →':'Симуляция →')+'</b>';})();
-$('#verpop').innerHTML=CHANGELOG.map(([v,d,items])=>'<h4>v'+v+' <span class="d">· '+d+'</span></h4><ul>'+items.map(i=>'<li>'+i+'</li>').join('')+'</ul>').join('');
+const clWhen=(v,d)=>{const x=(window.CL_TIMES||{})[v];if(!x||!x.at)return d;const t=new Date(x.at*1000);return t.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'})+', '+(x.approx?'≈':'')+t.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});};
+$('#verpop').innerHTML=CHANGELOG.map(([v,d,items])=>'<h4>v'+v+' <span class="d">· '+clWhen(v,d)+'</span></h4><ul>'+items.map(i=>'<li>'+i+'</li>').join('')+'</ul>').join('');
 $('#ver').onclick=e=>{e.stopPropagation();$('#verpop').classList.toggle('on');};
 addEventListener('click',e=>{if(!e.target.closest('#verpop'))$('#verpop').classList.remove('on');});
 // ---- в тренде ----
@@ -2061,4 +2071,31 @@ let hgHov=false;
    if(d.st&&d.g<0){ctx.globalAlpha=Math.max(0,d.a)*.35;ctx.beginPath();ctx.arc(d.x,d.y,7,0,7);ctx.fill();}}
   ctx.globalAlpha=1;dots=dots.filter(d=>d.a>0);}
  requestAnimationFrame(frame);addEventListener('resize',()=>{W=0;scanAt=0;});})();
+
+// ---- кнопка «Выбрать гипотезу» в гонке: номер → проверка → включить на живом боте ----
+(function(){let open=false,armed=0,msg='';
+ const findH=n=>{try{const H=D.hypotheses;return mergedHyp(H).find(r=>r.num===n)||null;}catch{return null;}};
+ function draw(){const box=$('#raceSelBox');if(!box)return;box.style.display=open?'':'none';if(!open)return;
+  const live=D&&D.hypSelect,cur=D&&D.liveHyp&&D.liveHyp.num;
+  if(!live){box.innerHTML='<div class="note">Выбор гипотезы для живого бота доступен только на панели живого бота (порт 8788).</div>';return;}
+  let pre='';try{if(raceSel){const r=mergedHyp(D.hypotheses).find(x=>x.id===raceSel);if(r&&r.num)pre=r.num;}}catch{}
+  const inp=$('#rsNum'),val=inp?inp.value:(pre||'');
+  box.innerHTML='<div class="rsrow"><span class="rsl">Номер гипотезы</span><input id="rsNum" type="number" min="1" placeholder="например 892" value="'+esc(String(val))+'">'+
+   (getPwd()?'':'<input id="rsPwd" type="password" placeholder="пароль панели">')+
+   '<button class="btn primary" id="rsGo">'+(armed?'Точно включить #'+armed+'? Нажми ещё раз':'Включить на живом боте')+'</button><button class="btn" id="rsX">Отмена</button></div>'+
+   '<div class="rsprev" id="rsPrev"></div><div class="note">Сейчас живой бот торгует по <b>#'+(cur||'—')+'</b>. Подсказка: кликни по строке в гонке — её номер подставится сюда. Смена правил касается реальных денег, поэтому нужно нажать кнопку дважды.</div>'+(msg?'<div class="rsmsg">'+msg+'</div>':'');
+  const pv=()=>{const n=+$('#rsNum').value,r=n?findH(n):null,w=r&&r.win&&r.win[raceW];$('#rsPrev').innerHTML=!n?'':r?'<b>#'+n+'</b> — '+esc(r.name||r.diff.map(d=>d.text).join(' · '))+(w&&w.n?' · в симуляции '+WLBL[raceW]+': <b class="'+cls(w.pnl)+'">'+mny(w.pnl)+'</b>, '+w.n+' сделок':''):'<span class="bad">#'+n+' нет в списке гипотез</span>';};
+  $('#rsNum').oninput=()=>{armed=0;msg='';pv();const b=$('#rsGo');if(b)b.textContent='Включить на живом боте';};pv();
+  $('#rsX').onclick=()=>{open=false;armed=0;msg='';draw();};
+  $('#rsGo').onclick=async()=>{const n=+$('#rsNum').value;if(!(n>0)){msg='<span class="bad">Введи номер гипотезы.</span>';draw();return;}
+   if(!findH(n)){msg='<span class="bad">Гипотезы #'+n+' нет в списке.</span>';draw();return;}
+   if(n===cur){msg='Живой бот уже торгует по #'+n+'.';draw();return;}
+   if(armed!==n){armed=n;msg='';draw();setTimeout(()=>{if(armed===n){armed=0;draw();}},8000);return;}
+   armed=0;const pe=$('#rsPwd'),pw=pe?pe.value:getPwd();msg='Переключаю…';draw();
+   try{if(pe&&pw)try{localStorage.setItem('dash_pwd',pw);}catch{}
+    const r=await fetch('/api/live/select',{method:'POST',headers:{'Content-Type':'application/json','X-Password':pw},body:JSON.stringify({num:n})});const j=await r.json();if(!r.ok)throw new Error(j.error||('HTTP '+r.status));
+    D.liveHyp=j.live;msg='<span class="good">Готово: живой бот торгует по гипотезе #'+j.live.num+'. Перезапуск ~10 секунд.</span>';try{hypBadge();}catch{}try{renderRace(true);}catch{}}
+   catch(e){msg='<span class="bad">Не получилось: '+esc(e.message)+'</span>';}draw();};}
+ document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#raceSelBtn')){open=!open;armed=0;msg='';draw();if(open)setTimeout(()=>{const i=$('#rsNum');if(i)i.focus();},0);return;}
+  const l=e.target.closest&&e.target.closest('#race .lane');if(l&&open){setTimeout(()=>{try{const r=mergedHyp(D.hypotheses).find(x=>x.id===l.dataset.id);if(r&&r.num){const i=$('#rsNum');if(i){i.value=r.num;i.dispatchEvent(new Event('input'));}}}catch{}},0);}});})();
 </script></body></html>
