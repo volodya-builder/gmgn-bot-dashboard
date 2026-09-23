@@ -1,39 +1,6 @@
 {
- "balance_usd": 909.6610827292949,
- "positions": {
-  "0x19368f221954a4957aa8f6add8c991ac86997777": {
-   "symbol": "Eva",
-   "name": "阿里巴巴新机器人",
-   "address": "0x19368f221954a4957aa8f6add8c991ac86997777",
-   "opened": 1790121995,
-   "entry": 0.00001991423733,
-   "size_usd": 20,
-   "peak": 0.00002244984,
-   "trough": 0.000019287208,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "rank",
-    "launchpad": "flap",
-    "age_min": "4.1",
-    "liq": "10416",
-    "mcap": "19334",
-    "holders": 112,
-    "smart": 2,
-    "renowned": 4,
-    "bundler": "0.045",
-    "snipers": 6,
-    "top10": "0.225",
-    "buys": 146,
-    "sells": 77,
-    "list_price": "0.0000193342",
-    "hour_utc": 0
-   },
-   "last": 0.00002244984,
-   "last_t": 1790122017
-  }
- },
+ "balance_usd": 942.5966509025702,
+ "positions": {},
  "seen": {
   "0xb18870450cead02867b2f7515522a84411887777": 1790084213,
   "0x08aa17a10afd4d8a3b2de3afec9f415b33407777": 1790085658,
@@ -70,16 +37,16 @@
   "0xaf049c3bf5b960a060cd839a8efe82dc3b7a7777": 1790119028,
   "0x19368f221954a4957aa8f6add8c991ac86997777": 1790121995
  },
- "closed": 33,
- "wins": 10,
- "pnl_usd": -60.138917270706685,
+ "closed": 34,
+ "wins": 11,
+ "pnl_usd": -47.20334909743134,
  "opened_at": [
   1790119028,
   1790121995
  ],
  "day": {
-  "key": "2026-09-22",
-  "pnl": -42.793925990277906
+  "key": "2026-09-23",
+  "pnl": 12.935568173275346
  },
  "stop_streak": 0,
  "last_hyp_report": "2026-09-22",
