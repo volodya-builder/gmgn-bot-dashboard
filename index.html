@@ -51,6 +51,8 @@ tbody tr:hover td{background:#ffffff05}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-bright)}
 .tablewrap{overflow:auto;max-height:560px}
+#v-trades .tablewrap{max-height:calc(100vh - 200px);min-height:560px}#v-trades .card{padding-bottom:12px}
+#trades a.ttok{display:inline-flex;align-items:center;gap:10px;max-width:none;overflow:visible;font-size:14px}#trades a.ttok span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px}#trades .tclg{flex:0 0 28px;width:28px;height:28px}#trades td{vertical-align:middle}
 .tip{position:fixed;pointer-events:none;background:#101010;border:1px solid var(--border2);padding:8px 12px;border-radius:12px;font-size:13px;display:none;color:var(--text)}
 pre{margin:0;font:12.5px/1.65 var(--font-mono);color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all;max-height:520px;overflow:auto}
 .kv{display:grid;grid-template-columns:1fr auto;gap:9px 14px;font-size:14px;min-width:0}
@@ -575,6 +577,10 @@ nav .pill.hid{display:none!important}
 
 /* v2.48: снизу страницы запас, чтобы последний блок можно было прокрутить выше края экрана */
 main{padding-bottom:45vh!important}
+.tlwbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0 10px}
+.tlwbar .pills{margin:0}
+.tlw{height:340px;border:1px solid #1f1f1f;border-radius:12px;overflow:hidden;background:#0f0f0f}
+.tlwh{color:#6a6e66;font-size:11.5px;margin:6px 2px 4px}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -738,9 +744,9 @@ function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{r
 function openTable(p,s){if(!p.length){$('#open').innerHTML='<tr><td class="empty">Нет открытых позиций</td></tr>';return;}
  $('#open').innerHTML='<tr><th>Токен</th><th class="num">Вход</th><th class="num">Размер</th><th class="num">В сделке</th><th>Режим</th><th>Адрес</th></tr>'+
  p.map(x=>'<tr><td>'+esc(x.symbol)+'</td><td class="num">'+(+x.entry).toPrecision(5)+'</td><td class="num">$'+f(x.size_usd,0)+'</td><td class="num">'+dur(Math.max(0,(D.now/1000-x.opened)/60))+'</td><td>'+x.mode+'</td><td><a target="_blank" href="https://gmgn.ai/bsc/token/'+x.address+'">'+x.address.slice(0,10)+'…</a></td></tr>').join('');}
-function tradesTable(t){if(!t.length){$('#trades').innerHTML='<tr><td class="empty">Пока нет закрытых сделок за этот период</td></tr>';return;}
+function tradesTable(t){window._ttT=t;try{ovLogos([...t].reverse());}catch{}if(!t.length){$('#trades').innerHTML='<tr><td class="empty">Пока нет закрытых сделок за этот период</td></tr>';return;}
  $('#trades').innerHTML='<tr><th>Закрыта</th><th>Токен</th><th class="num">Вход</th><th class="num">Выход</th><th class="num">PnL $</th><th class="num">PnL %</th><th>Причина</th><th class="num">Время</th><th>Режим</th></tr>'+
- [...t].reverse().map(x=>'<tr class="trow" data-k="'+esc(tkey(x))+'"><td>'+new Date(x.closed).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</td><td><a target="_blank" href="https://gmgn.ai/bsc/token/'+x.address+'">'+esc(x.symbol)+'</a></td><td class="num">'+x.entry_usd+'</td><td class="num">'+x.exit_usd+'</td><td class="num '+cls(x.pnl_usd)+'">'+f(x.pnl_usd)+'</td><td class="num '+cls(x.pnl_pct)+'">'+f(x.pnl_pct,1)+'%</td><td>'+rs(x.reason)+'</td><td class="num">'+dur(x.hold_min)+'</td><td>'+x.mode+'</td></tr>').join('');
+ [...t].reverse().map(x=>'<tr class="trow" data-k="'+esc(tkey(x))+'"><td>'+new Date(x.closed).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</td><td><a class="ttok" target="_blank" href="https://gmgn.ai/bsc/token/'+x.address+'"><i class="tclg">'+(ovLogo[String(x.address||"").toLowerCase()]?'<img src="'+esc(ovLogo[String(x.address||"").toLowerCase()])+'" loading="lazy" onerror="this.remove()">':'')+'<em>'+esc(String(x.symbol||"?").slice(0,2))+'</em></i><span>'+esc(x.symbol)+'</span></a></td><td class="num">'+x.entry_usd+'</td><td class="num">'+x.exit_usd+'</td><td class="num '+cls(x.pnl_usd)+'">'+f(x.pnl_usd)+'</td><td class="num '+cls(x.pnl_pct)+'">'+f(x.pnl_pct,1)+'%</td><td>'+rs(x.reason)+'</td><td class="num">'+dur(x.hold_min)+'</td><td>'+x.mode+'</td></tr>').join('');
  $('#trades').querySelectorAll('.trow').forEach(tr=>tr.onclick=e=>{if(e.target.closest('a'))return;openTrade(D.trades.find(x=>tkey(x)===tr.dataset.k));});}
 // ---- настройки (форма) ----
 const FIELDS=[
@@ -872,7 +878,7 @@ function animZoom(target,toNull){if(!geom)return;const from=zoom||[geom.x0,geom.
 let ovLogo={},ovLogoAsked=new Set(),ovLastT=null;
 function ovLogos(L){for(const t of (D.lastScan&&D.lastScan.tokens)||[])if(t.logo&&t.address)ovLogo[t.address.toLowerCase()]=t.logo;
  const need=[...new Set(L.slice(0,200).map(x=>String(x.address||'').toLowerCase()))].filter(a=>a&&!ovLogo[a]&&!ovLogoAsked.has(a)).slice(0,25);if(!need.length)return;need.forEach(a=>ovLogoAsked.add(a));
- fetch('/api/logos?a='+need.join(','),{cache:'no-store'}).then(r=>r.json()).then(m=>{let n=0;for(const k in m){ovLogo[k]=m[k];n++;}if(ovLastT){if(n)ovTrades(ovLastT);else ovLogos([...ovLastT].reverse());}}).catch(()=>{});}
+ fetch('/api/logos?a='+need.join(','),{cache:'no-store'}).then(r=>r.json()).then(m=>{let n=0;for(const k in m){ovLogo[k]=m[k];n++;}if(n&&window._ttT){try{tradesTable(window._ttT);}catch{}}if(ovLastT){if(n)ovTrades(ovLastT);else ovLogos([...ovLastT].reverse());}}).catch(()=>{});}
 function ovTrades(t){const el=$('#ovTr');if(!el)return;ovLastT=t;const L=[...t].reverse();ovLogos(L);
  const RSN={take_profit:'тейк',stop_loss:'стоп',trailing:'трейлинг',timeout:'по времени',manual:'вручную',sell_failed:'ошибка продажи'};
  const w=L.filter(x=>+x.pnl_usd>0).length,sum=L.reduce((a,x)=>a+ +x.pnl_usd,0);
@@ -1032,18 +1038,55 @@ const trDur=s=>s<90?Math.round(s)+' с':s<5400?f(s/60,s<600?1:0)+' мин':f(s/3
 let trCur=null;
 function tradeDetailBlock(x){
  if(window.DATA_URL)return '<div class="tdet"><div class="note">График сделки и разбор доступны на панели сервера (эта копия — только просмотр данных).</div></div>';
- return '<div class="tdet" id="tdet"><h3 style="margin-top:22px">График сделки</h3><div class="tchart"><canvas id="tcv"></canvas><div class="tcax" id="tcax"></div><div class="tip" id="ttip" style="display:none"></div></div><div class="tleg"><span><i class="e"></i>вход</span><span><i class="x"></i>выход</span><span><i class="p"></i>цена в сделке (каждые 10 с)</span><span><i class="k"></i>минутные свечи</span><span><i class="lv"></i>тейк / стоп</span></div><h3>Разбор сделки</h3><ol class="tsteps" id="tsteps"><li class="note">Загружаю…</li></ol></div>';
+ return '<div class="tdet" id="tdet"><h3 style="margin-top:22px">График сделки</h3><div class="tlwbar"><div class="pills small" id="tlwRes"><button class="pill on" data-r="1s">1 сек</button><button class="pill" data-r="1m">1 мин</button></div><div class="pills small" id="tlwMode"><button class="pill on" data-m="mc">Капитализация</button><button class="pill" data-m="px">Цена</button></div><button class="mini wide" id="tlwFit" title="Показать сделку целиком">К сделке</button></div><div class="tlw" id="tlw"><div class="note" style="padding:14px">Загружаю свечи с GMGN…</div></div><div class="tlwh">реальные свечи GMGN · колесо — масштаб · тяни — сдвиг · тяни шкалу цены — растянуть · двойной клик по шкале — сброс</div><div class="tchart" style="display:none"><canvas id="tcv"></canvas><div class="tcax" id="tcax"></div><div class="tip" id="ttip" style="display:none"></div></div><div class="tleg"><span><i class="e"></i>вход</span><span><i class="x"></i>выход</span><span><i class="p"></i>цена в сделке (каждые 10 с)</span><span><i class="k"></i>минутные свечи</span><span><i class="lv"></i>тейк / стоп</span></div><h3>Разбор сделки</h3><ol class="tsteps" id="tsteps"><li class="note">Загружаю…</li></ol></div>';
 }
 async function tradeDetailLoad(x){
  const box=$('#tdet');if(!box)return;trCur=x;
  let d=null;
  try{const r=await fetch('/api/trade?a='+encodeURIComponent(x.address)+'&o='+encodeURIComponent(x.opened),{cache:'no-store'});d=r.ok?await r.json():null;}catch{}
  if(trCur!==x||!$('#tdet'))return;
+ tlwShow(x,d);
  if(!d){$('#tsteps').innerHTML='<li class="note">Подробности этой сделки не сохранились (сделка старше этой версии панели), а свечи с GMGN получить не удалось.</li>';$('#tcv').style.display='none';$('#tcax').innerHTML='';return;}
  const steps=tradeSteps(x,d);$('#tsteps').innerHTML=steps.map(s=>'<li class="'+(s.k||'')+'"><b>'+s.t+'</b>'+(s.h?'<span class="tt">'+s.h+'</span>':'')+'<div>'+s.d+'</div></li>').join('');
  if(d.log&&d.log.length)$('#tsteps').insertAdjacentHTML('afterend','<details class="tlog"><summary>Журнал бота по этой сделке ('+d.log.length+')</summary><pre>'+esc(d.log.join('\n'))+'</pre></details>');
  try{drawTradeChart(x,d);}catch(e){console.error(e);}
 }
+// ---- реальный свечной график сделки (lightweight-charts + свечи GMGN) ----
+let TLW=null,tlwLib=null,tlwSt={res:'1s',mode:'mc'};
+function tlwLoadLib(){if(window.LightweightCharts)return Promise.resolve();if(tlwLib)return tlwLib;tlwLib=new Promise((ok,no)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js';sc.onload=ok;sc.onerror=()=>{tlwLib=null;no(new Error('не загрузилась библиотека графика'));};document.head.appendChild(sc);});return tlwLib;}
+async function tlwShow(x,d){const el=$('#tlw');if(!el||window.DATA_URL)return;
+ d=d||{};const opened=d.opened||Math.floor(new Date(x.opened)/1000),closed=d.closed||(x.closed?Math.floor(new Date(x.closed)/1000):Math.floor(Date.now()/1000));
+ const entry=+(d.entry||x.entry_usd||x.entry),exitP=+(d.exit||x.exit_usd||0),rules=d.rules||(D&&D.config&&D.config.exit)||{};
+ const supply=(+x.mcap>0&&entry>0)?(+x.mcap)/entry:0;const mc=tlwSt.mode==='mc'&&supply>0;const K=mc?supply:1;
+ const nowS=Math.floor(Date.now()/1000),res=tlwSt.res,pre=res==='1s'?600:3600,post=res==='1s'?1200:4*3600;
+ const from=opened-pre,to=Math.min(nowS,closed+post);
+ document.querySelectorAll('#tlwRes .pill').forEach(b=>{b.classList.toggle('on',b.dataset.r===res);b.onclick=()=>{tlwSt.res=b.dataset.r;tlwShow(x,d);};});
+ document.querySelectorAll('#tlwMode .pill').forEach(b=>{b.classList.toggle('on',b.dataset.m===(mc?'mc':'px'));b.style.display=supply>0?'':'none';b.onclick=()=>{tlwSt.mode=b.dataset.m;tlwShow(x,d);};});
+ let k;try{await tlwLoadLib();const r=await fetch('/api/kline?a='+encodeURIComponent(x.address)+'&from='+from+'&to='+to+'&res='+res,{cache:'no-store'});const j=await r.json();if(!r.ok)throw new Error(j.error||('ошибка '+r.status));k=j.k||[];}
+ catch(e){if($('#tlw')===el)el.innerHTML='<div class="note" style="padding:14px">Не удалось загрузить график: '+esc(e.message)+'</div>';return;}
+ if($('#tlw')!==el||trCur!==x)return;
+ if(!k.length){el.innerHTML='<div class="note" style="padding:14px">GMGN не отдал свечи за это время.</div>';return;}
+ if(TLW){try{TLW.remove();}catch{}TLW=null;}el.innerHTML='';
+ const tz=-new Date().getTimezoneOffset()*60,T=s2=>s2+tz;
+ const fmt=v=>{if(mc){const a=Math.abs(v);return '$'+(a>=1e6?f(v/1e6,2)+'M':a>=1e3?f(v/1e3,1)+'k':f(v,0));}return '$'+(+v).toPrecision(4);};
+ const ch=LightweightCharts.createChart(el,{height:340,layout:{background:{type:'solid',color:'#0f0f0f'},textColor:'#8f938a',fontSize:11},grid:{vertLines:{color:'#ffffff08'},horzLines:{color:'#ffffff0c'}},
+  rightPriceScale:{borderColor:'#ffffff14',scaleMargins:{top:.08,bottom:.22}},timeScale:{borderColor:'#ffffff14',timeVisible:true,secondsVisible:res==='1s',rightOffset:4},
+  crosshair:{mode:0},localization:{priceFormatter:fmt},handleScroll:true,handleScale:true});
+ TLW=ch;
+ const cs=ch.addCandlestickSeries({upColor:'#4caf6d',downColor:'#e05c5c',borderVisible:false,wickUpColor:'#4caf6d',wickDownColor:'#e05c5c',priceFormat:{type:'custom',formatter:fmt,minMove:mc?1:1e-12}});
+ cs.setData(k.map(c=>({time:T(c[0]),open:c[1]*K,high:c[2]*K,low:c[3]*K,close:c[4]*K})));
+ const vs=ch.addHistogramSeries({priceScaleId:'vol',priceFormat:{type:'volume'},lastValueVisible:false,priceLineVisible:false});ch.priceScale('vol').applyOptions({scaleMargins:{top:.82,bottom:0}});
+ vs.setData(k.map(c=>({time:T(c[0]),value:c[5],color:c[4]>=c[1]?'#4caf6d55':'#e05c5c55'})));
+ const snap=t0=>{let best=k[0][0];for(const c of k){if(c[0]<=t0)best=c[0];else break;}return T(best);};
+ const mk=[{time:snap(opened),position:'belowBar',color:'#5fd3a0',shape:'arrowUp',text:'Вход '+fmt(entry*K)}];
+ if(x.closed&&exitP>0)mk.push({time:snap(closed),position:'aboveBar',color:+x.pnl_usd>0?'#5fd3a0':'#ff7676',shape:'arrowDown',text:'Выход '+fmt(exitP*K)+' ('+((exitP/entry-1)*100>0?'+':'')+f((exitP/entry-1)*100,1)+'%)'});
+ mk.sort((a,b)=>a.time-b.time);cs.setMarkers(mk);
+ if(entry>0){cs.createPriceLine({price:entry*K,color:'#8f938a',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:'вход'});
+  if(+rules.take_profit_pct)cs.createPriceLine({price:entry*K*(1+rules.take_profit_pct/100),color:'#5fd3a0',lineWidth:1,lineStyle:2,axisLabelVisible:false,title:'тейк +'+rules.take_profit_pct+'%'});
+  if(+rules.stop_loss_pct)cs.createPriceLine({price:entry*K*(1-rules.stop_loss_pct/100),color:'#ff7676',lineWidth:1,lineStyle:2,axisLabelVisible:false,title:'стоп −'+rules.stop_loss_pct+'%'});}
+ const fit=()=>{const pad=Math.max(res==='1s'?90:600,(closed-opened)*.35);ch.timeScale().setVisibleRange({from:T(Math.max(k[0][0],opened-pad)),to:T(Math.min(k[k.length-1][0],closed+pad))});};
+ try{fit();}catch{ch.timeScale().fitContent();}$('#tlwFit').onclick=()=>{try{fit();}catch{}};
+ new ResizeObserver(()=>{if(TLW===ch&&el.clientWidth)ch.applyOptions({width:el.clientWidth});}).observe(el);}
 function tradeSteps(x,d){
  const S=[];const entry=+(d.entry||x.entry_usd),exitP=+(d.exit||x.exit_usd),opened=d.opened||Math.floor(new Date(x.opened)/1000),closed=d.closed||Math.floor(new Date(x.closed)/1000);
  const rules=d.rules||(D&&D.config&&D.config.exit)||{};const c=d.ctx||{};const ev=d.ev||[];const path=d.path||[];const has=x.rules!==undefined&&x.rules!=='';
@@ -1132,8 +1175,10 @@ function drawTradeChart(x,d){
 }
 
 // ---- версия ----
-const APP_VERSION='2.48';
+const APP_VERSION='2.50';
 const CHANGELOG=[
+ ['2.50','23.09.2026',['Карточка сделки: вместо схемы — настоящий свечной график с GMGN (свечи по 1 секунде или 1 минуте, объём внизу), стрелки входа и выхода, линии входа, тейка и стопа; колесо — масштаб, перетаскивание — сдвиг, кнопка «К сделке» возвращает к сделке; ось в капитализации или в цене']],
+ ['2.49','23.09.2026',['«Все сделки»: у каждой монеты логотип; таблица растянута вниз на всю высоту экрана']],
  ['2.48','23.09.2026',['Страницу можно прокрутить ниже последнего блока — снизу добавлен запас в половину экрана']],
  ['2.47','23.09.2026',['Карточка сделки (клик по монете в истории или в таблице): график цены с точками входа и выхода, зоной сделки и уровнями тейка/стопа — синяя линия это цена, которую бот видел каждые 10 с, серая — минутные свечи до и после сделки; ниже разбор по шагам: почему вошли, что делала цена, когда включился трейлинг, почему вышли, итог и что было с ценой после выхода; в конце — строки журнала бота по этой сделке. Для старых сделок путь цены не сохранён, поэтому показываются только свечи']],
  ['2.46','23.09.2026',['Обзор: график депозита по умолчанию строится «по сделкам» — точки идут подряд прямыми отрезками, без пустых промежутков, когда бот ничего не делал; кнопка «По сделкам / По времени» над графиком возвращает настоящую шкалу времени (выбор запоминается)']],
