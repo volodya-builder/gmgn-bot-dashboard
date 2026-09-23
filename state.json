@@ -1,39 +1,6 @@
 {
- "balance_usd": 867.5664578841652,
- "positions": {
-  "0x5aa382ba8709766e6142809517cf45db4a1d7777": {
-   "symbol": "中国小子",
-   "name": "成为中国人",
-   "address": "0x5aa382ba8709766e6142809517cf45db4a1d7777",
-   "opened": 1790139935,
-   "entry": 0.00001657034233,
-   "size_usd": 20,
-   "peak": 0.000016431059,
-   "trough": 0.000015407926,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "rank",
-    "launchpad": "flap",
-    "age_min": "2.9",
-    "liq": "8977",
-    "mcap": "16222",
-    "holders": 71,
-    "smart": 0,
-    "renowned": 2,
-    "bundler": "0.095",
-    "snipers": 0,
-    "top10": "0.173",
-    "buys": 89,
-    "sells": 38,
-    "list_price": "0.0000162219",
-    "hour_utc": 5
-   },
-   "last": 0.000015407926,
-   "last_t": 1790139958
-  }
- },
+ "balance_usd": 881.7096327705829,
+ "positions": {},
  "seen": {
   "0xb18870450cead02867b2f7515522a84411887777": 1790084213,
   "0x08aa17a10afd4d8a3b2de3afec9f415b33407777": 1790085658,
@@ -96,9 +63,9 @@
   "0xda61654a26ba454748f3c2aa433d54edc1d27777": 1790139333,
   "0x5aa382ba8709766e6142809517cf45db4a1d7777": 1790139935
  },
- "closed": 59,
+ "closed": 60,
  "wins": 18,
- "pnl_usd": -94.43354211583748,
+ "pnl_usd": -100.29036722941979,
  "opened_at": [
   1790136417,
   1790138756,
@@ -108,9 +75,9 @@
  ],
  "day": {
   "key": "2026-09-23",
-  "pnl": -34.29462484513078
+  "pnl": -40.15144995871309
  },
- "stop_streak": 1,
+ "stop_streak": 2,
  "last_hyp_report": "2026-09-22",
  "paused_until": 1790120967
 }
