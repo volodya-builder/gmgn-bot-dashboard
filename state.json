@@ -1,5 +1,5 @@
 {
- "balance_usd": 780.1963858234712,
+ "balance_usd": 812.3095328688825,
  "positions": {
   "0x0794250fdcf100ba6131031586a252c2a1df7777": {
    "symbol": "螃蟹AI",
@@ -30,8 +30,8 @@
     "list_price": "0.0000193737",
     "hour_utc": 6
    },
-   "last": 0.000020394168,
-   "last_t": 1790145568
+   "last": 0.000019041071,
+   "last_t": 1790145875
   },
   "0xeaf0193cf1e68922004037470c317cee0f977777": {
    "symbol": "龙虾人生",
@@ -62,40 +62,8 @@
     "list_price": "0.0000510384",
     "hour_utc": 6
    },
-   "last": 0.000051006225,
-   "last_t": 1790145569
-  },
-  "0xed9d3e24cc371b5c2b1e75ffd5bb315a49757777": {
-   "symbol": "GCPU",
-   "name": "GCPU",
-   "address": "0xed9d3e24cc371b5c2b1e75ffd5bb315a49757777",
-   "opened": 1790145498,
-   "entry": 0.000015754760520000002,
-   "size_usd": 20,
-   "peak": 0.000019187432,
-   "trough": 0.000014606351,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "rank",
-    "launchpad": "flap",
-    "age_min": "4.1",
-    "liq": "8511",
-    "mcap": "15606",
-    "holders": 84,
-    "smart": 5,
-    "renowned": 0,
-    "bundler": "0.017",
-    "snipers": 1,
-    "top10": "0.239",
-    "buys": 148,
-    "sells": 78,
-    "list_price": "0.0000156055",
-    "hour_utc": 6
-   },
-   "last": 0.000019187432,
-   "last_t": 1790145569
+   "last": 0.000052400391,
+   "last_t": 1790145875
   }
  },
  "seen": {
@@ -168,9 +136,9 @@
   "0xe4dbe4c28556ec6a1adecf19af387d7da6b27777": 1790144200,
   "0xed9d3e24cc371b5c2b1e75ffd5bb315a49757777": 1790145498
  },
- "closed": 65,
- "wins": 18,
- "pnl_usd": -139.40361417653176,
+ "closed": 66,
+ "wins": 19,
+ "pnl_usd": -127.29046713112051,
  "opened_at": [
   1790143390,
   1790143514,
@@ -180,9 +148,9 @@
  ],
  "day": {
   "key": "2026-09-23",
-  "pnl": -79.26469690582508
+  "pnl": -67.15154986041382
  },
- "stop_streak": 2,
+ "stop_streak": 0,
  "last_hyp_report": "2026-09-22",
  "paused_until": 1790143316
 }

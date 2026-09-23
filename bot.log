@@ -902,3 +902,6 @@
 [2026-09-23 06:36:41] 5с-цены: отслеживаю 10/10 монет, всего монет 83, точек 45846, пропущено (нет места) 2277, ошибок 0
 [2026-09-23 06:38:18] CANDIDATE GCPU (flap) age 4.1m | liq 8511 | mcap 15606 | holders 84 | swaps 226 | vol 16227 | top10 0.24 | bundler 0.02 | snipers 1 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 148/78 | creator creator_close | wash | smart 5 | renowned 0 | viewers 184 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 203 | chg1m 33 | viewers/holders 2.19 | source rank | launchpad flap
 [2026-09-23 06:38:18] BUY paper GCPU @0.0000157548 $20 | mcap 15606 liq 8511 holders 84
+[2026-09-23 06:40:20] история цен: запрошено 1, получено 1
+[2026-09-23 06:41:09] скан: 206 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:173 liq:4; возраст мин/медиана/макс: 1/1158/57514 мин
+[2026-09-23 06:43:18] SELL paper GCPU take_profit pnl 12.11$ (62.1%) hold 5m | balance 812.31
