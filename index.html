@@ -354,6 +354,14 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
   #trades th:nth-child(6),#trades td:nth-child(6){display:none}
   .stat .big,.big{letter-spacing:-.02em}
 }
+
+/* v2.19: вкладки и фильтры на телефоне переносятся на вторую строку, ничего не уходит за край */
+@media(max-width:700px){
+  nav.pills{flex-wrap:wrap;overflow:visible;border-radius:18px;gap:3px;padding:4px}
+  nav.pills .pill{flex:1 1 auto;text-align:center;padding:7px 9px;font-size:13px;min-height:34px}
+  .titlebar .pills,#trFilter,.htabs .pills{flex-wrap:wrap;overflow:visible;border-radius:18px;white-space:normal}
+  .titlebar .pills .pill,#trFilter .pill,.htabs .pills .pill{flex:1 1 auto;text-align:center;padding:6px 9px;font-size:12.5px;min-height:32px}
+}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -706,8 +714,9 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.18';
+const APP_VERSION='2.19';
 const CHANGELOG=[
+ ['2.19','23.09.2026',['Телефон: вкладки и фильтры переносятся на вторую строку — все видны сразу, без прокрутки вбок']],
  ['2.18','23.09.2026',['Телефон: страница больше не уезжает вбок; таблицы «Сделки» и «В тренде» показывают главные колонки (Токен · Фильтр · Возраст · Mcap · Холдеры и Закрыта · Токен · PnL · Причина), детали — по нажатию на строку; арена листается пальцем внутри карточки; крупнее кнопки и отступы']],
  ['2.17','23.09.2026',['На панели живого бота строка «Текущие правила» переименована в «Правила симуляции v1.2»: это правила бота-симуляции, с которыми сравниваются гипотезы, а живой бот торгует по выбранной гипотезе (зелёная точка)','В карточке гонки заголовок показывает постоянный номер гипотезы, а не место']],
  ['2.16','23.09.2026',['«Гонка гипотез»: у каждой дорожки виден номер гипотезы (#1, #42…); цифра в кружке слева — место в гонке, колонка подписана «Место»']],
