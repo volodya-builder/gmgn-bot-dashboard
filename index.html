@@ -363,6 +363,16 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
   .titlebar .pills .pill,#trFilter .pill,.htabs .pills .pill{flex:1 1 auto;text-align:center;padding:6px 9px;font-size:12.5px;min-height:32px}
   header{overflow:visible!important}
 }
+
+/* v2.21: шапка не растягивается шире экрана из-за плашек; кнопки без задержки касания */
+@media(max-width:700px){
+  header{grid-template-columns:minmax(0,1fr)!important;width:100%;max-width:100vw;box-sizing:border-box}
+  header>*{min-width:0;max-width:100%}
+  .badges{display:flex;flex-wrap:wrap;gap:6px;max-width:100%}
+  .badges>*{max-width:100%}
+  nav.pills{width:100%!important;max-width:100%!important;box-sizing:border-box}
+  .pill,.btn{touch-action:manipulation}
+}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -715,8 +725,9 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.20';
+const APP_VERSION='2.21';
 const CHANGELOG=[
+ ['2.21','23.09.2026',['Телефон: шапка больше не растягивается из-за плашек (вкладки в две строки на живой панели тоже)','Арена на телефоне облегчена: не больше 28 фишек на экране, реже выпуск — вкладки переключаются без задержки']],
  ['2.20','23.09.2026',['Телефон: перенос вкладок закреплён принудительно (CSS !important + проверка скриптом после загрузки)']],
  ['2.19','23.09.2026',['Телефон: вкладки и фильтры переносятся на вторую строку — все видны сразу, без прокрутки вбок']],
  ['2.18','23.09.2026',['Телефон: страница больше не уезжает вбок; таблицы «Сделки» и «В тренде» показывают главные колонки (Токен · Фильтр · Возраст · Mcap · Холдеры и Закрыта · Токен · PnL · Причина), детали — по нажатию на строку; арена листается пальцем внутри карточки; крупнее кнопки и отступы']],
@@ -1022,6 +1033,7 @@ function arSpawn(t){const G=arGeo;const g=t.ok||t.replay?-1:gateOf(t);const el=c
  const c={t,el,x:30,y,vy:0,g,tx:g<0?G.fin-18:G.gx[g]-30,phase:'run',v:170+Math.random()*60,life:0};arChips.push(c);place(c);}
 function place(c){c.el.style.transform='translate('+(c.x-17)+'px,'+(c.y-17)+'px)'+(c.phase==='fall'||c.phase==='gone'&&c.g>=0?' scale(.7)':'');}
 function arStep(dt){const G=arGeo;if(!G)return;
+ if(innerWidth<=700&&arChips.length>28){for(const c of arChips.slice(0,arChips.length-28))if(c.phase!=='gone'){c.phase='gone';}}
  arSpawnT-=dt;if(arSpawnT<=0&&(arQueue.length||arReplayQ.length)){const t=arQueue.length?arQueue.shift():arReplayQ.shift();arSpawn(t);arSpawnT=arQueue.length?arRate:.28;}
  for(const c of arChips){c.life+=dt;
   if(c.phase==='run'){c.x+=c.v*dt;if(c.x>=c.tx){c.x=c.tx;if(c.g<0){c.phase='fin';c.el.classList.add('pass');if(!c.t.replay){arLive.pass++;arFootLive();}arFin.push(c);if(arFin.length>6){const o=arFin.shift();o.phase='gone';}const i=arFin.length-1;c.fy=G.laneTop-40+i*46;}else{c.phase='bounce';c.bt=0;c.el.classList.add('hit');arHit(c);}}}
@@ -1052,7 +1064,7 @@ function renderArena(){if(!$('#v-arena').classList.contains('on'))return;
   arCnt=cnt;arPass=pass;arPaintCnt();
   // прямой эфир: каждый скан все монеты заново идут через ворота, равномерно до следующего скана
   const all=[...ls.tokens];for(let i=all.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[all[i],all[j]]=[all[j],all[i]];}
-  arQueue=all;arRate=Math.max(.04,Math.min(.6,((D.config.scan_every_sec||20)*.92)/Math.max(1,all.length)));arLive.scans++;
+  arQueue=all;arRate=Math.max(.04,Math.min(.6,((D.config.scan_every_sec||20)*.92)/Math.max(1,all.length)));if(innerWidth<=700){arRate=Math.max(arRate,.3);}arLive.scans++;
   const top=cnt.map((v,i)=>[v,i]).sort((a,b)=>b[0]-a[0])[0];
   $('#arFoot').innerHTML='Последний скан в '+new Date(ls.at).toLocaleTimeString('ru-RU')+': <b>'+ls.tokens.length+'</b> монет, прошли все фильтры <b>'+pass+'</b>'+(top&&top[0]?' · главное сито — <b>'+GATES[top[1]][0].toLowerCase()+'</b> ('+top[0]+')':'')+' · числа над воротами — сколько монет из этого скана остановилось на них<span id="arLiveFoot"></span>';arFootLive();}
  // сделки: новые закрытия → улёт с суммой
