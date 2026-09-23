@@ -1,39 +1,6 @@
 {
- "balance_usd": 885.0969175709038,
- "positions": {
-  "0xa24f1650a34e51703446e6e55b29fc7dc6837777": {
-   "symbol": "Buddy",
-   "name": "Buddy Cat",
-   "address": "0xa24f1650a34e51703446e6e55b29fc7dc6837777",
-   "opened": 1790129444,
-   "entry": 0.000019533435,
-   "size_usd": 20,
-   "peak": 0.000025001049,
-   "trough": 0.000016584019,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "rank",
-    "launchpad": "flap",
-    "age_min": "6.0",
-    "liq": "10420",
-    "mcap": "19251",
-    "holders": 125,
-    "smart": 6,
-    "renowned": 3,
-    "bundler": "0.193",
-    "snipers": 1,
-    "top10": "0.213",
-    "buys": 184,
-    "sells": 101,
-    "list_price": "0.0000192514",
-    "hour_utc": 2
-   },
-   "last": 0.000016584019,
-   "last_t": 1790129570
-  }
- },
+ "balance_usd": 896.5550440857743,
+ "positions": {},
  "seen": {
   "0xb18870450cead02867b2f7515522a84411887777": 1790084213,
   "0x08aa17a10afd4d8a3b2de3afec9f415b33407777": 1790085658,
@@ -81,9 +48,9 @@
   "0x463620d16a32ebee0186d0e4b99b157d43d07777": 1790128863,
   "0xa24f1650a34e51703446e6e55b29fc7dc6837777": 1790129444
  },
- "closed": 44,
+ "closed": 45,
  "wins": 13,
- "pnl_usd": -81.40308242909823,
+ "pnl_usd": -89.9449559142277,
  "opened_at": [
   1790126340,
   1790127124,
@@ -95,9 +62,9 @@
  ],
  "day": {
   "key": "2026-09-23",
-  "pnl": -21.264165158391542
+  "pnl": -29.806038643521017
  },
- "stop_streak": 3,
+ "stop_streak": 4,
  "last_hyp_report": "2026-09-22",
  "paused_until": 1790120967
 }
