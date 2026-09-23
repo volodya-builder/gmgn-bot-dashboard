@@ -1,5 +1,5 @@
 {
-  "rules_version": "v1.1",
+  "rules_version": "v1.2",
   "mode": "paper",
   "chain": "bsc",
   "scan_every_sec": 20,
@@ -18,32 +18,32 @@
     "pause_min": 30
   },
   "entry": {
-    "max_age_min": 30,
-    "min_age_min": 2,
-    "min_liquidity_usd": 8000,
+    "max_age_min": 20,
+    "min_age_min": 0,
+    "min_liquidity_usd": 15000,
     "min_market_cap_usd": 15000,
-    "max_market_cap_usd": 300000,
+    "max_market_cap_usd": 100000,
     "min_holders": 40,
     "min_swaps": 40,
     "min_volume_usd": 5000,
-    "max_top10_holder_rate": 0.35,
+    "max_top10_holder_rate": 1,
     "max_bundler_rate": 0.3,
-    "max_sniper_count": 15,
+    "max_sniper_count": 10,
     "max_buy_tax_pct": 3,
     "max_sell_tax_pct": 3,
     "min_lock_or_burn": 0.9,
     "require_renounced": true,
     "require_open_source": true,
     "max_rug_ratio": 0.2,
-    "min_buy_sell_ratio": 1.2,
+    "min_buy_sell_ratio": 0,
     "block_creator_status": [
       "creator_sell",
       "creator_remove_liquidity"
     ],
     "block_wash_trading": true,
-    "min_smart_degen_count": 0,
+    "min_smart_degen_count": 3,
     "min_renowned_count": 0,
-    "min_viewers": 0,
+    "min_viewers": 9,
     "min_tg_calls": 0,
     "min_x_followers": 0,
     "max_insider_rate": 1,
@@ -52,14 +52,14 @@
     "min_chg5m": -100000,
     "source_only": "",
     "launchpads": [],
-    "min_viewers_per_holder": 0,
+    "min_viewers_per_holder": 0.2,
     "min_chg1m": -100000
   },
   "exit": {
-    "take_profit_pct": 60,
-    "stop_loss_pct": 25,
-    "trailing_activate_pct": 30,
-    "trailing_drawdown_pct": 15,
+    "take_profit_pct": 200,
+    "stop_loss_pct": 20,
+    "trailing_activate_pct": 50,
+    "trailing_drawdown_pct": 25,
     "max_hold_min": 90
   },
   "live": {
@@ -74,5 +74,6 @@
     "min_trades": 100,
     "min_pf": 1.3,
     "adopt_cooldown_h": 24
-  }
+  },
+  "note": "Бумажный бот: с 2026-09-23T09:27:26.544Z правила лучшей гипотезы за 7 дней h14irsqz (по просьбе Володи)"
 }
