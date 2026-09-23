@@ -14,7 +14,7 @@
   },
   "risk": {
     "daily_loss_limit_usd": 80,
-    "pause_after_losses": 5,
+    "pause_after_losses": 0,
     "pause_min": 30
   },
   "entry": {
