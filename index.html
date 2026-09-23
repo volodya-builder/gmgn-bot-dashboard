@@ -275,6 +275,25 @@ th .eye{margin-right:2px}
 .opm{margin-top:10px;font-size:13px;color:#9a9d95;display:flex;flex-wrap:wrap;gap:4px 16px}.opm b{color:var(--text);font-weight:500}
 .ovgrid{display:grid;grid-template-columns:minmax(0,1fr) clamp(340px,24vw,420px);gap:22px;align-items:start}@media(max-width:1100px){.ovgrid{grid-template-columns:1fr}}
 .ovside{padding:20px 18px;text-align:left}.ovsh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px}.ovsh h2{margin:0}
+.ovside .ovtr,.ovside .ovsh{align-self:stretch;text-align:left}
+.ovday{display:flex;justify-content:space-between;align-items:baseline;padding:14px 10px 6px;color:var(--muted);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;position:sticky;top:0;background:#141414;z-index:1}
+.ovday span:last-child{font-family:var(--font-display);letter-spacing:0;text-transform:none;font-size:12.5px}
+.ovti{display:flex;align-items:center;gap:12px;padding:10px 10px;border-radius:12px;cursor:pointer;border-bottom:0;position:relative}
+.ovti:hover{background:#ffffff08}
+.ovlg{position:relative;flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:#222;display:grid;place-items:center;overflow:hidden;font-size:12px;font-weight:600;color:#9a9e96}
+.tcH .tcN{display:inline-flex;align-items:center;gap:9px;min-width:0;color:var(--text);font-size:inherit;white-space:normal}.tcH:has(.tcN){align-items:center}.tclg{position:relative;flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:#222;display:grid;place-items:center;overflow:hidden;font-style:normal}.tclg em{font-style:normal;font-size:11px;font-weight:600;color:#9a9e96}.tclg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ovlg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ovti.w .ovlg{box-shadow:0 0 0 2px #4caf6d}
+.ovti.l .ovlg{box-shadow:0 0 0 2px #e05c5c55}
+.ovmid{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left}
+.ovmid b{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ovmid span{color:#7d8179;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ovres{display:flex;flex-direction:column;align-items:flex-end;gap:3px;font-family:var(--font-display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ovres b{font-size:17px;font-weight:600}
+.ovres span{font-size:12px}
+.ovti.w .ovres b,.ovti.w .ovres span{color:var(--good,#4caf6d)}
+.ovti.l .ovres b{color:#e05c5c}
+.ovti.l .ovres span{color:#e05c5c99}
 .ovtr{overflow:auto;display:flex;flex-direction:column}.ovti{padding:10px 8px;border-bottom:1px solid #1c1c1c;cursor:pointer;border-radius:10px}.ovti:hover{background:#ffffff06}.ovti:last-child{border-bottom:0}
 .ovt1{display:flex;justify-content:space-between;gap:8px;font-size:14.5px}.ovt1 b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ovt1 span{font-family:var(--font-display);font-variant-numeric:tabular-nums;white-space:nowrap}
 .ovt2{display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-top:4px}.ovt2 .tag{padding:1px 7px;font-size:11px}.ovt3{color:#6a6e66;font-size:11.5px;margin-top:3px}
@@ -433,6 +452,45 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 .kstrip .tile .s{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media(max-width:1000px){.tiles.kstrip{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:14px}.kstrip .tile:nth-child(3n+1){border-left:0}}
 @media(max-width:560px){.tiles.kstrip{grid-template-columns:repeat(2,minmax(0,1fr))}.kstrip .tile{border-left:0;padding:2px 14px}.kstrip .tile:nth-child(even){border-left:1px solid #ffffff10}}
+/* робот-статус бота */
+.rbw{display:flex;align-items:center;gap:12px;padding:6px 16px 6px 8px;border:1px solid var(--border);border-radius:16px;background:#101010;margin-left:auto;margin-right:14px;min-width:0;--rc:#5fd3a0}
+.rbw.y{--rc:#f2c14e}.rbw.r{--rc:#ff6b6b}
+.rb{width:54px;height:54px;flex:0 0 54px;filter:drop-shadow(0 0 10px color-mix(in srgb,var(--rc) 35%,transparent))}
+.rb svg{width:100%;height:100%;overflow:visible}
+.rb-head,.rb-torso,.rb-ear{fill:#1b1d1f;stroke:var(--rc);stroke-width:2}
+.rb-face{fill:#0c0d0e}
+.rb-eye{fill:var(--rc)}.rb-ant,.rb-core{fill:var(--rc)}
+.rb-str{stroke:var(--rc);stroke-width:2;stroke-linecap:round}.rb-str2{stroke:var(--rc);stroke-width:2.2;stroke-linecap:round;fill:none}
+.rb-x,.rb-zz,.rb-sp{display:none}.rb-zz text{fill:var(--rc);font:700 8px var(--font-ui)}
+.rbt{display:flex;flex-direction:column;min-width:0;line-height:1.3}.rbt b{font-weight:600;font-size:14px;color:var(--rc);white-space:nowrap}.rbt span{color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px}
+/* работает: покачивается, глаза бегают, антенна мигает, сердце светится */
+.rbw.g .rb-body{animation:rbBob 1.6s ease-in-out infinite}
+.rbw.g .rb-eyes{animation:rbScan 3.2s ease-in-out infinite}
+.rbw.g .rb-ant{animation:rbBlink 1.1s steps(2,end) infinite}
+.rbw.g .rb-core{animation:rbPulse 1.6s ease-in-out infinite}
+.rbw.g.busy .rb-body{animation-duration:.8s}.rbw.g.busy .rb-core{animation-duration:.6s}
+/* пауза: медленно «дышит», глаза прикрыты, над головой zz */
+.rbw.y .rb-body{animation:rbBreath 3.5s ease-in-out infinite}
+.rbw.y .rb-eye{transform-box:fill-box;transform-origin:center;transform:scaleY(.25)}
+.rbw.y .rb-zz{display:block;animation:rbZ 2.4s ease-in-out infinite}
+.rbw.y .rb-ant{opacity:.45}
+/* сломан: трясётся, глаза-крестики, искрит, антенна мерцает */
+.rbw.r .rb-body{animation:rbShake .45s linear infinite}
+.rbw.r .rb-eyes{display:none}.rbw.r .rb-x{display:block}
+.rbw.r .rb-sp{display:block;animation:rbSpark .9s steps(2,end) infinite}
+.rbw.r .rb-ant{animation:rbFlick .7s steps(3,end) infinite}.rbw.r .rb-core{opacity:.35}
+@keyframes rbBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+@keyframes rbScan{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+@keyframes rbBlink{0%{opacity:1}100%{opacity:.25}}
+@keyframes rbPulse{0%,100%{opacity:.55;r:2.4}50%{opacity:1;r:3.4}}
+@keyframes rbBreath{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(1px) scale(.985)}}
+@keyframes rbZ{0%{opacity:0;transform:translateY(3px)}50%{opacity:1}100%{opacity:0;transform:translateY(-4px)}}
+@keyframes rbShake{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(-1.5px,0) rotate(-2deg)}75%{transform:translate(1.5px,0) rotate(2deg)}}
+@keyframes rbSpark{0%{opacity:1}100%{opacity:0}}
+@keyframes rbFlick{0%{opacity:1}50%{opacity:.15}100%{opacity:.8}}
+.rb-body{transform-box:view-box;transform-origin:32px 40px}
+@media(max-width:900px){.rbw{order:3;margin:10px 0 0;width:100%}}
+@media(prefers-reduced-motion:reduce){.rbw *{animation:none!important}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -447,7 +505,7 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
   <div class="ovgrid">
   <div class="card ovchart">
     <div class="ovstrip" id="ovHyp" style="display:none"></div>
-    <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity">Депозит</button><button class="pill" data-c="pnl">PnL по сделкам</button><button class="pill" data-c="count">Сделки</button></div></div>
+    <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="rbw" id="rbw" title=""><div class="rb" id="rb"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="rb-body"><line x1="32" y1="6" x2="32" y2="13" class="rb-str"/><circle cx="32" cy="5" r="3.2" class="rb-ant"/><rect x="13" y="13" width="38" height="27" rx="9" class="rb-head"/><rect x="18" y="19" width="28" height="15" rx="6" class="rb-face"/><g class="rb-eyes"><circle cx="26" cy="26.5" r="3" class="rb-eye"/><circle cx="38" cy="26.5" r="3" class="rb-eye"/></g><g class="rb-x"><path d="M23 23.5l6 6M29 23.5l-6 6M35 23.5l6 6M41 23.5l-6 6" class="rb-str2"/></g><rect x="9" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="51" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="20" y="43" width="24" height="14" rx="5" class="rb-torso"/><circle cx="32" cy="50" r="2.6" class="rb-core"/></g><g class="rb-zz"><text x="50" y="14">z</text><text x="56" y="8">z</text></g><g class="rb-sp"><path d="M8 10l3 3M56 42l3 3M6 44l3-2" class="rb-str2"/></g></svg></div><div class="rbt"><b id="rbTitle">…</b><span id="rbSub"></span></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity">Депозит</button><button class="pill" data-c="pnl">PnL по сделкам</button><button class="pill" data-c="count">Сделки</button></div></div>
     <div class="ctools"><label class="check" id="marksWrap"><input type="checkbox" id="marks"><span class="box"></span>Сделки на графике</label><div class="zbtns"><button class="mini" id="zout" title="Отдалить">−</button><button class="mini" id="zin" title="Приблизить">+</button><button class="mini wide" id="zreset">Весь период</button><button class="mini wide" id="zauto" style="display:none" title="Вернуть автоматический масштаб по вертикали">Авто</button><button class="mini wide" id="zhist" title="Спрятать колонку «История сделок» — график станет на всю ширину">На всю ширину</button><button class="mini wide" id="zbig">Развернуть</button></div><span class="hint">колесо — масштаб · тяни график — сдвиг · тяни шкалу цены или времени — растянуть · двойной клик — сброс</span></div><canvas id="chart"></canvas><div class="axis" id="axis"></div><div class="resz" id="resz" title="Потяни, чтобы изменить высоту графика"><span></span></div>
   </div>
   <div class="card ovside"><div class="ovsh"><h2>История сделок</h2><span class="note" id="ovTrSum"></span></div><div class="ovtr" id="ovTr"></div></div>
@@ -577,7 +635,7 @@ function renderOvHyp(){const rl=$('#raceCurLbl');if(rl)rl.textContent=D&&D.mode=
 (()=>{let nh=false;try{nh=localStorage.getItem('ovNoHist')==='1';}catch{}const g=document.querySelector('.ovgrid'),bt=$('#zhist');if(!g||!bt)return;
  const ap=()=>{g.classList.toggle('nohist',nh);bt.textContent=nh?'Показать историю':'На всю ширину';bt.title=nh?'Вернуть колонку «История сделок» справа':'Спрятать колонку «История сделок» — график станет на всю ширину';};ap();
  bt.onclick=()=>{nh=!nh;try{localStorage.setItem('ovNoHist',nh?'1':'0');}catch{}ap();try{redraw();}catch{}};})();
-function render(){if(!D)return;try{renderOvHyp();}catch(e){console.error(e);}const s=D.state,c=D.config,t=ptrades(),m=metrics(t);const start=c.paper_start_balance_usd;
+function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{renderOvHyp();}catch(e){console.error(e);}const s=D.state,c=D.config,t=ptrades(),m=metrics(t);const start=c.paper_start_balance_usd;
  const open=Object.values(s.positions||{});const inPos=open.reduce((a,p)=>a+p.size_usd,0);
  const plabel={'24h':'за 24 часа','7d':'за неделю','30d':'за месяц','all':'за всё время'}[period];
  $('#hero').innerHTML=[
@@ -728,13 +786,24 @@ function eqOverlay(ctx,g){const {X,Y,P,PW,PH,W,H,vis,start,x0,x1,span}=g;const U
 let zoomT=null,zAnim=0;
 function animZoom(target,toNull){if(!geom)return;const from=zoom||[geom.x0,geom.x1];zoomT=toNull?null:target;clearTimeout(zAnim);const t0=performance.now(),DUR=240;
  const step=now=>{const k=Math.min(1,(now-t0)/DUR),e=1-Math.pow(1-k,3);zoom=[from[0]+(target[0]-from[0])*e,from[1]+(target[1]-from[1])*e];redraw();if(k<1)zAnim=setTimeout(()=>step(performance.now()),16);else{zoomT=null;if(toNull)zoom=null;redraw();}};zAnim=setTimeout(()=>step(performance.now()),16);}
-function ovTrades(t){const el=$('#ovTr');if(!el)return;const L=[...t].reverse();
- const RSN={take_profit:['тейк','tp'],take_profit_gmgn:['тейк','tp'],stop_loss:['стоп','sl'],stop_loss_gmgn:['стоп','sl'],trailing:['трейлинг','tr'],timeout:['время',''],manual:['вручную',''],sell_failed:['ошибка продажи','sl']};
+let ovLogo={},ovLogoAsked=new Set(),ovLastT=null;
+function ovLogos(L){for(const t of (D.lastScan&&D.lastScan.tokens)||[])if(t.logo&&t.address)ovLogo[t.address.toLowerCase()]=t.logo;
+ const need=[...new Set(L.slice(0,200).map(x=>String(x.address||'').toLowerCase()))].filter(a=>a&&!ovLogo[a]&&!ovLogoAsked.has(a)).slice(0,25);if(!need.length)return;need.forEach(a=>ovLogoAsked.add(a));
+ fetch('/api/logos?a='+need.join(','),{cache:'no-store'}).then(r=>r.json()).then(m=>{let n=0;for(const k in m){ovLogo[k]=m[k];n++;}if(ovLastT){if(n)ovTrades(ovLastT);else ovLogos([...ovLastT].reverse());}}).catch(()=>{});}
+function ovTrades(t){const el=$('#ovTr');if(!el)return;ovLastT=t;const L=[...t].reverse();ovLogos(L);
+ const RSN={take_profit:'тейк',stop_loss:'стоп',trailing:'трейлинг',timeout:'по времени',manual:'вручную',sell_failed:'ошибка продажи'};
  const w=L.filter(x=>+x.pnl_usd>0).length,sum=L.reduce((a,x)=>a+ +x.pnl_usd,0);
- $('#ovTrSum').innerHTML=L.length?L.length+' · <span class="good">'+w+'</span>/<span class="bad">'+(L.length-w)+'</span> · <span class="'+cls(sum)+'">'+mny(sum)+'</span>':'';
+ $('#ovTrSum').innerHTML=L.length?'<span class="good">'+w+'</span> / <span class="bad">'+(L.length-w)+'</span> · <b class="'+cls(sum)+'">'+mny(sum)+'</b>':'';
  if(!L.length){el.innerHTML='<div class="empty">Сделок за период нет</div>';return;}
- el.innerHTML=L.slice(0,200).map((x,i)=>{const p=+x.pnl_usd,pc=+x.pnl_pct,r=RSN[x.reason]||[x.reason||'',''];const d=new Date(x.closed);
-  return '<div class="ovti" data-i="'+i+'"><div class="ovt1"><b>'+esc(x.symbol||'')+'</b><span class="'+cls(p)+'">'+mny(p)+'</span></div><div class="ovt2"><span>'+d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+'</span><span class="tag '+r[1]+'">'+esc(r[0])+'</span><span>'+dur(+x.hold_min)+'</span><span class="'+cls(pc)+'">'+(pc>0?'+':'')+f(pc,1)+'%</span></div>'+(x.mcap?'<div class="ovt3">mcap $'+f(+x.mcap/1000,0)+'k · ликв $'+f(+x.liq/1000,1)+'k · холдеров '+esc(x.holders||'')+(x.age_min?' · вход на '+f(+x.age_min,1)+' мин':'')+'</div>':'')+'</div>';}).join('');
+ const dk=d=>new Date(+d+3*36e5).toISOString().slice(0,10),today=dk(Date.now()),yest=dk(Date.now()-864e5);let last='',h='';
+ L.slice(0,200).forEach((x,i)=>{const p=+x.pnl_usd,pc=+x.pnl_pct,good=p>0,d=new Date(x.closed),k=dk(d);
+  if(k!==last){last=k;const ds=L.filter(y=>dk(new Date(y.closed))===k),sm=ds.reduce((a,y)=>a+ +y.pnl_usd,0);h+='<div class="ovday"><span>'+(k===today?'Сегодня':k===yest?'Вчера':d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'}))+'</span><span class="'+cls(sm)+'">'+mny(sm)+'</span></div>';}
+  const base=String(x.reason||'').replace(/_(gmgn|empty)$/,''),r=RSN[base]||base,lg=ovLogo[String(x.address||'').toLowerCase()],sym=esc((x.symbol||'?'));
+  const tip='Капитализация на входе $'+f(+x.mcap/1000,0)+'k, ликвидность $'+f(+x.liq/1000,1)+'k, холдеров '+(x.holders||'—')+(x.age_min?', вход на '+f(+x.age_min,1)+' минуте жизни монеты':'');
+  h+='<div class="ovti '+(good?'w':'l')+'" data-i="'+i+'" title="'+esc(tip)+'"><div class="ovlg">'+(lg?'<img src="'+esc(lg)+'" loading="lazy" onerror="this.remove()">':'')+'<span>'+sym.slice(0,2)+'</span></div>'+
+   '<div class="ovmid"><b>'+sym+'</b><span>'+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+' · '+esc(r)+' · '+dur(+x.hold_min)+'</span></div>'+
+   '<div class="ovres"><b>'+mny(p)+'</b><span>'+(pc>0?'+':'')+f(pc,1)+'%</span></div></div>';});
+ el.innerHTML=h;
  el.querySelectorAll('.ovti').forEach(n=>n.onclick=()=>openTrade(L[+n.dataset.i]));
  el.style.maxHeight=innerWidth>1100?'':'520px';}
 function drawChart(t,m){lastT=t;lastM=m;
@@ -794,7 +863,8 @@ function agoRu(ms){const s=Math.max(0,(Date.now()-ms)/1000);if(s<60)return 'то
 function tradeCard(x){const w=+x.pnl_usd>0,rsn=String(x.reason||'');const base=rsn.replace(/_(gmgn|empty)$/,'');
  const lbl={take_profit:'Тейк',stop_loss:'Стоп',trailing:'Трейлинг',timeout:'По времени',manual:'Вручную'}[base]||(RS_T[base]||rsn);
  const mc=+x.mcap>0?(+x.mcap>=1000?'$'+f(+x.mcap/1000,1)+'k':'$'+f(+x.mcap,0)):null;const sz=+x.size_usd>0?'$'+f(+x.size_usd,0):null;
- return '<div class="tcH"><b>'+esc(x.symbol)+'</b><span>'+agoRu(+new Date(x.closed))+'</span></div>'
+ const lg=(typeof ovLogo!=="undefined")&&ovLogo[String(x.address||"").toLowerCase()];
+ return '<div class="tcH"><span class="tcN"><i class="tclg">'+(lg?'<img src="'+esc(lg)+'" onerror="this.remove()">':'')+'<em>'+esc(String(x.symbol||"?").slice(0,2))+'</em></i><b>'+esc(x.symbol)+'</b></span><span>'+agoRu(+new Date(x.closed))+'</span></div>'
   +'<div class="tcV '+(w?'good':'bad')+'">'+(w?'+$':'−$')+f(Math.abs(x.pnl_usd))+'<small>'+(w?'+':'')+f(x.pnl_pct,1)+'%</small></div>'
   +'<div class="tcR"><span class="tcB '+(w?'g':'r')+'">'+esc(lbl)+'</span>'+(sz?'<span>'+sz+'</span>':'')+(mc?'<span class="tcM">@ '+mc+' · капитализация</span>':'')+'</div>'
   +'<div class="tcF">'+dur(x.hold_min)+' в сделке'+(x.age_min!==undefined&&x.age_min!==''?' · вход на '+f(x.age_min,1)+' мин жизни':'')+' · нажми — подробнее</div>';}
@@ -865,8 +935,11 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.35';
+const APP_VERSION='2.38';
 const CHANGELOG=[
+ ['2.38','23.09.2026',['В карточке сделки при наведении на точку графика теперь показывается логотип монеты']],
+ ['2.37','23.09.2026',['Робот-статус рядом с депозитом: зелёный и покачивается — бот работает (в сделке — быстрее), жёлтый и дремлет — пауза (дневной лимит, риск-пауза, мало BNB), красный и трясётся — нет связи, бот завис или критическая ошибка; при наведении — подробности']],
+ ['2.36','23.09.2026',['Обзор: история сделок стала проще — логотип монеты, название, крупно результат в $ и % (зелёный — плюс, красный — минус), под названием время, как закрылась и сколько длилась; сделки разбиты по дням с итогом дня; подробности (mcap, ликвидность, холдеры) — при наведении и в карточке по клику']],
  ['2.35','23.09.2026',['Обзор: доходность, средняя прибыль и убыток, макс. просадка, время в сделке и открытые позиции перенесены наверх — компактной строкой прямо под депозитом']],
  ['2.34','23.09.2026',['Обзор: «История сделок» сразу занимает высоту графика — раньше карточка была короткой первые секунды и растягивалась только после следующего обновления данных']],
  ['2.33','23.09.2026',['Страница стала шире: на больших мониторах рабочая зона растягивается до 1760 px вместо 1240 px — график, история сделок и таблицы получают больше места']],
@@ -1468,4 +1541,23 @@ function renderSys(){const S=SYSD;if(!S)return;const c=S.cur||{},m=c.mem||{},dk=
 async function loadSys(){const v=$('#v-sys');if(!v||!v.classList.contains('on'))return;if(window.DATA_URL){$('#sysTiles').innerHTML='';$('#sysSub').textContent='Мониторинг сервера доступен только в панели на самом сервере (не в копии на GitHub).';$('#sysLive').style.display='none';return;}if(sysBusy)return;sysBusy=true;try{const r=await fetch('/api/sys',{cache:'no-store'});if(r.ok){SYSD=await r.json();renderSys();$('#sysLive').style.opacity=1;}else $('#sysLive').style.opacity=.4;}catch{$('#sysLive').style.opacity=.4;}sysBusy=false;}
 setInterval(loadSys,2000);document.querySelectorAll('nav .pill').forEach(b=>b.addEventListener('click',()=>setTimeout(loadSys,0)));
 
+
+// ---- робот-статус: зелёный — работает, жёлтый — пауза, красный — сломан ----
+let rbRecv=0,rbDnow=0;
+function renderBot(){const w=document.getElementById('rbw');if(!w||!D)return;if(D.now!==rbDnow){rbDnow=D.now;rbRecv=Date.now();}
+ const s=D.state||{},c=D.config||{},nowS=Date.now()/1000,stat=window.DATA_URL?900:30;
+ const since=(Date.now()-rbRecv)/1000,scanAge=D.lastScan&&D.lastScan.at?(D.now-D.lastScan.at)/1000+since:null;
+ const open=Object.values(s.positions||{}),lim=c.risk&&c.risk.daily_loss_limit_usd,dayPnl=s.day&&s.day.pnl;
+ const crit=(D.log||[]).slice(-80).filter(l=>/КРИТИЧ|LIVE SELL FAILED|state\.json повреждён/.test(l)).filter(l=>{const m=l.match(/^\[([^\]]+)\]/);return m&&(Date.now()-new Date(m[1].replace(' ','T')+'Z'))<15*60e3;});
+ let st='g',title='Бот работает',sub='';const ago=x=>x<60?Math.round(x)+' с назад':Math.round(x/60)+' мин назад';
+ if(since>stat){st='r';title='Нет связи с ботом';sub='данные не обновлялись '+ago(since);}
+ else if(scanAge!=null&&scanAge>(window.DATA_URL?900:120)){st='r';title='Бот завис';sub='последняя проверка монет '+ago(scanAge);}
+ else if(crit.length){st='r';title='Ошибка в работе';sub=crit[crit.length-1].replace(/^\[[^\]]+\]\s*/,'').slice(0,90);}
+ else if(s.paused_until&&s.paused_until>nowS){st='y';title='Пауза';sub='до '+new Date(s.paused_until*1000).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}
+ else if(lim&&dayPnl!=null&&dayPnl<=-lim){st='y';title='Пауза до завтра';sub='дневной лимит убытка $'+f(lim,0)+' исчерпан';}
+ else if(s.no_funds_until&&s.no_funds_until>nowS){st='y';title='Пауза: мало BNB';sub='пополни кошелёк — бот проверит снова';}
+ else if(open.length){title='В сделке';sub=open.map(p=>p.symbol).join(', ')+(scanAge!=null?' · проверка '+ago(scanAge):'');}
+ else{title='Бот работает';sub='ищет вход'+(D.lastScan&&D.lastScan.tokens?' · '+D.lastScan.tokens.length+' монет':'')+(scanAge!=null?' · '+ago(scanAge):'');}
+ w.className='rbw '+st+(st==='g'&&open.length?' busy':'');document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub;w.title=title+(sub?' — '+sub:'');}
+setInterval(()=>{try{renderBot();}catch(e){}},1000);
 </script></body></html>
