@@ -1380,8 +1380,9 @@ function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label
  const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
  if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
 // ---- версия ----
-const APP_VERSION='2.83';
+const APP_VERSION='2.84';
 const CHANGELOG=[
+ ['2.84','24.09.2026',['«Объёмы» перенесены из «Арены» в «Обзор» — третьей подвкладкой рядом со «Сводкой» и «Всеми сделками»']],
  ['2.83','24.09.2026',['Объёмы BSC: у переключателей four.meme и flap — логотипы площадок']],
  ['2.82','24.09.2026',['Иконка вкладки браузера — голубой шар (логотип бота)']],
  ['2.81','24.09.2026',['Арена → «Объёмы» переделаны по коду страницы «Аналитика» hood: те же шрифты (Nunito), размеры, цифры с разделителями и изменением к прошлому периоду, панель со столбцами (градиент, текущий — салатовый, при наведении столбец подсвечивается, а число и дата показываются вверху панели вместо всплывающей подсказки); 24ч — 24 часа, неделя — 56 дней, месяц и всё время — 60 дней, как в hood']],
@@ -2116,8 +2117,8 @@ function renderBot(){const w=document.getElementById('rbw');if(!w||!D)return;if(
 setInterval(()=>{try{renderBot();}catch(e){}},1000);
 
 // ---- группы вкладок: верхнее меню короче, остальное — подвкладками ----
-const VGROUP={overview:'overview',trades:'overview',trending:'arena',net:'arena',hyp:'hyp',arena:'arena',rules:'bot',log:'bot',sys:'bot'};
-const GSUBS={overview:[['overview','Сводка'],['trades','Все сделки']],arena:[['arena','Арена'],['trending','В тренде'],['net','Объёмы']],bot:[['rules','Правила'],['log','Журнал'],['sys','Сервер']]};
+const VGROUP={overview:'overview',trades:'overview',trending:'arena',net:'overview',hyp:'hyp',arena:'arena',rules:'bot',log:'bot',sys:'bot'};
+const GSUBS={overview:[['overview','Сводка'],['trades','Все сделки'],['net','Объёмы']],arena:[['arena','Арена'],['trending','В тренде']],bot:[['rules','Правила'],['log','Журнал'],['sys','Сервер']]};
 function syncGroups(){const cur=(document.querySelector('.view.on')||{}).id;if(!cur)return;const v=cur.slice(2),g=VGROUP[v]||v;
  const gp=document.querySelector('nav .pill[data-group="bot"]');if(gp&&g==='bot'){gp.dataset.view=v;try{localStorage.setItem('botSub',v);}catch{}}
  document.querySelectorAll('nav .pill:not(.hid)').forEach(x=>x.classList.toggle('on',(x.dataset.group||VGROUP[x.dataset.view]||x.dataset.view)===g));
