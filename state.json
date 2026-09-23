@@ -1,6 +1,39 @@
 {
- "balance_usd": 866.149178589695,
- "positions": {},
+ "balance_usd": 845.849178589695,
+ "positions": {
+  "0xacb79c36dab41db50c93cce4d58dc6df0d4f7777": {
+   "symbol": "jolly",
+   "name": "jollybot",
+   "address": "0xacb79c36dab41db50c93cce4d58dc6df0d4f7777",
+   "opened": 1790141281,
+   "entry": 0.0000175793396,
+   "size_usd": 20,
+   "peak": 0.000026799198,
+   "trough": 0.000014240052,
+   "mode": "paper",
+   "order_id": null,
+   "ctx": {
+    "rules": "v1.1",
+    "source": "rank",
+    "launchpad": "flap",
+    "age_min": "8.4",
+    "liq": "9393",
+    "mcap": "17067",
+    "holders": 129,
+    "smart": 5,
+    "renowned": 7,
+    "bundler": "0.114",
+    "snipers": 1,
+    "top10": "0.207",
+    "buys": 285,
+    "sells": 226,
+    "list_price": "0.0000170673",
+    "hour_utc": 5
+   },
+   "last": 0.000015535727,
+   "last_t": 1790141506
+  }
+ },
  "seen": {
   "0xb18870450cead02867b2f7515522a84411887777": 1790084213,
   "0x08aa17a10afd4d8a3b2de3afec9f415b33407777": 1790085658,
@@ -63,7 +96,8 @@
   "0xda61654a26ba454748f3c2aa433d54edc1d27777": 1790139333,
   "0x5aa382ba8709766e6142809517cf45db4a1d7777": 1790139935,
   "0x6eedb3bb7820801cc126e6ef5372568c62107777": 1790140535,
-  "0x1dc5aa2d8bc7e4382b9b2385e6270b3a21db7777": 1790140577
+  "0x1dc5aa2d8bc7e4382b9b2385e6270b3a21db7777": 1790140577,
+  "0xacb79c36dab41db50c93cce4d58dc6df0d4f7777": 1790141281
  },
  "closed": 62,
  "wins": 18,
@@ -74,7 +108,8 @@
   1790139333,
   1790139935,
   1790140535,
-  1790140577
+  1790140577,
+  1790141281
  ],
  "day": {
   "key": "2026-09-23",
