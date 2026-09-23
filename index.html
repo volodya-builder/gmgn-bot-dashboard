@@ -510,6 +510,43 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 .kavg i b{display:block;height:100%;border-radius:6px}
 .kavg i b.g{background:#4caf6d}.kavg i b.r{background:#e05c5c}
 .kavg em{font-style:normal;font-family:var(--font-display);font-size:20px;font-variant-numeric:tabular-nums;min-width:74px;text-align:right}
+.ovttl{display:flex;align-items:center;gap:20px;flex-wrap:wrap;width:auto!important}
+.ovttl .rbw{margin:0;padding:4px 16px 4px 6px}
+/* v2.41: обзор целиком в окне при 100% масштабе — компактнее верх, высота графика подстраивается под окно */
+@media(min-width:1101px){
+  header{padding:9px 28px}
+  main:has(#v-overview.on){padding-top:12px;padding-bottom:12px}
+  #v-overview.on{gap:12px}
+  #v-overview .h1{font-size:28px}
+  #v-overview .ovttl{gap:14px}
+  #v-overview .ovttl .rbw{padding:2px 12px 2px 6px;gap:8px}
+  #v-overview .rb{width:38px;height:38px;flex-basis:38px}
+  #v-overview .hero{gap:12px;padding-bottom:0}
+  #v-overview .kc{padding:10px 16px;gap:4px;border-radius:14px}
+  #v-overview .kct{font-size:12.5px}
+  #v-overview .kcb{font-size:30px}
+  #v-overview .kcb small{font-size:14px}
+  #v-overview .kcl{font-size:13px}
+  #v-overview .kcs{font-size:12px}
+  #v-overview .kbar{margin:2px 0 0}
+  #v-overview .kavg{gap:8px}
+  #v-overview .kavg em{font-size:17px}
+  #v-overview .tiles.kstrip{margin:0;padding:8px 0}
+  #v-overview .tiles.kstrip:empty{display:none}
+  #v-overview .card.ovchart{padding:12px 22px 8px}
+  #v-overview .card.ovchart .head{margin-bottom:4px}
+  #v-overview .card.ovchart .big{font-size:24px}
+  #v-overview .card.ovchart .sub{font-size:13.5px;margin-top:3px}
+  #v-overview .ovstrip{margin-bottom:8px;padding:5px 12px}
+  #v-overview .ctools{margin:0 0 4px}
+  #v-overview .ctools .hint{display:none}
+  #v-overview .axis{margin-top:4px}
+  #v-overview .opc{margin-top:0;padding:12px 22px}
+  #v-overview .opc .oph{margin-bottom:6px}
+  #v-overview .ovside{padding:12px 18px}
+}
+@media(min-width:1101px) and (min-height:1150px){#v-overview .ctools .hint{display:block}}
+.resz{position:relative}.resz:hover::after{content:attr(data-h);position:absolute;right:8px;top:-6px;font-size:11px;color:var(--muted);pointer-events:none}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -518,13 +555,13 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 </header>
 <main>
 <section class="view on" id="v-overview">
-  <div class="titlebar"><h1 class="h1">Обзор</h1><div class="pills small" id="period"><button class="pill" data-p="24h">24ч</button><button class="pill" data-p="7d">Неделя</button><button class="pill" data-p="30d">Месяц</button><button class="pill on" data-p="all">Всё время</button></div></div>
+  <div class="titlebar"><div class="ovttl"><h1 class="h1">Обзор</h1><div class="rbw" id="rbw" title=""><div class="rb" id="rb"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="rb-body"><line x1="32" y1="6" x2="32" y2="13" class="rb-str"/><circle cx="32" cy="5" r="3.2" class="rb-ant"/><rect x="13" y="13" width="38" height="27" rx="9" class="rb-head"/><rect x="18" y="19" width="28" height="15" rx="6" class="rb-face"/><g class="rb-eyes"><circle cx="26" cy="26.5" r="3" class="rb-eye"/><circle cx="38" cy="26.5" r="3" class="rb-eye"/></g><g class="rb-x"><path d="M23 23.5l6 6M29 23.5l-6 6M35 23.5l6 6M41 23.5l-6 6" class="rb-str2"/></g><rect x="9" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="51" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="20" y="43" width="24" height="14" rx="5" class="rb-torso"/><circle cx="32" cy="50" r="2.6" class="rb-core"/></g><g class="rb-zz"><text x="50" y="14">z</text><text x="56" y="8">z</text></g><g class="rb-sp"><path d="M8 10l3 3M56 42l3 3M6 44l3-2" class="rb-str2"/></g></svg></div><div class="rbt"><b id="rbTitle">…</b><span id="rbSub"></span></div></div></div><div class="pills small" id="period"><button class="pill" data-p="24h">24ч</button><button class="pill" data-p="7d">Неделя</button><button class="pill" data-p="30d">Месяц</button><button class="pill on" data-p="all">Всё время</button></div></div>
   <div class="hero" id="hero"></div>
   <div class="tiles kstrip" id="tiles"></div>
   <div class="ovgrid">
   <div class="card ovchart">
     <div class="ovstrip" id="ovHyp" style="display:none"></div>
-    <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="rbw" id="rbw" title=""><div class="rb" id="rb"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="rb-body"><line x1="32" y1="6" x2="32" y2="13" class="rb-str"/><circle cx="32" cy="5" r="3.2" class="rb-ant"/><rect x="13" y="13" width="38" height="27" rx="9" class="rb-head"/><rect x="18" y="19" width="28" height="15" rx="6" class="rb-face"/><g class="rb-eyes"><circle cx="26" cy="26.5" r="3" class="rb-eye"/><circle cx="38" cy="26.5" r="3" class="rb-eye"/></g><g class="rb-x"><path d="M23 23.5l6 6M29 23.5l-6 6M35 23.5l6 6M41 23.5l-6 6" class="rb-str2"/></g><rect x="9" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="51" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="20" y="43" width="24" height="14" rx="5" class="rb-torso"/><circle cx="32" cy="50" r="2.6" class="rb-core"/></g><g class="rb-zz"><text x="50" y="14">z</text><text x="56" y="8">z</text></g><g class="rb-sp"><path d="M8 10l3 3M56 42l3 3M6 44l3-2" class="rb-str2"/></g></svg></div><div class="rbt"><b id="rbTitle">…</b><span id="rbSub"></span></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity">Депозит</button><button class="pill" data-c="pnl">PnL по сделкам</button><button class="pill" data-c="count">Сделки</button></div></div>
+    <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity">Депозит</button><button class="pill" data-c="pnl">PnL по сделкам</button><button class="pill" data-c="count">Сделки</button></div></div>
     <div class="ctools"><label class="check" id="marksWrap"><input type="checkbox" id="marks"><span class="box"></span>Сделки на графике</label><div class="zbtns"><button class="mini" id="zout" title="Отдалить">−</button><button class="mini" id="zin" title="Приблизить">+</button><button class="mini wide" id="zreset">Весь период</button><button class="mini wide" id="zauto" style="display:none" title="Вернуть автоматический масштаб по вертикали">Авто</button><button class="mini wide" id="zhist" title="Спрятать колонку «История сделок» — график станет на всю ширину">На всю ширину</button><button class="mini wide" id="zbig">Развернуть</button></div><span class="hint">колесо — масштаб · тяни график — сдвиг · тяни шкалу цены или времени — растянуть · двойной клик — сброс</span></div><canvas id="chart"></canvas><div class="axis" id="axis"></div><div class="resz" id="resz" title="Потяни, чтобы изменить высоту графика"><span></span></div>
   </div>
   <div class="card ovside"><div class="ovsh"><h2>История сделок</h2><span class="note" id="ovTrSum"></span></div><div class="ovtr" id="ovTr"></div></div>
@@ -778,7 +815,9 @@ function renderLog(){if(!D)return;const evs=D.log.map(parseLine).filter(Boolean)
 document.querySelectorAll('#logFilter .pill').forEach(b=>b.onclick=()=>{logFilter=b.dataset.f;document.querySelectorAll('#logFilter .pill').forEach(x=>x.classList.toggle('on',x===b));renderLog();});
 // ---- график (интерактивный) ----
 let yMan=null,zoom=null,hov=null,drag=null,geom=null,lastT=null,lastM=null,chartBig=false;
-let chartH=640;try{chartH=+localStorage.getItem('chartH2')||640;}catch{}
+let chartH=640,chartAuto=true;try{const _h=localStorage.getItem('chartH3');if(_h&&_h!=='auto'){chartH=+_h||640;chartAuto=false;}}catch{}
+// авто-высота: график занимает всё место до низа окна, чтобы обзор (показатели, график, история, открытые сделки) помещался целиком без прокрутки
+function fitChartH(){const c=$('#chart'),sec=$('#v-overview');if(!c||!sec||innerWidth<1101)return chartH;const cr=c.getBoundingClientRect(),sr=sec.getBoundingClientRect();if(!cr.width||!sr.height)return chartH;const top=cr.top+scrollY,rest=Math.max(0,sr.bottom-cr.bottom);return Math.max(240,Math.min(1200,Math.round(innerHeight-top-rest-14)));}
 let showMarks=true;try{showMarks=localStorage.getItem('marks')!=='0';}catch{}
 const tkey=x=>x.opened+'|'+x.address;
 const redraw=()=>{if(lastT)drawChart(lastT,lastM);};
@@ -822,7 +861,7 @@ function ovTrades(t){const el=$('#ovTr');if(!el)return;ovLastT=t;const L=[...t].
  el.querySelectorAll('.ovti').forEach(n=>n.onclick=()=>openTrade(L[+n.dataset.i]));
  el.style.maxHeight=innerWidth>1100?'':'520px';}
 function drawChart(t,m){lastT=t;lastM=m;
- const c=$('#chart'),ctx=c.getContext('2d'),W=c.clientWidth,H=chartBig?Math.max(300,innerHeight-260):chartH,dpr=devicePixelRatio||1;if(!W)return;c.style.height=H+'px';
+ const c=$('#chart'),ctx=c.getContext('2d'),W=c.clientWidth,H=chartBig?Math.max(300,innerHeight-260):(chartAuto?(chartH=fitChartH()):chartH),dpr=devicePixelRatio||1;if(!W)return;c.style.height=H+'px';
  c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
  const P={l:8,r:84,t:14,b:28},PW=W-P.l-P.r,PH=H-P.t-P.b;
  const pl=({'24h':'24 часа','7d':'неделя','30d':'месяц','all':'всё время'})[period];
@@ -871,7 +910,7 @@ function drawChart(t,m){lastT=t;lastM=m;
   if(hov.pt&&!hov.mark){ctx.beginPath();ctx.arc(X(hov.pt.t),Y(hov.pt.v),4.5,0,7);ctx.fillStyle='#e8f5ff';ctx.fill();}}
  ctx.restore();
  if(chart==='equity')eqOverlay(ctx,{X,Y,P,PW,PH,W,H,vis,start:D.config.paper_start_balance_usd,x0,x1,span});
- geom={X,Y,P,PW,PH,W,H,x0,x1,y0,y1,span,full,vis,vb};const za=document.getElementById('zauto');if(za)za.style.display=yMan&&chart==='equity'?'':'none';$('#axis').innerHTML='';}
+ geom={X,Y,P,PW,PH,W,H,x0,x1,y0,y1,span,full,vis,vb};try{$('#resz').dataset.h=(chartAuto?'по размеру окна · ':'')+H+' px';}catch{}const za=document.getElementById('zauto');if(za)za.style.display=yMan&&chart==='equity'?'':'none';$('#axis').innerHTML='';}
 setInterval(()=>{const v=document.getElementById('v-overview');if(v&&v.classList.contains('on')&&chart==='equity'&&!drag&&!document.hidden)redraw();},80);
 // карточка сделки при наведении на точку (в стиле hood)
 function agoRu(ms){const s=Math.max(0,(Date.now()-ms)/1000);if(s<60)return 'только что';const m=Math.floor(s/60);if(m<60)return m+' мин назад';const h=Math.floor(m/60);if(h<24)return h+' ч назад';return Math.floor(h/24)+' дн назад';}
@@ -923,12 +962,14 @@ function zoomAt(at,k){if(!geom)return;const [a,b]=zoomT||zoom||[geom.x0,geom.x1]
 
 // растягивание и полноэкранный режим графика
 (()=>{const card=$('#chart').closest('.card');let rs=null;
- $('#resz').addEventListener('mousedown',e=>{e.preventDefault();rs={y:e.clientY,h:chartH};document.body.style.cursor='ns-resize';});
+ $('#resz').addEventListener('mousedown',e=>{e.preventDefault();rs={y:e.clientY,h:chartH};chartAuto=false;document.body.style.cursor='ns-resize';});
+ $('#resz').addEventListener('dblclick',()=>{chartAuto=true;try{localStorage.setItem('chartH3','auto');}catch{}redraw();});
+ $('#resz').title='Потяни, чтобы изменить высоту графика · двойной клик — снова по размеру окна';
  addEventListener('mousemove',e=>{if(!rs)return;chartH=Math.max(200,Math.min(1200,rs.h+e.clientY-rs.y));redraw();});
- addEventListener('mouseup',()=>{if(rs){rs=null;document.body.style.cursor='';try{localStorage.setItem('chartH2',chartH);}catch{}}});
- $('#resz').addEventListener('touchstart',e=>{rs={y:e.touches[0].clientY,h:chartH};},{passive:true});
+ addEventListener('mouseup',()=>{if(rs){rs=null;document.body.style.cursor='';try{localStorage.setItem('chartH3',chartH);}catch{}}});
+ $('#resz').addEventListener('touchstart',e=>{rs={y:e.touches[0].clientY,h:chartH};chartAuto=false;},{passive:true});
  addEventListener('touchmove',e=>{if(!rs)return;chartH=Math.max(200,Math.min(1200,rs.h+e.touches[0].clientY-rs.y));redraw();},{passive:true});
- addEventListener('touchend',()=>{if(rs){rs=null;try{localStorage.setItem('chartH2',chartH);}catch{}}});
+ addEventListener('touchend',()=>{if(rs){rs=null;try{localStorage.setItem('chartH3',chartH);}catch{}}});
  $('#zbig').onclick=()=>{chartBig=!chartBig;card.classList.toggle('bigchart',chartBig);$('#zbig').textContent=chartBig?'Свернуть':'Развернуть';redraw();};
  addEventListener('keydown',e=>{if(e.key==='Escape'&&chartBig)$('#zbig').click();});
 })();
@@ -950,8 +991,10 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.39';
+const APP_VERSION='2.41';
 const CHANGELOG=[
+ ['2.41','23.09.2026',['Обзор помещается в окно целиком при обычном масштабе браузера (100%): верхние показатели компактнее, а высота графика сама подстраивается под окно — показатели, график, история и открытые сделки видны без прокрутки. Потянул полоску под графиком — высота фиксируется; двойной клик по ней — снова по размеру окна']],
+ ['2.40','23.09.2026',['Обзор: робот-статус («Бот работает», «В сделке», «Пауза») переехал из карточки графика наверх, рядом с заголовком «Обзор» — состояние бота видно первым делом']],
  ['2.39','23.09.2026',['Обзор: верх страницы — четыре понятные карточки вместо двух рядов цифр: «Депозит» (сколько было и сколько сейчас), «Итог сделок» (с лучшей и худшей), «Сделки» (полоска плюс/минус), «Средняя сделка» (средний плюс против среднего минуса полосками, простыми словами про profit factor и просадку)']],
  ['2.38','23.09.2026',['В карточке сделки при наведении на точку графика теперь показывается логотип монеты']],
  ['2.37','23.09.2026',['Робот-статус рядом с депозитом: зелёный и покачивается — бот работает (в сделке — быстрее), жёлтый и дремлет — пауза (дневной лимит, риск-пауза, мало BNB), красный и трясётся — нет связи, бот завис или критическая ошибка; при наведении — подробности']],
