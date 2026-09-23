@@ -713,7 +713,7 @@ main{padding-bottom:45vh!important}
 .fprh{display:flex;justify-content:space-between;font-size:12.5px;color:#9a9e96;margin-bottom:6px}.fprh b{color:#e8e9e4;font-variant-numeric:tabular-nums}
 .fprb{height:10px;background:#222;border-radius:6px;overflow:hidden}.fprb i{display:block;height:100%;border-radius:6px}
 @media(max-width:900px){.faqg{grid-template-columns:1fr}.faqi2{max-width:420px}}
-.lnm .lmore{color:var(--muted);font-size:12px}
+.lnm .lmore{color:#c9ccc4;font-size:13px}.lnm .lmore i{font-style:normal;color:var(--muted);font-size:12px}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -1317,20 +1317,17 @@ function drawTradeChart(x,d){
  trGeom.PW=PW;
 }
 
+// у гипотез из полного списка (hyp_all) в diff нет ключей — восстанавливаем по подписи
+function laneKey(l){l=String(l||'').toLowerCase();if(l.startsWith('возраст от'))return 'min_age_min';if(l.startsWith('возраст до'))return 'max_age_min';if(l.startsWith('тейк'))return 'take_profit_pct';if(l.startsWith('стоп'))return 'stop_loss_pct';if(l.startsWith('откат трейлинга'))return 'trailing_drawdown_pct';if(l.startsWith('трейлинг'))return 'trailing_activate_pct';if(l.startsWith('максимум в сделке'))return 'max_hold_min';return l;}
 // короткое имя дорожки: только главное — возраст, выход (тейк/стоп/трейлинг/время) и число прочих условий входа; полный список — в подсказке и в карточке
-function laneShort(r){const D2=r.diff||[];const by=k=>D2.find(d=>d.k===k);const p=[];
- const a0=by('min_age_min'),a1=by('max_age_min');const num=v=>String(v==null?'':v).replace(/[^\d.,]/g,'');
- if(a0&&a1)p.push('возраст '+num(a0.val)+'–'+num(a1.val)+' мин');else if(a1)p.push(a1.text);else if(a0)p.push(a0.text);
- for(const k of ['take_profit_pct','stop_loss_pct']){const d=by(k);if(d)p.push(d.text);}
- const ta=by('trailing_activate_pct'),td=by('trailing_drawdown_pct');if(ta)p.push(ta.text);else if(td)p.push(td.text);
- const mh=by('max_hold_min');if(mh)p.push(mh.text.replace('максимум в сделке','в сделке до'));
- const used=new Set(['min_age_min','max_age_min','take_profit_pct','stop_loss_pct','trailing_activate_pct','trailing_drawdown_pct','max_hold_min']);
- const rest=D2.filter(d=>!used.has(d.k));
- if(rest.length){const n=rest.length,w=n%10===1&&n%100!==11?'условие входа':n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?'условия входа':'условий входа';p.push('<span class="lmore">+'+n+' '+w+'</span>');}
- return p.length?p.map((x,i)=>x.startsWith('<span')?x:esc(x)).join(' · '):esc(D2.map(d=>d.text).join(' · '));}
+function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label||d.text)});const EX=new Set(['take_profit_pct','stop_loss_pct','trailing_activate_pct','trailing_drawdown_pct','max_hold_min']);
+ const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
+ if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
 // ---- версия ----
-const APP_VERSION='2.76';
+const APP_VERSION='2.78';
 const CHANGELOG=[
+ ['2.78','23.09.2026',['Гонка гипотез: строка дорожки совсем короткая — номер, число изменённых условий (вход · выход), метка надёжности и число сделок; все параметры — при наведении и в карточке']],
+ ['2.77','23.09.2026',['Гонка гипотез: короткое имя теперь работает и для гипотез из полного списка (раньше у них показывалось только «+7 условий входа»)']],
  ['2.76','23.09.2026',['Гонка гипотез: в строке дорожки только главное — возраст токена, тейк/стоп/трейлинг/время в сделке и число прочих условий входа («+3 условия входа»); полный список — при наведении и в карточке по клику']],
  ['2.75','23.09.2026',['Гипотезы → Справка: подробные ответы на 15 вопросов с иллюстрациями — как всё устроено, что такое гипотеза и откуда берутся новые, как считается прибыль, как читать гонку, метки, осторожная оценка, проверки, почему лидер меняется, проверка на новых, расхождение с реальностью (с живыми цифрами), выбор гипотезы для бота, таблица, периоды и сколько данных уже набрано (живые шкалы)']],
  ['2.74','23.09.2026',['Шапка сайта: переключатель «Реальные деньги | Симуляция» — видно, какая панель открыта, второе нажатие открывает другую','Кнопка «Живой бот: гипотеза #N» — открывает гипотезы','Индикатор связи: «онлайн · обновлено N с назад» (зелёный), «данные запаздывают» (жёлтый), «нет связи с ботом» (красный); точное время — при наведении','Шапка больше не вылезает за край экрана на узких мониторах']],
