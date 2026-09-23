@@ -357,10 +357,11 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 
 /* v2.19: вкладки и фильтры на телефоне переносятся на вторую строку, ничего не уходит за край */
 @media(max-width:700px){
-  nav.pills{flex-wrap:wrap;overflow:visible;border-radius:18px;gap:3px;padding:4px}
+  nav.pills{display:flex!important;flex-wrap:wrap!important;overflow:visible!important;border-radius:18px;gap:3px;padding:4px;height:auto!important}
   nav.pills .pill{flex:1 1 auto;text-align:center;padding:7px 9px;font-size:13px;min-height:34px}
-  .titlebar .pills,#trFilter,.htabs .pills{flex-wrap:wrap;overflow:visible;border-radius:18px;white-space:normal}
+  .titlebar .pills,#trFilter,.htabs .pills{display:flex!important;flex-wrap:wrap!important;overflow:visible!important;border-radius:18px;white-space:normal}
   .titlebar .pills .pill,#trFilter .pill,.htabs .pills .pill{flex:1 1 auto;text-align:center;padding:6px 9px;font-size:12.5px;min-height:32px}
+  header{overflow:visible!important}
 }
 </style></head><body>
 <header>
@@ -714,8 +715,9 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.19';
+const APP_VERSION='2.20';
 const CHANGELOG=[
+ ['2.20','23.09.2026',['Телефон: перенос вкладок закреплён принудительно (CSS !important + проверка скриптом после загрузки)']],
  ['2.19','23.09.2026',['Телефон: вкладки и фильтры переносятся на вторую строку — все видны сразу, без прокрутки вбок']],
  ['2.18','23.09.2026',['Телефон: страница больше не уезжает вбок; таблицы «Сделки» и «В тренде» показывают главные колонки (Токен · Фильтр · Возраст · Mcap · Холдеры и Закрыта · Токен · PnL · Причина), детали — по нажатию на строку; арена листается пальцем внутри карточки; крупнее кнопки и отступы']],
  ['2.17','23.09.2026',['На панели живого бота строка «Текущие правила» переименована в «Правила симуляции v1.2»: это правила бота-симуляции, с которыми сравниваются гипотезы, а живой бот торгует по выбранной гипотезе (зелёная точка)','В карточке гонки заголовок показывает постоянный номер гипотезы, а не место']],
@@ -1153,4 +1155,7 @@ async function tick(){try{const d=await (await fetch(window.DATA_URL||'/api',{ca
  $('#upd').textContent='данные от '+new Date(d.now).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});hypBadge();render();}
  catch(e){$('#upd').textContent=window.DATA_URL?'нет данных':'бот не отвечает';}}
 tick();setInterval(tick,5000);addEventListener('resize',()=>D&&render());
+
+(function(){function mob(){const m=window.innerWidth<=700;document.documentElement.classList.toggle('is-mobile',m);document.querySelectorAll('nav.pills,.titlebar .pills,#trFilter,.htabs .pills').forEach(el=>{if(m){el.style.setProperty('flex-wrap','wrap','important');el.style.setProperty('overflow','visible','important');el.style.setProperty('display','flex','important');}else{el.style.removeProperty('flex-wrap');el.style.removeProperty('overflow');el.style.removeProperty('display');}});}
+window.addEventListener('resize',mob);window.addEventListener('load',mob);document.addEventListener('DOMContentLoaded',mob);mob();setTimeout(mob,600);setTimeout(mob,2500);})();
 </script></body></html>
