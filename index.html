@@ -764,9 +764,10 @@ main{padding-bottom:45vh!important}
 #v-net .ana-svg-bar.dim{opacity:.6}
 #v-net .ana-note2{color:#70746a;font-size:12px;line-height:1.6;padding:0 2px 30px}
 @media(max-width:900px){#v-net .ana-strip{grid-template-columns:1fr 1fr;row-gap:18px}#v-net .ana-stat:nth-child(3){border-left:0;padding-left:0}#v-net .ana-stat .n{font-size:30px}#v-net .ana-svg{height:220px}#v-net .page-title{font-size:26px}}
+.logo#logoHome{cursor:pointer;border-radius:10px;transition:opacity .15s}.logo#logoHome:hover{opacity:.8}
 </style></head><body>
 <header>
-  <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
+  <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
   <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill hid" data-view="trending">В тренде</button><button class="pill hid" data-view="net">Объёмы</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="rules" data-group="bot">Бот</button><button class="pill hid" data-view="trades">Сделки</button><button class="pill hid" data-view="rules">Правила</button><button class="pill hid" data-view="log">Журнал</button><button class="pill hid" data-view="sys">Сервер</button></nav>
   <div class="badges"><div class="hst" id="hst"><div class="hseg" id="hseg" role="group" aria-label="Какой бот показан"></div><button class="hchipx" id="hhyp" type="button" style="display:none"></button><span class="hfresh" id="hfresh" role="status" aria-live="polite"><i></i><span class="t">подключаюсь…</span></span></div><div class="hstold" hidden><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span><a id="modeSwitch" class="badge" style="display:none"></a><span id="hypBadge" class="badge"></span></div></div>
 </header>
@@ -1380,8 +1381,9 @@ function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label
  const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
  if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
 // ---- версия ----
-const APP_VERSION='2.85';
+const APP_VERSION='2.86';
 const CHANGELOG=[
+ ['2.86','24.09.2026',['Клик по логотипу BOT в левом верхнем углу открывает «Обзор»']],
  ['2.85','24.09.2026',['«Объёмы»: к торгам на кривой four.meme и flap добавлены торги этих монет на PancakeSwap после выхода с площадки — во всех парах (BNB, доллары, другие токены), всё в долларах; у объёма показана доля PancakeSwap; исправлен подсчёт монет flap, торгующихся не за BNB']],
  ['2.84','24.09.2026',['«Объёмы» перенесены из «Арены» в «Обзор» — третьей подвкладкой рядом со «Сводкой» и «Всеми сделками»']],
  ['2.83','24.09.2026',['Объёмы BSC: у переключателей four.meme и flap — логотипы площадок']],
@@ -2296,4 +2298,7 @@ setInterval(()=>{try{if(hypTab==='help')faqLive();}catch{}},3000);document.addEv
  grp('#netMet','m',()=>met,v=>{met=v;try{localStorage.setItem('netMet',v);}catch{}});
  document.querySelectorAll('nav .pill').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{if(on()){load();draw();}},0)));
  setInterval(()=>{if(on()&&!document.hidden)load();},30000);addEventListener('resize',()=>{if(on())draw();});})();
+
+// клик по логотипу — на «Обзор» (подвкладка «Сводка»), наверх страницы
+(function(){const l=document.getElementById('logoHome');if(!l)return;const go=()=>{const b=document.querySelector('nav .pill.hid[data-view="overview"]')||document.querySelector('nav .pill[data-view="overview"]');if(b)b.click();scrollTo({top:0,behavior:'smooth'});};l.addEventListener('click',go);l.addEventListener('keydown',e=>{if(e.key==='Enter')go();});})();
 </script></body></html>
