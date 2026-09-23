@@ -1,38 +1,6 @@
 {
- "balance_usd": 789.4994026958602,
+ "balance_usd": 807.2795921267634,
  "positions": {
-  "0xeaf0193cf1e68922004037470c317cee0f977777": {
-   "symbol": "龙虾人生",
-   "name": "人生可以躺平，龙虾必须翻身",
-   "address": "0xeaf0193cf1e68922004037470c317cee0f977777",
-   "opened": 1790143764,
-   "entry": 0.00005256957672,
-   "size_usd": 20,
-   "peak": 0.000057415512,
-   "trough": 0.000045412543,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "rank",
-    "launchpad": "flap",
-    "age_min": "2.3",
-    "liq": "22927",
-    "mcap": "51038",
-    "holders": 2400,
-    "smart": 4,
-    "renowned": 0,
-    "bundler": "0.000",
-    "snipers": 1,
-    "top10": "0.241",
-    "buys": 49,
-    "sells": 27,
-    "list_price": "0.0000510384",
-    "hour_utc": 6
-   },
-   "last": 0.000048870772,
-   "last_t": 1790148979
-  },
   "0x6f93818603035e931df6bcf3556fb14fe0077777": {
    "symbol": "宁波银行",
    "name": "BNB宁波银行",
@@ -40,7 +8,7 @@
    "opened": 1790146233,
    "entry": 0.00001622246086,
    "size_usd": 20,
-   "peak": 0.000024578139,
+   "peak": 0.000024851672,
    "trough": 0.0000140813,
    "mode": "paper",
    "order_id": null,
@@ -62,8 +30,8 @@
     "list_price": "0.0000155714",
     "hour_utc": 6
    },
-   "last": 0.000023950465,
-   "last_t": 1790148979
+   "last": 0.000022964305,
+   "last_t": 1790149296
   }
  },
  "seen": {
@@ -140,9 +108,9 @@
   "0x369853e30e12cc26455a24c9c457e2467c787777": 1790146944,
   "0x6887d3be2be94a4abcdb514262da1a0560fb7777": 1790147573
  },
- "closed": 70,
+ "closed": 71,
  "wins": 19,
- "pnl_usd": -148.90059730414288,
+ "pnl_usd": -151.12040787323966,
  "opened_at": [
   1790144200,
   1790145498,
@@ -153,9 +121,9 @@
  ],
  "day": {
   "key": "2026-09-23",
-  "pnl": -88.76168003343622
+  "pnl": -90.981490602533
  },
- "stop_streak": 4,
+ "stop_streak": 0,
  "last_hyp_report": "2026-09-22",
  "paused_until": 1790208000
 }
