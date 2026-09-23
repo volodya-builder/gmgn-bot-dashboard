@@ -714,10 +714,18 @@ main{padding-bottom:45vh!important}
 .fprb{height:10px;background:#222;border-radius:6px;overflow:hidden}.fprb i{display:block;height:100%;border-radius:6px}
 @media(max-width:900px){.faqg{grid-template-columns:1fr}.faqi2{max-width:420px}}
 .lnm .lmore{color:#c9ccc4;font-size:13px}.lnm .lmore i{font-style:normal;color:var(--muted);font-size:12px}
+.netctl{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.netkpi .kcb{font-size:32px}
+.netc{position:relative;margin-top:10px}
+.netc canvas{width:100%;display:block;cursor:crosshair}
+.netleg{display:flex;gap:14px;font-size:12.5px;color:#9a9e96}
+.netleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.nsh{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:center;font-size:12px;color:#9a9e96;margin-top:6px}
+.nshb{display:flex;height:10px;border-radius:6px;overflow:hidden;background:#222}.nshb i{display:block;height:100%}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
-  <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill hid" data-view="trending">В тренде</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="rules" data-group="bot">Бот</button><button class="pill hid" data-view="trades">Сделки</button><button class="pill hid" data-view="rules">Правила</button><button class="pill hid" data-view="log">Журнал</button><button class="pill hid" data-view="sys">Сервер</button></nav>
+  <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill hid" data-view="trending">В тренде</button><button class="pill hid" data-view="net">Объёмы</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="rules" data-group="bot">Бот</button><button class="pill hid" data-view="trades">Сделки</button><button class="pill hid" data-view="rules">Правила</button><button class="pill hid" data-view="log">Журнал</button><button class="pill hid" data-view="sys">Сервер</button></nav>
   <div class="badges"><div class="hst" id="hst"><div class="hseg" id="hseg" role="group" aria-label="Какой бот показан"></div><button class="hchipx" id="hhyp" type="button" style="display:none"></button><span class="hfresh" id="hfresh" role="status" aria-live="polite"><i></i><span class="t">подключаюсь…</span></span></div><div class="hstold" hidden><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span><a id="modeSwitch" class="badge" style="display:none"></a><span id="hypBadge" class="badge"></span></div></div>
 </header>
 <main>
@@ -735,6 +743,13 @@ main{padding-bottom:45vh!important}
   <div class="card ovside"><div class="ovsh"><h2>История сделок</h2><span class="note" id="ovTrSum"></span></div><div class="ovtr" id="ovTr"></div><div class="resz resz2" id="resz2" title="Потяни вниз, чтобы растянуть график и историю сделок"><span></span></div></div>
   </div>
   <div class="card opc" id="opCard"><div class="oph"><h2>Открытые сделки <span class="note" id="opCnt"></span></h2><button class="mini wide" id="sndBtn"></button></div><div id="openLive"></div><div style="display:none"><table id="open"></table></div></div>
+</section>
+<section class="view" id="v-net">
+  <div class="titlebar"><h1 class="h1">Объёмы BSC</h1><div class="netctl"><div class="pills small" id="netPf"><button class="pill on" data-p="all">Вместе</button><button class="pill" data-p="fm">four.meme</button><button class="pill" data-p="flap">flap</button></div><div class="pills small" id="netPer"><button class="pill on" data-h="24">24 ч</button><button class="pill" data-h="72">3 дня</button><button class="pill" data-h="168">7 дней</button><button class="pill" data-h="720">30 дней</button></div></div></div>
+  <div class="hero netkpi" id="netKpi"></div>
+  <div class="card"><div class="head"><div><h2 style="margin:0">Объём торгов по часам</h2><div class="sub" id="netVolSub"></div></div><div class="netleg" id="netLeg1"></div></div><div class="netc"><canvas id="netVol"></canvas></div></div>
+  <div class="card"><div class="head"><div><h2 style="margin:0">Запущено монет по часам</h2><div class="sub">Сколько новых монет создали на площадках за каждый час</div></div><div class="netleg" id="netLeg2"></div></div><div class="netc"><canvas id="netCnt"></canvas></div></div>
+  <div class="note" id="netNote" style="padding:0 4px"></div>
 </section>
 <section class="view" id="v-trending">
   <div class="titlebar"><h1 class="h1">В тренде</h1><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="note" id="trMeta"></span><div class="pills small" id="trFilter"><button class="pill on" data-f="all">Все</button><button class="pill" data-f="ok">Прошли фильтр</button><button class="pill" data-f="trenches">С лаунчпадов</button><button class="pill" data-f="fresh">Моложе 30 мин</button></div></div></div>
@@ -1324,8 +1339,9 @@ function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label
  const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
  if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
 // ---- версия ----
-const APP_VERSION='2.78';
+const APP_VERSION='2.79';
 const CHANGELOG=[
+ ['2.79','23.09.2026',['Арена → новая подвкладка «Объёмы»: объём торгов и число запущенных монет на four.meme и flap по часам — прямо из блокчейна BSC (новый сборщик на сервере, обновление каждые 20 с); переключатели «Вместе / four.meme / flap» и период 24 ч / 3 дня / 7 / 30 дней; карточки: объём, запуски, сделки, доля площадок; подсказка по наведению на столбец']],
  ['2.78','23.09.2026',['Гонка гипотез: строка дорожки совсем короткая — номер, число изменённых условий (вход · выход), метка надёжности и число сделок; все параметры — при наведении и в карточке']],
  ['2.77','23.09.2026',['Гонка гипотез: короткое имя теперь работает и для гипотез из полного списка (раньше у них показывалось только «+7 условий входа»)']],
  ['2.76','23.09.2026',['Гонка гипотез: в строке дорожки только главное — возраст токена, тейк/стоп/трейлинг/время в сделке и число прочих условий входа («+3 условия входа»); полный список — при наведении и в карточке по клику']],
@@ -2055,8 +2071,8 @@ function renderBot(){const w=document.getElementById('rbw');if(!w||!D)return;if(
 setInterval(()=>{try{renderBot();}catch(e){}},1000);
 
 // ---- группы вкладок: верхнее меню короче, остальное — подвкладками ----
-const VGROUP={overview:'overview',trades:'overview',trending:'arena',hyp:'hyp',arena:'arena',rules:'bot',log:'bot',sys:'bot'};
-const GSUBS={overview:[['overview','Сводка'],['trades','Все сделки']],arena:[['arena','Арена'],['trending','В тренде']],bot:[['rules','Правила'],['log','Журнал'],['sys','Сервер']]};
+const VGROUP={overview:'overview',trades:'overview',trending:'arena',net:'arena',hyp:'hyp',arena:'arena',rules:'bot',log:'bot',sys:'bot'};
+const GSUBS={overview:[['overview','Сводка'],['trades','Все сделки']],arena:[['arena','Арена'],['trending','В тренде'],['net','Объёмы']],bot:[['rules','Правила'],['log','Журнал'],['sys','Сервер']]};
 function syncGroups(){const cur=(document.querySelector('.view.on')||{}).id;if(!cur)return;const v=cur.slice(2),g=VGROUP[v]||v;
  const gp=document.querySelector('nav .pill[data-group="bot"]');if(gp&&g==='bot'){gp.dataset.view=v;try{localStorage.setItem('botSub',v);}catch{}}
  document.querySelectorAll('nav .pill:not(.hid)').forEach(x=>x.classList.toggle('on',(x.dataset.group||VGROUP[x.dataset.view]||x.dataset.view)===g));
@@ -2189,4 +2205,49 @@ function faqLive(){const H=D&&D.hypotheses;if(!H)return;const dt=H.data||{},th=d
   pg.innerHTML=bar('Монет с историей цены',dt.with_paths,th.tokens)+bar('Дней наблюдений',dt.days,th.days,1)+bar('Реальных сделок',real,th.trades);}
  const fe=$('#faqExec');if(fe&&ex.n_stops)fe.innerHTML='Сейчас: по '+ex.n_stops+' реальным стопам цена в среднем уходила до <b class="bad">'+f(ex.real_stop_pct,1)+'%</b>, а модель ожидала <b>'+f(ex.model_stop_pct,1)+'%</b> — разница <b>'+f(ex.overshoot_pp,1)+' п.п.</b> уже учтена как поправка.';}
 setInterval(()=>{try{if(hypTab==='help')faqLive();}catch{}},3000);document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#hypTabs .pill[data-t="help"]'))setTimeout(()=>{try{faqLive();}catch{}},0);});
+
+// ---- Арена → Объёмы: объём торгов и запуски монет four.meme / flap по часам (из блокчейна, сборщик gmgn-net) ----
+(function(){let ND=null,pf='all',per=24,busy=false,hov=null,geo={};const CF='#e0b85a',CL='#5fd3a0',NAMES={fm:'four.meme',flap:'flap'};
+ try{pf=localStorage.getItem('netPf')||'all';per=+localStorage.getItem('netPer')||24;}catch{}
+ const on=()=>{const v=$('#v-net');return v&&v.classList.contains('on');};
+ const k$=v=>'$'+(v>=1e6?f(v/1e6,2)+'M':v>=1e3?f(v/1e3,1)+'k':f(v,0));
+ async function load(){if(busy||window.DATA_URL)return;busy=true;try{const r=await fetch('/api/net',{cache:'no-store'});if(r.ok){ND=await r.json();draw();}else{ND=null;draw();}}catch{}busy=false;}
+ function rows(){if(!ND)return[];const now=Math.floor(Date.now()/3600e3)*3600,from=now-(per-1)*3600,m=new Map(ND.hours.map(h=>[h[0],h]));const out=[];for(let h=from;h<=now;h+=3600){const r=m.get(h);out.push({h,fm:r?r[1]:null,flap:r?r[2]:null});}return out;}
+ const val=(x,k)=>x?x[k]:0;
+ function bars(cv,R,key,fmt,id){const W=cv.clientWidth,H=260,dpr=devicePixelRatio||1;if(!W)return;cv.width=W*dpr;cv.height=H*dpr;cv.style.height=H+'px';const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);
+  const P={l:8,r:64,t:12,b:26},PW=W-P.l-P.r,PH=H-P.t-P.b;const sers=pf==='all'?['fm','flap']:[pf];
+  const tot=R.map(r=>sers.reduce((a,s)=>a+val(r[s],key),0));const mx=Math.max(1,...tot)*1.12;const Y=v=>P.t+PH-(v/mx)*PH,n=R.length,bw=PW/n;
+  c.font='11px Inter,sans-serif';c.textBaseline='middle';for(let i=0;i<=4;i++){const v=mx*i/4,y=Y(v);c.strokeStyle='#ffffff0d';c.beginPath();c.moveTo(P.l,y);c.lineTo(W-P.r+4,y);c.stroke();c.fillStyle='#8f938a';c.textAlign='left';c.fillText(fmt(v),W-P.r+10,y);}
+  R.forEach((r,i)=>{let y0=Y(0);const x=P.l+i*bw+bw*.14,w=Math.max(1,bw*.72);const hot=hov&&hov.id===id&&hov.i===i;
+   for(const s of sers){const v=val(r[s],key);if(!v)continue;const y1=Y(v)-(Y(0)-y0);c.fillStyle=(s==='fm'?CF:CL)+(hot?'':'cc');c.beginPath();c.roundRect(x,y1,w,y0-y1,Math.min(3,w/2));c.fill();y0=y1;}
+   if(!r.fm&&!r.flap){c.fillStyle='#ffffff08';c.fillRect(x,P.t,w,PH);}});
+  c.textBaseline='alphabetic';const step=Math.max(1,Math.ceil(n/(PW/70)));c.fillStyle='#8f938a';c.textAlign='center';
+  R.forEach((r,i)=>{if(i%step)return;const d=new Date(r.h*1000);const l=per>48?d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+' '+String(d.getHours()).padStart(2,'0')+'ч':String(d.getHours()).padStart(2,'0')+':00';c.fillText(l,P.l+i*bw+bw/2,H-8);});
+  geo[id]={P,bw,R,key,fmt,sers};}
+ function draw(){if(!on())return;const R=rows();const sum=(s,k)=>R.reduce((a,r)=>a+val(r[s],k),0);
+  const S={fm:{v:sum('fm','v'),c:sum('fm','c'),b:sum('fm','b'),s:sum('fm','s')},flap:{v:sum('flap','v'),c:sum('flap','c'),b:sum('flap','b'),s:sum('flap','s')}};
+  const sel=pf==='all'?['fm','flap']:[pf],tv=sel.reduce((a,s)=>a+S[s].v,0),tc=sel.reduce((a,s)=>a+S[s].c,0),tb=sel.reduce((a,s)=>a+S[s].b,0),ts=sel.reduce((a,s)=>a+S[s].s,0);
+  const hrs=R.filter(r=>r.fm||r.flap).length,lbl={24:'24 часа',72:'3 дня',168:'7 дней',720:'30 дней'}[per];
+  const share=(S.fm.v+S.flap.v)>0?S.flap.v/(S.fm.v+S.flap.v)*100:0,shc=(S.fm.c+S.flap.c)>0?S.flap.c/(S.fm.c+S.flap.c)*100:0;
+  const card=(t,b,l1,l2)=>'<div class="kc"><div class="kct">'+t+'</div><div class="kcb">'+b+'</div><div class="kcl">'+l1+'</div><div class="kcs">'+l2+'</div></div>';
+  $('#netKpi').innerHTML=card('Объём за '+lbl,k$(tv),hrs?'в среднем '+k$(tv/Math.max(1,hrs))+' в час':'данных пока нет','торги на площадках до выхода на PancakeSwap')+
+   card('Запущено монет',f(tc,0),hrs?'в среднем '+f(tc/Math.max(1,hrs),0)+' в час':'','новые монеты за выбранный период')+
+   card('Сделок',f(tb+ts,0),'покупок <b class="good">'+f(tb,0)+'</b> · продаж <b class="bad">'+f(ts,0)+'</b>',tb+ts?'средняя сделка '+k$(tv/(tb+ts)):'')+
+   '<div class="kc"><div class="kct">four.meme против flap</div><div class="nsh"><span>объём</span><div class="nshb"><i style="width:'+(100-share)+'%;background:'+CF+'"></i><i style="width:'+share+'%;background:'+CL+'"></i></div></div><div class="nsh"><span>запуски</span><div class="nshb"><i style="width:'+(100-shc)+'%;background:'+CF+'"></i><i style="width:'+shc+'%;background:'+CL+'"></i></div></div><div class="kcs"><b style="color:'+CF+'">four.meme</b> '+k$(S.fm.v)+' · '+f(S.fm.c,0)+' монет<br><b style="color:'+CL+'">flap</b> '+k$(S.flap.v)+' · '+f(S.flap.c,0)+' монет</div></div>';
+  const lg=(pf==='all'?['fm','flap']:[pf]).map(s=>'<span><i style="background:'+(s==='fm'?CF:CL)+'"></i>'+NAMES[s]+'</span>').join('');$('#netLeg1').innerHTML=lg;$('#netLeg2').innerHTML=lg;
+  $('#netVolSub').textContent='Сколько долларов наторговали на площадках за каждый час'+(ND&&ND.bnb?' · BNB = $'+f(ND.bnb,0):'');
+  bars($('#netVol'),R,'v',k$,'v');bars($('#netCnt'),R,'c',v=>f(v,0),'c');
+  const st=ND&&ND.started?new Date(ND.started*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'';
+  $('#netNote').innerHTML=ND?'Данные читаются прямо из блокчейна BSC (контракты four.meme и flap) каждые 20 секунд. Сбор идёт с '+st+' — история копится с этого момента, пустые столбцы — часы до начала сбора. Объём — торги на кривой площадки, до перехода монеты на PancakeSwap; монеты four.meme в других валютах (не BNB и не долларах) в объём не входят.'+(ND.gaps?' Пропусков в данных: '+ND.gaps+'.':''):'Сборщик объёмов ещё не отдал данные — обнови страницу через минуту.';}
+ function tipAt(e,id){const cv=e.currentTarget,g=geo[id],tip=$('#tip');if(!g)return;const r=cv.getBoundingClientRect(),i=Math.floor((e.clientX-r.left-g.P.l)/g.bw);const row=g.R[i];
+  if(!row){hov=null;tip.style.display='none';draw();return;}hov={id,i};const d=new Date(row.h*1000),d2=new Date(row.h*1000+3600e3);
+  let h='<b>'+d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+', '+String(d.getHours()).padStart(2,'0')+':00–'+String(d2.getHours()).padStart(2,'0')+':00</b>';
+  if(!row.fm&&!row.flap)h+='<br><span style="color:#8f938a">нет данных (сбор ещё не шёл)</span>';
+  else for(const s of g.sers){const x=row[s]||{c:0,b:0,s:0,v:0};h+='<br><span style="color:'+(s==='fm'?CF:CL)+'">'+NAMES[s]+'</span>: '+(id==='v'?k$(x.v)+' · '+f(x.b+x.s,0)+' сделок':f(x.c,0)+' монет');}
+  tip.classList.remove('tipcard');tip.innerHTML=h;tip.style.display='block';tip.style.left=Math.min(e.clientX+14,innerWidth-tip.offsetWidth-12)+'px';tip.style.top=(e.clientY+16)+'px';draw();}
+ for(const [cid,id] of [['netVol','v'],['netCnt','c']]){const cv=$('#'+cid);if(!cv)continue;cv.addEventListener('mousemove',e=>tipAt(e,id));cv.addEventListener('mouseleave',()=>{hov=null;$('#tip').style.display='none';draw();});}
+ document.querySelectorAll('#netPf .pill').forEach(b=>{b.classList.toggle('on',b.dataset.p===pf);b.onclick=()=>{pf=b.dataset.p;try{localStorage.setItem('netPf',pf);}catch{}document.querySelectorAll('#netPf .pill').forEach(x=>x.classList.toggle('on',x===b));draw();};});
+ document.querySelectorAll('#netPer .pill').forEach(b=>{b.classList.toggle('on',+b.dataset.h===per);b.onclick=()=>{per=+b.dataset.h;try{localStorage.setItem('netPer',per);}catch{}document.querySelectorAll('#netPer .pill').forEach(x=>x.classList.toggle('on',x===b));draw();};});
+ document.querySelectorAll('nav .pill').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{if(on()){load();draw();}},0)));
+ setInterval(()=>{if(on()&&!document.hidden)load();},30000);addEventListener('resize',()=>{if(on())draw();});})();
 </script></body></html>
