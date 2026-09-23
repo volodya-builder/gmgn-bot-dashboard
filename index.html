@@ -258,6 +258,11 @@ th .eye{margin-right:2px}
 
 .awhy{position:absolute;transform:translateX(-100%);font:500 11px var(--font-ui);color:#ff9a9a;background:#1a0f0fdd;border:1px solid #5a2b2b;border-radius:999px;padding:1px 8px;white-space:nowrap;pointer-events:none;z-index:6;transition:transform 1.4s ease-out,opacity 1.4s ease-in}.awhy.go{transform:translate(-100%,-26px);opacity:0}
 .gate .glbl{transition:color .2s}.gflash b{animation:gfl .5s}@keyframes gfl{0%{color:#ff7b7b;transform:scale(1.25)}100%{color:inherit;transform:none}}
+.ovgrid.nohist{grid-template-columns:minmax(0,1fr)}.ovgrid.nohist>.ovside{display:none}
+.ovstrip{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;padding:9px 12px;margin-bottom:16px;border:1px solid #2b5a3a;border-radius:12px;background:linear-gradient(100deg,#4caf6d14,transparent 70%);font-size:14px}.ovstrip .ondot{margin-right:0}.ovstrip .onpill{margin-left:0}
+.ovstrip .osl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}.ovstrip .osn{font-weight:600;font-size:16px;white-space:nowrap}.ovstrip .osd{color:#9a9d95;min-width:0;flex:1 1 180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ovstrip .osm{color:#c9ccc4;white-space:nowrap;font-size:13px}.ovstrip .osm b{font-weight:600}
+.ovstrip .osb{display:flex;gap:6px;margin-left:auto}.ovstrip .btn{padding:5px 12px;font-size:13px;border-radius:9px}.ovstrip .ovrules{flex-basis:100%;margin-top:4px;padding-top:10px}
+@media(max-width:700px){.ovstrip .osd{flex-basis:100%;white-space:normal}.ovstrip .osb{margin-left:0}}
 .ovgrid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start}@media(max-width:1100px){.ovgrid{grid-template-columns:1fr}}
 .ovside{padding:20px 18px;text-align:left}.ovsh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px}.ovsh h2{margin:0}
 .ovtr{overflow:auto;display:flex;flex-direction:column}.ovti{padding:10px 8px;border-bottom:1px solid #1c1c1c;cursor:pointer;border-radius:10px}.ovti:hover{background:#ffffff06}.ovti:last-child{border-bottom:0}
@@ -410,11 +415,11 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 <section class="view on" id="v-overview">
   <div class="titlebar"><h1 class="h1">Обзор</h1><div class="pills small" id="period"><button class="pill" data-p="24h">24ч</button><button class="pill" data-p="7d">Неделя</button><button class="pill" data-p="30d">Месяц</button><button class="pill on" data-p="all">Всё время</button></div></div>
   <div class="hero" id="hero"></div>
-  <div class="card ovh" id="ovHyp" style="display:none"></div>
   <div class="ovgrid">
   <div class="card ovchart">
+    <div class="ovstrip" id="ovHyp" style="display:none"></div>
     <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity">Депозит</button><button class="pill" data-c="pnl">PnL по сделкам</button><button class="pill" data-c="count">Сделки</button></div></div>
-    <div class="ctools"><label class="check" id="marksWrap"><input type="checkbox" id="marks"><span class="box"></span>Сделки на графике</label><div class="zbtns"><button class="mini" id="zout" title="Отдалить">−</button><button class="mini" id="zin" title="Приблизить">+</button><button class="mini wide" id="zreset">Весь период</button><button class="mini wide" id="zauto" style="display:none" title="Вернуть автоматический масштаб по вертикали">Авто</button><button class="mini wide" id="zbig">Развернуть</button></div><span class="hint">колесо — масштаб · тяни график — сдвиг · тяни шкалу цены или времени — растянуть · двойной клик — сброс</span></div><canvas id="chart"></canvas><div class="axis" id="axis"></div><div class="resz" id="resz" title="Потяни, чтобы изменить высоту графика"><span></span></div>
+    <div class="ctools"><label class="check" id="marksWrap"><input type="checkbox" id="marks"><span class="box"></span>Сделки на графике</label><div class="zbtns"><button class="mini" id="zout" title="Отдалить">−</button><button class="mini" id="zin" title="Приблизить">+</button><button class="mini wide" id="zreset">Весь период</button><button class="mini wide" id="zauto" style="display:none" title="Вернуть автоматический масштаб по вертикали">Авто</button><button class="mini wide" id="zhist" title="Спрятать колонку «История сделок» — график станет на всю ширину">На всю ширину</button><button class="mini wide" id="zbig">Развернуть</button></div><span class="hint">колесо — масштаб · тяни график — сдвиг · тяни шкалу цены или времени — растянуть · двойной клик — сброс</span></div><canvas id="chart"></canvas><div class="axis" id="axis"></div><div class="resz" id="resz" title="Потяни, чтобы изменить высоту графика"><span></span></div>
   </div>
   <div class="card ovside"><div class="ovsh"><h2>История сделок</h2><span class="note" id="ovTrSum"></span></div><div class="ovtr" id="ovTr"></div></div>
   </div>
@@ -527,15 +532,23 @@ function rulesSummary(c){const e=c.entry||{},x=c.exit||{};const k=v=>v>=1e6?'$'+
  if(e.max_sniper_count<9999)a.push('снайперов до '+e.max_sniper_count);if(e.max_bundler_rate<1)a.push('бандлеры до '+Math.round(e.max_bundler_rate*100)+'%');if(e.max_insider_rate<1)a.push('инсайдеры до '+Math.round(e.max_insider_rate*100)+'%');
  const b=['тейк +'+x.take_profit_pct+'%','стоп −'+x.stop_loss_pct+'%'];if(x.trailing_activate_pct<1e5)b.push('трейлинг после +'+x.trailing_activate_pct+'%, откат '+x.trailing_drawdown_pct+'%');b.push('не дольше '+x.max_hold_min+' мин');
  return {entry:a,exit:b};}
+let ovRulesOpen=false;try{ovRulesOpen=localStorage.getItem('ovRules')==='1';}catch{}
 function renderOvHyp(){const rl=$('#raceCurLbl');if(rl)rl.textContent=D&&D.mode==='live'?'Правила бота-симуляции (для сравнения)':'Текущие правила';const el=$('#ovHyp');if(!el||!D||!D.config)return;const c=D.config,L=D.liveHyp,H=D.hypotheses;const live=D.mode==='live';
  const list=H&&H.list||[];const r=L?list.find(x=>x.id===L.id||x.num===L.num):list.find(x=>x.id==='current');const w=r&&r.win&&r.win['7d']&&r.win['7d'].n?'7d':'all';const m=r&&r.win?r.win[w]:null;
  const R=rulesSummary(c);el.style.display='';
- el.innerHTML='<div class="ovtop"><div><div class="clbl">'+(live?'Бот торгует реальными деньгами по':'Симуляция торгует по')+'</div>'+
-  '<div class="ovname"><i class="ondot big"></i>'+(L?'Гипотеза <b>#'+L.num+'</b>':'Правила <b>'+esc(c.rules_version||'')+'</b>')+onTag(L?'включена':'работают')+'</div>'+
-  (L?'<div class="ovsub">'+esc(L.name||'')+'</div><div class="note">выбрана '+dt(L.selected_at*1000)+(L.previous?' · до этого '+esc(L.previous):'')+'</div>':'<div class="note">гипотеза для этого бота не выбрана — работают правила из вкладки «Правила»</div>')+
-  '</div><div class="ovside">'+(m&&m.n?'<div class="clbl">В симуляции '+WLBL[w]+'</div><div class="ovm"><b class="'+cls(m.exp)+'">'+mny(m.exp)+'</b> на сделку · '+m.n+' '+sdl(m.n)+' '+relTag(m.rel)+'</div>':'')+'<button class="btn" id="ovHypGo">'+(D.hypSelect?'Сменить гипотезу':'Открыть гипотезы')+'</button></div></div>'+
-  '<div class="ovrules"><div><span class="clbl">Вход</span>'+R.entry.map(t=>'<span class="hchip">'+esc(t)+'</span>').join('')+'</div><div><span class="clbl">Выход</span>'+R.exit.map(t=>'<span class="hchip">'+esc(t)+'</span>').join('')+'</div></div>';
+ const nm=L?(L.name||''):'гипотеза не выбрана — работают правила из вкладки «Правила»';
+ const tt=L?'выбрана '+dt(L.selected_at*1000)+(L.previous?' · до этого '+L.previous:''):'';
+ el.innerHTML='<i class="ondot"></i><span class="osl">'+(live?'Реальные деньги':'Симуляция')+'</span>'+
+  '<span class="osn" title="'+esc(tt)+'">'+(L?'Гипотеза #'+L.num:'Правила '+esc(c.rules_version||''))+'</span>'+onTag(L?'включена':'работают')+
+  '<span class="osd" title="'+esc(nm)+'">'+esc(nm)+'</span>'+
+  (m&&m.n?'<span class="osm" title="Как эта гипотеза торговала в симуляции '+WLBL[w]+'">симуляция '+WLBL[w].replace('за ','')+': <b class="'+cls(m.exp)+'">'+mny(m.exp)+'</b> на сделку · '+m.n+' '+sdl(m.n)+'</span>':'')+
+  '<span class="osb"><button class="btn" id="ovRulesT">'+(ovRulesOpen?'Скрыть правила':'Правила входа и выхода')+'</button><button class="btn" id="ovHypGo">'+(D.hypSelect?'Сменить гипотезу':'Гипотезы')+'</button></span>'+
+  (ovRulesOpen?'<div class="ovrules"><div><span class="clbl">Вход</span>'+R.entry.map(t=>'<span class="hchip">'+esc(t)+'</span>').join('')+'</div><div><span class="clbl">Выход</span>'+R.exit.map(t=>'<span class="hchip">'+esc(t)+'</span>').join('')+'</div></div>':'');
+ $('#ovRulesT').onclick=()=>{ovRulesOpen=!ovRulesOpen;try{localStorage.setItem('ovRules',ovRulesOpen?'1':'0');}catch{}renderOvHyp();};
  $('#ovHypGo').onclick=()=>{const t=document.querySelector('nav .pill[data-view="hyp"]');if(t)t.click();try{setHypTab('sum');}catch{}scrollTo(0,0);};}
+(()=>{let nh=false;try{nh=localStorage.getItem('ovNoHist')==='1';}catch{}const g=document.querySelector('.ovgrid'),bt=$('#zhist');if(!g||!bt)return;
+ const ap=()=>{g.classList.toggle('nohist',nh);bt.textContent=nh?'Показать историю':'На всю ширину';bt.title=nh?'Вернуть колонку «История сделок» справа':'Спрятать колонку «История сделок» — график станет на всю ширину';};ap();
+ bt.onclick=()=>{nh=!nh;try{localStorage.setItem('ovNoHist',nh?'1':'0');}catch{}ap();try{redraw();}catch{}};})();
 function render(){if(!D)return;try{renderOvHyp();}catch(e){console.error(e);}const s=D.state,c=D.config,t=ptrades(),m=metrics(t);const start=c.paper_start_balance_usd;
  const open=Object.values(s.positions||{});const inPos=open.reduce((a,p)=>a+p.size_usd,0);
  const plabel={'24h':'за 24 часа','7d':'за неделю','30d':'за месяц','all':'за всё время'}[period];
@@ -824,8 +837,10 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.28';
+const APP_VERSION='2.30';
 const CHANGELOG=[
+ ['2.30','23.09.2026',['Обзор: карточка «Бот торгует по гипотезе #N» стала узкой полосой прямо над графиком; правила входа и выхода открываются кнопкой «Правила входа и выхода»','Обзор: кнопка «На всю ширину» у графика прячет колонку «История сделок» — график растягивается на весь экран (кнопка «Показать историю» возвращает её, выбор запоминается)']],
+ ['2.29','23.09.2026',['Графики «Сравнение на графике» и «Лучшая против текущих правил» в стиле графика депозита: плавные линии со свечением, значение каждой линии справа, пульсирующие концы, при наведении — значения всех вариантов на выбранное время; колесо — масштаб, перетаскивание — сдвиг, двойной клик — весь период; в легенде номера гипотез']],
  ['2.28','23.09.2026',['«Обзор»: график вдвое выше (640 px), справа — история сделок: монета, результат в $ и %, как закрылась, время в сделке, mcap/ликвидность/холдеры на входе; клик открывает карточку сделки']],
  ['2.27','23.09.2026',['График депозита как в TradingView: тяни шкалу цены вверх-вниз — растянуть или сжать по вертикали, колесо над шкалой цены — то же; тяни шкалу времени — растянуть по времени; перетаскивание графика двигает и по времени, и по цене; кнопка «Авто» и двойной клик по шкале цены возвращают автомасштаб; больше делений на осях']],
  ['2.26','23.09.2026',['Таблица «Все варианты»: сортировка по клику на заголовок — №, надёжность, сделок, на сделку, осторожно, проверки; первый клик — по убыванию, второй — по возрастанию, третий — обычный порядок; выбор запоминается']],
@@ -1050,16 +1065,62 @@ function drawMinutes(E){const c=$('#minChart');if(!c)return;const ctx=c.getConte
  const worst=rows.reduce((a,r)=>r.below25_pct>a.below25_pct?r:a),bestR=rows.reduce((a,r)=>r.median_net>a.median_net?r:a),pos=rows.filter(r=>r.median_net>0);
  const total=rows.reduce((a,r)=>a+r.n,0);
  $('#minNote').innerHTML='<b>Главный вывод.</b> '+(pos.length?'Плюс по типичной сделке даёт вход на '+pos.map(r=>r.min).join(', ')+'-й минуте.':'Ни одна минута входа не даёт плюса по типичной сделке.')+' Самая опасная зона — '+worst.min+'-я минута: '+worst.below25_pct+'% монет уходят ниже −25%. '+(bestR!==worst?'Мягче всего на '+bestR.min+'-й минуте: типичный результат '+mny(bestR.median_net)+', ниже −25% уходят '+bestR.below25_pct+'%, до +60% доходят '+bestR.above60_pct+'%.':'')+(D.hypotheses?.data?.premature?' Оценка по '+total+' наблюдениям — мало, картина может измениться.':'');}
-function drawHyp(list,cSel='#hypChart',legSel='#hypLegend',ids=[...hypSel]){const c=$(cSel);if(!c)return;const ctx=c.getContext('2d');const W=c.clientWidth,H=300,dpr=devicePixelRatio||1;if(!W)return;c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
- const selArr=ids;const sel=selArr.map((id,i)=>({r:list.find(x=>x.id===id),i})).filter(o=>o.r&&o.r.win[hypW].curve.length);
- $(legSel).innerHTML=selArr.map((id,i)=>{const r=list.find(x=>x.id===id);if(!r)return '';return '<span><span class="sw" style="background:'+HCOL[i%HCOL.length]+'"></span>'+(r.id==='current'?CURL():(r.id===H_champ()?'Лучшая гипотеза':'Вариант '+(i+1)))+'</span>';}).join('');
- if(!sel.length){ctx.fillStyle='#8f938a';ctx.font='14px Inter,sans-serif';ctx.fillText('Нет сделок '+WLBL[hypW]+' у выбранных вариантов',16,40);return;}
- const P={l:8,r:84,t:14,b:28};let xs=[],ys=[0];sel.forEach(o=>o.r.win[hypW].curve.forEach(p=>{xs.push(p[0]);ys.push(p[1]);}));const x0=Math.min(...xs),x1=Math.max(...xs,x0+60);let y0=Math.min(...ys),y1=Math.max(...ys);const pad=(y1-y0)*.1||1;y0-=pad;y1+=pad;
- const X=v=>P.l+(v-x0)/(x1-x0)*(W-P.l-P.r),Y=v=>P.t+(1-(v-y0)/(y1-y0))*(H-P.t-P.b);
- ctx.font='12px Inter,sans-serif';ctx.textBaseline='middle';ctx.textAlign='left';for(let i=0;i<=4;i++){const v=y0+(y1-y0)*i/4;ctx.strokeStyle='#ffffff0d';ctx.beginPath();ctx.moveTo(P.l,Y(v));ctx.lineTo(W-P.r+6,Y(v));ctx.stroke();ctx.fillStyle='#8f938a';ctx.fillText(mny(v),W-P.r+14,Y(v));}
- ctx.textBaseline='alphabetic';const span=(x1-x0)*1000;for(let i=0;i<=4;i++){const tv=x0+(x1-x0)*i/4;ctx.textAlign=i===0?'left':i===4?'right':'center';ctx.fillText(fmtT(tv*1000,span),X(tv),H-8);}
- ctx.setLineDash([4,5]);ctx.strokeStyle='#ffffff2a';ctx.beginPath();ctx.moveTo(P.l,Y(0));ctx.lineTo(W-P.r+6,Y(0));ctx.stroke();ctx.setLineDash([]);
- sel.forEach(o=>{const cv=o.r.win[hypW].curve;ctx.strokeStyle=HCOL[o.i%HCOL.length];ctx.lineWidth=o.r.id==='current'?3:2;ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(X(cv[0][0]),Y(0));cv.forEach(p=>ctx.lineTo(X(p[0]),Y(p[1])));ctx.stroke();const l=cv[cv.length-1];ctx.fillStyle=HCOL[o.i%HCOL.length];ctx.beginPath();ctx.arc(X(l[0]),Y(l[1]),4,0,7);ctx.fill();});}
+// ---- график «Сравнение на графике» / «Лучшая против текущих правил» в стиле графика депозита на «Обзоре»:
+// плавные линии со свечением, подпись значения у каждой линии справа, пульсирующие точки на концах,
+// наведение — вертикальная линия и значения всех вариантов на это время, колесо — масштаб, перетаскивание — сдвиг, двойной клик — весь период
+const hypZ={},hypHv={},hypDrag={};
+function hypName(r,i){return r.id==='current'?CURL():((r.num?'#'+r.num:'Вариант '+(i+1))+(r.id===H_champ()?' · лучшая':''));}
+function hypValAt(pts,t){if(!pts.length||t<pts[0].t)return null;let v=pts[0].v;for(const p of pts){if(p.t>t)break;v=p.v;}return v;}
+function drawHyp(list,cSel='#hypChart',legSel='#hypLegend',ids=[...hypSel]){const c=$(cSel);if(!c)return;c._args=[list,cSel,legSel,ids];
+ const ctx=c.getContext('2d'),W=c.clientWidth,H=340,dpr=devicePixelRatio||1;if(!W)return;c.style.height=H+'px';c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+ const sel=ids.map((id,i)=>({r:list.find(x=>x.id===id),i})).filter(o=>o.r&&o.r.win[hypW]&&o.r.win[hypW].curve.length);
+ const leg=$(legSel);if(leg)leg.innerHTML=ids.map((id,i)=>{const r=list.find(x=>x.id===id);if(!r)return '';return '<span><span class="sw" style="background:'+HCOL[i%HCOL.length]+'"></span>'+esc(hypName(r,i))+'</span>';}).join('');
+ if(!sel.length){ctx.fillStyle='#8f938a';ctx.font='14px Inter,sans-serif';ctx.textBaseline='middle';ctx.fillText('Нет сделок '+WLBL[hypW]+' у выбранных вариантов',16,40);c._g=null;return;}
+ const P={l:8,r:96,t:18,b:30},PW=W-P.l-P.r,PH=H-P.t-P.b;
+ const series=sel.map(o=>{const cv=o.r.win[hypW].curve;const pts=[{t:cv[0][0]*1000-1,v:0}].concat(cv.map(p=>({t:p[0]*1000,v:p[1]})));return {r:o.r,i:o.i,col:HCOL[o.i%HCOL.length],pts,name:hypName(o.r,o.i)};});
+ let xf0=Infinity,xf1=-Infinity;series.forEach(s=>{xf0=Math.min(xf0,s.pts[0].t);xf1=Math.max(xf1,s.pts[s.pts.length-1].t);});if(xf1-xf0<6e4)xf1=xf0+6e4;
+ let x0,x1;const z=hypZ[cSel];if(z){const sp=Math.min(z[1]-z[0],(xf1-xf0)*4);x0=Math.max(xf0-(xf1-xf0)*.02-sp*.5,Math.min(z[0],xf1-sp*.5));x1=x0+sp;hypZ[cSel]=[x0,x1];}else{x0=xf0;x1=xf1+(xf1-xf0)*.02;}
+ const span=(x1-x0)||1,X=t=>P.l+(t-x0)/span*PW;
+ let ys=[0];series.forEach(s=>{s.pts.forEach((p,k)=>{if(p.t>=x0&&p.t<=x1)ys.push(p.v);});const a=hypValAt(s.pts,x0),b=hypValAt(s.pts,x1);if(a!=null)ys.push(a);if(b!=null)ys.push(b);});
+ let y0=Math.min(...ys),y1=Math.max(...ys);const pad=(y1-y0)*.14||1;y0-=pad;y1+=pad;const Y=v=>P.t+(1-(v-y0)/(y1-y0))*PH;
+ // сетка и подписи
+ ctx.font='12px Inter,sans-serif';ctx.textBaseline='middle';ctx.textAlign='left';const NY=Math.max(4,Math.min(8,Math.round(PH/60)));
+ for(let i=0;i<=NY;i++){const v=y0+(y1-y0)*i/NY,y=Y(v);ctx.strokeStyle='#ffffff0d';ctx.beginPath();ctx.moveTo(P.l,y);ctx.lineTo(W-P.r+6,y);ctx.stroke();ctx.fillStyle='#8f938a';ctx.fillText(Math.abs(v)>=100?(v<0?'−':'+')+'$'+f(Math.abs(v),0):mny(v),W-P.r+14,y);}
+ ctx.textBaseline='alphabetic';const NX=Math.max(3,Math.min(8,Math.round(PW/150)));for(let i=0;i<=NX;i++){const tv=x0+span*i/NX;ctx.fillStyle='#8f938a';ctx.textAlign=i===0?'left':i===NX?'right':'center';ctx.fillText(fmtT(tv,span),X(tv),H-8);}
+ ctx.save();ctx.beginPath();ctx.rect(P.l-8,P.t-8,PW+16,PH+16);ctx.clip();
+ const zy=Y(0);if(zy>P.t&&zy<P.t+PH){ctx.setLineDash([2,6]);ctx.strokeStyle='#ffffff30';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(P.l,zy);ctx.lineTo(P.l+PW,zy);ctx.stroke();ctx.setLineDash([]);}
+ const vis=s=>{let a=s.pts.findIndex(p=>p.t>=x0);if(a<0)a=s.pts.length-1;let b=s.pts.length-1;for(let k=s.pts.length-1;k>=0;k--)if(s.pts[k].t<=x1){b=k;break;}return s.pts.slice(Math.max(0,a-1),Math.min(s.pts.length,b+2)).map(p=>({x:X(p.t),y:Y(p.v)}));};
+ // мягкая заливка под лучшей (или единственной не текущей) линией
+ const fo=series.find(s=>s.r.id===H_champ())||series.find(s=>s.r.id!=='current')||series[0];
+ {const pts=vis(fo);if(pts.length>1){const g=ctx.createLinearGradient(0,P.t,0,P.t+PH);g.addColorStop(0,fo.col+'30');g.addColorStop(.65,fo.col+'0e');g.addColorStop(1,fo.col+'00');ctx.beginPath();eqTrace(ctx,pts);ctx.lineTo(pts[pts.length-1].x,P.t+PH);ctx.lineTo(pts[0].x,P.t+PH);ctx.closePath();ctx.fillStyle=g;ctx.fill();}}
+ // линии: сначала остальные, текущие правила и лучшая — поверх
+ const order=[...series].sort((a,b)=>(a===fo)-(b===fo)||(a.r.id==='current')-(b.r.id==='current'));
+ order.forEach(s=>{const pts=vis(s);if(pts.length<2)return;ctx.lineJoin='round';ctx.lineCap='round';ctx.shadowColor=s.col+'99';ctx.shadowBlur=12;ctx.strokeStyle=s.col;ctx.lineWidth=s===fo||s.r.id==='current'?2.6:2;ctx.beginPath();eqTrace(ctx,pts);ctx.stroke();ctx.shadowBlur=0;ctx.strokeStyle='#ffffff2a';ctx.lineWidth=.8;ctx.beginPath();eqTrace(ctx,pts);ctx.stroke();});
+ // пульсирующие точки на концах
+ const ph=(performance.now()%2000)/2000;series.forEach(s=>{const l=s.pts[s.pts.length-1];if(l.t<x0||l.t>x1)return;const x=X(l.t),y=Y(l.v);ctx.beginPath();ctx.arc(x,y,4+ph*9,0,7);ctx.fillStyle=s.col+Math.round((1-ph)*70).toString(16).padStart(2,'0');ctx.fill();ctx.beginPath();ctx.arc(x,y,4.5,0,7);ctx.fillStyle=s.col;ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#141414';ctx.stroke();});
+ // наведение
+ const hv=hypHv[cSel];let hvVals=null;
+ if(hv&&!hypDrag[cSel]){const t=x0+(hv.x-P.l)/PW*span;ctx.strokeStyle='#ffffff38';ctx.setLineDash([2,4]);ctx.beginPath();ctx.moveTo(hv.x,P.t);ctx.lineTo(hv.x,P.t+PH);ctx.stroke();ctx.setLineDash([]);
+  hvVals=series.map(s=>({s,v:hypValAt(s.pts,t)})).filter(o=>o.v!=null);hvVals.forEach(o=>{ctx.beginPath();ctx.arc(hv.x,Y(o.v),4.5,0,7);ctx.fillStyle=o.s.col;ctx.fill();ctx.lineWidth=2;ctx.strokeStyle='#141414';ctx.stroke();});hv.t=t;}
+ ctx.restore();
+ // подписи значений справа (без наложения)
+ const tags=(hvVals||series.map(s=>({s,v:s.pts[s.pts.length-1].v}))).map(o=>({col:o.s.col,v:o.v,y:Math.max(P.t,Math.min(P.t+PH,Y(o.v)))})).sort((a,b)=>a.y-b.y);
+ for(let k=1;k<tags.length;k++)if(tags[k].y-tags[k-1].y<24)tags[k].y=tags[k-1].y+24;const over=tags.length?tags[tags.length-1].y-(P.t+PH):0;if(over>0)tags.forEach(t=>t.y-=over);
+ tags.forEach(t=>eqPill(ctx,W-P.r+8,t.y,(t.v>=0?'+$':'−$')+f(Math.abs(t.v)),t.col,'#0b0b0b'));
+ if(hv&&hv.t&&!hypDrag[cSel]){const lbl=new Date(hv.t).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});ctx.font='600 11.5px Inter,sans-serif';const tw=ctx.measureText(lbl).width+14;eqPill(ctx,Math.max(P.l+tw/2,Math.min(P.l+PW-tw/2,hv.x)),H-12,lbl,'#2a2d31','#f1f2ed','center');}
+ c._g={X,P,PW,PH,x0,x1,span,full:[xf0,xf1],series,hvVals};
+ if(!c._ev){c._ev=1;const again=()=>{if(c._args)drawHyp(...c._args);};
+  c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),mx=e.clientX-r.left,g=c._g;if(!g)return;const tip=$('#tip');
+   if(hypDrag[cSel]){const d=hypDrag[cSel],dt=-(mx-d.mx)/g.PW*(d.z[1]-d.z[0]);hypZ[cSel]=[d.z[0]+dt,d.z[1]+dt];c.style.cursor='grabbing';tip.style.display='none';again();return;}
+   if(mx<g.P.l||mx>g.P.l+g.PW){hypHv[cSel]=null;tip.style.display='none';again();return;}
+   hypHv[cSel]={x:mx};c.style.cursor='crosshair';again();const vals=(c._g.hvVals||[]).slice().sort((a,b)=>b.v-a.v);
+   if(vals.length){tip.classList.remove('tipcard');tip.innerHTML='<b>'+new Date(hypHv[cSel].t).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</b>'+vals.map(o=>'<div style="display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:3px"><span><span class="sw" style="background:'+o.s.col+';display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px"></span>'+esc(o.s.name)+'</span><b class="'+cls(o.v)+'">'+mny(o.v)+'</b></div>').join('');tip.style.display='block';const tw=tip.offsetWidth;tip.style.left=Math.min(e.clientX+14,innerWidth-tw-12)+'px';tip.style.top=(e.clientY+16)+'px';}else tip.style.display='none';});
+  c.addEventListener('mouseleave',()=>{hypHv[cSel]=null;hypDrag[cSel]=null;$('#tip').style.display='none';again();});
+  c.addEventListener('mousedown',e=>{const g=c._g;if(!g)return;hypDrag[cSel]={mx:e.clientX-c.getBoundingClientRect().left,z:[g.x0,g.x1]};});
+  addEventListener('mouseup',()=>{if(hypDrag[cSel]){hypDrag[cSel]=null;c.style.cursor='crosshair';again();}});
+  c.addEventListener('wheel',e=>{const g=c._g;if(!g)return;e.preventDefault();const r=c.getBoundingClientRect(),mx=e.clientX-r.left,tc=g.x0+(mx-g.P.l)/g.PW*g.span,k=Math.exp(e.deltaY*0.0015),fs=g.full[1]-g.full[0];let sp=Math.max(Math.min(6e4*5,fs),Math.min(fs*4,g.span*k));const a=(tc-g.x0)/g.span;hypZ[cSel]=[tc-a*sp,tc-a*sp+sp];again();},{passive:false});
+  c.addEventListener('dblclick',()=>{hypZ[cSel]=null;again();});}}
+setInterval(()=>{if(document.hidden)return;['#hypChart','#hypChart2'].forEach(s=>{const c=document.querySelector(s);if(c&&c._args&&c.offsetParent&&!hypDrag[s])drawHyp(...c._args);});},90);
 const H_champ=()=>D.hypotheses?.champions?.[hypW]?.id;
 document.querySelectorAll('#hypPeriod .pill').forEach(b=>b.onclick=()=>{hypW=b.dataset.w;hypSel=null;document.querySelectorAll('#hypPeriod .pill').forEach(x=>x.classList.toggle('on',x===b));renderHyp(true);});
 document.querySelectorAll('#hypFilter .pill').forEach(b=>b.onclick=()=>{hypF=b.dataset.f;document.querySelectorAll('#hypFilter .pill').forEach(x=>x.classList.toggle('on',x===b));renderHyp(true);});
