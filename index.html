@@ -1,6 +1,6 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Trading bot — панель</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0b0b0b;--card:#141414;--card2:#181818;--border:#242424;--border2:#2e2e2e;--text:#f1f2ed;--muted:#8f938a;--accent:#7cc4ff;--accent-bright:#a9dbff;--accent-dim:#7cc4ff1f;--good:#4caf6d;--bad:#e05c5c;--radius:20px;
 --font-ui:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--font-display:"Nunito","Inter",sans-serif;--font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
@@ -732,6 +732,36 @@ main{padding-bottom:45vh!important}
 .ncsub{color:#8f938a;font-size:18px;margin-top:8px}
 #netMet .pill{font-size:17px;padding:8px 18px}
 @media(max-width:900px){.nstats{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:22px}.nst:nth-child(3){padding-left:0;border-left:0}.nstn{font-size:40px}.nstl{font-size:15px}.ncard{padding:22px 18px}}
+#v-net{--hd:#9b9e94;--hgold:#c8f542;--hfont:"Nunito","Nunito Sans","Inter",-apple-system,sans-serif;gap:0;max-width:1180px;margin:0 auto;width:100%}
+#v-net .ana-head{flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;margin:30px 0 26px;display:flex}
+#v-net .page-title{font-family:var(--hfont);letter-spacing:-.025em;font-weight:700;font-size:30px;margin:0}
+#v-net .ana-ctl{display:flex;gap:10px;flex-wrap:wrap}
+#v-net .seg{background:#ffffff0a;border:1px solid #ffffff0f;border-radius:999px;gap:2px;padding:3px;display:inline-flex}
+#v-net .seg-btn{color:var(--hd);font:inherit;cursor:pointer;transition:color .18s,background .18s;background:0 0;border:0;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:500;white-space:nowrap}
+#v-net .seg-btn:hover{color:var(--text)}
+#v-net .seg-btn.on{color:var(--text);background:#ffffff1a;box-shadow:inset 0 1px #ffffff0f}
+#v-net .ana-strip{border-bottom:1px solid #ffffff14;grid-template-columns:repeat(4,1fr);margin:0 0 28px;padding-bottom:26px;display:grid}
+#v-net .ana-stat{border-left:1px solid #ffffff14;padding:4px 22px;min-width:0}
+#v-net .ana-stat:first-child{border-left:0;padding-left:0}
+#v-net .ana-stat .n{font-family:var(--hfont);letter-spacing:-.03em;font-variant-numeric:tabular-nums;font-size:40px;font-weight:400;line-height:1.1;white-space:nowrap}
+#v-net .ana-stat .l{color:var(--hd);flex-wrap:wrap;align-items:center;gap:10px;margin-top:8px;font-size:13.5px;display:flex}
+#v-net .ana-stat .l .dim{color:#70746a}
+#v-net .ana-delta{font-variant-numeric:tabular-nums;font-size:13px;font-weight:500;color:var(--hd)}
+#v-net .ana-delta.up{color:#5fd3a0}#v-net .ana-delta.down{color:#ff7676}
+#v-net .ana-panel{background:#ffffff08;border:1px solid #ffffff14;border-radius:22px;margin-bottom:22px;padding:22px 24px 16px;box-shadow:inset 0 1px #ffffff0d}
+#v-net .ana-panel-head{flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px;display:flex}
+#v-net .ana-panel-val{font-family:var(--hfont);letter-spacing:-.03em;font-variant-numeric:tabular-nums;font-size:26px;font-weight:400}
+#v-net .ana-panel-sub{color:var(--hd);margin-top:3px;font-size:13px}
+#v-net .ana-svg{width:100%;height:300px;display:block;overflow:visible}
+#v-net .ana-grid-line{stroke:#ffffff0f;stroke-width:1px}
+#v-net .ana-grid-lbl,#v-net .ana-axis-lbl{fill:var(--hd);font-size:12px;font-family:Inter,sans-serif}
+#v-net .ana-svg-bar{fill:url(#anaBarGrad);transition:opacity .18s}
+#v-net .ana-svg-bar.now{fill:url(#anaBarNow);opacity:1}
+#v-net .ana-svg-bar.hl{fill:url(#anaBarHl);opacity:1}
+#v-net .ana-svg-bar.now.hl{fill:url(#anaBarNow)}
+#v-net .ana-svg-bar.dim{opacity:.6}
+#v-net .ana-note2{color:#70746a;font-size:12px;line-height:1.6;padding:0 2px 30px}
+@media(max-width:900px){#v-net .ana-strip{grid-template-columns:1fr 1fr;row-gap:18px}#v-net .ana-stat:nth-child(3){border-left:0;padding-left:0}#v-net .ana-stat .n{font-size:30px}#v-net .ana-svg{height:220px}#v-net .page-title{font-size:26px}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -755,10 +785,10 @@ main{padding-bottom:45vh!important}
   <div class="card opc" id="opCard"><div class="oph"><h2>Открытые сделки <span class="note" id="opCnt"></span></h2><button class="mini wide" id="sndBtn"></button></div><div id="openLive"></div><div style="display:none"><table id="open"></table></div></div>
 </section>
 <section class="view" id="v-net">
-  <div class="titlebar"><h1 class="h1">Объёмы BSC</h1><div class="netctl"><div class="pills small" id="netPf"><button class="pill on" data-p="all">Вместе</button><button class="pill" data-p="fm">four.meme</button><button class="pill" data-p="flap">flap</button></div><div class="pills small" id="netPer"><button class="pill on" data-h="24">24ч</button><button class="pill" data-h="168">Неделя</button><button class="pill" data-h="720">Месяц</button><button class="pill" data-h="0">Всё время</button></div></div></div>
-  <div class="nstats" id="netKpi"></div>
-  <div class="card ncard"><div class="nchead"><div><div class="ncbig" id="netBig">—</div><div class="ncsub" id="netSub"></div></div><div class="pills" id="netMet"><button class="pill on" data-m="v">Объём</button><button class="pill" data-m="t">Сделки</button><button class="pill" data-m="c">Запуски</button></div></div><div class="netc"><canvas id="netCv"></canvas></div></div>
-  <div class="note" id="netNote" style="padding:0 4px"></div>
+  <div class="ana-head"><div class="page-title">Объёмы BSC</div><div class="ana-ctl"><div class="seg" id="netPf"><button type="button" class="seg-btn on" data-p="all">Вместе</button><button type="button" class="seg-btn" data-p="fm">four.meme</button><button type="button" class="seg-btn" data-p="flap">flap</button></div><div class="seg" id="netPer"><button type="button" class="seg-btn on" data-h="24">24ч</button><button type="button" class="seg-btn" data-h="168">Неделя</button><button type="button" class="seg-btn" data-h="720">Месяц</button><button type="button" class="seg-btn" data-h="0">Всё время</button></div></div></div>
+  <div class="ana-strip" id="netKpi"></div>
+  <div class="ana-panel"><div class="ana-panel-head"><div><div class="ana-panel-val" id="netBig">—</div><div class="ana-panel-sub" id="netSub"></div></div><div class="seg" id="netMet"><button type="button" class="seg-btn on" data-m="v">Объём</button><button type="button" class="seg-btn" data-m="t">Сделки</button><button type="button" class="seg-btn" data-m="c">Запуски</button></div></div><div id="netSvg"></div></div>
+  <div class="ana-note2" id="netNote"></div>
 </section>
 <section class="view" id="v-trending">
   <div class="titlebar"><h1 class="h1">В тренде</h1><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="note" id="trMeta"></span><div class="pills small" id="trFilter"><button class="pill on" data-f="all">Все</button><button class="pill" data-f="ok">Прошли фильтр</button><button class="pill" data-f="trenches">С лаунчпадов</button><button class="pill" data-f="fresh">Моложе 30 мин</button></div></div></div>
@@ -1348,8 +1378,9 @@ function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label
  const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
  if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
 // ---- версия ----
-const APP_VERSION='2.80';
+const APP_VERSION='2.81';
 const CHANGELOG=[
+ ['2.81','24.09.2026',['Арена → «Объёмы» переделаны по коду страницы «Аналитика» hood: те же шрифты (Nunito), размеры, цифры с разделителями и изменением к прошлому периоду, панель со столбцами (градиент, текущий — салатовый, при наведении столбец подсвечивается, а число и дата показываются вверху панели вместо всплывающей подсказки); 24ч — 24 часа, неделя — 56 дней, месяц и всё время — 60 дней, как в hood']],
  ['2.80','24.09.2026',['Арена → «Объёмы» в стиле аналитики hood: крупные цифры сверху (объём, сделки, запуски, средняя сделка), одна большая карточка с переключателем «Объём / Сделки / Запуски», скруглённые столбцы, пустые часы — чёрточками, текущий столбец подсвечен; 24ч — по часам, неделя / месяц / всё время — по дням']],
  ['2.79','23.09.2026',['Арена → новая подвкладка «Объёмы»: объём торгов и число запущенных монет на four.meme и flap по часам — прямо из блокчейна BSC (новый сборщик на сервере, обновление каждые 20 с); переключатели «Вместе / four.meme / flap» и период 24 ч / 3 дня / 7 / 30 дней; карточки: объём, запуски, сделки, доля площадок; подсказка по наведению на столбец']],
  ['2.78','23.09.2026',['Гонка гипотез: строка дорожки совсем короткая — номер, число изменённых условий (вход · выход), метка надёжности и число сделок; все параметры — при наведении и в карточке']],
@@ -2216,55 +2247,44 @@ function faqLive(){const H=D&&D.hypotheses;if(!H)return;const dt=H.data||{},th=d
  const fe=$('#faqExec');if(fe&&ex.n_stops)fe.innerHTML='Сейчас: по '+ex.n_stops+' реальным стопам цена в среднем уходила до <b class="bad">'+f(ex.real_stop_pct,1)+'%</b>, а модель ожидала <b>'+f(ex.model_stop_pct,1)+'%</b> — разница <b>'+f(ex.overshoot_pp,1)+' п.п.</b> уже учтена как поправка.';}
 setInterval(()=>{try{if(hypTab==='help')faqLive();}catch{}},3000);document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#hypTabs .pill[data-t="help"]'))setTimeout(()=>{try{faqLive();}catch{}},0);});
 
-// ---- Арена → Объёмы (в стиле hood Analytics): объём, сделки, запуски four.meme / flap из блокчейна (сборщик gmgn-net) ----
-(function(){let ND=null,pf='all',per=24,met='v',busy=false,hov=-1,geo=null;const NAMES={fm:'four.meme',flap:'flap'};
+// ---- Арена → Объёмы: копия страницы «Аналитика» hood (hoodandarrow.com) — цифры с разделителями, панель со столбцами SVG ----
+(function(){let ND=null,pf='all',per=24,met='v',busy=false,hov=null;const NAMES={fm:'four.meme',flap:'flap'};const MON=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
  try{pf=localStorage.getItem('netPf')||'all';const p=localStorage.getItem('netPer2');per=p==null?24:+p;met=localStorage.getItem('netMet')||'v';}catch{}
  const on=()=>{const v=$('#v-net');return v&&v.classList.contains('on');};
- const k$=v=>'$'+(v>=1e6?f(v/1e6,v>=1e7?1:2)+'M':v>=1e3?f(v/1e3,v>=1e5?0:1)+'k':f(v,v<10?2:0));
- const kn=v=>v>=1e6?f(v/1e6,1)+'M':v>=1e4?f(v/1e3,1)+'k':f(v,0);
+ const K=v=>v>=1e9?'$'+(v/1e9).toFixed(2).replace('.',',')+'B':v>=1e6?'$'+(v/1e6).toFixed(v>=1e7?1:2).replace('.',',')+'M':v>=1e3?'$'+(v/1e3).toFixed(v>=1e5?0:1).replace('.',',')+'k':'$'+(v||0).toFixed(2).replace('.',',');
+ const N=v=>v>=1e6?(v/1e6).toFixed(1).replace('.',',')+'M':v>=1e4?(v/1e3).toFixed(1).replace('.',',')+'k':f(v,0);
  async function load(){if(busy||window.DATA_URL)return;busy=true;try{const r=await fetch('/api/net',{cache:'no-store'});ND=r.ok?await r.json():null;draw();}catch{}busy=false;}
- const sers=()=>pf==='all'?['fm','flap']:[pf];
- const pick=(x,m)=>!x?0:m==='t'?x.b+x.s:x[m];
- // почасово для 24ч, по дням для недели/месяца/всего
- function rows(){if(!ND)return{R:[],step:3600};const hs=ND.hours;const step=per===24?3600:86400;const tz=-new Date().getTimezoneOffset()*60;
-  const key=h=>step===3600?h:Math.floor((h+tz)/86400)*86400-tz;const agg=new Map();
-  for(const [h,fm,fl] of hs){const k=key(h);const A=agg.get(k)||{fm:{c:0,b:0,s:0,v:0},flap:{c:0,b:0,s:0,v:0}};for(const [s,x] of [['fm',fm],['flap',fl]])for(const q of ['c','b','s','v'])A[s][q]+=x[q]||0;agg.set(k,A);}
-  const nowK=key(Math.floor(Date.now()/3600e3)*3600);let n=per===24?24:per===168?7:per===720?30:Math.max(7,Math.ceil((nowK-(hs.length?key(hs[0][0]):nowK))/86400)+1);
-  if(per===0)n=Math.max(n,60);const R=[];for(let i=n-1;i>=0;i--){const k=nowK-i*step;R.push({k,d:agg.get(k)||null});}return{R,step};}
- function draw(){if(!on())return;const {R,step}=rows();const S=sers();
-  const tot=(r,m)=>r.d?S.reduce((a,s)=>a+pick(r.d[s],m),0):0;const sum=m=>R.reduce((a,r)=>a+tot(r,m),0);
-  const V=sum('v'),Tt=sum('t'),C=sum('c'),B=R.reduce((a,r)=>a+(r.d?S.reduce((q,s)=>q+r.d[s].b,0):0),0);
-  const flc=R.reduce((a,r)=>a+(r.d?r.d.flap.c:0),0),fmc=R.reduce((a,r)=>a+(r.d?r.d.fm.c:0),0);
-  const st=(n,l,x)=>'<div class="nst"><div class="nstn">'+n+'</div><div class="nstl">'+l+(x?'<span> · '+x+'</span>':'')+'</div></div>';
-  $('#netKpi').innerHTML=st(k$(V),'Объём')+st(kn(Tt),'Сделки',Tt?f(B/Tt*100,0)+'% покупок':'')+st(kn(C),'Запуски',pf==='all'&&C?kn(flc)+' flap · '+kn(fmc)+' four.meme':'')+st(Tt?k$(V/Tt):'—','Средняя сделка');
-  const lbl=per===24?'24 часа':per===168?'7 дней':per===720?'30 дней':R.length+' дней';
-  $('#netBig').textContent=met==='v'?k$(V):kn(met==='t'?Tt:C);$('#netSub').textContent=(met==='v'?'Объём':met==='t'?'Сделки':'Запуски')+', '+lbl+(pf==='all'?'':' · '+NAMES[pf]);
-  document.querySelectorAll('#netMet .pill').forEach(x=>x.classList.toggle('on',x.dataset.m===met));
-  const cv=$('#netCv'),W=cv.clientWidth,H=440,dpr=devicePixelRatio||1;if(!W)return;cv.width=W*dpr;cv.height=H*dpr;cv.style.height=H+'px';const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);
-  const P={l:0,r:96,t:18,b:40},PW=W-P.l-P.r,PH=H-P.t-P.b,n=R.length,slot=PW/n,bw=Math.max(4,Math.min(18,slot*.62));
-  const vals=R.map(r=>tot(r,met));const mx=Math.max(...vals,met==='v'?10:1);const Y=v=>P.t+PH-(v/mx)*PH;
-  c.font='500 15px Inter,sans-serif';c.textBaseline='middle';c.textAlign='left';
-  for(let i=1;i<=4;i++){const v=mx*i/4,y=Y(v);c.strokeStyle='#ffffff10';c.lineWidth=1;c.beginPath();c.moveTo(P.l,y+.5);c.lineTo(P.l+PW,y+.5);c.stroke();c.fillStyle='#8f938a';c.fillText(met==='v'?k$(v):kn(v),W-P.r+16,y);}
-  const base=P.t+PH;
-  R.forEach((r,i)=>{const cx=P.l+slot*i+slot/2,v=vals[i],last=i===n-1,hot=i===hov;
-   if(!v){c.fillStyle=last?'#c8f23c':(hot?'#6a6e66':'#3a3d38');c.beginPath();c.roundRect(cx-bw*.55,base-3,bw*1.1,4,2);c.fill();return;}
-   const y=Math.min(Y(v),base-6),g=c.createLinearGradient(0,y,0,base);
-   if(last){g.addColorStop(0,'#d9ff5c');g.addColorStop(1,'#8fb82a');}else{g.addColorStop(0,hot?'#ffffff':'#f1f2ee');g.addColorStop(1,hot?'#b9bbb5':'#6e706b');}
-   c.fillStyle=g;c.beginPath();c.roundRect(cx-bw/2,y,bw,base-y,bw/2);c.fill();});
-  c.fillStyle='#8f938a';c.font='500 15px Inter,sans-serif';c.textBaseline='alphabetic';
-  const fmtX=k=>{const d=new Date(k*1000);return step===3600?String(d.getHours()).padStart(2,'0')+':00':d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'}).replace('.','');};
-  const idx=n<=3?[...Array(n).keys()]:[0,Math.floor((n-1)/2),n-1];idx.forEach((i,j)=>{c.textAlign=j===0?'left':j===idx.length-1?'right':'center';const cx=P.l+slot*i+slot/2;c.fillText(fmtX(R[i].k),j===0?cx-bw/2:j===idx.length-1?cx+bw/2:cx,H-8);});
-  geo={P,slot,R,step,S};
+ const S=()=>pf==='all'?['fm','flap']:[pf];
+ const pk=(x,m)=>!x?0:m==='t'?x.b+x.s:x[m];
+ function data(){const H=ND?ND.hours:[];const now=Date.now(),hourly=per===24,nb=hourly?24:per===168?56:60;
+  const d0=new Date(now);d0.setMinutes(0,0,0);if(!hourly)d0.setHours(0);const step=hourly?3600e3:864e5,t0=d0.getTime()-(nb-1)*step;
+  const bins=Array.from({length:nb},(_,i)=>({from:t0+i*step,to:t0+(i+1)*step,v:0,t:0,c:0,b:0,has:false}));
+  const win=per>0?now-per*3600e3:0,prevFrom=per>0?now-2*per*3600e3:0;const tot={v:0,t:0,c:0,b:0,fl:0,fm:0},prev={v:0,t:0,c:0,has:false};let first=null;
+  for(const [h,fm,fl] of H){const ts=h*1000;if(first==null)first=ts;const X={fm,flap:fl};let v=0,t=0,c=0,b=0;for(const s of S()){v+=pk(X[s],'v');t+=pk(X[s],'t');c+=pk(X[s],'c');b+=X[s].b||0;}
+   const i=Math.floor((ts-t0)/step);if(i>=0&&i<nb){const B=bins[i];B.v+=v;B.t+=t;B.c+=c;B.has=true;}
+   if(ts+3600e3>win){tot.v+=v;tot.t+=t;tot.c+=c;tot.b+=b;tot.fl+=fl.c||0;tot.fm+=fm.c||0;}else if(per>0&&ts>=prevFrom){prev.v+=v;prev.t+=t;prev.c+=c;prev.has=true;}}
+  return {bins,tot,prev:per>0&&first!=null&&first<=win-per*3600e3+3600e3?prev:null,hourly,nb};}
+ const delta=(now,was)=>{if(was==null)return '';if(was===0)return now>0?'<span class="ana-delta up">new</span>':'';const r=(now-was)/was*100;return isFinite(r)?'<span class="ana-delta '+(Math.abs(r)<.5?'flat':r>0?'up':'down')+'">'+(r>0?'+':'')+r.toFixed(1)+'%</span>':'';};
+ function svg(bins,key,fmt){const vals=bins.map(b=>b[key]),s=Math.max(...vals,0),l=1e3,u=vals.length,d=(l-70)/u,gap=Math.max(3,Math.min(10,d*.28)),w=d-gap,g=v=>10+(1-(s>0?v/s:0))*264;
+  let o='<svg class="ana-svg" viewBox="0 0 '+l+' 300" preserveAspectRatio="none"><defs><linearGradient id="anaBarGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6e6e3"/><stop offset="1" stop-color="#7c7c79"/></linearGradient><linearGradient id="anaBarHl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c9c9c5"/></linearGradient><linearGradient id="anaBarNow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8f542"/><stop offset="1" stop-color="#a6d92e"/></linearGradient></defs>';
+  for(const e of [.25,.5,.75,1])o+='<g><line x1="0" x2="'+(l-76)+'" y1="'+g(s*e)+'" y2="'+g(s*e)+'" class="ana-grid-line"/><text x="934" y="'+(g(s*e)+4)+'" class="ana-grid-lbl">'+fmt(s*e,true)+'</text></g>';
+  vals.forEach((v,t)=>{const hgt=s>0?Math.max(4,v/s*264):4,x=t*(w+gap),c='ana-svg-bar'+(t===u-1?' now':'')+(hov===t?' hl':hov===null?'':' dim');o+='<g data-i="'+t+'"><rect x="'+x+'" y="10" width="'+w+'" height="264" fill="transparent"/><rect x="'+x+'" y="'+(274-hgt)+'" width="'+w+'" height="'+hgt+'" rx="'+Math.min(6,w/2)+'" class="'+c+'"/></g>';});
+  const lab=ms=>{const t=new Date(ms);return per===24?String(t.getHours()).padStart(2,'0')+':00':t.getDate()+' '+MON[t.getMonth()];};
+  [0,Math.floor((u-1)/2),u-1].forEach(i=>{const x=i===0?0:i===u-1?(u-1)*(w+gap)+w:i*(w+gap)+w/2;o+='<text x="'+x+'" y="294" class="ana-axis-lbl" text-anchor="'+(i===0?'start':i===u-1?'end':'middle')+'">'+lab(bins[i].from)+'</text>';});
+  return o+'</svg>';}
+ function draw(){if(!on())return;const {bins,tot,prev,hourly,nb}=data();
+  const st=(n,l)=>'<div class="ana-stat"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>';
+  $('#netKpi').innerHTML=st(K(tot.v),'Объём '+delta(tot.v,prev&&prev.v))+st(N(tot.t),'Сделки '+delta(tot.t,prev&&prev.t))+st(N(tot.c),'Запуски '+(pf==='all'?'<span class="dim">· '+N(tot.fl)+' flap · '+N(tot.fm)+' four.meme</span>':delta(tot.c,prev&&prev.c)))+st(tot.t?K(tot.v/tot.t):'$0','Средняя сделка');
+  const key=met,fmt=key==='v'?(v,ax)=>ax?K(v).replace(/,00(?=\$|$)/,''):K(v):(v)=>N(Math.round(v)),name={v:'Объём',t:'Сделки',c:'Запуски'}[key];
+  const sumC=bins.reduce((a,b)=>a+b[key],0),H=hov!==null&&bins[hov]?bins[hov]:null;
+  $('#netBig').textContent=H?fmt(H[key]):fmt(sumC);
+  $('#netSub').textContent=H?(hourly?(()=>{const d=new Date(H.from),d2=new Date(H.to);return d.getDate()+' '+MON[d.getMonth()]+', '+String(d.getHours()).padStart(2,'0')+':00–'+String(d2.getHours()).padStart(2,'0')+':00'+(H.has?'':' · сбор ещё не шёл');})():(()=>{const d=new Date(H.from);return d.getDate()+' '+MON[d.getMonth()]+(H.has?'':' · сбор ещё не шёл');})()):name+', '+(hourly?'24 часа':nb+' дней')+(pf==='all'?'':' · '+NAMES[pf]);
+  $('#netSvg').innerHTML=svg(bins,key,fmt);
+  document.querySelectorAll('#netMet .seg-btn').forEach(x=>x.classList.toggle('on',x.dataset.m===met));
   const at=ND&&ND.started?new Date(ND.started*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'';
-  $('#netNote').innerHTML=ND?'Данные из блокчейна BSC (контракты four.meme и flap), обновление каждые 20 секунд. Сбор идёт с '+at+' — раньше этого момента данных нет. Объём — торги на кривой площадки до перехода на PancakeSwap; монеты four.meme в других валютах (не BNB и не долларах) в объём не входят. BNB = $'+f(ND.bnb||0,0)+'.':'Сборщик объёмов ещё не отдал данные — обнови страницу через минуту.';}
- const cv=$('#netCv');
- if(cv){cv.addEventListener('mousemove',e=>{if(!geo)return;const r=cv.getBoundingClientRect(),i=Math.floor((e.clientX-r.left-geo.P.l)/geo.slot),row=geo.R[i],tip=$('#tip');if(!row){hov=-1;tip.style.display='none';draw();return;}
-  if(i!==hov){hov=i;draw();}const d=new Date(row.k*1000),d2=new Date((row.k+geo.step)*1000);
-  let h='<b>'+(geo.step===3600?d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+', '+String(d.getHours()).padStart(2,'0')+':00–'+String(d2.getHours()).padStart(2,'0')+':00':d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'}))+'</b>';
-  if(!row.d)h+='<br><span style="color:#8f938a">нет данных — сбор ещё не шёл</span>';else for(const s of geo.S){const x=row.d[s];h+='<br>'+NAMES[s]+': <b>'+k$(x.v)+'</b> · '+kn(x.b+x.s)+' сделок · '+kn(x.c)+' запусков';}
-  tip.classList.remove('tipcard');tip.innerHTML=h;tip.style.display='block';tip.style.left=Math.min(e.clientX+14,innerWidth-tip.offsetWidth-12)+'px';tip.style.top=(e.clientY+16)+'px';});
-  cv.addEventListener('mouseleave',()=>{hov=-1;$('#tip').style.display='none';draw();});}
- const grp=(sel,attr,get,set)=>document.querySelectorAll(sel+' .pill').forEach(b=>{b.classList.toggle('on',b.dataset[attr]===String(get()));b.onclick=()=>{set(b.dataset[attr]);document.querySelectorAll(sel+' .pill').forEach(x=>x.classList.toggle('on',x===b));draw();};});
+  $('#netNote').textContent=ND?'Данные из блокчейна BSC (контракты four.meme и flap), обновление каждые 20 секунд. Сбор идёт с '+at+', раньше данных нет. Объём — торги на кривой площадки до перехода на PancakeSwap. BNB = $'+f(ND.bnb||0,0)+'.':'Читаю блокчейн…';}
+ const box=$('#netSvg');if(box){box.addEventListener('mouseover',e=>{const g=e.target.closest&&e.target.closest('g[data-i]');if(!g)return;const i=+g.dataset.i;if(i!==hov){hov=i;draw();}});box.addEventListener('mouseleave',()=>{hov=null;draw();});}
+ const grp=(sel,attr,get,set)=>document.querySelectorAll(sel+' .seg-btn').forEach(b=>{b.classList.toggle('on',b.dataset[attr]===String(get()));b.onclick=()=>{set(b.dataset[attr]);hov=null;document.querySelectorAll(sel+' .seg-btn').forEach(x=>x.classList.toggle('on',x===b));draw();};});
  grp('#netPf','p',()=>pf,v=>{pf=v;try{localStorage.setItem('netPf',v);}catch{}});
  grp('#netPer','h',()=>per,v=>{per=+v;try{localStorage.setItem('netPer2',v);}catch{}});
  grp('#netMet','m',()=>met,v=>{met=v;try{localStorage.setItem('netMet',v);}catch{}});
