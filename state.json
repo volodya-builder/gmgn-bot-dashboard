@@ -1,39 +1,6 @@
 {
- "balance_usd": 852.0708381313269,
- "positions": {
-  "0x1dc5aa2d8bc7e4382b9b2385e6270b3a21db7777": {
-   "symbol": "GenAI",
-   "name": "AI原生一代",
-   "address": "0x1dc5aa2d8bc7e4382b9b2385e6270b3a21db7777",
-   "opened": 1790140577,
-   "entry": 0.00001592450246,
-   "size_usd": 20,
-   "peak": 0.000015460682,
-   "trough": 0.000015460682,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "rank",
-    "launchpad": "flap",
-    "age_min": "9.0",
-    "liq": "8581",
-    "mcap": "15654",
-    "holders": 114,
-    "smart": 5,
-    "renowned": 6,
-    "bundler": "0.009",
-    "snipers": 8,
-    "top10": "0.229",
-    "buys": 212,
-    "sells": 121,
-    "list_price": "0.0000156538",
-    "hour_utc": 5
-   },
-   "last": 0.000015460682,
-   "last_t": 1790140578
-  }
- },
+ "balance_usd": 866.149178589695,
+ "positions": {},
  "seen": {
   "0xb18870450cead02867b2f7515522a84411887777": 1790084213,
   "0x08aa17a10afd4d8a3b2de3afec9f415b33407777": 1790085658,
@@ -98,9 +65,9 @@
   "0x6eedb3bb7820801cc126e6ef5372568c62107777": 1790140535,
   "0x1dc5aa2d8bc7e4382b9b2385e6270b3a21db7777": 1790140577
  },
- "closed": 61,
+ "closed": 62,
  "wins": 18,
- "pnl_usd": -109.32916186867584,
+ "pnl_usd": -115.25082141030776,
  "opened_at": [
   1790138756,
   1790139024,
@@ -111,9 +78,9 @@
  ],
  "day": {
   "key": "2026-09-23",
-  "pnl": -49.190244597969134
+  "pnl": -55.11190413960106
  },
- "stop_streak": 3,
+ "stop_streak": 4,
  "last_hyp_report": "2026-09-22",
  "paused_until": 1790120967
 }
