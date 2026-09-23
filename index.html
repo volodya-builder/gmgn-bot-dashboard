@@ -154,7 +154,9 @@ th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--text)}
 .cwhat{margin-bottom:18px}.crow{display:grid;grid-template-columns:minmax(160px,1fr) auto auto auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #1c1c1c;font-size:14px}
 .crow .was{color:var(--muted);text-decoration:line-through;text-decoration-color:#8f938a88}.crow .arr{color:var(--muted)}
 .hdgrid .crow{grid-template-columns:1fr auto}.hdgrid .crow .was{text-decoration:none;font-size:12.5px}
-.cbtns{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.btn.danger{background:#e0b85a;color:#1a1204;border-color:transparent}
+.cbtns{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.lh{border-color:#2b4757}.lhtop{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:flex-start}.lhnum{font-weight:600;font-size:44px;line-height:1;letter-spacing:-1px}.lhnum span{font-size:15px;color:var(--muted);font-weight:400;letter-spacing:0;margin-left:10px}.lhname{margin-top:10px;font-size:15px;max-width:760px;line-height:1.45}.lhstat{margin-top:10px;color:var(--muted);font-size:13.5px}.lhpick{margin-top:20px;padding-top:18px;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:12px}.lhrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.lhin{background:#0f0f0f;border:1px solid var(--border2);color:var(--text);font:16px var(--font-ui);padding:9px 12px;border-radius:10px;outline:none;width:120px}.lhprev{font-size:13px;color:var(--muted);min-height:18px}.hnum{font-weight:600;color:var(--accent);white-space:nowrap}
+#hypBadge{display:none}.btn.danger{background:#e0b85a;color:#1a1204;border-color:transparent}
 .rel{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;border:1px solid var(--border2);white-space:nowrap}
 .rel.solid{color:var(--good);border-color:#2b5a3a;background:#4caf6d14}.rel.maybe{color:#e0b85a;border-color:#5a4a2b;background:#e0b85a12}.rel.few{color:var(--muted)}
 .hleg{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:13px}.hleg .sw{margin-right:6px}
@@ -297,7 +299,7 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
   <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill" data-view="trending">В тренде</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="trades">Сделки</button><button class="pill" data-view="rules">Правила</button><button class="pill" data-view="log">Журнал</button></nav>
-  <div class="badges"><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span><a id="modeSwitch" class="badge" style="display:none"></a></div>
+  <div class="badges"><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span><a id="modeSwitch" class="badge" style="display:none"></a><span id="hypBadge" class="badge"></span></div>
 </header>
 <main>
 <section class="view on" id="v-overview">
@@ -318,6 +320,7 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
   <div class="titlebar"><h1 class="h1">Гипотезы</h1><div class="pills small" id="hypPeriod"><button class="pill" data-w="24h">24 часа</button><button class="pill on" data-w="7d">7 дней</button><button class="pill" data-w="30d">30 дней</button><button class="pill" data-w="all">Всё время</button></div></div>
   <div class="htabs"><div class="pills" id="hypTabs"><button class="pill on" data-t="sum">Итог</button><button class="pill" data-t="all">Все варианты<span class="cnt" id="hcAll"></span></button><button class="pill" data-t="watch">Под наблюдением<span class="cnt" id="hcWatch"></span></button><button class="pill" data-t="race">Гонка гипотез</button><button class="pill" data-t="lab">Исследование</button><button class="pill" data-t="help">Как читать</button></div></div>
   <div class="hpane on" data-p="sum">
+   <div class="card lh" id="liveHyp" style="display:none"></div>
    <div class="card hverd" id="hypVerdict"></div>
    <div class="card champ" id="champ"></div>
    <div class="card"><div class="head"><div><div class="big" style="font-size:22px">Лучшая против текущих правил</div><div class="sub" id="hypSub2">Накопленная прибыль, если бы бот торговал по каждому из вариантов</div></div><div class="hleg" id="hypLegend2"></div></div><canvas id="hypChart2"></canvas></div>
@@ -620,8 +623,9 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.13';
+const APP_VERSION='2.14';
 const CHANGELOG=[
+ ['2.14','23.09.2026',['У каждой гипотезы постоянный номер (#1, #2, …) — в таблице, в карточке лучшей; номер не меняется между пересчётами','Во вкладке «Гипотезы» карточка «Живой бот торгует по гипотезе #N»: выбрать гипотезу для реальных денег одной кнопкой (лучшая за 24 часа / 7 / 30 дней) или по номеру; кнопка «Торговать живым ботом по #N» у каждой гипотезы','В шапке — номер гипотезы, по которой торгует живой бот; сделки живого бота помечаются этим номером']],
  ['2.13','23.09.2026',['«Гонка гипотез» перенесена на вкладку «Гипотезы» — отдельный раздел «Гонка гипотез», период общий с вкладкой','«Арена» — только воронка отбора в прямом эфире: каждый скан (раз в 20 с) все монеты заново непрерывным потоком идут через ворота фильтров, отсеянные отскакивают с подписью причины, ворота вспыхивают, счётчик эфира']],
  ['2.12','23.09.2026',['Вкладка «Гипотезы» разбита на разделы: Итог, Все варианты, Под наблюдением, Исследование, Как читать','Наверху — один главный вывод простыми словами и полоски «сколько данных накоплено»','Лучшая гипотеза: что поменять (было → стало), 4 ключевые цифры и чек-лист «можно ли ей верить» с зелёными/красными отметками; подробные цифры спрятаны под «Подробнее»','Таблица вариантов короче: до 3 изменений в строке, колонка «Проверки» точками, кнопка «Подробнее» вместо клика по чипам']],
  ['2.11','23.09.2026',['Бот записывает цены свежих монет каждые 5 секунд (до 10 монет одновременно, первый час жизни) — основа для честной симуляции; счётчик в блоке «Данные» на вкладке «Гипотезы»']],
@@ -713,7 +717,7 @@ function setHypTab(t){hypTab=t;try{localStorage.setItem('hypTab',t);}catch{}docu
 function renderHyp(force){const H=D.hypotheses;
  document.querySelectorAll('#v-hyp .hpane').forEach(p=>p.classList.toggle('on',p.dataset.p===hypTab));document.querySelectorAll('#hypTabs .pill').forEach(x=>x.classList.toggle('on',x.dataset.t===hypTab));
  if(!H||!H.list||!H.list[0]||!H.list[0].win||!H.engine){$('#hypVerdict').innerHTML='<div class="vlbl">Главный вывод</div><div class="vt">Гипотезы ещё не посчитаны</div><div class="vx">'+(H&&H.list?'Движок проверки обновлён — первый пересчёт через несколько минут после перезапуска бота.':'Бот собирает данные. Первые результаты появятся примерно через 2 часа после запуска.')+'</div>';['#champ','#hypTable','#hypReports','#hypWatch','#hypReal','#hypUseless','#minNote'].forEach(s=>{const e=$(s);if(e)e.innerHTML='';});return;}
- const key=H.generated_at+'|'+hypW+'|'+hypF+'|'+hypTab+'|'+[...(hypSel||[])].join()+'|'+[...hypOpen].join()+'|'+applyArm+'|'+watchArm+'|'+(D.editable||'');if(key===hypKey&&!force)return;hypKey=key;
+ const key=H.generated_at+'|'+hypW+'|'+hypF+'|'+hypTab+'|'+[...(hypSel||[])].join()+'|'+[...hypOpen].join()+'|'+applyArm+'|'+watchArm+'|'+(D.editable||'')+'|'+(D.liveHyp?.num||'')+'|'+lhArm;if(key===hypKey&&!force)return;hypKey=key;
  const list=H.list,cur=list.find(r=>r.id==='current');const ch=H.champions?.[hypW];const best=ch&&list.find(r=>r.id===ch.id);const nz=H.noise?.[hypW]||null,wf=H.walkforward?.[hypW]||null,d=H.data;
  if(!hypSel){hypSel=new Set(['current']);if(best)hypSel.add(best.id);}
  const W=H.watch||[];const nAll=list.filter(r=>r.id!=='current'&&r.win[hypW].n>0).length;
@@ -733,12 +737,12 @@ function renderHyp(force){const H=D.hypotheses;
   '<div class="rdy"><div class="vlbl">Сколько данных накоплено</div>'+bar('Монет с историей цены',d.with_paths,d.thresholds.tokens,f(d.with_paths,0)+' / '+d.thresholds.tokens)+bar('Дней наблюдений',d.days,d.thresholds.days,f(d.days,1)+' / '+d.thresholds.days)+(d.with_ticks!=null?bar('Монет с ценами каждые 5 секунд',d.with_ticks,300,f(d.with_ticks,0)+' / 300'):'')+bar('Реальных сделок по правилам '+esc(d.real_rules||''),d.real_trades,d.thresholds.trades,f(d.real_trades,0)+' / '+d.thresholds.trades)+'<div class="note">Пока полоски не заполнены, выводы предварительные.</div></div>';
  const canApply=D.editable&&!window.DATA_URL;
  if(best){const m=bm,cm=cur?.win[hypW];const solid=m.rel==='solid';const dlt=cm&&cm.n?m.exp-cm.exp:null;
-  $('#champ').innerHTML='<div class="chead"><div class="big" style="font-size:22px">Лучшая гипотеза '+WLBL[hypW]+'</div>'+relTag(m.rel)+'</div><div class="sub" style="margin-top:4px">Выбрана по осторожной оценке (среднее минус разброс), а не по самой большой прибыли.</div>'+
+  $('#champ').innerHTML='<div class="chead"><div class="big" style="font-size:22px">Лучшая гипотеза '+WLBL[hypW]+(best.num?' <span class="hnum">#'+best.num+'</span>':'')+'</div>'+relTag(m.rel)+'</div><div class="sub" style="margin-top:4px">Выбрана по осторожной оценке (среднее минус разброс), а не по самой большой прибыли.</div>'+
    '<div class="lead"><div><div class="h4">Что поменять в правилах</div>'+(best.diff.length?best.diff.map(dd=>'<div class="crow"><span>'+esc(dd.label||dd.text)+'</span><span class="was">'+esc(dd.was)+'</span><span class="arr">→</span><b>'+esc(dd.val||'')+'</b></div>').join(''):'<div class="note">ничего — текущие правила и есть лучший вариант</div>')+
    '<div class="lcmp">'+(dlt==null?'По текущим правилам '+WLBL[hypW]+' сделок в симуляции нет — сравнивать не с чем.':Math.abs(dlt)<0.01?'Результат <b>такой же, как у текущих правил</b> ('+mny(cm.exp)+' на сделку) — на этих данных изменение ничего не меняет.':'Текущие правила: '+mny(cm.exp)+' на сделку на '+cm.n+' '+sdl(cm.n)+'. Гипотеза '+(dlt>0?'<b class="good">лучше на '+mny(dlt).replace('+','')+'</b>':'<b class="bad">хуже на '+mny(dlt).replace('−','')+'</b>')+' на каждой сделке.')+'</div></div>'+
    '<div><div class="h4">Результат в симуляции</div>'+kpis(m)+'</div></div>'+
    '<div class="h4" style="margin-top:22px">Можно ли ей верить <span>пройдено '+pass+' из '+C.length+'</span></div>'+ckList(C)+
-   '<div class="cbtns"><button class="btn" data-hyptrades="'+best.id+'" data-w="'+hypW+'" data-name="'+esc(best.name)+'">Сделки на графиках</button>'+(canApply&&best.diff.length?'<button class="btn '+(applyArm===best.id?'danger':'primary')+'" id="applyBtn"'+(solid?'':' disabled')+'>'+(applyArm===best.id?'Точно применить? Нажми ещё раз':'Применить к боту')+'</button><button class="btn" id="watchBtn">'+(watchArm===best.id?'Точно наблюдать? Нажми ещё раз':'Взять под наблюдение')+'</button>':'')+'</div>'+
+   '<div class="cbtns">'+liveSelBtn(best)+'<button class="btn" data-hyptrades="'+best.id+'" data-w="'+hypW+'" data-name="'+esc(best.name)+'">Сделки на графиках</button>'+(canApply&&best.diff.length?'<button class="btn '+(applyArm===best.id?'danger':'primary')+'" id="applyBtn"'+(solid?'':' disabled')+'>'+(applyArm===best.id?'Точно применить? Нажми ещё раз':'Применить к боту')+'</button><button class="btn" id="watchBtn">'+(watchArm===best.id?'Точно наблюдать? Нажми ещё раз':'Взять под наблюдение')+'</button>':'')+'</div>'+
    '<div class="note" id="applyNote" style="margin-top:10px">'+(solid?'Гипотеза прошла все проверки.':best.diff.length&&canApply?'Применить можно только гипотезу с меткой «надёжно» — когда все проверки выше станут зелёными.':'')+'</div>'+
    '<details class="more"><summary>Подробные цифры и проверка на подгонку</summary><div style="margin-top:12px">'+levels(m,m.holdout,nz,'4. Последние 30% данных')+overfit(m,wf)+'</div></details>';
   const ab=$('#applyBtn');if(ab)ab.onclick=()=>applyHyp(best,{entry:best.entry,exit:best.exit});const wb=$('#watchBtn');if(wb)wb.onclick=()=>watchHyp(best);}
@@ -751,11 +755,11 @@ function renderHyp(force){const H=D.hypotheses;
  $('#hypTable').innerHTML='<tr><th></th><th>#</th><th>Что изменено</th><th>Надёжность</th><th class="num">Сделок</th><th class="num">На сделку</th><th class="num" title="среднее минус разброс — осторожная оценка">Осторожно</th><th>Проверки</th><th></th></tr>'+
   (rows.length>1||hypF==='all'?'':'<tr><td colspan="9" class="empty">Таких вариантов пока нет</td></tr>')+
   rows.map((r,i)=>{const m=r.win[hypW],si=selArr.indexOf(r.id),open=hypOpen.has(r.id);const Cr=hypChecks(m,nz);
-   return '<tr class="hyp-row'+(si>=0?' sel':'')+(r.id==='current'?' currow':'')+'" data-id="'+r.id+'"><td>'+(si>=0?'<span class="sw" style="background:'+HCOL[si%HCOL.length]+'"></span>':'<span class="sw empty"></span>')+'</td><td class="note">'+(r.id==='current'?'—':i)+'</td><td><div class="hchips flat">'+chipsShort(r)+'</div></td><td>'+relTag(m.rel)+'</td><td class="num">'+m.n+'</td><td class="num '+cls(m.exp)+'">'+(m.n?mny(m.exp):'—')+'</td><td class="num '+cls(m.expLB)+'">'+(m.n?mny(m.expLB):'—')+'</td><td>'+(m.n?ckDots(Cr):'—')+'</td><td class="num"><button class="mini wide hx" data-open="'+r.id+'">'+(open?'Свернуть':'Подробнее')+'</button></td></tr>'+
+   return '<tr class="hyp-row'+(si>=0?' sel':'')+(r.id==='current'?' currow':'')+'" data-id="'+r.id+'"><td>'+(si>=0?'<span class="sw" style="background:'+HCOL[si%HCOL.length]+'"></span>':'<span class="sw empty"></span>')+'</td><td>'+(r.id==='current'?'<span class="note">сейчас</span>':r.num?'<span class="hnum">#'+r.num+'</span>':'<span class="note">—</span>')+'</td><td><div class="hchips flat">'+chipsShort(r)+'</div></td><td>'+relTag(m.rel)+'</td><td class="num">'+m.n+'</td><td class="num '+cls(m.exp)+'">'+(m.n?mny(m.exp):'—')+'</td><td class="num '+cls(m.expLB)+'">'+(m.n?mny(m.expLB):'—')+'</td><td>'+(m.n?ckDots(Cr):'—')+'</td><td class="num"><button class="mini wide hx" data-open="'+r.id+'">'+(open?'Свернуть':'Подробнее')+'</button></td></tr>'+
     (open?'<tr class="hdet"><td colspan="9">'+detail(r,nz,wf)+'</td></tr>':'');}).join('');
  $('#hypTable').querySelectorAll('.hyp-row').forEach(tr=>tr.onclick=e=>{const id=tr.dataset.id;if(e.target.closest('[data-open]')){hypOpen.has(id)?hypOpen.delete(id):hypOpen.add(id);}else{if(hypSel.has(id))hypSel.delete(id);else{if(hypSel.size>=5)hypSel.delete([...hypSel][hypSel.size-1]);hypSel.add(id);}}renderHyp(true);});
  // ===== остальное =====
- renderWatch(H);renderReality(H);renderUseless(H);renderReports();
+ renderLiveHyp(H);renderWatch(H);renderReality(H);renderUseless(H);renderReports();
  if(hypTab==='sum'){drawHyp(list,'#hypChart2','#hypLegend2',best?['current',best.id]:['current']);const same=best&&cur&&cur.win[hypW].n&&Math.abs(best.win[hypW].pnl-cur.win[hypW].pnl)<0.01;$('#hypSub2').textContent=same?'Линии совпадают: у лучшей гипотезы и текущих правил одни и те же сделки':'Накопленная прибыль, если бы бот торговал по каждому из вариантов';}
  if(hypTab==='all')drawHyp(list,'#hypChart','#hypLegend',[...hypSel]);
  if(hypTab==='lab')drawMinutes(H.entry_minute||[]);
@@ -763,7 +767,7 @@ function renderHyp(force){const H=D.hypotheses;
 function detail(r,nz,wf,w=hypW){const ws=['24h','7d','30d','all'];const m=r.win[w];
  return '<div class="hdgrid"><div><div class="h4">Изменения относительно текущих правил</div>'+(r.diff.length?r.diff.map(d=>'<div class="crow full"><span>'+esc(d.label||d.text)+'</span><span class="was">'+esc(d.was)+'</span><span class="arr">→</span><b>'+esc(d.val||'')+'</b></div>').join(''):'<div class="note">это текущие правила</div>')+
  '<div class="h4" style="margin-top:18px">По периодам</div><table class="mini-t"><tr><th></th><th class="num">Сделок</th><th class="num">На сделку</th><th class="num">Осторожно</th><th></th></tr>'+ws.map(w=>{const x=r.win[w];return '<tr><td>'+WLBL[w].replace('за ','')+'</td><td class="num">'+x.n+'</td><td class="num '+cls(x.exp)+'">'+(x.n?mny(x.exp):'—')+'</td><td class="num '+cls(x.expLB)+'">'+(x.n?mny(x.expLB):'—')+'</td><td>'+relTag(x.rel)+'</td></tr>';}).join('')+'</table>'+
- '<div style="margin-top:16px"><button class="btn" data-hyptrades="'+r.id+'" data-w="'+w+'" data-name="'+esc(r.name)+'">Сделки на графиках</button></div></div>'+
+ '<div class="cbtns" style="margin-top:16px">'+liveSelBtn(r)+'<button class="btn" data-hyptrades="'+r.id+'" data-w="'+w+'" data-name="'+esc(r.name)+'">Сделки на графиках</button></div></div>'+
  '<div><div class="h4">Можно ли верить '+WLBL[w]+'</div>'+(m.n?ckList(hypChecks(m,nz)):'<div class="note">сделок нет</div>')+'<details class="more"><summary>Подробные цифры</summary><div style="margin-top:12px">'+levels(m,m.holdout,nz,'4. Последние 30% данных')+overfit(m,wf)+'</div></details></div></div>';}
 function renderWatch(H){const W=H.watch||[];const canApply=D.editable&&!window.DATA_URL;const nz=H.noise?.all||null;
  if(!W.length){$('#hypWatch').innerHTML='<div class="note">Под наблюдением пока ничего нет. Взять гипотезу под наблюдение можно кнопкой в карточке лучшей гипотезы на вкладке «Итог».</div>';return;}
@@ -1014,9 +1018,43 @@ document.querySelectorAll('#raceW .pill').forEach(b=>b.onclick=()=>{raceW=b.data
 document.querySelectorAll('nav .pill').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav .pill').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+b.dataset.view));document.body.classList.toggle('wide-trending',b.dataset.view==='trending');render();});
 document.querySelectorAll('#period .pill').forEach(b=>b.onclick=()=>{period=b.dataset.p;zoom=null;document.querySelectorAll('#period .pill').forEach(x=>x.classList.toggle('on',x===b));render();});
 document.querySelectorAll('#chartTabs .pill').forEach(b=>b.onclick=()=>{chart=b.dataset.c;zoom=null;hov=null;document.querySelectorAll('#chartTabs .pill').forEach(x=>x.classList.toggle('on',x===b));render();});
+
+// ---- выбор гипотезы для живого бота ----
+let lhArm=null,lhMsg='',lhPending=null;
+const getPwd=()=>{try{return localStorage.getItem('dash_pwd')||'';}catch{return '';}};
+function liveSelBtn(r){if(!D.hypSelect||window.DATA_URL||!r||!r.num)return '';const on=D.liveHyp&&D.liveHyp.num===r.num;
+ if(on)return '<span class="rel solid">живой бот торгует по #'+r.num+'</span>';
+ return '<button class="btn '+(lhArm===r.num?'danger':'primary')+'" data-livesel="'+r.num+'">'+(lhArm===r.num?'Точно? Реальные деньги пойдут по #'+r.num+' — нажми ещё раз':'Торговать живым ботом по #'+r.num)+'</button>';}
+function renderLiveHyp(H){const el=$('#liveHyp');if(!el)return;const L=D.liveHyp;const can=D.hypSelect&&!window.DATA_URL;
+ if(!D.hypSelect&&!L){el.style.display='none';return;}el.style.display='';
+ const list=H&&H.list||[];const cur=L?list.find(r=>r.id===L.id):null;const m=cur&&cur.win?cur.win[hypW]:null;
+ const champs=['24h','7d','30d'].map(w=>{const c=H&&H.champions&&H.champions[w];const r=c&&list.find(x=>x.id===c.id);return r&&r.num?{w,r}:null;}).filter(Boolean);
+ const seen=new Set();const uniq=champs.filter(({r})=>seen.has(r.num)?false:(seen.add(r.num),true));
+ let h='<div class="lhtop"><div><div class="clbl">Живой бот (реальные деньги) торгует по гипотезе</div>';
+ if(L){h+='<div class="lhnum" style="margin-top:8px">#'+L.num+'<span>выбрана '+dt(L.selected_at*1000)+(L.previous?' · до этого '+esc(L.previous):'')+'</span></div><div class="lhname">'+esc(L.name||'')+'</div>'+
+  '<div class="lhstat">'+(m&&m.n?'В симуляции '+WLBL[hypW]+': '+m.n+' сделок, '+mny(m.exp)+' на сделку, нижняя граница '+mny(m.expLB)+' '+relTag(m.rel):cur?'В симуляции '+WLBL[hypW]+' сделок нет — выбери период подлиннее.':'Сейчас её нет среди лучших по последнему пересчёту — правила бота от этого не меняются.')+'</div>';}
+ else h+='<div class="lhnum" style="margin-top:8px;font-size:26px">свои правила<span>'+esc(D.config&&D.config.rules_version||'')+'</span></div><div class="lhname">Гипотеза ещё не выбрана — выбери ниже по номеру или одной из кнопок.</div>';
+ h+='</div></div>';
+ if(can){h+='<div class="lhpick"><div class="clbl">Выбрать гипотезу</div>';
+  if(uniq.length)h+='<div class="lhrow">'+uniq.map(({w,r})=>{const on=L&&L.num===r.num;const ws=champs.filter(x=>x.r.num===r.num).map(x=>WLBL[x.w].replace('за ',''));return '<button class="btn '+(on?'':lhArm===r.num?'danger':'primary')+'" data-livesel="'+r.num+'"'+(on?' disabled':'')+'>'+(lhArm===r.num?'Точно #'+r.num+'? Нажми ещё раз':'Лучшая за '+ws.join(', ')+' · #'+r.num+(on?' (сейчас)':''))+'</button>';}).join('')+'</div>';
+  h+='<div class="lhrow"><input class="lhin" id="lhNum" type="number" min="1" placeholder="номер" inputmode="numeric"><button class="btn '+(lhArm==='in'?'danger':'')+'" id="lhGo">'+(lhArm==='in'?'Точно? Нажми ещё раз':'Торговать по этому номеру')+'</button>'+(D.editable==='password'?'<input class="pwd" id="lhPwd" type="password" placeholder="пароль панели" value="'+esc(getPwd())+'">':'')+'</div>';
+  h+='<div class="lhprev" id="lhPrev"></div><div class="note" id="lhNote">'+(lhMsg||'Номер есть у каждой гипотезы: в таблице «Все проверенные варианты» (колонка #) и в карточке лучшей. Кнопка «Торговать живым ботом» есть и в раскрытой строке таблицы. После выбора бот перезапускается за ~10 секунд; открытые сделки сохраняются и дальше закрываются по правилам выхода новой гипотезы. Размер сделки и лимиты риска не меняются.')+'</div></div>';}
+ el.innerHTML=h;
+ const inp=$('#lhNum');if(inp){if(lhArm==='in'&&lhPending)inp.value=lhPending;const prev=()=>{const n=+inp.value;const r=list.find(x=>x.num===n);$('#lhPrev').innerHTML=!inp.value?'':r?'<b>#'+n+'</b> — '+esc(r.name):'#'+n+' нет среди текущих лучших; если номер когда-то был в списке, бот всё равно найдёт её правила';};inp.oninput=()=>{if(lhArm==='in'){lhArm=null;}prev();};prev();}
+ const go=$('#lhGo');if(go)go.onclick=()=>{const n=+($('#lhNum').value||0);if(!(n>0)){lhMsg='Введи номер гипотезы.';renderHyp(true);return;}liveSelect(n,'in');};
+ const pw=$('#lhPwd');if(pw)pw.onchange=()=>{try{localStorage.setItem('dash_pwd',pw.value);}catch{}};}
+async function liveSelect(n,armKey){const key=armKey||n;if(lhArm!==key){lhArm=key;lhPending=n;lhMsg='';renderHyp(true);setTimeout(()=>{if(lhArm===key){lhArm=null;renderHyp(true);}},8000);return;}
+ lhArm=null;lhMsg='Переключаю…';const pwEl=$('#lhPwd');const pw=pwEl?pwEl.value:getPwd();renderHyp(true);
+ try{try{if(pw)localStorage.setItem('dash_pwd',pw);}catch{}
+  const r=await fetch('/api/live/select',{method:'POST',headers:{'Content-Type':'application/json','X-Password':pw},body:JSON.stringify({num:n})});const j=await r.json();if(!r.ok)throw new Error(j.error||('HTTP '+r.status));
+  D.liveHyp=j.live;lhMsg='<span class="good">Готово: живой бот торгует по гипотезе #'+j.live.num+'. Перезапуск ~10 секунд.</span>';}
+ catch(e){lhMsg='<span class="bad">Не получилось: '+esc(e.message)+'</span>';}
+ renderHyp(true);hypBadge();}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-livesel]');if(!b||b.disabled)return;e.stopPropagation();e.preventDefault();liveSelect(+b.dataset.livesel);},true);
+function hypBadge(){const b=$('#hypBadge');if(!b)return;const L=D&&D.liveHyp;if(!L||window.DATA_URL){b.style.display='none';return;}b.style.display='';b.innerHTML='живой бот: гипотеза <b>#'+L.num+'</b>';b.title=L.name||'';b.style.cursor='pointer';b.onclick=()=>{const t=document.querySelector('nav .pill[data-view="hyp"]');if(t)t.click();};}
 async function tick(){try{const d=await (await fetch(window.DATA_URL||'/api',{cache:'no-store'})).json();D=d;
  $('#mode').className='badge '+d.mode;$('#mode').innerHTML='<span class="dot"></span><b>'+(d.mode==='paper'?'симуляция':'live')+'</b> '+d.chain.toUpperCase();
- $('#upd').textContent='данные от '+new Date(d.now).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});render();}
+ $('#upd').textContent='данные от '+new Date(d.now).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});hypBadge();render();}
  catch(e){$('#upd').textContent=window.DATA_URL?'нет данных':'бот не отвечает';}}
 tick();setInterval(tick,5000);addEventListener('resize',()=>D&&render());
 </script></body></html>
