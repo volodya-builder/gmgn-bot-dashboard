@@ -1,39 +1,6 @@
 {
- "balance_usd": 807.2795921267634,
- "positions": {
-  "0x6f93818603035e931df6bcf3556fb14fe0077777": {
-   "symbol": "宁波银行",
-   "name": "BNB宁波银行",
-   "address": "0x6f93818603035e931df6bcf3556fb14fe0077777",
-   "opened": 1790146233,
-   "entry": 0.00001622246086,
-   "size_usd": 20,
-   "peak": 0.000024851672,
-   "trough": 0.000013291818,
-   "mode": "paper",
-   "order_id": null,
-   "ctx": {
-    "rules": "v1.1",
-    "source": "rank",
-    "launchpad": "flap",
-    "age_min": "16.6",
-    "liq": "8379",
-    "mcap": "15571",
-    "holders": 106,
-    "smart": 0,
-    "renowned": 0,
-    "bundler": "0.120",
-    "snipers": 5,
-    "top10": "0.227",
-    "buys": 56,
-    "sells": 6,
-    "list_price": "0.0000155714",
-    "hour_utc": 6
-   },
-   "last": 0.000016457701,
-   "last_t": 1790150865
-  }
- },
+ "balance_usd": 821.4481249113758,
+ "positions": {},
  "seen": {
   "0xb18870450cead02867b2f7515522a84411887777": 1790084213,
   "0x08aa17a10afd4d8a3b2de3afec9f415b33407777": 1790085658,
@@ -108,9 +75,9 @@
   "0x369853e30e12cc26455a24c9c457e2467c787777": 1790146944,
   "0x6887d3be2be94a4abcdb514262da1a0560fb7777": 1790147573
  },
- "closed": 71,
+ "closed": 72,
  "wins": 19,
- "pnl_usd": -151.12040787323966,
+ "pnl_usd": -156.95187508862733,
  "opened_at": [
   1790144200,
   1790145498,
@@ -121,9 +88,9 @@
  ],
  "day": {
   "key": "2026-09-23",
-  "pnl": -90.981490602533
+  "pnl": -96.81295781792069
  },
- "stop_streak": 0,
+ "stop_streak": 1,
  "last_hyp_report": "2026-09-22",
  "paused_until": 1790208000
 }
