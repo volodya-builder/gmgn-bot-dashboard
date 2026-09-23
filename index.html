@@ -547,13 +547,27 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
 }
 @media(min-width:1101px) and (min-height:1150px){#v-overview .ctools .hint{display:block}}
 .resz{position:relative}.resz:hover::after{content:attr(data-h);position:absolute;right:8px;top:-6px;font-size:11px;color:var(--muted);pointer-events:none}
+/* подвкладки: Обзор → Сводка/Сделки, Бот → Правила/Журнал/Сервер */
+nav .pill.hid{display:none!important}
+.subnav{display:none;margin:0 0 18px}.subnav.on{display:flex}
+.subnav .pills{border-radius:14px}
+.subnav .pill{padding:7px 16px;font-size:13.5px}
+/* ползунки высоты: заметнее, второй — под историей сделок (тянут вместе) */
+.resz{height:18px;margin:8px -8px -12px}
+.resz span{width:84px;height:5px;background:#ffffff2e}
+.resz:hover span,.resz.act span{background:var(--accent)}
+.resz2{flex:none;align-self:stretch;margin:6px 0 -8px}
+@media(max-width:1100px){.resz2{display:none}}
+.ovtr{scrollbar-width:thin;scrollbar-color:#ffffff38 transparent}
+.ovtr::-webkit-scrollbar{width:8px}.ovtr::-webkit-scrollbar-thumb{background:#ffffff30;border-radius:8px}.ovtr::-webkit-scrollbar-thumb:hover{background:#7cc4ff99}.ovtr::-webkit-scrollbar-track{background:transparent}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
-  <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill" data-view="trending">В тренде</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="trades">Сделки</button><button class="pill" data-view="rules">Правила</button><button class="pill" data-view="log">Журнал</button><button class="pill" data-view="sys">Сервер</button></nav>
+  <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill" data-view="trending">В тренде</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="rules" data-group="bot">Бот</button><button class="pill hid" data-view="trades">Сделки</button><button class="pill hid" data-view="rules">Правила</button><button class="pill hid" data-view="log">Журнал</button><button class="pill hid" data-view="sys">Сервер</button></nav>
   <div class="badges"><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span><a id="modeSwitch" class="badge" style="display:none"></a><span id="hypBadge" class="badge"></span></div>
 </header>
 <main>
+<div class="subnav" id="subnav"></div>
 <section class="view on" id="v-overview">
   <div class="titlebar"><div class="ovttl"><h1 class="h1">Обзор</h1><div class="rbw" id="rbw" title=""><div class="rb" id="rb"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="rb-body"><line x1="32" y1="6" x2="32" y2="13" class="rb-str"/><circle cx="32" cy="5" r="3.2" class="rb-ant"/><rect x="13" y="13" width="38" height="27" rx="9" class="rb-head"/><rect x="18" y="19" width="28" height="15" rx="6" class="rb-face"/><g class="rb-eyes"><circle cx="26" cy="26.5" r="3" class="rb-eye"/><circle cx="38" cy="26.5" r="3" class="rb-eye"/></g><g class="rb-x"><path d="M23 23.5l6 6M29 23.5l-6 6M35 23.5l6 6M41 23.5l-6 6" class="rb-str2"/></g><rect x="9" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="51" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="20" y="43" width="24" height="14" rx="5" class="rb-torso"/><circle cx="32" cy="50" r="2.6" class="rb-core"/></g><g class="rb-zz"><text x="50" y="14">z</text><text x="56" y="8">z</text></g><g class="rb-sp"><path d="M8 10l3 3M56 42l3 3M6 44l3-2" class="rb-str2"/></g></svg></div><div class="rbt"><b id="rbTitle">…</b><span id="rbSub"></span></div></div></div><div class="pills small" id="period"><button class="pill" data-p="24h">24ч</button><button class="pill" data-p="7d">Неделя</button><button class="pill" data-p="30d">Месяц</button><button class="pill on" data-p="all">Всё время</button></div></div>
   <div class="hero" id="hero"></div>
@@ -564,7 +578,7 @@ body.wide-trending main{max-width:none;padding-left:20px;padding-right:20px}
     <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity">Депозит</button><button class="pill" data-c="pnl">PnL по сделкам</button><button class="pill" data-c="count">Сделки</button></div></div>
     <div class="ctools"><label class="check" id="marksWrap"><input type="checkbox" id="marks"><span class="box"></span>Сделки на графике</label><div class="zbtns"><button class="mini" id="zout" title="Отдалить">−</button><button class="mini" id="zin" title="Приблизить">+</button><button class="mini wide" id="zreset">Весь период</button><button class="mini wide" id="zauto" style="display:none" title="Вернуть автоматический масштаб по вертикали">Авто</button><button class="mini wide" id="zhist" title="Спрятать колонку «История сделок» — график станет на всю ширину">На всю ширину</button><button class="mini wide" id="zbig">Развернуть</button></div><span class="hint">колесо — масштаб · тяни график — сдвиг · тяни шкалу цены или времени — растянуть · двойной клик — сброс</span></div><canvas id="chart"></canvas><div class="axis" id="axis"></div><div class="resz" id="resz" title="Потяни, чтобы изменить высоту графика"><span></span></div>
   </div>
-  <div class="card ovside"><div class="ovsh"><h2>История сделок</h2><span class="note" id="ovTrSum"></span></div><div class="ovtr" id="ovTr"></div></div>
+  <div class="card ovside"><div class="ovsh"><h2>История сделок</h2><span class="note" id="ovTrSum"></span></div><div class="ovtr" id="ovTr"></div><div class="resz resz2" id="resz2" title="Потяни вниз, чтобы растянуть график и историю сделок"><span></span></div></div>
   </div>
   <div class="card opc" id="opCard"><div class="oph"><h2>Открытые сделки <span class="note" id="opCnt"></span></h2><button class="mini wide" id="sndBtn"></button></div><div id="openLive"></div><div style="display:none"><table id="open"></table></div></div>
 </section>
@@ -866,10 +880,10 @@ function drawChart(t,m){lastT=t;lastM=m;
  const P={l:8,r:84,t:14,b:28},PW=W-P.l-P.r,PH=H-P.t-P.b;
  const pl=({'24h':'24 часа','7d':'неделя','30d':'месяц','all':'всё время'})[period];
  let full,series=[],bars=[];
- if(chart==='equity'){const start=D.config.paper_start_balance_usd;let eq=start;series.push({t:t.length?+new Date(t[0].opened):Date.now()-36e5,v:eq});for(const x of t){eq+= +x.pnl_usd;series.push({t:+new Date(x.closed),v:eq,tr:x});}
+ if(chart==='equity'){const start=D.config.paper_start_balance_usd;const S=D.state||{};const wl=D.mode==='live'&&S.wallet_bnb!=null&&+S.balance_usd>0;let eq=wl?+S.balance_usd-t.reduce((a,x)=>a+ +x.pnl_usd,0):start;series.push({t:t.length?+new Date(t[0].opened):Date.now()-36e5,v:eq});for(const x of t){eq+= +x.pnl_usd;series.push({t:+new Date(x.closed),v:eq,tr:x});}
   {const lt=series[series.length-1].t,nw=Date.now();if(nw>lt+6e4)series.push({t:nw,v:eq,now:true});}
   full=[series[0].t,Math.max(series[series.length-1].t,series[0].t+6e4)];
-  $('#chartBig').textContent='$'+f(eq);$('#chartSub').textContent='Депозит по закрытым сделкам, '+pl;}
+  $('#chartBig').textContent='$'+f(eq);if(wl){const oth=+S.balance_usd-start-(+S.pnl_usd||0);$('#chartSub').textContent='Кошелёк, как в GMGN (BNB по курсу сейчас), '+pl+(period==='all'&&Math.abs(oth)>=0.01?' · от старта $'+f(start,0)+': сделки '+mny(+S.pnl_usd||0)+', курс BNB и газ '+mny(oth):'');$('#chartSub').title='Линия заканчивается ровно на текущем балансе кошелька (BNB × курс BNB), как показывает GMGN. Шаги линии — результаты сделок после всех комиссий (сверены с GMGN). Разница со стартом, не объяснённая сделками, — это изменение курса BNB к доллару и газ за неудачные транзакции.';}else $('#chartSub').textContent='Депозит по закрытым сделкам, '+pl;}
  else{bars=buckets(t);const step=bars[0]?.step||36e5;full=bars.length?[bars[0].t,bars[bars.length-1].t+step]:[Date.now()-864e5,Date.now()];
   const total=chart==='pnl'?m.pnl:t.length;$('#chartBig').textContent=chart==='pnl'?(total>=0?'+':'')+money(total):total;$('#chartSub').textContent=(chart==='pnl'?'PnL по сделкам':'Количество сделок')+', '+(step===36e5?'по часам':'по дням')+', '+pl;}
  let x0,x1;if(zoom){const sp=zoom[1]-zoom[0],lo=Math.min(full[0],full[1]-sp),hi=Math.max(full[0],full[1]-sp);x0=Math.max(lo,Math.min(zoom[0],hi));x1=x0+sp;zoom=[x0,x1];}else[x0,x1]=full;
@@ -991,8 +1005,11 @@ function openTrade(x){if(!x)return;const has=x.rules!==undefined&&x.rules!=='';c
 function closeTrade(){$('#drawer').classList.remove('on');$('#drawerBg').classList.remove('on');}
 $('#drawerBg').onclick=closeTrade;$('#drawerX').onclick=closeTrade;addEventListener('keydown',e=>{if(e.key==='Escape'){closeTrade();$('#verpop').classList.remove('on');}});
 // ---- версия ----
-const APP_VERSION='2.41';
+const APP_VERSION='2.44';
 const CHANGELOG=[
+ ['2.44','23.09.2026',['Обзор: ползунок внизу под историей сделок — тяни вниз, чтобы растянуть и график, и список сделок (высота запоминается); ползунки заметнее, полоса прокрутки истории шире']],
+ ['2.43','23.09.2026',['График «Депозит» у живого бота заканчивается на реальном балансе кошелька, как в GMGN (BNB × курс BNB сейчас); под графиком — сколько из разницы со стартом дали сделки, а сколько курс BNB и газ']],
+ ['2.42','23.09.2026',['Верхнее меню короче: «Сделки» — подвкладка «Все сделки» в «Обзоре»; «Правила», «Журнал» и «Сервер» собраны во вкладку «Бот» (запоминается, какую подвкладку открывал последней)']],
  ['2.41','23.09.2026',['Обзор помещается в окно целиком при обычном масштабе браузера (100%): верхние показатели компактнее, а высота графика сама подстраивается под окно — показатели, график, история и открытые сделки видны без прокрутки. Потянул полоску под графиком — высота фиксируется; двойной клик по ней — снова по размеру окна']],
  ['2.40','23.09.2026',['Обзор: робот-статус («Бот работает», «В сделке», «Пауза») переехал из карточки графика наверх, рядом с заголовком «Обзор» — состояние бота видно первым делом']],
  ['2.39','23.09.2026',['Обзор: верх страницы — четыре понятные карточки вместо двух рядов цифр: «Депозит» (сколько было и сколько сейчас), «Итог сделок» (с лучшей и худшей), «Сделки» (полоска плюс/минус), «Средняя сделка» (средний плюс против среднего минуса полосками, простыми словами про profit factor и просадку)']],
@@ -1619,4 +1636,22 @@ function renderBot(){const w=document.getElementById('rbw');if(!w||!D)return;if(
  else{title='Бот работает';sub='ищет вход'+(D.lastScan&&D.lastScan.tokens?' · '+D.lastScan.tokens.length+' монет':'')+(scanAge!=null?' · '+ago(scanAge):'');}
  w.className='rbw '+st+(st==='g'&&open.length?' busy':'');document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub;w.title=title+(sub?' — '+sub:'');}
 setInterval(()=>{try{renderBot();}catch(e){}},1000);
+
+// ---- группы вкладок: верхнее меню короче, остальное — подвкладками ----
+const VGROUP={overview:'overview',trades:'overview',trending:'trending',hyp:'hyp',arena:'arena',rules:'bot',log:'bot',sys:'bot'};
+const GSUBS={overview:[['overview','Сводка'],['trades','Все сделки']],bot:[['rules','Правила'],['log','Журнал'],['sys','Сервер']]};
+function syncGroups(){const cur=(document.querySelector('.view.on')||{}).id;if(!cur)return;const v=cur.slice(2),g=VGROUP[v]||v;
+ const gp=document.querySelector('nav .pill[data-group="bot"]');if(gp&&g==='bot'){gp.dataset.view=v;try{localStorage.setItem('botSub',v);}catch{}}
+ document.querySelectorAll('nav .pill:not(.hid)').forEach(x=>x.classList.toggle('on',(x.dataset.group||VGROUP[x.dataset.view]||x.dataset.view)===g));
+ const sn=document.getElementById('subnav'),subs=GSUBS[g];if(!sn)return;
+ if(!subs){sn.classList.remove('on');sn.innerHTML='';return;}
+ sn.classList.add('on');sn.innerHTML='<div class="pills small">'+subs.map(([id,l])=>'<button class="pill'+(id===v?' on':'')+'" data-sub="'+id+'">'+l+'</button>').join('')+'</div>';
+ sn.querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{const t=document.querySelector('nav .pill.hid[data-view="'+b.dataset.sub+'"]')||document.querySelector('nav .pill[data-view="'+b.dataset.sub+'"]:not([data-group])');if(t)t.click();});}
+(function(){try{const bs=localStorage.getItem('botSub');const gp=document.querySelector('nav .pill[data-group="bot"]');if(bs&&gp&&VGROUP[bs]==='bot')gp.dataset.view=bs;}catch{}
+ document.querySelectorAll('nav .pill').forEach(b=>b.addEventListener('click',()=>setTimeout(syncGroups,0)));syncGroups();})();
+
+// второй ползунок (под историей сделок) управляет той же высотой, что и ползунок графика
+(function(){const a=document.getElementById('resz2'),b=document.getElementById('resz');if(!a||!b)return;
+ a.addEventListener('mousedown',e=>{e.preventDefault();a.classList.add('act');b.dispatchEvent(new MouseEvent('mousedown',{clientX:e.clientX,clientY:e.clientY,bubbles:true,cancelable:true}));});
+ addEventListener('mouseup',()=>a.classList.remove('act'));})();
 </script></body></html>
