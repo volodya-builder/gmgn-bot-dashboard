@@ -1051,7 +1051,7 @@ async function liveSelect(n,armKey){const key=armKey||n;if(lhArm!==key){lhArm=ke
  catch(e){lhMsg='<span class="bad">Не получилось: '+esc(e.message)+'</span>';}
  renderHyp(true);hypBadge();}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-livesel]');if(!b||b.disabled)return;e.stopPropagation();e.preventDefault();liveSelect(+b.dataset.livesel);},true);
-function hypBadge(){const b=$('#hypBadge');if(!b)return;const L=D&&D.liveHyp;if(!L||window.DATA_URL){b.style.display='none';return;}b.style.display='';b.innerHTML='живой бот: гипотеза <b>#'+L.num+'</b>';b.title=L.name||'';b.style.cursor='pointer';b.onclick=()=>{const t=document.querySelector('nav .pill[data-view="hyp"]');if(t)t.click();};}
+function hypBadge(){const b=$('#hypBadge');if(!b)return;const L=D&&D.liveHyp;if(!L||window.DATA_URL){b.style.display='none';return;}b.style.display='inline-flex';b.innerHTML='живой бот: гипотеза <b>#'+L.num+'</b>';b.title=L.name||'';b.style.cursor='pointer';b.onclick=()=>{const t=document.querySelector('nav .pill[data-view="hyp"]');if(t)t.click();};}
 async function tick(){try{const d=await (await fetch(window.DATA_URL||'/api',{cache:'no-store'})).json();D=d;
  $('#mode').className='badge '+d.mode;$('#mode').innerHTML='<span class="dot"></span><b>'+(d.mode==='paper'?'симуляция':'live')+'</b> '+d.chain.toUpperCase();
  $('#upd').textContent='данные от '+new Date(d.now).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});hypBadge();render();}
