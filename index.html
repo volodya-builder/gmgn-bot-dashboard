@@ -774,6 +774,21 @@ main{padding-bottom:45vh!important}
 .rbw.r .rbpop{border-color:#5a2b2b}.rbw.y .rbpop{border-color:#5a4b2b}
 .calg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:6px}
 @media(max-width:800px){.calg{grid-template-columns:1fr}}
+/* компактная шапка: сеть — выпадающим списком, режим короче, «онлайн» — точкой */
+.hnet{position:relative}
+.hnet>a:not(.on){display:none}
+.hnet>a.on::after{content:'';width:0;height:0;margin-left:2px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid #8f938a}
+.hnet .hmenu{display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:100%;padding:4px;border:1px solid var(--border2);border-radius:12px;background:#121212;box-shadow:0 12px 30px #000a;z-index:40;flex-direction:column;gap:2px}
+.hnet .hmenu a{display:flex!important}
+.hnet:hover .hmenu,.hnet:focus-within .hmenu,.hnet.open .hmenu{display:flex}
+.hnet .hmenu::before{content:'';position:absolute;left:0;right:0;top:-8px;height:8px}
+.hseg .ch{display:none!important}
+.hseg a{padding:6px 11px}
+.hchipx{padding:7px 10px}.hchipx .k{display:inline;color:var(--muted)}
+.hfresh{min-width:0!important;gap:0;padding:6px 4px;cursor:default}
+.hfresh .t{display:none}
+.hfresh i{width:9px;height:9px}
+.hst{gap:8px}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -1394,8 +1409,9 @@ function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label
  const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
  if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
 // ---- версия ----
-const APP_VERSION='2.93';
+const APP_VERSION='2.94';
 const CHANGELOG=[
+ ['2.94','24.09.2026',['Шапка компактнее: сеть — одна кнопка с выпадающим списком, «Реальные / Симуляция» без лишней подписи сети, живой бот — «Живой бот: #339», статус связи — цветная точка (подробности при наведении)']],
  ['2.93','24.09.2026',['Переключатель сетей в шапке: логотипы BNB Chain, Solana и Robinhood']],
  ['2.92','24.09.2026',['Новые сети: Solana и Robinhood — такой же сбор монет и перебор гипотез, как для BSC, без реальных денег','В шапке переключатель сетей «BSC | Solana | Robinhood»: открывает панель нужной сети']],
  ['2.91','24.09.2026',['Гипотезы стали ближе к реальности: в симуляцию добавлены комиссия GMGN (1% на покупку и 1% на продажу) и налоги каждой монеты; каждая живая сделка пересчитывается симуляцией, и средняя разница отдельно для тейков, стопов и остальных выходов автоматически вносится поправкой во все гипотезы; в «Аналитике» — карточка «Реальность против симуляции» со всеми живыми сделками']],
@@ -2068,10 +2084,10 @@ function hstRender(){const d=D;if(!d)return;try{hnetRender();}catch(e){console.e
  const url=other&&(d.chain||'bsc')==='bsc'?location.protocol+'//'+location.hostname+':'+other+'/':null;const nonBsc=(d.chain||'bsc')!=='bsc';const liveUrl=live?null:url,paperUrl=live?url:null;
  const seg=$('#hseg');if(seg){const a=(on,cls,txt,href,tip)=>'<a class="'+(on?'on '+cls:'')+'"'+(!on&&href?' href="'+href+'"':'')+' title="'+tip+'"><i></i>'+txt+'</a>';
   const k=(live?'L':'P')+'|'+(url||'')+'|'+(d.chain||'');if(seg.dataset.k!==k){seg.dataset.k=k;if(nonBsc){seg.innerHTML='<a class="on paper" title="В этой сети бот только собирает данные и проверяет гипотезы — без реальных денег"><i></i>Исследование</a>';return;}
-   seg.innerHTML=a(live,'live','Реальные деньги',liveUrl,live?'Сейчас открыта панель живого бота — он торгует реальными деньгами':(liveUrl?'Открыть панель живого бота (реальные деньги)':'Панель живого бота недоступна отсюда'))+
+   seg.innerHTML=a(live,'live','Реальные',liveUrl,live?'Сейчас открыта панель живого бота — он торгует реальными деньгами':(liveUrl?'Открыть панель живого бота (реальные деньги)':'Панель живого бота недоступна отсюда'))+
     a(!live,'paper','Симуляция',paperUrl,!live?'Сейчас открыта панель бота-симуляции — он торгует понарошку, без денег':(paperUrl?'Открыть панель бота-симуляции (без денег)':'Панель симуляции недоступна отсюда'))+
     '<span class="ch" title="Сеть">'+esc(String(d.chain||'').toUpperCase())+'</span>';}}
- const h=$('#hhyp');if(h){const L=d.liveHyp;if(!L||window.DATA_URL){h.style.display='none';}else{h.style.display='';h.innerHTML='<span class="k">Живой бот:</span> гипотеза <b>#'+L.num+'</b>';
+ const h=$('#hhyp');if(h){const L=d.liveHyp;if(!L||window.DATA_URL){h.style.display='none';}else{h.style.display='';h.innerHTML='<span class="k">Живой бот:</span> <b>#'+L.num+'</b>';
   h.title='Живой бот торгует по гипотезе #'+L.num+(L.name?' — '+L.name:'')+'. Нажми, чтобы открыть гипотезы и сменить.';h.onclick=()=>{const t=document.querySelector('nav .pill[data-view="hyp"]');if(t)t.click();try{setHypTab('sum');}catch{}scrollTo(0,0);};}}}
 function hstFresh(){const el=$('#hfresh');if(!el)return;const t=el.querySelector('.t');
  if(!hstOk){el.className='hfresh'+(hstFail?' bad':'');t.innerHTML=hstFail?'бот не отвечает':'подключаюсь…';return;}
@@ -2364,4 +2380,11 @@ setInterval(()=>{try{if(hypTab==='help')faqLive();}catch{}},3000);document.addEv
    '<div class="tablewrap"><table class="lpt"><tr><th>Монета</th><th>Закрыта</th><th>Выход: реально / симуляция</th><th class="num">Реально</th><th class="num">Симуляция</th><th class="num">Разница</th></tr>'+
    [...c.rows].reverse().map(r=>'<tr><td><b>'+esc(r.symbol)+'</b> <span class="note">'+esc(r.rules||'')+'</span></td><td>'+new Date(r.closed).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</td><td>'+(RN[r.real_reason]||esc(r.real_reason))+' / '+(RN[r.sim_reason]||esc(r.sim_reason))+(r.same?'':' <span class="bad">≠</span>')+'</td><td class="num '+cls(r.real_pct)+'">'+(r.real_pct>0?'+':'')+f(r.real_pct,1)+'% · '+mny(r.real_usd)+'</td><td class="num '+cls(r.sim_pct)+'">'+(r.sim_pct>0?'+':'')+f(r.sim_pct,1)+'% · '+mny(r.sim_usd)+'</td><td class="num '+cls(r.real_pct-r.sim_pct)+'">'+pp(r.real_pct-r.sim_pct)+'</td></tr>').join('')+'</table></div>';}
  setInterval(()=>{try{if(typeof hypTab!=='undefined'&&hypTab==='lab')draw();}catch{}},3000);document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#hypTabs .pill[data-t="lab"]'))setTimeout(()=>{try{draw();}catch{}},0);});})();
+
+// компактная шапка: другие сети — в выпадающем меню под текущей; «онлайн» — подсказка у точки
+(function(){if(typeof hnetRender==='function'){const o=hnetRender;hnetRender=function(){const el=document.getElementById('hnet');const before=el&&el.dataset.k;const r=o.apply(this,arguments);
+ if(el&&(el.dataset.k!==before||!el.querySelector('.hmenu'))){const on=el.querySelector(':scope>a.on');const rest=[...el.querySelectorAll(':scope>a:not(.on)')];if(rest.length){const m=document.createElement('div');m.className='hmenu';rest.forEach(a=>m.appendChild(a));el.appendChild(m);}
+  if(on&&!on._t){on._t=1;on.title='Сеть: '+on.textContent.trim()+' — наведи или нажми, чтобы выбрать другую';on.addEventListener('click',e=>{e.preventDefault();el.classList.toggle('open');});document.addEventListener('click',e=>{if(!el.contains(e.target))el.classList.remove('open');});}}return r;};}
+ if(typeof hstFresh==='function'){const f=hstFresh;hstFresh=function(){const r=f.apply(this,arguments);const el=document.getElementById('hfresh');if(el){const t=el.querySelector('.t');if(t)el.title=t.textContent;}return r;};}
+})();
 </script></body></html>
