@@ -829,6 +829,49 @@ main{padding-bottom:45vh!important}
 #ovHyp .ovhp .ovrules{margin:0;padding:10px 0 0;border-top:1px solid var(--border)}
 .ovhf{display:flex;justify-content:flex-end;margin-top:12px}
 @media(max-width:700px){.ovhp{position:fixed;left:16px;right:16px;top:auto;width:auto}}
+
+/* mobile-2107: версия для телефона */
+@media(max-width:700px){
+  header{position:relative!important;gap:10px!important;padding:10px 12px!important}
+  #hhyp{display:none!important}
+  .badges .hst{flex-wrap:nowrap!important;gap:6px!important}
+  .hseg a{padding:6px 9px!important}
+  main{padding:12px 10px 40px!important}
+  .h1{font-size:24px}
+  #v-overview .ovttl{gap:10px!important}
+  #v-overview .ovttl .h1{margin:0}
+  .ovhb{height:34px}
+  /* карточки показателей 2×2 */
+  #hero,#raceKpi{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  #hero .kc,#raceKpi .kc{padding:10px 12px!important;gap:3px!important;border-radius:14px}
+  #hero .kc:nth-child(1),#hero .kc:nth-child(4){grid-column:1/-1}
+  #hero .kc:nth-child(1) .kbnb{display:inline;font-size:13px}
+  #hero .kc .kcs{display:none!important}
+  #hero .kct,#raceKpi .kct{font-size:12px}
+  #hero .kcb,#raceKpi .kcb{font-size:25px!important;white-space:normal}
+  #hero .kbnb{display:block;font-size:12px;margin-top:2px}
+  #hero .kcl,#raceKpi .kcl{font-size:12px;line-height:1.35}
+  #raceKpi .kcs{font-size:11.5px}
+  #raceKpi .kspark{display:none}
+  /* все сделки — карточками */
+  #trades,#trades tbody{display:block;width:100%}
+  #trades tr:first-child{display:none}
+  #trades tr.trow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:10px;row-gap:3px;align-items:center;padding:10px 2px;border-bottom:1px solid var(--border)}
+  #trades tr.trow td{display:block;padding:0!important;border:0!important;min-width:0}
+  #trades tr.trow td:nth-child(2){grid-column:1/3;grid-row:1;overflow:hidden}
+  #trades tr.trow td:nth-child(5){grid-column:3;grid-row:1;font-size:15px;font-weight:600;text-align:right}
+  #trades tr.trow td:nth-child(1){grid-column:1;grid-row:2;font-size:12px}
+  #trades tr.trow td:nth-child(7){grid-column:2;grid-row:2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  #trades tr.trow td:nth-child(6){display:block!important;grid-column:3;grid-row:2;font-size:12px;text-align:right}
+  #trades tr.trow td:nth-child(7) *{font-size:11px}
+  #v-trades .card{padding:6px 12px!important}
+  #v-trades .tablewrap{overflow:visible!important;max-height:none!important;height:auto!important}
+  #v-trades .card{height:auto!important;max-height:none!important}
+  #trades tr.trow td:nth-child(3),#trades tr.trow td:nth-child(4),#trades tr.trow td:nth-child(8),#trades tr.trow td:nth-child(9){display:none!important}
+  .ovhp{position:fixed!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;width:auto!important;max-height:78vh;overflow:auto;border-radius:18px 18px 0 0!important;padding:18px 16px calc(18px + env(safe-area-inset-bottom))!important;box-shadow:0 0 0 100vmax #000a!important;z-index:200!important}
+  .ovhf .btn{width:100%;padding:12px}
+  #sndBtn{font-size:12px;padding:6px 10px;white-space:nowrap}
+}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -838,7 +881,7 @@ main{padding-bottom:45vh!important}
 <main>
 <div class="subnav" id="subnav"></div>
 <section class="view on" id="v-overview">
-  <div class="titlebar"><div class="ovttl"><h1 class="h1">Обзор</h1><div class="rbw" id="rbw" title=""><div class="rb" id="rb"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="rb-body"><line x1="32" y1="6" x2="32" y2="13" class="rb-str"/><circle cx="32" cy="5" r="3.2" class="rb-ant"/><rect x="13" y="13" width="38" height="27" rx="9" class="rb-head"/><rect x="18" y="19" width="28" height="15" rx="6" class="rb-face"/><g class="rb-eyes"><circle cx="26" cy="26.5" r="3" class="rb-eye"/><circle cx="38" cy="26.5" r="3" class="rb-eye"/></g><g class="rb-x"><path d="M23 23.5l6 6M29 23.5l-6 6M35 23.5l6 6M41 23.5l-6 6" class="rb-str2"/></g><rect x="9" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="51" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="20" y="43" width="24" height="14" rx="5" class="rb-torso"/><circle cx="32" cy="50" r="2.6" class="rb-core"/></g><g class="rb-zz"><text x="50" y="14">z</text><text x="56" y="8">z</text></g><g class="rb-sp"><path d="M8 10l3 3M56 42l3 3M6 44l3-2" class="rb-str2"/></g></svg></div><div class="rbt"><b id="rbTitle">…</b><span id="rbSub"></span></div></div><div class="ovhw" id="ovHyp" style="display:none"></div></div><div class="pills small" id="period"><button class="pill" data-p="24h">24ч</button><button class="pill" data-p="7d">Неделя</button><button class="pill" data-p="30d">Месяц</button><button class="pill on" data-p="all">Всё время</button></div></div>
+  <div class="titlebar"><div class="ovttl"><div class="rbw" id="rbw" title=""><div class="rb" id="rb"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="rb-body"><line x1="32" y1="6" x2="32" y2="13" class="rb-str"/><circle cx="32" cy="5" r="3.2" class="rb-ant"/><rect x="13" y="13" width="38" height="27" rx="9" class="rb-head"/><rect x="18" y="19" width="28" height="15" rx="6" class="rb-face"/><g class="rb-eyes"><circle cx="26" cy="26.5" r="3" class="rb-eye"/><circle cx="38" cy="26.5" r="3" class="rb-eye"/></g><g class="rb-x"><path d="M23 23.5l6 6M29 23.5l-6 6M35 23.5l6 6M41 23.5l-6 6" class="rb-str2"/></g><rect x="9" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="51" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="20" y="43" width="24" height="14" rx="5" class="rb-torso"/><circle cx="32" cy="50" r="2.6" class="rb-core"/></g><g class="rb-zz"><text x="50" y="14">z</text><text x="56" y="8">z</text></g><g class="rb-sp"><path d="M8 10l3 3M56 42l3 3M6 44l3-2" class="rb-str2"/></g></svg></div><div class="rbt"><b id="rbTitle">…</b><span id="rbSub"></span></div></div><div class="ovhw" id="ovHyp" style="display:none"></div></div><div class="pills small" id="period"><button class="pill" data-p="24h">24ч</button><button class="pill" data-p="7d">Неделя</button><button class="pill" data-p="30d">Месяц</button><button class="pill on" data-p="all">Всё время</button></div></div>
   <div class="hero" id="hero"></div>
   <div class="tiles kstrip" id="tiles"></div>
   <div class="ovgrid">
@@ -1480,8 +1523,10 @@ function drawBotBars(){const v=$('#v-net');const c=$('#btCv');if(!c||!v||!v.clas
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.106';
+const APP_VERSION='2.108';
 const CHANGELOG=[
+ ['2.108','24.09.2026',['Обзор: убран заголовок «Обзор» — строка начинается сразу с робота']],
+ ['2.107','24.09.2026',['Телефон: шапка не висит над экраном и занимает меньше места; карточки показателей 2×2; «Все сделки» — карточками (монета, итог, дата, причина); подписи на графиках объёмов читаемые; короткая кнопка звука']],
  ['2.106','24.09.2026',['Обзор: номер гипотезы теперь рядом с роботом; по нажатию на него открываются правила и кнопка «Сменить гипотезу». Отдельная строка над графиком убрана']],
  ['2.105','24.09.2026',['Обзор: в карточках показателей остались только главные цифры; мелкие подписи (свободные деньги, лучшая/худшая сделка, комиссии, число плюсов/минусов, просадка) показываются подсказкой при наведении на карточку. На телефоне — как раньше']],
  ['2.104','24.09.2026',['Обзор: плашка гипотезы (#номер · правила · сменить) убрана с графика — теперь отдельной строкой между карточками показателей и графиком']],
@@ -2124,7 +2169,7 @@ let opPrev=null,opFresh={},sndOn=true,AC=null;try{sndOn=localStorage.getItem('sn
 function acx(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch{}}return AC;}
 function chime(){const a=acx();if(!a)return;try{if(a.state==='suspended')a.resume();const t=a.currentTime+0.02;[[660,0],[880,0.14],[1320,0.28]].forEach(([fr,d])=>{const o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.value=fr;g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(0.28,t+d+0.02);g.gain.exponentialRampToValueAtTime(0.001,t+d+0.6);o.connect(g);g.connect(a.destination);o.start(t+d);o.stop(t+d+0.65);});}catch(e){console.error(e);}}
 ['pointerdown','keydown'].forEach(ev=>addEventListener(ev,()=>{if(!sndOn)return;const a=acx();if(a&&a.state==='suspended')a.resume().then(sndBtn).catch(()=>{});else sndBtn();},true));
-function sndBtn(){const b=$('#sndBtn');if(!b)return;const locked=sndOn&&(!AC||AC.state!=='running');b.textContent=sndOn?(locked?'Звук включён · нажми, чтобы разрешить':'Звук о новых сделках: вкл'):'Звук о новых сделках: выкл';
+function sndBtn(){const b=$('#sndBtn');if(!b)return;const locked=sndOn&&(!AC||AC.state!=='running');const sm=matchMedia('(max-width:700px)').matches;b.textContent=sndOn?(locked?(sm?'Разрешить звук':'Звук включён · нажми, чтобы разрешить'):(sm?'Звук: вкл':'Звук о новых сделках: вкл')):(sm?'Звук: выкл':'Звук о новых сделках: выкл');
  b.title=locked?'Браузер разрешает звук только после первого нажатия на странице — нажми эту кнопку один раз':sndOn?'Нажми, чтобы выключить звук':'Нажми, чтобы включить звук';
  b.onclick=()=>{if(sndOn&&locked){acx();AC&&AC.resume().then(()=>{chime();sndBtn();});return;}sndOn=!sndOn;try{localStorage.setItem('snd',sndOn?'1':'0');}catch{}if(sndOn)chime();sndBtn();};}
 let titleT=null;const baseTitle=document.title;
@@ -2413,12 +2458,12 @@ setInterval(()=>{try{if(hypTab==='help')faqLive();}catch{}},3000);document.addEv
    if(ts+3600e3>win){tot.v+=v;tot.t+=t;tot.c+=c;tot.b+=b;tot.pv+=pv;tot.fl+=fl.c||0;tot.fm+=fm.c||0;}else if(per>0&&ts>=prevFrom){prev.v+=v;prev.t+=t;prev.c+=c;prev.has=true;}}
   return {bins,tot,prev:per>0&&first!=null&&first<=win-per*3600e3+3600e3?prev:null,hourly,nb};}
  const delta=(now,was)=>{if(was==null)return '';if(was===0)return now>0?'<span class="ana-delta up">new</span>':'';const r=(now-was)/was*100;return isFinite(r)?'<span class="ana-delta '+(Math.abs(r)<.5?'flat':r>0?'up':'down')+'">'+(r>0?'+':'')+r.toFixed(1)+'%</span>':'';};
- function svg(bins,key,fmt){const vals=bins.map(b=>b[key]),s=Math.max(...vals,0),l=1e3,u=vals.length,d=(l-70)/u,gap=Math.max(3,Math.min(10,d*.28)),w=d-gap,g=v=>10+(1-(s>0?v/s:0))*264;
-  let o='<svg class="ana-svg" viewBox="0 0 '+l+' 300" preserveAspectRatio="none"><defs><linearGradient id="anaBarGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6e6e3"/><stop offset="1" stop-color="#7c7c79"/></linearGradient><linearGradient id="anaBarHl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c9c9c5"/></linearGradient><linearGradient id="anaBarNow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8f542"/><stop offset="1" stop-color="#a6d92e"/></linearGradient></defs>';
-  for(const e of [.25,.5,.75,1])o+='<g><line x1="0" x2="'+(l-76)+'" y1="'+g(s*e)+'" y2="'+g(s*e)+'" class="ana-grid-line"/><text x="934" y="'+(g(s*e)+4)+'" class="ana-grid-lbl">'+fmt(s*e,true)+'</text></g>';
-  vals.forEach((v,t)=>{const hgt=s>0?Math.max(4,v/s*264):4,x=t*(w+gap),c='ana-svg-bar'+(t===u-1?' now':'')+(hov===t?' hl':hov===null?'':' dim');o+='<g data-i="'+t+'"><rect x="'+x+'" y="10" width="'+w+'" height="264" fill="transparent"/><rect x="'+x+'" y="'+(274-hgt)+'" width="'+w+'" height="'+hgt+'" rx="'+Math.min(6,w/2)+'" class="'+c+'"/></g>';});
+ function svg(bins,key,fmt){const bx=$('#netSvg'),VH=matchMedia('(max-width:900px)').matches?220:300,vals=bins.map(b=>b[key]),s=Math.max(...vals,0),l=Math.max(300,Math.round(bx&&bx.clientWidth||1000)),u=vals.length,d=(l-70)/u,gap=Math.max(3,Math.min(10,d*.28)),w=d-gap,g=v=>10+(1-(s>0?v/s:0))*(VH-36);
+  let o='<svg class="ana-svg" viewBox="0 0 '+l+' '+VH+'" preserveAspectRatio="none"><defs><linearGradient id="anaBarGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6e6e3"/><stop offset="1" stop-color="#7c7c79"/></linearGradient><linearGradient id="anaBarHl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c9c9c5"/></linearGradient><linearGradient id="anaBarNow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8f542"/><stop offset="1" stop-color="#a6d92e"/></linearGradient></defs>';
+  for(const e of [.25,.5,.75,1])o+='<g><line x1="0" x2="'+(l-76)+'" y1="'+g(s*e)+'" y2="'+g(s*e)+'" class="ana-grid-line"/><text x="'+(l-66)+'" y="'+(g(s*e)+4)+'" class="ana-grid-lbl">'+fmt(s*e,true)+'</text></g>';
+  vals.forEach((v,t)=>{const hgt=s>0?Math.max(4,v/s*(VH-36)):4,x=t*(w+gap),c='ana-svg-bar'+(t===u-1?' now':'')+(hov===t?' hl':hov===null?'':' dim');o+='<g data-i="'+t+'"><rect x="'+x+'" y="10" width="'+w+'" height="'+(VH-36)+'" fill="transparent"/><rect x="'+x+'" y="'+(VH-26-hgt)+'" width="'+w+'" height="'+hgt+'" rx="'+Math.min(6,w/2)+'" class="'+c+'"/></g>';});
   const lab=ms=>{const t=new Date(ms);return per===24?String(t.getHours()).padStart(2,'0')+':00':t.getDate()+' '+MON[t.getMonth()];};
-  [0,Math.floor((u-1)/2),u-1].forEach(i=>{const x=i===0?0:i===u-1?(u-1)*(w+gap)+w:i*(w+gap)+w/2;o+='<text x="'+x+'" y="294" class="ana-axis-lbl" text-anchor="'+(i===0?'start':i===u-1?'end':'middle')+'">'+lab(bins[i].from)+'</text>';});
+  [0,Math.floor((u-1)/2),u-1].forEach(i=>{const x=i===0?0:i===u-1?(u-1)*(w+gap)+w:i*(w+gap)+w/2;o+='<text x="'+x+'" y="'+(VH-6)+'" class="ana-axis-lbl" text-anchor="'+(i===0?'start':i===u-1?'end':'middle')+'">'+lab(bins[i].from)+'</text>';});
   return o+'</svg>';}
  function draw(){if(!on())return;const {bins,tot,prev,hourly,nb}=data();
   const st=(n,l)=>'<div class="ana-stat"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>';
