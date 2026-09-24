@@ -884,6 +884,54 @@ main{padding-bottom:45vh!important}
 }
 .mzb{display:none}@media(pointer:coarse){#chart{touch-action:pan-y;-webkit-user-select:none;-webkit-touch-callout:none}.mzb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}.mzb .mini{height:38px;min-width:44px;font-size:17px}.mzb .mini.wide{font-size:13.5px;padding:0 14px}.mzh{font-size:11.5px;color:var(--muted);flex-basis:100%}}
 @media(pointer:coarse) and (max-width:900px){#resz,#resz2{display:none!important}.card.bigchart{position:static;inset:auto;box-shadow:none}}
+/* mob-calm: телефон — спокойная раскладка обзора (депозит → график → период → цифры) */
+@media(max-width:700px){
+  header{row-gap:10px!important;padding-bottom:10px!important}
+  header .brand{display:none!important}
+  header .badges{order:-1}
+  header nav.pills .pill{padding:8px 10px;font-size:14px}
+  #hst{flex-wrap:nowrap!important;gap:8px!important}
+  #hst .hseg a{padding:6px 10px!important;font-size:13px!important}
+  #subnav{margin:2px 0 4px!important}
+  #subnav>.pills{display:flex!important;width:100%}
+  #subnav .pill{flex:1;text-align:center;padding:7px 6px!important;font-size:13px!important}
+  #v-overview.view.on{display:flex!important;flex-wrap:wrap;gap:12px 10px;align-items:stretch}
+  #v-overview>*{order:20;flex:1 1 100%;min-width:0}
+  #v-overview>.titlebar,#v-overview>#hero,#v-overview>.ovgrid{display:contents!important}
+  #v-overview .ovttl{order:1;flex:1 1 100%;display:flex!important;flex-wrap:nowrap!important;flex-direction:row!important;align-items:center;gap:10px;margin:0!important;min-width:0}
+  #v-overview .ovttl #mar{display:none!important}
+  #v-overview #rbw{order:1;flex:1 1 auto;min-width:0;background:none!important;border:0!important;padding:0!important;box-shadow:none!important}
+  #v-overview #rbw .rb{width:30px!important;height:30px!important}
+  #v-overview #rbw .rb svg{width:30px!important;height:30px!important}
+  #v-overview #ovHyp{flex:none;margin:0!important;order:2}
+  #v-overview #hero>.kc:nth-child(1){order:2;flex:1 1 100%;background:none!important;border:0!important;box-shadow:none!important;padding:4px 2px 0!important}
+  #v-overview #hero>.kc:nth-child(1) .kcb{font-size:40px!important;letter-spacing:-.02em;line-height:1.05}
+  #v-overview #hero>.kc:nth-child(1) .kct{font-size:12.5px}
+  #v-overview .ovchart{order:3;flex:1 1 100%;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0 -4px}
+  #v-overview .ovchart>.head{display:none!important}
+  #v-overview .ovchart .ctools{display:none!important}
+  #v-overview .titlebar>#period{order:4;flex:1 1 100%;display:flex!important;justify-content:space-between;margin:0!important}
+  #v-overview .titlebar>#period .pill{flex:1;text-align:center;padding:7px 0!important;font-size:13px!important}
+  #v-overview #hero>.kc:nth-child(2){order:5;flex:1 1 calc(50% - 5px)}
+  #v-overview #hero>.kc:nth-child(3){order:5;flex:1 1 calc(50% - 5px)}
+  #v-overview #hero>.kc:nth-child(4){order:6;flex:1 1 100%}
+  #v-overview #hero>.kc:nth-child(n+2){padding:12px 14px!important}
+  #v-overview #hero>.kc:nth-child(n+2) .kcb{font-size:24px!important}
+  #v-overview #hero>.kc:nth-child(2) .kcl{font-size:12px;line-height:1.5}
+  #v-overview #hero>.kc:nth-child(2) .kcl b{white-space:nowrap}
+  #v-overview .mzb{margin-top:4px!important;justify-content:flex-end;gap:6px!important}
+  #v-overview .mzb .mzh{display:none!important}
+  #v-overview .mzb .mini{height:32px!important;min-width:40px!important;font-size:15px!important}
+  #v-overview .mzb .mini.wide{font-size:12.5px!important;padding:0 12px!important}
+  #v-overview #opCard{order:7}
+  #v-overview .ovside{order:8;flex:1 1 100%!important;width:auto!important}
+  #v-overview #opCard{margin:0!important}
+  #v-overview #rbw .rb{flex:0 0 30px!important;min-width:0!important;max-width:30px!important}
+  #v-overview #rbw{gap:8px!important}
+  #v-overview .mzb [data-z=all]{display:none!important}
+  #v-overview #hero>.kc:nth-child(n+2) .kct{font-size:12px}
+  #v-overview #hero>.kc:nth-child(2) .kcl{font-size:11.5px}
+}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -1580,8 +1628,11 @@ function drawBotBars(){const v=$('#v-net');const c=$('#btCv');if(!c||!v||!v.clas
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.117';
+const APP_VERSION='2.120';
 const CHANGELOG=[
+ ['2.120','24.09.2026',['Свечной график: при наведении на точку сделки — карточка сделки, как на линейном графике (логотип, результат, причина, размер, капитализация, время); клик по точке — подробности']],
+ ['2.119','24.09.2026',['Телефон: спокойная раскладка обзора — сверху статус бота и гипотеза в одну строку, крупный депозит, сразу под ним график, под графиком период, ниже цифры сделок; шапка в две строки без лишних рамок']],
+ ['2.118','24.09.2026',['Свечной график: убраны подсказки и значок; галочка «Сделки на графике» работает и для свечей — точка над свечой у прибыльной сделки, под свечой у убыточной. Графики свечей — библиотека <a href="https://www.tradingview.com/lightweight-charts/" target="_blank" rel="noopener">TradingView Lightweight Charts</a>']],
  ['2.117','24.09.2026',['Обзор: график депозита «Свечи» — на движке TradingView (Lightweight Charts): колесо — масштаб, перетаскивание — сдвиг, растягивание шкалы цены, двойной клик — весь график, перекрестие со значениями','Одна свеча — одна сделка, без пустых промежутков (или 15 мин / 1 ч / 4 ч / 1 день — отрезки без сделок пропускаются); тени — лучший и худший момент внутри сделки; у свечей по времени внизу столбики — сколько сделок было в свече; сверху строка О/М/Н/З и монеты этой свечи, клик по свече — подробности сделки']],
  ['2.116','24.09.2026',['Телефон: высота графика зафиксирована (меньше половины экрана), растягивание высоты отключено — график больше не разрастается на весь экран, страницу легко листать дальше']],
  ['2.114','24.09.2026',['Телефон: масштаб двумя пальцами работает в любом направлении (раньше вертикальное сведение пальцев меняло шкалу цены, а не отдаляло график); iPhone больше не перехватывает жест под увеличение страницы']],
@@ -2291,7 +2342,7 @@ setInterval(()=>{try{hstFresh();}catch{}},1000);
 
 
 // ---- свечной график депозита (TradingView Lightweight Charts) ----
-let cdTF='trade',TV=null,tvKey='',tvCs=[];
+let cdTF='trade',TV=null,tvKey='',tvCs=[],tvMk={},tvTip=false;
 try{const c=localStorage.getItem('ovChart');if(c==='equity'||c==='candles')chart=c;const f=localStorage.getItem('cdTF2');if(f)cdTF=f;}catch{}
 document.addEventListener('click',e=>{const b=e.target.closest('#chartTabs .pill');if(b){try{localStorage.setItem('ovChart',b.dataset.c);}catch{}}
  const tb=e.target.closest('#cdBar .pill[data-tf]');if(tb){cdTF=tb.dataset.tf;try{localStorage.setItem('cdTF2',cdTF);}catch{}tvKey='';redraw();try{TV&&TV.chart.timeScale().fitContent();}catch{}}},true);
@@ -2306,7 +2357,7 @@ function cdAgg(cs,step){const tz=new Date().getTimezoneOffset()*60,st=step/1000,
   if(!g)m.set(key,{ts:key,o:k.o,h:k.h,l:k.l,c:k.c,n:k.n,w:k.w,v:k.v,trs:[...k.trs]});else{g.h=Math.max(g.h,k.h);g.l=Math.min(g.l,k.l);g.c=k.c;g.n+=k.n;g.w+=k.w;g.v+=k.v;g.trs.push(...k.trs);}}
  return [...m.values()].sort((a,b)=>a.ts-b.ts);}
 function tvInit(){const el=$('#tvChart');if(!el||!window.LightweightCharts)return null;const L=window.LightweightCharts;
- const chart=L.createChart(el,{autoSize:false,layout:{background:{type:'solid',color:'transparent'},textColor:'#8f938a',fontFamily:'Inter,sans-serif',fontSize:12},
+ const chart=L.createChart(el,{autoSize:false,layout:{background:{type:'solid',color:'transparent'},textColor:'#8f938a',fontFamily:'Inter,sans-serif',fontSize:12,attributionLogo:false},
   grid:{vertLines:{color:'#ffffff08'},horzLines:{color:'#ffffff0d'}},crosshair:{mode:L.CrosshairMode.Normal,vertLine:{color:'#ffffff40',labelBackgroundColor:'#2a2a2a'},horzLine:{color:'#ffffff40',labelBackgroundColor:'#2a2a2a'}},
   rightPriceScale:{borderVisible:false,scaleMargins:{top:.08,bottom:.22}},timeScale:{borderVisible:false,timeVisible:true,secondsVisible:false,rightOffset:3,barSpacing:14,minBarSpacing:2},
   localization:{locale:'ru-RU',priceFormatter:v=>'$'+f(v,Math.abs(v)>=1000?0:2),timeFormatter:ts=>new Date(ts*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})},
@@ -2315,23 +2366,27 @@ function tvInit(){const el=$('#tvChart');if(!el||!window.LightweightCharts)retur
  const vol=chart.addHistogramSeries({priceScaleId:'vol',priceFormat:{type:'custom',formatter:v=>f(v,0)+' сд.'},lastValueVisible:false,priceLineVisible:false});
  chart.priceScale('vol').applyOptions({scaleMargins:{top:.82,bottom:0},visible:false});
  el.addEventListener('dblclick',()=>{chart.timeScale().fitContent();chart.priceScale('right').applyOptions({autoScale:true});});
- chart.subscribeCrosshairMove(p=>tvLegend(p&&p.time!=null?tvCs.find(k=>k.ts===p.time):null));
- chart.subscribeClick(p=>{if(!p||p.time==null)return;const k=tvCs.find(x=>x.ts===p.time);if(k&&k.trs.length===1)try{openTrade(k.trs[0]);}catch{}});
+ chart.subscribeCrosshairMove(p=>{tvLegend(p&&p.time!=null?tvCs.find(k=>k.ts===p.time):null);const T=$('#tip'),x=p&&p.hoveredObjectId&&tvMk[p.hoveredObjectId];
+  if(x&&p.point){const r=el.getBoundingClientRect();T.innerHTML=tradeCard(x);T.classList.add('tipcard');T.style.display='block';const tw=T.offsetWidth,cx=r.left+p.point.x,cy=r.top+p.point.y;T.style.left=Math.min(cx+14,innerWidth-tw-12)+'px';T.style.top=(cy+16)+'px';el.style.cursor='pointer';tvTip=true;}
+  else if(tvTip){T.style.display='none';T.classList.remove('tipcard');el.style.cursor='';tvTip=false;}});
+ el.addEventListener('mouseleave',()=>{if(tvTip){const T=$('#tip');T.style.display='none';T.classList.remove('tipcard');tvTip=false;}});
+ chart.subscribeClick(p=>{if(p&&p.hoveredObjectId&&tvMk[p.hoveredObjectId]){try{openTrade(tvMk[p.hoveredObjectId]);}catch{}return;}if(!p||p.time==null)return;const k=tvCs.find(x=>x.ts===p.time);if(k&&k.trs.length===1)try{openTrade(k.trs[0]);}catch{}});
  return {chart,cs,vol};}
 function tvLegend(k){const el=$('#tvLeg');if(!el)return;if(!k)k=tvCs[tvCs.length-1];if(!k){el.innerHTML='';return;}const ch=k.c-k.o,pc=k.o?ch/k.o*100:0;
  const when=new Date(k.ts*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
  el.innerHTML='<div>'+when+' &nbsp;О <b>$'+f(k.o)+'</b>М <b>$'+f(k.h)+'</b>Н <b>$'+f(k.l)+'</b>З <b>$'+f(k.c)+'</b><b class="'+cls(ch)+'">'+(ch>=0?'+':'−')+'$'+f(Math.abs(ch))+' ('+(ch>=0?'+':'')+f(pc,1)+'%)</b></div>'+
-  '<div class="tr">'+k.trs.slice(0,6).map(x=>esc(x.symbol||'?')+' <span class="'+cls(+x.pnl_usd)+'">'+mny(+x.pnl_usd)+'</span>').join(' · ')+(k.trs.length>6?' · ещё '+(k.trs.length-6):'')+(k.trs.length===1?' · нажми на свечу — подробности':'')+'</div>';}
-function drawCandles(t,m){document.querySelectorAll('#chartTabs .pill').forEach(x=>x.classList.toggle('on',x.dataset.c===chart));geom=null;try{eqPulse(null);}catch{}const mw=$('#marksWrap');if(mw)mw.style.display='none';
+  '<div class="tr">'+k.trs.slice(0,6).map(x=>esc(x.symbol||'?')+' <span class="'+cls(+x.pnl_usd)+'">'+mny(+x.pnl_usd)+'</span>').join(' · ')+(k.trs.length>6?' · ещё '+(k.trs.length-6):'')+'</div>';}
+function drawCandles(t,m){document.querySelectorAll('#chartTabs .pill').forEach(x=>x.classList.toggle('on',x.dataset.c===chart));geom=null;try{eqPulse(null);}catch{}const mw=$('#marksWrap');if(mw)mw.style.display='';
  const c=$('#chart'),wrap=$('#tvWrap');const H=chartBig?Math.max(300,innerHeight-260):(chartAuto?(chartH=fitChartH()):chartH);c.style.display='none';wrap.style.display='';
- const bar=$('#cdBar');if(bar.dataset.k!==cdTF||!bar.innerHTML){bar.dataset.k=cdTF;bar.innerHTML='<div class="pills small">'+CD_TF.map(([k,n])=>'<button class="pill'+(k===cdTF?' on':'')+'" data-tf="'+k+'" title="'+(k==='trade'?'Одна свеча — одна сделка, без пустых промежутков между сделками':'Одна свеча = '+n+'; отрезки без сделок пропускаются')+'">'+n+'</button>').join('')+'</div><span class="note">колесо — масштаб · тяни — сдвиг · тяни шкалу цены — растянуть · двойной клик — весь график</span>';}
+ const bar=$('#cdBar');if(bar.dataset.k!==cdTF||!bar.innerHTML){bar.dataset.k=cdTF;bar.innerHTML='<div class="pills small">'+CD_TF.map(([k,n])=>'<button class="pill'+(k===cdTF?' on':'')+'" data-tf="'+k+'" title="'+(k==='trade'?'Одна свеча — одна сделка, без пустых промежутков между сделками':'Одна свеча = '+n+'; отрезки без сделок пропускаются')+'">'+n+'</button>').join('')+'</div>';}
  if(!t.length){wrap.style.display='none';c.style.display='';return;}
  if(!TV)TV=tvInit();if(!TV){c.style.display='';wrap.style.display='none';return;}
  const W=wrap.clientWidth||c.clientWidth;TV.chart.applyOptions({width:W,height:H});
- const key=cdTF+'|'+t.length+'|'+(t[t.length-1].closed)+'|'+Math.round(eqNow()*100);if(key===tvKey)return;const first=!tvKey;tvKey=key;
+ const key=cdTF+'|'+t.length+'|'+(t[t.length-1].closed)+'|'+Math.round(eqNow()*100)+'|'+showMarks;if(key===tvKey)return;const first=!tvKey;tvKey=key;
  let cs=cdTradeCandles(t);const step=(CD_TF.find(x=>x[0]===cdTF)||CD_TF[0])[2];if(step)cs=cdAgg(cs,step);tvCs=cs;
  TV.cs.setData(cs.map(k=>({time:k.ts,open:k.o,high:k.h,low:k.l,close:k.c})));
  const agg=!!step;TV.vol.setData(agg?cs.map(k=>({time:k.ts,value:k.n,color:k.c>=k.o?'#5fd3a040':'#ff767640'})):[]);TV.chart.priceScale('right').applyOptions({scaleMargins:{top:.08,bottom:agg?.22:.06}});
+ try{const mk=[];tvMk={};let mi=0;if(showMarks)for(const k of cs)for(const x of k.trs){const w=+x.pnl_usd>0,id='m'+(mi++);tvMk[id]=x;mk.push({time:k.ts,position:w?'aboveBar':'belowBar',color:w?'#5fd3a0':'#ff7676',shape:'circle',size:.6,id});}TV.cs.setMarkers(mk);}catch(e){console.error(e);}
  if(first)TV.chart.timeScale().fitContent();tvLegend(null);}
 
 async function tick(){try{const d=await (await fetch(window.DATA_URL||'/api',{cache:'no-store'})).json();D=d;
