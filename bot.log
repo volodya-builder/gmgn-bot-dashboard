@@ -2468,3 +2468,11 @@
 [2026-09-24 03:39:28] гипотезы: проверено сейчас 177, всего 44668 за 4538 мс; токенов с историей 1152/300, дней 1.48/3 — выводы преждевременны; лучшая за 7 дней по нижней границе: возраст до 5 мин, снайперов до 15, рост за 1 мин от 0%, тейк +150%, стоп −50%, трейлинг выключен (n=10, $19.08/сделку, нижняя граница $13.62, мало данных: нужно ещё 20 сделок до первой оценки); шум p95 $4.05
 [2026-09-24 03:39:28] наблюдаемая гипотеза «Вход на 3-й минуте при зрителях ≥ 9, зрителей на холдера ≥ 0»: проверочных сделок 95, $-2.24/сделку, нижняя граница $-3.08 — мало данных
 [2026-09-24 03:39:28] наблюдаемая гипотеза «volodya experiment»: проверочных сделок 9, $0.72/сделку, нижняя граница $-2.77 — мало данных
+[2026-09-24 03:42:40] скан: 208 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:197 liq:4; возраст мин/медиана/макс: 3/1303/122475 мин
+[2026-09-24 03:43:36] история цен: запрошено 6, получено 6
+[2026-09-24 03:44:20] CANDIDATE SpaceXAI (flap) age 0.3m | liq 19942 | mcap 39080 | holders 297 | swaps 109 | vol 6459 | top10 0.14 | bundler 0.00 | snipers 5 | tax 2/2 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 72/37 | creator creator_close | wash | smart 3 | renowned 0 | viewers 82 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 1 | chg1m -9 | viewers/holders 0.28 | source rank | launchpad flap
+[2026-09-24 03:44:20] BUY paper SpaceXAI @0.0000411310 $20 | mcap 39080 liq 19942 holders 297
+[2026-09-24 03:46:01] CANDIDATE 卷饼 (flap) age 0.2m | liq 16687 | mcap 35611 | holders 212 | swaps 389 | vol 26350 | top10 0.43 | bundler 0.19 | snipers 2 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 227/162 | creator creator_close | wash | smart 6 | renowned 8 | viewers 355 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 253 | chg1m 116 | viewers/holders 1.67 | source rank | launchpad flap
+[2026-09-24 03:46:01] BUY paper 卷饼 @0.0000378920 $20 | mcap 35611 liq 16687 holders 212
+[2026-09-24 03:46:15] SELL paper SpaceXAI stop_loss pnl -4.83$ (-22.6%) hold 2m | balance 823.31
+[2026-09-24 03:46:25] SELL paper 卷饼 stop_loss pnl -5.10$ (-24.0%) hold 0m | balance 838.21
