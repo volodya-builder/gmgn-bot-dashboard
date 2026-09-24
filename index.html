@@ -932,6 +932,9 @@ main{padding-bottom:45vh!important}
   #v-overview #hero>.kc:nth-child(n+2) .kct{font-size:12px}
   #v-overview #hero>.kc:nth-child(2) .kcl{font-size:11.5px}
 }
+#v-net .ana-svg-bar.bt{fill:url(#btGrad)}#v-net .ana-svg-bar.bt.hl{fill:url(#btHl)}#v-net .ana-svg-bar.bt.now{fill:url(#btNow)}#v-net .ana-svg-bar.bt.btn{fill:url(#btNeg)}#v-net .ana-svg-bar.bt.btn.hl{fill:url(#btNegHl)}#v-net .ana-svg-bar.bt.btmt{fill:#ffffff1f}
+#v-net .ana-grid-line.btzero{stroke:#ffffff33}#v-net #btBig.btneg{color:#e57373}#v-net .btempty{height:220px;display:flex;align-items:center;justify-content:center;color:var(--hd);font-size:14px}
+#v-net #botPanel .ana-note2{margin:10px 0 0;padding:0}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -958,7 +961,7 @@ main{padding-bottom:45vh!important}
   <div class="ana-strip" id="netKpi"></div>
   <div class="ana-panel"><div class="ana-panel-head"><div><div class="ana-panel-val" id="netBig">—</div><div class="ana-panel-sub" id="netSub"></div></div><div class="seg" id="netMet"><button type="button" class="seg-btn on" data-m="v">Объём</button><button type="button" class="seg-btn" data-m="t">Сделки</button><button type="button" class="seg-btn" data-m="c">Запуски</button></div></div><div id="netSvg"></div></div>
   <div class="ana-note2" id="netNote"></div>
-  <div class="ana-panel" id="botPanel"><div class="ana-panel-head"><div><div class="ana-panel-val" id="btBig">—</div><div class="ana-panel-sub" id="btSub"></div></div><div class="seg" id="btMet"><button type="button" class="seg-btn on" data-m="pnl">PnL по сделкам</button><button type="button" class="seg-btn" data-m="count">Сделки</button></div></div><div class="btwrap"><canvas id="btCv"></canvas><div class="tip" id="btTip" style="display:none"></div></div><div class="ana-note2">Сделки бота за выбранный на «Обзоре» период: столбики по часам (до 3 дней) или по дням.</div></div>
+  <div class="ana-panel" id="botPanel"><div class="ana-panel-head"><div><div class="ana-panel-val" id="btBig">—</div><div class="ana-panel-sub" id="btSub"></div></div><div class="seg" id="btMet"><button type="button" class="seg-btn on" data-m="pnl">PnL по сделкам</button><button type="button" class="seg-btn" data-m="count">Сделки</button></div></div><div id="btSvg"></div><div class="ana-note2">Сделки бота за выбранный на «Обзоре» период: столбики по часам (до 3 дней) или по дням.</div></div>
 </section>
 <section class="view" id="v-trending">
   <div class="titlebar"><h1 class="h1">В тренде</h1><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="note" id="trMeta"></span><div class="pills small" id="trFilter"><button class="pill on" data-f="all">Все</button><button class="pill" data-f="ok">Прошли фильтр</button><button class="pill" data-f="trenches">С лаунчпадов</button><button class="pill" data-f="fresh">Моложе 30 мин</button></div></div></div>
@@ -1603,33 +1606,38 @@ function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label
 // ---- «Объёмы» → сделки бота: PnL по сделкам и число сделок столбиками (перенесено с «Обзора») ----
 let botMode='pnl',botLast=null,botGeom=null;
 document.querySelectorAll('#btMet .seg-btn').forEach(b=>b.onclick=()=>{botMode=b.dataset.m;document.querySelectorAll('#btMet .seg-btn').forEach(x=>x.classList.toggle('on',x===b));drawBotBars();});
-function drawBotBars(){const v=$('#v-net');const c=$('#btCv');if(!c||!v||!v.classList.contains('on')||!botLast)return;const t=botLast;
- const W=c.clientWidth||600,H=240,dpr=devicePixelRatio||1;c.width=W*dpr;c.height=H*dpr;c.style.height=H+'px';const ctx=c.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,W,H);
- const total=botMode==='pnl'?t.reduce((a,x)=>a+(+x.pnl_usd||0),0):t.length;
- $('#btBig').textContent=botMode==='pnl'?money(total):f(total,0);
- if(!t.length){$('#btSub').textContent='сделок за период нет';ctx.fillStyle='#6a6e66';ctx.font='13px sans-serif';ctx.fillText('Нет сделок за выбранный период',12,H/2);botGeom=null;return;}
+let botHov=null;
+function drawBotBars(){const v=$('#v-net');const bx=$('#btSvg');if(!bx||!v||!v.classList.contains('on')||!botLast)return;const t=botLast;const pnl=botMode==='pnl';
+ const MON=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];const p2=n=>String(n).padStart(2,'0');
+ const fm=(vv,ax)=>pnl?((vv<0?'−':vv>0&&!ax?'+':'')+'$'+(Math.abs(vv)>=1000?f(Math.abs(vv)/1000,1)+'k':Math.abs(vv)>=100||ax?f(Math.abs(vv),Math.abs(vv)>=100?0:ax?(Math.abs(vv)<10?1:0):2):f(Math.abs(vv),2))):f(Math.round(vv),0);
+ if(!t.length){$('#btBig').textContent=pnl?'$0':'0';$('#btSub').textContent='сделок за выбранный период нет';bx.innerHTML='<div class="btempty">Нет сделок за выбранный период</div>';return;}
  const ts=t.map(x=>+new Date(x.closed)).filter(Boolean);let t0=Math.min(...ts),t1=Math.max(...ts);const step=(t1-t0)<=3*864e5?36e5:864e5;t0=Math.floor(t0/step)*step;t1=Math.floor(t1/step)*step+step;
- const B=new Map();for(const x of t){const k=Math.floor(+new Date(x.closed)/step)*step;const b=B.get(k)||{t:k,n:0,pnl:0};b.n++;b.pnl+=(+x.pnl_usd||0);B.set(k,b);}
- const bars=[...B.values()].sort((a,b)=>a.t-b.t);
- $('#btSub').textContent=(botMode==='pnl'?'PnL по сделкам':'Количество сделок')+', '+(step===36e5?'по часам':'по дням')+' · '+t.length+' сделок';
- const vals=bars.map(b=>botMode==='pnl'?b.pnl:b.n);let y1=Math.max(0,...vals),y0=Math.min(0,...vals);if(y1===y0)y1=1;const pd=(y1-y0)*.1;y1+=pd;if(y0<0)y0-=pd;
- const P={l:8,r:70,t:12,b:26},PW=W-P.l-P.r,PH=H-P.t-P.b;const X=x=>P.l+(x-t0)/((t1-t0)||1)*PW,Y=y=>P.t+(1-(y-y0)/((y1-y0)||1))*PH;
- ctx.strokeStyle='#ffffff10';ctx.lineWidth=1;ctx.fillStyle='#6a6e66';ctx.font='11px sans-serif';ctx.textAlign='left';
- for(let i=0;i<=4;i++){const vv=y0+(y1-y0)*i/4,y=Y(vv);ctx.beginPath();ctx.moveTo(P.l,y);ctx.lineTo(W-P.r,y);ctx.stroke();ctx.fillText(botMode==='count'?f(vv,0):(Math.abs(vv)>=100?(vv<0?'-':'')+'$'+f(Math.abs(vv),0):money(vv)),W-P.r+10,y+4);}
- const base=Y(0);ctx.strokeStyle='#ffffff30';ctx.beginPath();ctx.moveTo(P.l,base);ctx.lineTo(W-P.r,base);ctx.stroke();
- const bw=Math.max(3,Math.min(40,PW/((t1-t0)/step)*.7));
- for(const b of bars){const vv=botMode==='pnl'?b.pnl:b.n,cx=X(b.t+step/2),y=Y(vv),top=Math.min(y,base),h=Math.max(2,Math.abs(base-y));const gg=ctx.createLinearGradient(0,top,0,top+h);
-  if(botMode==='pnl'&&vv<0){gg.addColorStop(0,'#e05c5c');gg.addColorStop(1,'#7a2f2f');}else if(botMode==='pnl'){gg.addColorStop(0,'#4caf6d');gg.addColorStop(1,'#2b5a3a');}else{gg.addColorStop(0,'#f4f4f0');gg.addColorStop(1,'#8a8a86');}
-  ctx.fillStyle=gg;ctx.beginPath();ctx.roundRect?ctx.roundRect(cx-bw/2,top,bw,h,3):ctx.rect(cx-bw/2,top,bw,h);ctx.fill();}
- ctx.fillStyle='#6a6e66';ctx.textAlign='center';const n=Math.max(2,Math.min(6,Math.floor(W/120)));for(let i=0;i<=n;i++){const tt=t0+(t1-t0)*i/n;ctx.fillText(new Date(tt).toLocaleString('ru-RU',step===36e5?{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'}:{day:'2-digit',month:'2-digit'}),Math.min(W-P.r-30,Math.max(P.l+30,X(tt))),H-8);}
- botGeom={X,bars,step,W,base,Y};
- c.onmousemove=e=>{const g=botGeom;if(!g)return;const r=c.getBoundingClientRect(),mx=e.clientX-r.left;let best=null;for(const b of g.bars){const d=Math.abs(g.X(b.t+g.step/2)-mx);if(!best||d<best.d)best={b,d};}const tip=$('#btTip');if(!best||best.d>40){tip.style.display='none';return;}const b=best.b;tip.style.display='block';tip.innerHTML=new Date(b.t).toLocaleString('ru-RU',g.step===36e5?{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}:{day:'2-digit',month:'2-digit'})+'<br>'+(botMode==='pnl'?'PnL <b class="'+cls(b.pnl)+'">'+money(b.pnl)+'</b> · '+b.n+' сделок':'<b>'+b.n+'</b> сделок');tip.style.left=Math.min(mx+12,g.W-170)+'px';tip.style.top=(g.Y(botMode==='pnl'?b.pnl:b.n)-44)+'px';};
- c.onmouseleave=()=>{const tip=$('#btTip');if(tip)tip.style.display='none';};}
+ const nb=Math.max(1,Math.round((t1-t0)/step)),bins=Array.from({length:nb},(_,k)=>({from:t0+k*step,n:0,pnl:0}));
+ for(const x of t){const k=Math.floor((+new Date(x.closed)-t0)/step);if(bins[k]){bins[k].n++;bins[k].pnl+=(+x.pnl_usd||0);}}
+ const val=b=>pnl?b.pnl:b.n,vals=bins.map(val),total=pnl?t.reduce((a,x)=>a+(+x.pnl_usd||0),0):t.length;
+ const H=botHov!==null&&bins[botHov]?bins[botHov]:null;
+ const lab=ms=>{const d=new Date(ms);return step===36e5?d.getDate()+' '+MON[d.getMonth()]+', '+p2(d.getHours())+':00':d.getDate()+' '+MON[d.getMonth()];};
+ $('#btBig').textContent=H?fm(val(H)):fm(total);$('#btBig').className='ana-panel-val'+(pnl&&(H?val(H):total)<0?' btneg':'');
+ $('#btSub').textContent=H?(step===36e5?lab(H.from)+'–'+p2(new Date(H.from+step).getHours())+':00':lab(H.from))+' · '+(H.n?H.n+' '+(H.n%10===1&&H.n%100!==11?'сделка':H.n%10>=2&&H.n%10<=4&&(H.n%100<10||H.n%100>=20)?'сделки':'сделок'):'сделок не было'):(pnl?'PnL по сделкам':'Количество сделок')+', '+(step===36e5?'по часам':'по дням')+' · '+t.length+' сделок';
+ const VH=matchMedia('(max-width:900px)').matches?220:300,l=Math.max(300,Math.round(bx.clientWidth||1000)),u=nb,d=(l-70)/u,gap=Math.max(2,Math.min(10,d*.28)),w=Math.max(1,d-gap);
+ let hi=Math.max(0,...vals),lo=pnl?Math.min(0,...vals):0;if(hi===lo)hi=lo+1;const PH=VH-36,g=vv=>10+(hi-vv)/(hi-lo)*PH,base=g(0);
+ let o='<svg class="ana-svg" viewBox="0 0 '+l+' '+VH+'" preserveAspectRatio="none"><defs><linearGradient id="btGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6e6e3"/><stop offset="1" stop-color="#7c7c79"/></linearGradient><linearGradient id="btHl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c9c9c5"/></linearGradient><linearGradient id="btNow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8f542"/><stop offset="1" stop-color="#a6d92e"/></linearGradient><linearGradient id="btNeg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8f3f3f"/><stop offset="1" stop-color="#e57373"/></linearGradient><linearGradient id="btNegHl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b04c4c"/><stop offset="1" stop-color="#ff8f8f"/></linearGradient></defs>';
+ const ticks=[];if(lo<0){ticks.push(lo,lo/2);}ticks.push(0);[.25,.5,.75,1].forEach(e=>{if(hi*e>0&&(lo>=0||e>=.5))ticks.push(hi*e);});
+ for(const tv of ticks){const y=g(tv);o+='<g><line x1="0" x2="'+(l-76)+'" y1="'+y+'" y2="'+y+'" class="ana-grid-line'+(tv===0&&lo<0?' btzero':'')+'"/>'+(tv===0&&lo>=0?'':'<text x="'+(l-66)+'" y="'+(y+4)+'" class="ana-grid-lbl">'+fm(tv,true)+'</text>')+'</g>';}
+ vals.forEach((vv,k)=>{const x=k*(w+gap),empty=!bins[k].n,neg=pnl&&vv<0;const hgt=empty?4:Math.max(4,Math.abs(vv)/(hi-lo)*PH);const y=empty?base-4:neg?base:base-hgt;
+  const c='ana-svg-bar bt'+(empty?' btmt':neg?' btn':k===u-1?' now':'')+(botHov===k?' hl':botHov===null?'':' dim');
+  o+='<g data-i="'+k+'"><rect x="'+x+'" y="10" width="'+w+'" height="'+PH+'" fill="transparent"/><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+hgt+'" rx="'+Math.min(6,w/2)+'" class="'+c+'"/></g>';});
+ const lb=ms=>{const dd=new Date(ms);return step===36e5?(u<=26?p2(dd.getHours())+':00':dd.getDate()+' '+MON[dd.getMonth()]+', '+p2(dd.getHours())+':00'):dd.getDate()+' '+MON[dd.getMonth()];};
+ [...new Set([0,Math.floor((u-1)/2),u-1])].forEach(k=>{const x=k===0?0:k===u-1?(u-1)*(w+gap)+w:k*(w+gap)+w/2;o+='<text x="'+x+'" y="'+(VH-6)+'" class="ana-axis-lbl" text-anchor="'+(k===0?'start':k===u-1?'end':'middle')+'">'+lb(bins[k].from)+'</text>';});
+ bx.innerHTML=o+'</svg>';
+ if(!bx.dataset.h){bx.dataset.h=1;const pick=e=>{const gg=e.target.closest&&e.target.closest('g[data-i]');if(!gg)return;const k=+gg.dataset.i;if(k!==botHov){botHov=k;drawBotBars();}};bx.addEventListener('mouseover',pick);bx.addEventListener('mouseleave',()=>{botHov=null;drawBotBars();});
+  bx.addEventListener('touchstart',pick,{passive:true});bx.addEventListener('touchmove',e=>{const tt=e.touches[0],el=document.elementFromPoint(tt.clientX,tt.clientY);pick({target:el});},{passive:true});addEventListener('resize',()=>drawBotBars());}}
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.120';
+const APP_VERSION='2.121';
 const CHANGELOG=[
+ ['2.121','24.09.2026',['«Объёмы»: график сделок бота оформлен как график объёмов — те же скруглённые столбики, шкала, подписи и подсветка при наведении (сумма и время столбика показываются сверху); убыточные часы — красные столбики вниз от нуля, текущий — салатовый']],
  ['2.120','24.09.2026',['Свечной график: при наведении на точку сделки — карточка сделки, как на линейном графике (логотип, результат, причина, размер, капитализация, время); клик по точке — подробности']],
  ['2.119','24.09.2026',['Телефон: спокойная раскладка обзора — сверху статус бота и гипотеза в одну строку, крупный депозит, сразу под ним график, под графиком период, ниже цифры сделок; шапка в две строки без лишних рамок']],
  ['2.118','24.09.2026',['Свечной график: убраны подсказки и значок; галочка «Сделки на графике» работает и для свечей — точка над свечой у прибыльной сделки, под свечой у убыточной. Графики свечей — библиотека <a href="https://www.tradingview.com/lightweight-charts/" target="_blank" rel="noopener">TradingView Lightweight Charts</a>']],
