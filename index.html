@@ -965,6 +965,12 @@ body.hvm .hvxbtn{display:none}
 #raceDet .trustb{margin-top:6px}
 #raceDet .trustb .lcmp{margin-top:18px}
 .racemore{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 4px 4px}.racemore .note{font-size:12.5px}#hypTable tr.hmore td{padding:12px 8px}#hypTable tr.hmore .btn{margin-right:8px}#hypTable tr.hmore .note{font-size:12.5px}
+
+/* hvm-real: реальные сделки в истории гипотезы */
+.ovti.real{background:#7cc4ff0a;border-radius:10px}
+.rbdg{font-style:normal;font-size:10.5px;font-weight:600;letter-spacing:.02em;color:#7cc4ff;border:1px solid #7cc4ff55;border-radius:6px;padding:0 5px;margin-left:7px;vertical-align:2px}
+.hvs .hvrl{color:#c9ccc4;font-weight:500}
+.hvs{line-height:1.6;max-width:560px}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -1298,18 +1304,18 @@ let ovLogo={},ovLogoAsked=new Set(),ovLastT=null;
 function ovLogos(L){for(const t of (D.lastScan&&D.lastScan.tokens)||[])if(t.logo&&t.address)ovLogo[t.address.toLowerCase()]=t.logo;
  const need=[...new Set(L.slice(0,200).map(x=>String(x.address||'').toLowerCase()))].filter(a=>a&&!ovLogo[a]&&!ovLogoAsked.has(a)).slice(0,25);if(!need.length)return;need.forEach(a=>ovLogoAsked.add(a));
  fetch('/api/logos?a='+need.join(','),{cache:'no-store'}).then(r=>r.json()).then(m=>{let n=0;for(const k in m){ovLogo[k]=m[k];n++;}if(n&&window._ttT){try{tradesTable(window._ttT);}catch{}}if(ovLastT){if(n)ovTrades(ovLastT);else ovLogos([...ovLastT].reverse());}}).catch(()=>{});}
-function ovTrades(t){const el=$('#ovTr');if(!el)return;ovLastT=t;const L=[...t].reverse();ovLogos(L);
+function ovTrades(t){const el=$('#ovTr');if(!el)return;if(window.HVM&&HVM.real&&HVM.real.length){const fr=period==='all'?0:Date.now()-PERIOD_MS[period];t=[...t,...HVM.real.filter(x=>+new Date(x.closed)>=fr)].sort((a,b)=>+new Date(a.closed)-+new Date(b.closed));}ovLastT=t;const L=[...t].reverse();ovLogos(L);
  const RSN={take_profit:'тейк',stop_loss:'стоп',trailing:'трейлинг',timeout:'по времени',manual:'вручную',sell_failed:'ошибка продажи'};
- const w=L.filter(x=>+x.pnl_usd>0).length,sum=L.reduce((a,x)=>a+ +x.pnl_usd,0);
- $('#ovTrSum').innerHTML=L.length?'<span class="good">'+w+'</span> / <span class="bad">'+(L.length-w)+'</span> · <b class="'+cls(sum)+'">'+mny(sum)+'</b>':'';
+ const LS=L.filter(x=>!x.real);const w=LS.filter(x=>+x.pnl_usd>0).length,sum=LS.reduce((a,x)=>a+ +x.pnl_usd,0);
+ $('#ovTrSum').innerHTML=L.length?'<span class="good">'+w+'</span> / <span class="bad">'+(LS.length-w)+'</span> · <b class="'+cls(sum)+'">'+mny(sum)+'</b>':'';
  if(!L.length){el.innerHTML='<div class="empty">Сделок за период нет</div>';return;}
  const dk=d=>new Date(+d+3*36e5).toISOString().slice(0,10),today=dk(Date.now()),yest=dk(Date.now()-864e5);let last='',h='';
  L.slice(0,200).forEach((x,i)=>{const p=+x.pnl_usd,pc=+x.pnl_pct,good=p>0,d=new Date(x.closed),k=dk(d);
-  if(k!==last){last=k;const ds=L.filter(y=>dk(new Date(y.closed))===k),sm=ds.reduce((a,y)=>a+ +y.pnl_usd,0);h+='<div class="ovday"><span>'+(k===today?'Сегодня':k===yest?'Вчера':d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'}))+'</span><span class="'+cls(sm)+'">'+mny(sm)+'</span></div>';}
+  if(k!==last){last=k;const ds=L.filter(y=>!y.real&&dk(new Date(y.closed))===k),sm=ds.reduce((a,y)=>a+ +y.pnl_usd,0);h+='<div class="ovday"><span>'+(k===today?'Сегодня':k===yest?'Вчера':d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'}))+'</span><span class="'+cls(sm)+'">'+mny(sm)+'</span></div>';}
   const base=String(x.reason||'').replace(/_(gmgn|empty)$/,''),r=RSN[base]||base,lg=ovLogo[String(x.address||'').toLowerCase()],sym=esc((x.symbol||'?'));
   const tip='Капитализация на входе $'+f(+x.mcap/1000,0)+'k, ликвидность $'+f(+x.liq/1000,1)+'k, холдеров '+(x.holders||'—')+(x.age_min?', вход на '+f(+x.age_min,1)+' минуте жизни монеты':'');
-  h+='<div class="ovti '+(good?'w':'l')+'" data-i="'+i+'" title="'+esc(tip)+'"><div class="ovlg">'+(lg?'<img src="'+esc(lg)+'" loading="lazy" onerror="this.remove()">':'')+'<span>'+sym.slice(0,2)+'</span></div>'+
-   '<div class="ovmid"><b>'+sym+'</b><span>'+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+' · '+esc(r)+' · '+dur(+x.hold_min)+'</span></div>'+
+  h+='<div class="ovti '+(good?'w':'l')+(x.real?' real':'')+'" data-i="'+i+'" title="'+esc(tip)+'"><div class="ovlg">'+(lg?'<img src="'+esc(lg)+'" loading="lazy" onerror="this.remove()">':'')+'<span>'+sym.slice(0,2)+'</span></div>'+
+   '<div class="ovmid"><b>'+sym+(x.real?'<i class="rbdg">реальная</i>':'')+'</b><span>'+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+' · '+esc(r)+' · '+dur(+x.hold_min)+'</span></div>'+
    '<div class="ovres"><b>'+mny(p)+'</b><span>'+(pc>0?'+':'')+f(pc,1)+'%</span></div></div>';});
  el.innerHTML=h;
  el.querySelectorAll('.ovti').forEach(n=>n.onclick=()=>openTrade(L[+n.dataset.i]));
@@ -1671,8 +1677,9 @@ function drawBotBars(){const v=$('#v-net');const bx=$('#btSvg');if(!bx||!v||!v.c
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.133';
+const APP_VERSION='2.134';
 const CHANGELOG=[
+ ['2.134','24.09.2026',['Расширенная версия гипотезы: в истории сделок видны и реальные сделки живого бота по этой гипотезе (с пометкой «реальная»), сверху — их итог и до какого времени досчитана симуляция (новые монеты попадают в неё примерно через 2 часа)']],
  ['2.133','24.09.2026',['Исправлено: «Свечи» на графике депозита не показывались после ускорения панели — библиотека графика теперь подгружается при переключении на свечи']],
  ['2.132','24.09.2026',['Скорость: панель перерисовывает только открытую вкладку (раньше — все девять каждые 5 секунд), таблицы и журнал обновляются только при новых данных','Гонка и таблица гипотез показывают первые 120 / 100 строк, остальные — по кнопке «Показать ещё»; полный список приходит в 3 раза меньше, кривые подгружаются только для показанных','Опрос бота каждые 5 с стал в 5–10 раз легче (неизменившиеся части не пересылаются), в фоновой вкладке опрос на паузе','Стили и код панели кэшируются браузером, библиотека графика сделки грузится только при открытии сделки','График гипотез: пульс на концах линий больше не перерисовывает весь график 11 раз в секунду']],
  ['2.131','24.09.2026',['«Можно ли ей верить» в карточке гипотезы: для гипотез не из топ-40 раньше показывались пустые/неверные пункты (например «0 из 100 проверочных» красным). Теперь сервер считает эти проверки для всех гипотез; не посчитанное помечается серым, а не красным']],
@@ -2664,7 +2671,7 @@ window.HVM=null;
  function bar(){const b=$('#hvBar');if(!b||!HVM)return;const r=HVM.r,L=D&&D.liveHyp;const live=r&&L&&r.num&&L.num===r.num;const m=r&&r.win&&r.win[raceW];
   const ttl=r.id==='current'?'Текущие правила':'Гипотеза #'+(r.num||'');
   b.innerHTML='<button class="btn hvback" id="hvBack">← К гонке</button><div class="hvt"><div class="hvh"><b>'+esc(ttl)+'</b>'+(m?relTag(m.rel):'')+(live?'<span class="hvlive"><i class="ondot"></i>живой бот торгует по ней</span>':'')+'</div><div class="hvn">'+esc(HVM.name||r.name||'')+'</div></div>'+
-   '<div class="hvs">'+(HVM.loading?'загружаю сделки…':HVM.err?'<span class="bad">'+esc(HVM.err)+'</span>':'симуляция: '+HVM.trades.length+' сделок по $'+f(HVM.size||20,0)+', старт $'+f(D.config.paper_start_balance_usd,0)+' · комиссии и газ учтены')+'</div>';
+   '<div class="hvs">'+(HVM.loading?'загружаю сделки…':HVM.err?'<span class="bad">'+esc(HVM.err)+'</span>':'симуляция: '+HVM.trades.length+' сделок по $'+f(HVM.size||20,0)+', старт $'+f(D.config.paper_start_balance_usd,0)+' · комиссии и газ учтены'+(()=>{const lt=HVM.trades.length?+new Date(HVM.trades[HVM.trades.length-1].opened):0;return lt?'<br>досчитана до входа '+new Date(lt).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+' — новые монеты попадают в симуляцию примерно через 2 часа (бот ждёт, пока соберётся история цены)':'';})()+(HVM.real&&HVM.real.length?(()=>{const s=HVM.real.reduce((a,x)=>a+ +x.pnl_usd,0);return '<br><b class="hvrl">реально по этой гипотезе: '+HVM.real.length+' '+sdl(HVM.real.length)+', <span class="'+cls(s)+'">'+mny(s)+'</span></b> — в истории справа с пометкой «реальная»';})():''))+'</div>';
   $('#hvBack').onclick=()=>close(true);}
  function place(){const d=det(),hv=$('#hvInfo');if(d&&hv&&d.style.display!=='none'&&d.parentNode!==hv){hv.appendChild(d);d.classList.remove('hdrawer');d.querySelector('.drx')?.remove();}}
  async function open(id){const R=raceIds;const r=R&&R.list.find(x=>x.id===id);if(!r)return;
@@ -2673,7 +2680,7 @@ window.HVM=null;
   navProg=true;try{const b=document.querySelector('nav .pill[data-view="overview"]');if(b)b.click();}finally{navProg=false;}
   scrollTo(0,0);bar();$('#hvBar').style.display='';try{render();}catch(e){console.error(e);}setTimeout(place,0);
   try{const q=await fetch('/api/hyp?id='+encodeURIComponent(id)+'&w=all',{cache:'no-store'});const j=await q.json();if(!q.ok)throw new Error(j.error||('HTTP '+q.status));
-   if(!window.HVM||HVM.id!==id)return;HVM.size=j.size;HVM.name=HVM.name||j.name;HVM.trades=(j.trades||[]).map(t=>conv(t,j.size)).sort((a,b)=>+new Date(a.closed)-+new Date(b.closed));HVM.loading=false;}
+   if(!window.HVM||HVM.id!==id)return;HVM.real=r.num?(D.trades||[]).filter(x=>String(x.rules||'')==='#'+r.num).map(x=>({...x,real:1})):[];HVM.size=j.size;HVM.name=HVM.name||j.name;HVM.trades=(j.trades||[]).map(t=>conv(t,j.size)).sort((a,b)=>+new Date(a.closed)-+new Date(b.closed));HVM.loading=false;}
   catch(e){if(window.HVM){HVM.loading=false;HVM.err='Не удалось загрузить сделки: '+e.message;}}
   if(!window.HVM||HVM.id!==id)return;bar();try{zoom=null;yMan=null;}catch{}try{render();}catch(e){console.error(e);}place();}
  function close(toRace){if(!window.HVM)return;window.HVM=null;document.body.classList.remove('hvm');$('#hvBar').style.display='none';$('#hvBar').innerHTML='';
