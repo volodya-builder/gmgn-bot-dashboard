@@ -296,6 +296,7 @@ th .eye{margin-right:2px}
 .opax{position:relative;display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}.opz{position:absolute;top:0;transform:translateX(-50%)}@media(max-width:700px){.opz{display:none}}
 .opm{margin-top:10px;font-size:13px;color:#9a9d95;display:flex;flex-wrap:wrap;gap:4px 16px}.opm b{color:var(--text);font-weight:500}
 .ctools.ctmin .zbtns,.ctools.ctmin .hint{display:none!important}
+#period{display:none!important}
 .ovgrid{display:grid;grid-template-columns:minmax(0,1fr) clamp(340px,24vw,420px);gap:22px;align-items:start}@media(max-width:1100px){.ovgrid{grid-template-columns:1fr}}
 .ovside{padding:20px 18px;text-align:left}.ovsh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px}.ovsh h2{margin:0}
 .ovside .ovtr,.ovside .ovsh{align-self:stretch;text-align:left}
@@ -790,6 +791,22 @@ main{padding-bottom:45vh!important}
 .hfresh .t{display:none}
 .hfresh i{width:9px;height:9px}
 .hst{gap:8px}
+/* подпись под суммой графика убрана по просьбе */
+#chartSub{display:none!important}
+#ovHyp.ovstrip{border:0;background:none;padding:0;margin:0 0 6px;gap:6px 10px;font-size:13px;flex-wrap:wrap}
+#ovHyp .osn2{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13px;color:#e8e9e4;white-space:nowrap;cursor:default}
+#ovHyp .osn2 .ondot{margin:0}
+#ovHyp .osd2{color:#7d8179;min-width:0;flex:1 1 200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ovHyp .osb2{display:flex;gap:14px;white-space:nowrap}
+#ovHyp .osb2 a{color:#9a9e96;cursor:pointer;font-size:12.5px;text-decoration:none;border-bottom:1px dashed #4a4d48}
+#ovHyp .osb2 a:hover{color:#e8e9e4;border-color:#9a9e96}
+#ovHyp .ovrules{flex-basis:100%;margin-top:6px;padding-top:10px}
+.btwrap{position:relative}.btwrap canvas{width:100%;height:240px;display:block}.btwrap .tip{position:absolute;pointer-events:none;background:#1a1a1a;border:1px solid var(--border2);border-radius:8px;padding:6px 9px;font-size:12px;line-height:1.4;white-space:nowrap}
+/* описание гипотезы над графиком убрано по просьбе (оно есть в «правила») */
+#ovHyp .osd2{display:none!important}
+#ovHyp .osb2{margin-left:auto}
+/* v-right: робот-статус и мини-воронка — справа от заголовка «Обзор» */
+@media(min-width:701px){#v-overview .ovttl{width:100%!important;flex-wrap:nowrap}#v-overview .ovttl>.h1{margin-right:auto}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -805,7 +822,7 @@ main{padding-bottom:45vh!important}
   <div class="ovgrid">
   <div class="card ovchart">
     <div class="ovstrip" id="ovHyp" style="display:none"></div>
-    <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity">Депозит</button><button class="pill" data-c="pnl">PnL по сделкам</button><button class="pill" data-c="count">Сделки</button></div></div>
+    <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity">Депозит</button></div></div>
     <div class="ctools ctmin"><label class="check" id="marksWrap"><input type="checkbox" id="marks"><span class="box"></span>Сделки на графике</label><div class="zbtns"><button class="mini" id="zout" title="Отдалить">−</button><button class="mini" id="zin" title="Приблизить">+</button><button class="mini wide" id="zaxis" title="По сделкам — точки идут подряд, без пустых промежутков между сделками. По времени — настоящая шкала времени">По сделкам</button><button class="mini wide" id="zreset">Весь период</button><button class="mini wide" id="zauto" style="display:none" title="Вернуть автоматический масштаб по вертикали">Авто</button><button class="mini wide" id="zhist" title="Спрятать колонку «История сделок» — график станет на всю ширину">На всю ширину</button><button class="mini wide" id="zbig">Развернуть</button></div><span class="hint">колесо — масштаб · тяни график — сдвиг · тяни шкалу цены или времени — растянуть · двойной клик — сброс</span></div><canvas id="chart"></canvas><div class="axis" id="axis"></div><div class="resz" id="resz" title="Потяни, чтобы изменить высоту графика"><span></span></div>
   </div>
   <div class="card ovside"><div class="ovsh"><h2>История сделок</h2><span class="note" id="ovTrSum"></span></div><div class="ovtr" id="ovTr"></div><div class="resz resz2" id="resz2" title="Потяни вниз, чтобы растянуть график и историю сделок"><span></span></div></div>
@@ -817,6 +834,7 @@ main{padding-bottom:45vh!important}
   <div class="ana-strip" id="netKpi"></div>
   <div class="ana-panel"><div class="ana-panel-head"><div><div class="ana-panel-val" id="netBig">—</div><div class="ana-panel-sub" id="netSub"></div></div><div class="seg" id="netMet"><button type="button" class="seg-btn on" data-m="v">Объём</button><button type="button" class="seg-btn" data-m="t">Сделки</button><button type="button" class="seg-btn" data-m="c">Запуски</button></div></div><div id="netSvg"></div></div>
   <div class="ana-note2" id="netNote"></div>
+  <div class="ana-panel" id="botPanel"><div class="ana-panel-head"><div><div class="ana-panel-val" id="btBig">—</div><div class="ana-panel-sub" id="btSub"></div></div><div class="seg" id="btMet"><button type="button" class="seg-btn on" data-m="pnl">PnL по сделкам</button><button type="button" class="seg-btn" data-m="count">Сделки</button></div></div><div class="btwrap"><canvas id="btCv"></canvas><div class="tip" id="btTip" style="display:none"></div></div><div class="ana-note2">Сделки бота за выбранный на «Обзоре» период: столбики по часам (до 3 дней) или по дням.</div></div>
 </section>
 <section class="view" id="v-trending">
   <div class="titlebar"><h1 class="h1">В тренде</h1><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="note" id="trMeta"></span><div class="pills small" id="trFilter"><button class="pill on" data-f="all">Все</button><button class="pill" data-f="ok">Прошли фильтр</button><button class="pill" data-f="trenches">С лаунчпадов</button><button class="pill" data-f="fresh">Моложе 30 мин</button></div></div></div>
@@ -929,11 +947,10 @@ function renderOvHyp(){const rl=$('#raceCurLbl');if(rl)rl.textContent=D&&D.mode=
  const R=rulesSummary(c);el.style.display='';
  const nm=L?(L.name||''):'гипотеза не выбрана — работают правила из вкладки «Правила»';
  const tt=L?'выбрана '+dt(L.selected_at*1000)+(L.previous?' · до этого '+L.previous:''):'';
- el.innerHTML='<i class="ondot"></i><span class="osl">'+(live?'Реальные деньги':'Симуляция')+'</span>'+
-  '<span class="osn" title="'+esc(tt)+'">'+(L?'Гипотеза #'+L.num:'Правила '+esc(c.rules_version||''))+'</span>'+onTag(L?'включена':'работают')+
-  '<span class="osd" title="'+esc(nm)+'">'+esc(nm)+'</span>'+
-  (m&&m.n?'<span class="osm" title="Как эта гипотеза торговала в симуляции '+WLBL[w]+'">симуляция '+WLBL[w].replace('за ','')+': <b class="'+cls(m.exp)+'">'+mny(m.exp)+'</b> на сделку · '+m.n+' '+sdl(m.n)+'</span>':'')+
-  '<span class="osb"><button class="btn" id="ovRulesT">'+(ovRulesOpen?'Скрыть правила':'Правила входа и выхода')+'</button><button class="btn" id="ovHypGo">'+(D.hypSelect?'Сменить гипотезу':'Гипотезы')+'</button></span>'+
+ const simT=m&&m.n?' · в симуляции '+WLBL[w].replace('за ','')+': '+mny(m.exp)+' на сделку, '+m.n+' '+sdl(m.n):'';
+ el.innerHTML='<span class="osn2" title="'+esc((live?'Реальные деньги · ':'Симуляция · ')+tt+simT)+'"><i class="ondot"></i>'+(L?'#'+L.num:esc(c.rules_version||'правила'))+'</span>'+
+  '<span class="osd2" title="'+esc(nm)+'">'+esc(nm)+'</span>'+
+  '<span class="osb2"><a id="ovRulesT">'+(ovRulesOpen?'скрыть правила':'правила')+'</a><a id="ovHypGo">'+(D.hypSelect?'сменить':'гипотезы')+'</a></span>'+
   (ovRulesOpen?'<div class="ovrules"><div><span class="clbl">Вход</span>'+R.entry.map(t=>'<span class="hchip">'+esc(t)+'</span>').join('')+'</div><div><span class="clbl">Выход</span>'+R.exit.map(t=>'<span class="hchip">'+esc(t)+'</span>').join('')+'</div></div>':'');
  $('#ovRulesT').onclick=()=>{ovRulesOpen=!ovRulesOpen;try{localStorage.setItem('ovRules',ovRulesOpen?'1':'0');}catch{}renderOvHyp();};
  $('#ovHypGo').onclick=()=>{const t=document.querySelector('nav .pill[data-view="hyp"]');if(t)t.click();try{setHypTab('race');}catch{}scrollTo(0,0);};}
@@ -957,7 +974,7 @@ function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{r
    card('Сделки',n+'<small>'+(n?' · '+f(m.wr,0)+'% в плюс':'')+'</small>','','<div class="kbar">'+(n?'<i class="g" style="flex:'+wn+'"></i><i class="r" style="flex:'+ls+'"></i>':'<i style="flex:1"></i>')+'</div><div class="kcs"><span class="good">'+wn+' в плюс</span> · <span class="bad">'+ls+' в минус</span> · в среднем '+(Number.isNaN(m.avgHold)?'—':dur(m.avgHold))+'</div>')+
    card('Средняя сделка','','','<div class="kavg"><span>в плюс</span><i><b class="g" style="width:'+(aw/mx*100)+'%"></b></i><em class="good">'+(wn?'+$'+f(aw):'—')+'</em></div><div class="kavg"><span>в минус</span><i><b class="r" style="width:'+(al/mx*100)+'%"></b></i><em class="bad">'+(ls?'−$'+f(al):'—')+'</em></div><div class="kcs">'+pfTxt+(n?' · макс. просадка <span class="'+(m.mdd>20?'bad':'')+'">'+f(m.mdd,1)+'%</span>':'')+'</div>');
   $('#tiles').innerHTML='';$('#tiles').style.display='none';}
- openTable(open,s);try{openLive(open);}catch(e){console.error(e);}tradesTable(t);try{ovTrades(t);}catch(e){console.error(e);}rules(c);renderLog();drawChart(t,m);renderTrending();renderHyp();try{renderArena();}catch(e){console.error(e);}
+ openTable(open,s);try{openLive(open);}catch(e){console.error(e);}tradesTable(t);try{ovTrades(t);}catch(e){console.error(e);}rules(c);renderLog();drawChart(t,m);try{botLast=t;drawBotBars();}catch(e){console.error(e);}renderTrending();renderHyp();try{renderArena();}catch(e){console.error(e);}
  $('#tradesSub').textContent=t.length+' сделок '+plabel;}
 function openTable(p,s){if(!p.length){$('#open').innerHTML='<tr><td class="empty">Нет открытых позиций</td></tr>';return;}
  $('#open').innerHTML='<tr><th>Токен</th><th class="num">Вход</th><th class="num">Размер</th><th class="num">В сделке</th><th>Режим</th><th>Адрес</th></tr>'+
@@ -1409,9 +1426,42 @@ function laneKey(l){l=String(l||'').toLowerCase();if(l.startsWith('возрас�
 function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label||d.text)});const EX=new Set(['take_profit_pct','stop_loss_pct','trailing_activate_pct','trailing_drawdown_pct','max_hold_min']);
  const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
  if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
+// ---- «Объёмы» → сделки бота: PnL по сделкам и число сделок столбиками (перенесено с «Обзора») ----
+let botMode='pnl',botLast=null,botGeom=null;
+document.querySelectorAll('#btMet .seg-btn').forEach(b=>b.onclick=()=>{botMode=b.dataset.m;document.querySelectorAll('#btMet .seg-btn').forEach(x=>x.classList.toggle('on',x===b));drawBotBars();});
+function drawBotBars(){const v=$('#v-net');const c=$('#btCv');if(!c||!v||!v.classList.contains('on')||!botLast)return;const t=botLast;
+ const W=c.clientWidth||600,H=240,dpr=devicePixelRatio||1;c.width=W*dpr;c.height=H*dpr;c.style.height=H+'px';const ctx=c.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,W,H);
+ const total=botMode==='pnl'?t.reduce((a,x)=>a+(+x.pnl_usd||0),0):t.length;
+ $('#btBig').textContent=botMode==='pnl'?money(total):f(total,0);
+ if(!t.length){$('#btSub').textContent='сделок за период нет';ctx.fillStyle='#6a6e66';ctx.font='13px sans-serif';ctx.fillText('Нет сделок за выбранный период',12,H/2);botGeom=null;return;}
+ const ts=t.map(x=>+new Date(x.closed)).filter(Boolean);let t0=Math.min(...ts),t1=Math.max(...ts);const step=(t1-t0)<=3*864e5?36e5:864e5;t0=Math.floor(t0/step)*step;t1=Math.floor(t1/step)*step+step;
+ const B=new Map();for(const x of t){const k=Math.floor(+new Date(x.closed)/step)*step;const b=B.get(k)||{t:k,n:0,pnl:0};b.n++;b.pnl+=(+x.pnl_usd||0);B.set(k,b);}
+ const bars=[...B.values()].sort((a,b)=>a.t-b.t);
+ $('#btSub').textContent=(botMode==='pnl'?'PnL по сделкам':'Количество сделок')+', '+(step===36e5?'по часам':'по дням')+' · '+t.length+' сделок';
+ const vals=bars.map(b=>botMode==='pnl'?b.pnl:b.n);let y1=Math.max(0,...vals),y0=Math.min(0,...vals);if(y1===y0)y1=1;const pd=(y1-y0)*.1;y1+=pd;if(y0<0)y0-=pd;
+ const P={l:8,r:70,t:12,b:26},PW=W-P.l-P.r,PH=H-P.t-P.b;const X=x=>P.l+(x-t0)/((t1-t0)||1)*PW,Y=y=>P.t+(1-(y-y0)/((y1-y0)||1))*PH;
+ ctx.strokeStyle='#ffffff10';ctx.lineWidth=1;ctx.fillStyle='#6a6e66';ctx.font='11px sans-serif';ctx.textAlign='left';
+ for(let i=0;i<=4;i++){const vv=y0+(y1-y0)*i/4,y=Y(vv);ctx.beginPath();ctx.moveTo(P.l,y);ctx.lineTo(W-P.r,y);ctx.stroke();ctx.fillText(botMode==='count'?f(vv,0):(Math.abs(vv)>=100?(vv<0?'-':'')+'$'+f(Math.abs(vv),0):money(vv)),W-P.r+10,y+4);}
+ const base=Y(0);ctx.strokeStyle='#ffffff30';ctx.beginPath();ctx.moveTo(P.l,base);ctx.lineTo(W-P.r,base);ctx.stroke();
+ const bw=Math.max(3,Math.min(40,PW/((t1-t0)/step)*.7));
+ for(const b of bars){const vv=botMode==='pnl'?b.pnl:b.n,cx=X(b.t+step/2),y=Y(vv),top=Math.min(y,base),h=Math.max(2,Math.abs(base-y));const gg=ctx.createLinearGradient(0,top,0,top+h);
+  if(botMode==='pnl'&&vv<0){gg.addColorStop(0,'#e05c5c');gg.addColorStop(1,'#7a2f2f');}else if(botMode==='pnl'){gg.addColorStop(0,'#4caf6d');gg.addColorStop(1,'#2b5a3a');}else{gg.addColorStop(0,'#f4f4f0');gg.addColorStop(1,'#8a8a86');}
+  ctx.fillStyle=gg;ctx.beginPath();ctx.roundRect?ctx.roundRect(cx-bw/2,top,bw,h,3):ctx.rect(cx-bw/2,top,bw,h);ctx.fill();}
+ ctx.fillStyle='#6a6e66';ctx.textAlign='center';const n=Math.max(2,Math.min(6,Math.floor(W/120)));for(let i=0;i<=n;i++){const tt=t0+(t1-t0)*i/n;ctx.fillText(new Date(tt).toLocaleString('ru-RU',step===36e5?{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'}:{day:'2-digit',month:'2-digit'}),Math.min(W-P.r-30,Math.max(P.l+30,X(tt))),H-8);}
+ botGeom={X,bars,step,W,base,Y};
+ c.onmousemove=e=>{const g=botGeom;if(!g)return;const r=c.getBoundingClientRect(),mx=e.clientX-r.left;let best=null;for(const b of g.bars){const d=Math.abs(g.X(b.t+g.step/2)-mx);if(!best||d<best.d)best={b,d};}const tip=$('#btTip');if(!best||best.d>40){tip.style.display='none';return;}const b=best.b;tip.style.display='block';tip.innerHTML=new Date(b.t).toLocaleString('ru-RU',g.step===36e5?{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}:{day:'2-digit',month:'2-digit'})+'<br>'+(botMode==='pnl'?'PnL <b class="'+cls(b.pnl)+'">'+money(b.pnl)+'</b> · '+b.n+' сделок':'<b>'+b.n+'</b> сделок');tip.style.left=Math.min(mx+12,g.W-170)+'px';tip.style.top=(g.Y(botMode==='pnl'?b.pnl:b.n)-44)+'px';};
+ c.onmouseleave=()=>{const tip=$('#btTip');if(tip)tip.style.display='none';};}
+document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
+addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.96';
+const APP_VERSION='2.102';
 const CHANGELOG=[
+ ['2.102','24.09.2026',['Обзор: робот-статус и мини-воронка отбора сдвинуты к правому краю строки заголовка']],
+ ['2.101','24.09.2026',['Обзор: над графиком убрано длинное описание гипотезы — остались номер, «правила» и «сменить»']],
+ ['2.100','24.09.2026',['Обзор: над графиком остался только «Депозит»; «PnL по сделкам» и «Сделки» переехали во вкладку «Объёмы» отдельной панелью со столбиками по часам/дням']],
+ ['2.99','24.09.2026',['Обзор: убран переключатель периода «24ч / Неделя / Месяц / Всё время» — Обзор всегда показывает всё время']],
+ ['2.98','24.09.2026',['Обзор: полоса «Гипотеза #N» над графиком стала одной тихой строкой без рамки и фона: зелёная точка и номер, правила серым, ссылки «правила» и «сменить»; подробности (режим, когда выбрана, результат в симуляции) — при наведении на номер']],
+ ['2.97','24.09.2026',['Обзор: убрана серая строка-пояснение под суммой над графиком']],
  ['2.96','24.09.2026',['График депозита: над ним осталась только галочка «Сделки на графике», остальные кнопки и подсказка убраны. Колесо мыши, перетаскивание и двойной клик по-прежнему работают']],
  ['2.95','24.09.2026',['Переключение сетей: при выборе BSC сразу открывается панель живого бота с реальным депозитом (раньше — симуляция); в Solana и Robinhood живого бота пока нет — там открывается симуляция']],
  ['2.94','24.09.2026',['Шапка компактнее: сеть — одна кнопка с выпадающим списком, «Реальные / Симуляция» без лишней подписи сети, живой бот — «Живой бот: #339», статус связи — цветная точка (подробности при наведении)']],
