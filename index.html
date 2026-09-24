@@ -1304,7 +1304,7 @@ let ovLogo={},ovLogoAsked=new Set(),ovLastT=null;
 function ovLogos(L){for(const t of (D.lastScan&&D.lastScan.tokens)||[])if(t.logo&&t.address)ovLogo[t.address.toLowerCase()]=t.logo;
  const need=[...new Set(L.slice(0,200).map(x=>String(x.address||'').toLowerCase()))].filter(a=>a&&!ovLogo[a]&&!ovLogoAsked.has(a)).slice(0,25);if(!need.length)return;need.forEach(a=>ovLogoAsked.add(a));
  fetch('/api/logos?a='+need.join(','),{cache:'no-store'}).then(r=>r.json()).then(m=>{let n=0;for(const k in m){ovLogo[k]=m[k];n++;}if(n&&window._ttT){try{tradesTable(window._ttT);}catch{}}if(ovLastT){if(n)ovTrades(ovLastT);else ovLogos([...ovLastT].reverse());}}).catch(()=>{});}
-function ovTrades(t){const el=$('#ovTr');if(!el)return;if(window.HVM&&HVM.real&&HVM.real.length){const fr=period==='all'?0:Date.now()-PERIOD_MS[period];t=[...t,...HVM.real.filter(x=>+new Date(x.closed)>=fr)].sort((a,b)=>+new Date(a.closed)-+new Date(b.closed));}ovLastT=t;const L=[...t].reverse();ovLogos(L);
+function ovTrades(t){const el=$('#ovTr');if(!el)return;if(window.HVM&&HVM.real&&HVM.real.length){const fr=period==='all'?0:Date.now()-PERIOD_MS[period];t=[...t.filter(x=>!x.real),...HVM.real.filter(x=>+new Date(x.closed)>=fr)].sort((a,b)=>+new Date(a.closed)-+new Date(b.closed));}ovLastT=t;const L=[...t].reverse();ovLogos(L);
  const RSN={take_profit:'тейк',stop_loss:'стоп',trailing:'трейлинг',timeout:'по времени',manual:'вручную',sell_failed:'ошибка продажи'};
  const LS=L.filter(x=>!x.real);const w=LS.filter(x=>+x.pnl_usd>0).length,sum=LS.reduce((a,x)=>a+ +x.pnl_usd,0);
  $('#ovTrSum').innerHTML=L.length?'<span class="good">'+w+'</span> / <span class="bad">'+(LS.length-w)+'</span> · <b class="'+cls(sum)+'">'+mny(sum)+'</b>':'';
@@ -1677,8 +1677,9 @@ function drawBotBars(){const v=$('#v-net');const bx=$('#btSvg');if(!bx||!v||!v.c
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.134';
+const APP_VERSION='2.135';
 const CHANGELOG=[
+ ['2.135','24.09.2026',['Расширенная версия гипотезы: реальные сделки больше не дублируются в истории']],
  ['2.134','24.09.2026',['Расширенная версия гипотезы: в истории сделок видны и реальные сделки живого бота по этой гипотезе (с пометкой «реальная»), сверху — их итог и до какого времени досчитана симуляция (новые монеты попадают в неё примерно через 2 часа)']],
  ['2.133','24.09.2026',['Исправлено: «Свечи» на графике депозита не показывались после ускорения панели — библиотека графика теперь подгружается при переключении на свечи']],
  ['2.132','24.09.2026',['Скорость: панель перерисовывает только открытую вкладку (раньше — все девять каждые 5 секунд), таблицы и журнал обновляются только при новых данных','Гонка и таблица гипотез показывают первые 120 / 100 строк, остальные — по кнопке «Показать ещё»; полный список приходит в 3 раза меньше, кривые подгружаются только для показанных','Опрос бота каждые 5 с стал в 5–10 раз легче (неизменившиеся части не пересылаются), в фоновой вкладке опрос на паузе','Стили и код панели кэшируются браузером, библиотека графика сделки грузится только при открытии сделки','График гипотез: пульс на концах линий больше не перерисовывает весь график 11 раз в секунду']],
