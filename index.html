@@ -765,6 +765,8 @@ main{padding-bottom:45vh!important}
 #v-net .ana-note2{color:#70746a;font-size:12px;line-height:1.6;padding:0 2px 30px}
 @media(max-width:900px){#v-net .ana-strip{grid-template-columns:1fr 1fr;row-gap:18px}#v-net .ana-stat:nth-child(3){border-left:0;padding-left:0}#v-net .ana-stat .n{font-size:30px}#v-net .ana-svg{height:220px}#v-net .page-title{font-size:26px}}
 .logo#logoHome{cursor:pointer;border-radius:10px;transition:opacity .15s}.logo#logoHome:hover{opacity:.8}
+.kbnb{font-size:17px;color:#9a9e96;font-weight:400;letter-spacing:0}
+.kbnb2{font-size:15px;color:#9a9e96;font-weight:400;letter-spacing:0}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -914,6 +916,8 @@ function renderOvHyp(){const rl=$('#raceCurLbl');if(rl)rl.textContent=D&&D.mode=
  const ap=()=>{g.classList.toggle('nohist',nh);bt.textContent=nh?'Показать историю':'На всю ширину';bt.title=nh?'Вернуть колонку «История сделок» справа':'Спрятать колонку «История сделок» — график станет на всю ширину';};ap();
  bt.onclick=()=>{nh=!nh;try{localStorage.setItem('ovNoHist',nh?'1':'0');}catch{}ap();try{redraw();}catch{}};})();
 // депозит = свободные деньги на кошельке + текущая стоимость открытых позиций (по последней цене)
+function eqBnb(){const s=(D&&D.state)||{};if(!(+s.wallet_bnb>0&&+s.balance_usd>0))return null;return eqNow()/(s.balance_usd/s.wallet_bnb);}
+const bnbTag=(cl)=>{const b=eqBnb();return b==null?'':'<small class="'+(cl||'kbnb')+'"> ('+f(b,4)+' BNB)</small>';};
 function eqNow(){const s=(D&&D.state)||{};let v=+s.balance_usd||0;for(const p of Object.values(s.positions||{})){const k=+p.last>0&&+p.entry>0?p.last/p.entry:1;v+=(+p.size_usd||0)*k;}return v;}
 function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{renderOvHyp();}catch(e){console.error(e);}const s=D.state,c=D.config,t=ptrades(),m=metrics(t);const start=c.paper_start_balance_usd;
  const open=Object.values(s.positions||{});const inPos=open.reduce((a,p)=>a+p.size_usd,0);
@@ -923,7 +927,7 @@ function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{r
   const pfTxt=Number.isFinite(m.pf)?'на каждый потерянный $1 заработано $'+f(m.pf):(m.pf===Infinity?'убыточных сделок нет':'');
   const card=(ttl,big,bk,body)=>'<div class="kc"><div class="kct">'+ttl+'</div><div class="kcb '+(bk||'')+'">'+big+'</div>'+body+'</div>';
   $('#hero').innerHTML=
-   card('Депозит','$'+f(bal)+(open.length?(()=>{const cv=open.reduce((a,q)=>{const pt=q.path&&q.path.length?q.path[q.path.length-1][1]:null;return a+(pt&&q.entry>0?q.size_usd*pt/q.entry:q.size_usd);},0);return '<small class="kin '+(cv>=inPos?'good':'bad')+'" title="Сколько сейчас стоят открытые сделки (вложено $'+f(inPos,0)+'), до комиссий"> (в сделке $'+f(cv)+')</small>';})():''),'','<div class="kcl">старт $'+f(start,0)+' → <b class="'+cls(dd)+'">'+mny(dd)+' ('+(dd>0?'+':'')+f(dd/start*100,1)+'%)</b></div><div class="kcs">'+(open.length?'в сделках $'+f(inPos,0)+' · открыто '+open.length+' из '+c.max_open_positions:'сейчас все деньги свободны')+'</div>')+
+   card('Депозит','$'+f(bal)+bnbTag()+(open.length?(()=>{const cv=open.reduce((a,q)=>{const pt=q.path&&q.path.length?q.path[q.path.length-1][1]:null;return a+(pt&&q.entry>0?q.size_usd*pt/q.entry:q.size_usd);},0);return '<small class="kin '+(cv>=inPos?'good':'bad')+'" title="Сколько сейчас стоят открытые сделки (вложено $'+f(inPos,0)+'), до комиссий"> (в сделке $'+f(cv)+')</small>';})():''),'','<div class="kcl">старт $'+f(start,0)+' → <b class="'+cls(dd)+'">'+mny(dd)+' ('+(dd>0?'+':'')+f(dd/start*100,1)+'%)</b></div><div class="kcs">'+(open.length?'в сделках $'+f(inPos,0)+' · открыто '+open.length+' из '+c.max_open_positions:'сейчас все деньги свободны')+'</div>')+
    card('Итог сделок '+plabel,(m.pnl>=0?'+':'')+money(m.pnl),cls(m.pnl),'<div class="kcl">уже с комиссиями и газом</div><div class="kcs">'+(n?'лучшая <span class="good">'+mny(best)+'</span> · худшая <span class="bad">'+mny(worst)+'</span>':'сделок пока нет')+'</div>')+
    card('Сделки',n+'<small>'+(n?' · '+f(m.wr,0)+'% в плюс':'')+'</small>','','<div class="kbar">'+(n?'<i class="g" style="flex:'+wn+'"></i><i class="r" style="flex:'+ls+'"></i>':'<i style="flex:1"></i>')+'</div><div class="kcs"><span class="good">'+wn+' в плюс</span> · <span class="bad">'+ls+' в минус</span> · в среднем '+(Number.isNaN(m.avgHold)?'—':dur(m.avgHold))+'</div>')+
    card('Средняя сделка','','','<div class="kavg"><span>в плюс</span><i><b class="g" style="width:'+(aw/mx*100)+'%"></b></i><em class="good">'+(wn?'+$'+f(aw):'—')+'</em></div><div class="kavg"><span>в минус</span><i><b class="r" style="width:'+(al/mx*100)+'%"></b></i><em class="bad">'+(ls?'−$'+f(al):'—')+'</em></div><div class="kcs">'+pfTxt+(n?' · макс. просадка <span class="'+(m.mdd>20?'bad':'')+'">'+f(m.mdd,1)+'%</span>':'')+'</div>');
@@ -1103,7 +1107,7 @@ function drawChart(t,m){lastT=t;lastM=m;eqAxisBtn();const byTr=eqByTrade&&chart=
  if(chart==='equity'){const start=D.config.paper_start_balance_usd;const S=D.state||{};const wl=D.mode==='live'&&S.wallet_bnb!=null&&+S.balance_usd>0;let eq=wl?eqNow()-t.reduce((a,x)=>a+ +x.pnl_usd,0):start;series.push({t:t.length?+new Date(t[0].opened):Date.now()-36e5,v:eq});for(const x of t){eq+= +x.pnl_usd;series.push({t:+new Date(x.closed),v:eq,tr:x});}
   if(eqByTrade){const B=series[0].t;series.forEach((p,i)=>{p.rt=p.t;p.t=B+i*EQ_STEP;});}else{const lt=series[series.length-1].t,nw=Date.now();if(nw>lt+6e4)series.push({t:nw,v:eq,now:true});}
   full=[series[0].t,Math.max(series[series.length-1].t,series[0].t+6e4)];
-  $('#chartBig').textContent='$'+f(eq);if(wl){const oth=eqNow()-start-(+S.pnl_usd||0);$('#chartSub').textContent='Кошелёк, как в GMGN (BNB по курсу сейчас), '+pl+(period==='all'&&Math.abs(oth)>=0.01?' · от старта $'+f(start,0)+': сделки '+mny(+S.pnl_usd||0)+', курс BNB и газ '+mny(oth):'');$('#chartSub').title='Линия заканчивается ровно на текущем балансе кошелька (BNB × курс BNB), как показывает GMGN. Шаги линии — результаты сделок после всех комиссий (сверены с GMGN). Разница со стартом, не объяснённая сделками, — это изменение курса BNB к доллару и газ за неудачные транзакции.';}else $('#chartSub').textContent='Депозит по закрытым сделкам, '+pl;}
+  $('#chartBig').innerHTML='$'+f(eq)+(wl?bnbTag('kbnb2'):'');if(wl){const oth=eqNow()-start-(+S.pnl_usd||0);$('#chartSub').textContent='Кошелёк, как в GMGN (BNB по курсу сейчас), '+pl+(period==='all'&&Math.abs(oth)>=0.01?' · от старта $'+f(start,0)+': сделки '+mny(+S.pnl_usd||0)+', курс BNB и газ '+mny(oth):'');$('#chartSub').title='Линия заканчивается ровно на текущем балансе кошелька (BNB × курс BNB), как показывает GMGN. Шаги линии — результаты сделок после всех комиссий (сверены с GMGN). Разница со стартом, не объяснённая сделками, — это изменение курса BNB к доллару и газ за неудачные транзакции.';}else $('#chartSub').textContent='Депозит по закрытым сделкам, '+pl;}
  else{bars=buckets(t);const step=bars[0]?.step||36e5;full=bars.length?[bars[0].t,bars[bars.length-1].t+step]:[Date.now()-864e5,Date.now()];
   const total=chart==='pnl'?m.pnl:t.length;$('#chartBig').textContent=chart==='pnl'?(total>=0?'+':'')+money(total):total;$('#chartSub').textContent=(chart==='pnl'?'PnL по сделкам':'Количество сделок')+', '+(step===36e5?'по часам':'по дням')+', '+pl;}
  let x0,x1;if(zoom){const sp=zoom[1]-zoom[0],lo=Math.min(full[0],full[1]-sp),hi=Math.max(full[0],full[1]-sp);x0=Math.max(lo,Math.min(zoom[0],hi));x1=x0+sp;zoom=[x0,x1];}else[x0,x1]=full;
@@ -1381,8 +1385,9 @@ function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label
  const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
  if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
 // ---- версия ----
-const APP_VERSION='2.86';
+const APP_VERSION='2.87';
 const CHANGELOG=[
+ ['2.87','24.09.2026',['Депозит: рядом с суммой в долларах — сумма в BNB в скобках (кошелёк + открытые сделки); курс BNB теперь берётся прямо из пула WBNB/USDT на PancakeSwap — цена WBNB у GMGN «замерзла» на $760,73, из-за чего депозит в долларах был занижен']],
  ['2.86','24.09.2026',['Клик по логотипу BOT в левом верхнем углу открывает «Обзор»']],
  ['2.85','24.09.2026',['«Объёмы»: к торгам на кривой four.meme и flap добавлены торги этих монет на PancakeSwap после выхода с площадки — во всех парах (BNB, доллары, другие токены), всё в долларах; у объёма показана доля PancakeSwap; исправлен подсчёт монет flap, торгующихся не за BNB']],
  ['2.84','24.09.2026',['«Объёмы» перенесены из «Арены» в «Обзор» — третьей подвкладкой рядом со «Сводкой» и «Всеми сделками»']],
