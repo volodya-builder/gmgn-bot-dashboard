@@ -1098,7 +1098,7 @@ let D=null,period='all',chart='equity';
 const PERIOD_MS={'24h':864e5,'7d':7*864e5,'30d':30*864e5};
 function ptrades(){if(!D)return[];const t=window.HVM?HVM.trades:D.trades;if(period==='all')return t;const from=Date.now()-PERIOD_MS[period];return t.filter(x=>+new Date(x.closed)>=from);}
 function metrics(t){const wins=t.filter(x=>+x.pnl_usd>0),loss=t.filter(x=>+x.pnl_usd<=0);const gw=wins.reduce((a,x)=>a+ +x.pnl_usd,0),gl=Math.abs(loss.reduce((a,x)=>a+ +x.pnl_usd,0));
- const pnl=gw-gl;let peak=0,eq=0,mdd=0;for(const x of t){eq+= +x.pnl_usd;peak=Math.max(peak,eq);mdd=Math.max(mdd,(peak-eq)/(D.config.paper_start_balance_usd+peak)*100);}
+ const pnl=gw-gl;let peak=0,eq=0,mdd=0;for(const x of t){eq+= +x.pnl_usd;peak=Math.max(peak,eq);mdd=Math.max(mdd,(peak-eq)/(startBal()+peak)*100);}
  return{wins,loss,gw,gl,pnl,mdd,pf:gl?gw/gl:(gw?Infinity:NaN),wr:t.length?wins.length/t.length*100:NaN,avgHold:t.length?t.reduce((a,x)=>a+ +x.hold_min,0)/t.length:NaN};}
 // ---- выбранная гипотеза: зелёная точка «включена» ----
 // на живой панели «текущие правила» в переборе — это правила бота-симуляции, а не живого
@@ -1138,9 +1138,10 @@ function renderOvHyp(){const rl=$('#raceCurLbl');if(rl)rl.textContent=D&&D.mode=
 // депозит = свободные деньги на кошельке + текущая стоимость открытых позиций (по последней цене)
 function eqBnb(){const s=(D&&D.state)||{};if(!(+s.wallet_bnb>0&&+s.balance_usd>0))return null;return eqNow()/(s.balance_usd/s.wallet_bnb);}
 const bnbTag=(cl)=>{if(window.HVM)return '';const b=eqBnb();return b==null?'':'<small class="'+(cl||'kbnb')+'"> ('+f(b,4)+' BNB)</small>';};
-function eqNow(){if(window.HVM&&D&&D.config)return D.config.paper_start_balance_usd+HVM.trades.reduce((a,x)=>a+ +x.pnl_usd,0);const s=(D&&D.state)||{};let v=+s.balance_usd||0;for(const p of Object.values(s.positions||{}))v+=(+p.size_usd||0);return v;} // открытая сделка — по вложенной сумме: депозит меняется только когда сделка закрыта
+function startBal(){return window.HVM?100:/*расширенная версия гипотезы: депозит всегда с $100*/D.config.paper_start_balance_usd;}
+function eqNow(){if(window.HVM&&D&&D.config)return startBal()+HVM.trades.reduce((a,x)=>a+ +x.pnl_usd,0);const s=(D&&D.state)||{};let v=+s.balance_usd||0;for(const p of Object.values(s.positions||{}))v+=(+p.size_usd||0);return v;} // открытая сделка — по вложенной сумме: депозит меняется только когда сделка закрыта
 let ovKey='',ttKey='',logKey='',trKey='';
-function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{renderOvHyp();}catch(e){console.error(e);}const s=D.state,c=D.config,t=ptrades(),m=metrics(t);const start=c.paper_start_balance_usd;
+function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{renderOvHyp();}catch(e){console.error(e);}const s=D.state,c=D.config,t=ptrades(),m=metrics(t);const start=startBal();
  const open=window.HVM?[]:Object.values(s.positions||{});const inPos=open.reduce((a,p)=>a+p.size_usd,0);
  const plabel={'24h':'за 24 часа','7d':'за неделю','30d':'за месяц','all':'за всё время'}[period];
  {const bal=eqNow(),dd=bal-start,wn=m.wins.length,ls=m.loss.length,n=t.length,aw=wn?m.gw/wn:0,al=ls?m.gl/ls:0,mx=Math.max(aw,al)||1;
@@ -1330,7 +1331,7 @@ function drawChart(t,m){if(chart==='candles'){lastT=t;lastM=m;try{drawCandles(t,
  const P={l:8,r:84,t:14,b:28},PW=W-P.l-P.r,PH=H-P.t-P.b;
  const pl=({'24h':'24 часа','7d':'неделя','30d':'месяц','all':'всё время'})[period];
  let full,series=[],bars=[];
- if(chart==='equity'){const start=D.config.paper_start_balance_usd;const S=D.state||{};const wl=!window.HVM&&D.mode==='live'&&S.wallet_bnb!=null&&+S.balance_usd>0;let eq=wl?eqNow()-t.reduce((a,x)=>a+ +x.pnl_usd,0):start;series.push({t:t.length?+new Date(t[0].opened):Date.now()-36e5,v:eq});for(const x of t){eq+= +x.pnl_usd;series.push({t:+new Date(x.closed),v:eq,tr:x});}
+ if(chart==='equity'){const start=startBal();const S=D.state||{};const wl=!window.HVM&&D.mode==='live'&&S.wallet_bnb!=null&&+S.balance_usd>0;let eq=wl?eqNow()-t.reduce((a,x)=>a+ +x.pnl_usd,0):start;series.push({t:t.length?+new Date(t[0].opened):Date.now()-36e5,v:eq});for(const x of t){eq+= +x.pnl_usd;series.push({t:+new Date(x.closed),v:eq,tr:x});}
   if(eqByTrade){const B=series[0].t;series.forEach((p,i)=>{p.rt=p.t;p.t=B+i*EQ_STEP;});}else{const lt=series[series.length-1].t,nw=Date.now();if(nw>lt+6e4)series.push({t:nw,v:eq,now:true});}
   full=[series[0].t,Math.max(series[series.length-1].t,series[0].t+6e4)];
   $('#chartBig').innerHTML='$'+f(eq)+(wl?bnbTag('kbnb2'):'');if(wl){const oth=eqNow()-start-(+S.pnl_usd||0);$('#chartSub').textContent='Кошелёк, как в GMGN (BNB по курсу сейчас), '+pl+(period==='all'&&Math.abs(oth)>=0.01?' · от старта $'+f(start,0)+': сделки '+mny(+S.pnl_usd||0)+', курс BNB и газ '+mny(oth):'');$('#chartSub').title='Линия заканчивается ровно на текущем балансе кошелька (BNB × курс BNB), как показывает GMGN. Шаги линии — результаты сделок после всех комиссий (сверены с GMGN). Разница со стартом, не объяснённая сделками, — это изменение курса BNB к доллару и газ за неудачные транзакции.';}else $('#chartSub').textContent='Депозит по закрытым сделкам, '+pl;}
@@ -1354,7 +1355,7 @@ function drawChart(t,m){if(chart==='candles'){lastT=t;lastM=m;try{drawCandles(t,
    for(let i=Math.ceil(i0/st)*st;i<=i1;i+=st){const lbl=fmtT(series[i].rt,rs);if(lbl===prev)continue;const tw=ctx.measureText(lbl).width,x=Math.max(P.l,Math.min(P.l+PW-tw,X(series[i].t)-tw/2));if(x<pr+18)continue;prev=lbl;pr=x+tw;ctx.fillText(lbl,x,H-8);}}}
  else for(let i=0;i<=NX;i++){const tv=x0+span*i/NX;ctx.fillStyle='#8f938a';ctx.textAlign=i===0?'left':i===NX?'right':'center';ctx.fillText(fmtT(tv,span),X(tv),H-8);}
  ctx.save();ctx.beginPath();ctx.rect(P.l-8,P.t-8,PW+16,PH+16);ctx.clip();
- if(chart==='equity'){const start=D.config.paper_start_balance_usd;
+ if(chart==='equity'){const start=startBal();
   const pts=vis.map(p=>({x:X(p.t),y:Y(p.v)})),top=P.t-8,bot=P.t+PH+8,base=Math.max(top,Math.min(bot,Y(start)));
   if(start>y0&&start<y1){ctx.setLineDash([2,6]);ctx.strokeStyle='#ffffff26';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(P.l,base);ctx.lineTo(P.l+PW,base);ctx.stroke();ctx.setLineDash([]);}
   const UP='#5fd3a0',DN='#ff7676',LN='#7cc4ff';
@@ -1378,7 +1379,7 @@ function drawChart(t,m){if(chart==='candles'){lastT=t;lastM=m;try{drawCandles(t,
  if(hov&&hov.x!=null&&!drag){ctx.strokeStyle='#ffffff38';ctx.setLineDash([2,4]);ctx.beginPath();ctx.moveTo(hov.x,P.t);ctx.lineTo(hov.x,P.t+PH);ctx.stroke();ctx.setLineDash([]);
   if(hov.pt&&!hov.mark){ctx.beginPath();ctx.arc(X(hov.pt.t),Y(hov.pt.v),4.5,0,7);ctx.fillStyle='#e8f5ff';ctx.fill();}}
  ctx.restore();
- if(chart==='equity')eqOverlay(ctx,{X,Y,P,PW,PH,W,H,vis,start:D.config.paper_start_balance_usd,x0,x1,span});
+ if(chart==='equity')eqOverlay(ctx,{X,Y,P,PW,PH,W,H,vis,start:startBal(),x0,x1,span});
  eqStraight=false; geom={X,Y,P,PW,PH,W,H,x0,x1,y0,y1,span,full,vis,vb};try{$('#resz').dataset.h=(chartAuto?'по размеру окна · ':'')+H+' px';}catch{}const za=document.getElementById('zauto');if(za)za.style.display=yMan&&chart==='equity'?'':'none';$('#axis').innerHTML='';}
 
 // карточка сделки при наведении на точку (в стиле hood)
@@ -1678,8 +1679,9 @@ function drawBotBars(){const v=$('#v-net');const bx=$('#btSvg');if(!bx||!v||!v.c
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view], #netPer .seg-btn').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.138';
+const APP_VERSION='2.139';
 const CHANGELOG=[
+ ['2.139','24.09.2026',['Расширенная версия гипотезы: депозит и график стартуют с $100 у любой гипотезы (раньше — с депозита бота)']],
  ['2.138','24.09.2026',['График гипотез: каждая гипотеза стартует с депозита $100 — линия показывает, сколько стало бы на счёте (при наведении — сумма и прибыль)']],
  ['2.137','24.09.2026',['«Объёмы»: график «PnL по сделкам / Сделки» построен в том же окне, что и объёмы — 24 узких столбика по часам (неделя и месяц — по дням), пустые часы плоскими полосками; период переключается кнопками над объёмами']],
  ['2.136','24.09.2026',['Безопасность: имена и адреса монет, строки журнала и пояснения гипотез экранируются полностью (включая кавычки) — монета с «ядовитым» именем больше не может выполнить код в панели']],
@@ -2469,7 +2471,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('#chartTabs .pill
 const CD_TF=[['trade','Сделка',0],['15m','15м',9e5],['1h','1ч',36e5],['4h','4ч',144e5],['1d','1д',864e5]];
 function cdOff(){const w=$('#tvWrap');if(w)w.style.display='none';const c=$('#chart');if(c)c.style.display='';const b=$('#cdBar');if(b)b.innerHTML='';}
 // свеча на сделку: открытие — депозит до сделки, закрытие — после; тени — лучший и худший момент сделки (пик и провал цены × размер)
-function cdTradeCandles(t){const S=D.state||{};const wl=!window.HVM&&D.mode==='live'&&S.wallet_bnb!=null&&+S.balance_usd>0;const tot=t.reduce((a,x)=>a+ +x.pnl_usd,0);let eq=wl?eqNow()-tot:D.config.paper_start_balance_usd;
+function cdTradeCandles(t){const S=D.state||{};const wl=!window.HVM&&D.mode==='live'&&S.wallet_bnb!=null&&+S.balance_usd>0;const tot=t.reduce((a,x)=>a+ +x.pnl_usd,0);let eq=wl?eqNow()-tot:startBal();
  const out=[];let lastT=0;for(const x of t){const o=eq,p=+x.pnl_usd,c=o+p,sz=+x.size_usd||20;const pk=+x.peak_pct,tr=+x.trough_pct;
   let h=Math.max(o,c),l=Math.min(o,c);if(isFinite(pk)&&pk>0)h=Math.max(h,o+sz*pk/100);if(isFinite(tr)&&tr<0)l=Math.min(l,o+sz*tr/100);
   let ts=Math.floor(+new Date(x.closed)/1000);if(ts<=lastT)ts=lastT+1;lastT=ts;out.push({ts,o,h,l,c,n:1,w:p>0?1:0,v:sz,trs:[x]});eq=c;}return out;}
@@ -2677,7 +2679,7 @@ window.HVM=null;
  function bar(){const b=$('#hvBar');if(!b||!HVM)return;const r=HVM.r,L=D&&D.liveHyp;const live=r&&L&&r.num&&L.num===r.num;const m=r&&r.win&&r.win[raceW];
   const ttl=r.id==='current'?'Текущие правила':'Гипотеза #'+(r.num||'');
   b.innerHTML='<button class="btn hvback" id="hvBack">← К гонке</button><div class="hvt"><div class="hvh"><b>'+esc(ttl)+'</b>'+(m?relTag(m.rel):'')+(live?'<span class="hvlive"><i class="ondot"></i>живой бот торгует по ней</span>':'')+'</div><div class="hvn">'+esc(HVM.name||r.name||'')+'</div></div>'+
-   '<div class="hvs">'+(HVM.loading?'загружаю сделки…':HVM.err?'<span class="bad">'+esc(HVM.err)+'</span>':'симуляция: '+HVM.trades.length+' сделок по $'+f(HVM.size||20,0)+', старт $'+f(D.config.paper_start_balance_usd,0)+' · комиссии и газ учтены'+(()=>{const lt=HVM.trades.length?+new Date(HVM.trades[HVM.trades.length-1].opened):0;return lt?'<br>досчитана до входа '+new Date(lt).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+' — новые монеты попадают в симуляцию примерно через 2 часа (бот ждёт, пока соберётся история цены)':'';})()+(HVM.real&&HVM.real.length?(()=>{const s=HVM.real.reduce((a,x)=>a+ +x.pnl_usd,0);return '<br><b class="hvrl">реально по этой гипотезе: '+HVM.real.length+' '+sdl(HVM.real.length)+', <span class="'+cls(s)+'">'+mny(s)+'</span></b> — в истории справа с пометкой «реальная»';})():''))+'</div>';
+   '<div class="hvs">'+(HVM.loading?'загружаю сделки…':HVM.err?'<span class="bad">'+esc(HVM.err)+'</span>':'симуляция: '+HVM.trades.length+' сделок по $'+f(HVM.size||20,0)+', старт $'+f(startBal(),0)+' · комиссии и газ учтены'+(()=>{const lt=HVM.trades.length?+new Date(HVM.trades[HVM.trades.length-1].opened):0;return lt?'<br>досчитана до входа '+new Date(lt).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+' — новые монеты попадают в симуляцию примерно через 2 часа (бот ждёт, пока соберётся история цены)':'';})()+(HVM.real&&HVM.real.length?(()=>{const s=HVM.real.reduce((a,x)=>a+ +x.pnl_usd,0);return '<br><b class="hvrl">реально по этой гипотезе: '+HVM.real.length+' '+sdl(HVM.real.length)+', <span class="'+cls(s)+'">'+mny(s)+'</span></b> — в истории справа с пометкой «реальная»';})():''))+'</div>';
   $('#hvBack').onclick=()=>close(true);}
  function place(){const d=det(),hv=$('#hvInfo');if(d&&hv&&d.style.display!=='none'&&d.parentNode!==hv){hv.appendChild(d);d.classList.remove('hdrawer');d.querySelector('.drx')?.remove();}}
  async function open(id){const R=raceIds;const r=R&&R.list.find(x=>x.id===id);if(!r)return;
