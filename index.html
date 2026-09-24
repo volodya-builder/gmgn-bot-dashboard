@@ -1671,8 +1671,9 @@ function drawBotBars(){const v=$('#v-net');const bx=$('#btSvg');if(!bx||!v||!v.c
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.132';
+const APP_VERSION='2.133';
 const CHANGELOG=[
+ ['2.133','24.09.2026',['Исправлено: «Свечи» на графике депозита не показывались после ускорения панели — библиотека графика теперь подгружается при переключении на свечи']],
  ['2.132','24.09.2026',['Скорость: панель перерисовывает только открытую вкладку (раньше — все девять каждые 5 секунд), таблицы и журнал обновляются только при новых данных','Гонка и таблица гипотез показывают первые 120 / 100 строк, остальные — по кнопке «Показать ещё»; полный список приходит в 3 раза меньше, кривые подгружаются только для показанных','Опрос бота каждые 5 с стал в 5–10 раз легче (неизменившиеся части не пересылаются), в фоновой вкладке опрос на паузе','Стили и код панели кэшируются браузером, библиотека графика сделки грузится только при открытии сделки','График гипотез: пульс на концах линий больше не перерисовывает весь график 11 раз в секунду']],
  ['2.131','24.09.2026',['«Можно ли ей верить» в карточке гипотезы: для гипотез не из топ-40 раньше показывались пустые/неверные пункты (например «0 из 100 проверочных» красным). Теперь сервер считает эти проверки для всех гипотез; не посчитанное помечается серым, а не красным']],
  ['2.130','24.09.2026',['Карточка гипотезы в гонке и её расширенная версия: сравнение с текущими правилами («лучше/хуже на $ на каждой сделке») и чек-лист «Можно ли ей верить» — как во вкладке «Лучшая сейчас»']],
@@ -2482,11 +2483,12 @@ function tvLegend(k){const el=$('#tvLeg');if(!el)return;if(!k)k=tvCs[tvCs.length
  const when=new Date(k.ts*1000).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
  el.innerHTML='<div>'+when+' &nbsp;О <b>$'+f(k.o)+'</b>М <b>$'+f(k.h)+'</b>Н <b>$'+f(k.l)+'</b>З <b>$'+f(k.c)+'</b><b class="'+cls(ch)+'">'+(ch>=0?'+':'−')+'$'+f(Math.abs(ch))+' ('+(ch>=0?'+':'')+f(pc,1)+'%)</b></div>'+
   '<div class="tr">'+k.trs.slice(0,6).map(x=>esc(x.symbol||'?')+' <span class="'+cls(+x.pnl_usd)+'">'+mny(+x.pnl_usd)+'</span>').join(' · ')+(k.trs.length>6?' · ещё '+(k.trs.length-6):'')+'</div>';}
+let tvLoading=false;
 function drawCandles(t,m){document.querySelectorAll('#chartTabs .pill').forEach(x=>x.classList.toggle('on',x.dataset.c===chart));geom=null;try{eqPulse(null);}catch{}const mw=$('#marksWrap');if(mw)mw.style.display='';
  const c=$('#chart'),wrap=$('#tvWrap');const H=chartBig?Math.max(300,innerHeight-260):(chartAuto?(chartH=fitChartH()):chartH);c.style.display='none';wrap.style.display='';
  const bar=$('#cdBar');if(bar.dataset.k!==cdTF||!bar.innerHTML){bar.dataset.k=cdTF;bar.innerHTML='<div class="pills small">'+CD_TF.map(([k,n])=>'<button class="pill'+(k===cdTF?' on':'')+'" data-tf="'+k+'" title="'+(k==='trade'?'Одна свеча — одна сделка, без пустых промежутков между сделками':'Одна свеча = '+n+'; отрезки без сделок пропускаются')+'">'+n+'</button>').join('')+'</div>';}
  if(!t.length){wrap.style.display='none';c.style.display='';return;}
- if(!TV)TV=tvInit();if(!TV){c.style.display='';wrap.style.display='none';return;}
+ if(!TV)TV=tvInit();if(!TV){if(!window.LightweightCharts&&!tvLoading){tvLoading=true;tlwLoadLib().then(()=>{tvLoading=false;tvKey='';TV=null;if(chart==='candles'&&D)try{render();}catch(e){console.error(e);}}).catch(()=>{tvLoading=false;});}c.style.display='';wrap.style.display='none';return;}
  const W=wrap.clientWidth||c.clientWidth;TV.chart.applyOptions({width:W,height:H});
  const key=cdTF+'|'+t.length+'|'+(t[t.length-1].closed)+'|'+Math.round(eqNow()*100)+'|'+showMarks;if(key===tvKey)return;const first=!tvKey;tvKey=key;
  let cs=cdTradeCandles(t);const step=(CD_TF.find(x=>x[0]===cdTF)||CD_TF[0])[2];if(step)cs=cdAgg(cs,step);tvCs=cs;
