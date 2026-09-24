@@ -303,6 +303,9 @@ th .eye{margin-right:2px}
 .opm{margin-top:10px;font-size:13px;color:#9a9d95;display:flex;flex-wrap:wrap;gap:4px 16px}.opm b{color:var(--text);font-weight:500}
 .ctools.ctmin .zbtns,.ctools.ctmin .hint{display:none!important}
 #period{display:none!important}
+#chartBig,#chartSub{display:none!important}
+
+.altsum{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:2px 0 6px}.altsum b{color:var(--text);font-weight:500}.altsum .good{color:var(--good)}.altsum .bad{color:var(--bad,#e05c5c)}.altsum:empty{display:none}
 .ovgrid{display:grid;grid-template-columns:minmax(0,1fr) clamp(340px,24vw,420px);gap:22px;align-items:start}@media(max-width:1100px){.ovgrid{grid-template-columns:1fr}}
 .ovside{padding:20px 18px;text-align:left}.ovsh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px}.ovsh h2{margin:0}
 .ovside .ovtr,.ovside .ovsh{align-self:stretch;text-align:left}
@@ -878,6 +881,7 @@ main{padding-bottom:45vh!important}
   .ovhf .btn{width:100%;padding:12px}
   #sndBtn{font-size:12px;padding:6px 10px;white-space:nowrap}
 }
+.mzb{display:none}@media(pointer:coarse){#chart{touch-action:pan-y}.mzb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}.mzb .mini{height:38px;min-width:44px;font-size:17px}.mzb .mini.wide{font-size:13.5px;padding:0 14px}.mzh{font-size:11.5px;color:var(--muted);flex-basis:100%}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -892,8 +896,8 @@ main{padding-bottom:45vh!important}
   <div class="tiles kstrip" id="tiles"></div>
   <div class="ovgrid">
   <div class="card ovchart">
-    <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity">Депозит</button></div></div>
-    <div class="ctools ctmin"><label class="check" id="marksWrap"><input type="checkbox" id="marks"><span class="box"></span>Сделки на графике</label><div class="zbtns"><button class="mini" id="zout" title="Отдалить">−</button><button class="mini" id="zin" title="Приблизить">+</button><button class="mini wide" id="zaxis" title="По сделкам — точки идут подряд, без пустых промежутков между сделками. По времени — настоящая шкала времени">По сделкам</button><button class="mini wide" id="zreset">Весь период</button><button class="mini wide" id="zauto" style="display:none" title="Вернуть автоматический масштаб по вертикали">Авто</button><button class="mini wide" id="zhist" title="Спрятать колонку «История сделок» — график станет на всю ширину">На всю ширину</button><button class="mini wide" id="zbig">Развернуть</button></div><span class="hint">колесо — масштаб · тяни график — сдвиг · тяни шкалу цены или времени — растянуть · двойной клик — сброс</span></div><canvas id="chart"></canvas><div class="axis" id="axis"></div><div class="resz" id="resz" title="Потяни, чтобы изменить высоту графика"><span></span></div>
+    <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity" title="Как менялся депозит: линия по всем сделкам">Депозит</button><button class="pill" data-c="trades" title="Каждая сделка — отдельный столбик: вверх зелёный — прибыль, вниз красный — убыток">Каждая сделка</button><button class="pill" data-c="per" title="Сумма результатов сделок по часам (или по дням, если данных больше двух суток)">По времени</button><button class="pill" data-c="dd" title="Насколько депозит ниже своего максимума в каждый момент — показывает глубину и длину провалов">Просадка</button></div></div>
+    <div class="ctools ctmin"><label class="check" id="marksWrap"><input type="checkbox" id="marks"><span class="box"></span>Сделки на графике</label><div class="zbtns"><button class="mini" id="zout" title="Отдалить">−</button><button class="mini" id="zin" title="Приблизить">+</button><button class="mini wide" id="zaxis" title="По сделкам — точки идут подряд, без пустых промежутков между сделками. По времени — настоящая шкала времени">По сделкам</button><button class="mini wide" id="zreset">Весь период</button><button class="mini wide" id="zauto" style="display:none" title="Вернуть автоматический масштаб по вертикали">Авто</button><button class="mini wide" id="zhist" title="Спрятать колонку «История сделок» — график станет на всю ширину">На всю ширину</button><button class="mini wide" id="zbig">Развернуть</button></div><span class="hint">колесо — масштаб · тяни график — сдвиг · тяни шкалу цены или времени — растянуть · двойной клик — сброс</span></div><div class="altsum" id="altSum"></div><canvas id="chart"></canvas><div class="mzb" id="mzb"><button class="mini" data-z="out" aria-label="Отдалить">−</button><button class="mini" data-z="in" aria-label="Приблизить">+</button><button class="mini wide" data-z="all">Весь период</button><span class="mzh">1 палец — сдвиг · 2 пальца — масштаб · удержи — точные значения · 2 тапа — сброс</span></div><div class="axis" id="axis"></div><div class="resz" id="resz" title="Потяни, чтобы изменить высоту графика"><span></span></div>
   </div>
   <div class="card ovside"><div class="ovsh"><h2>История сделок</h2><span class="note" id="ovTrSum"></span></div><div class="ovtr" id="ovTr"></div><div class="resz resz2" id="resz2" title="Потяни вниз, чтобы растянуть график и историю сделок"><span></span></div></div>
   </div>
@@ -1045,7 +1049,7 @@ function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{r
   const card=(ttl,big,bk,body)=>'<div class="kc"><div class="kct">'+ttl+'</div><div class="kcb '+(bk||'')+'">'+big+'</div>'+body+'</div>';
   $('#hero').innerHTML=
    card('Депозит','$'+f(bal)+bnbTag()+(open.length?(()=>{const cv=open.reduce((a,q)=>{const pt=q.path&&q.path.length?q.path[q.path.length-1][1]:null;return a+(pt&&q.entry>0?q.size_usd*pt/q.entry:q.size_usd);},0);return '<small class="kin '+(cv>=inPos?'good':'bad')+'" title="Сколько сейчас стоят открытые сделки (вложено $'+f(inPos,0)+'), до комиссий"> (в сделке $'+f(cv)+')</small>';})():''),'','<div class="kcl">старт $'+f(start,0)+' → <b class="'+cls(dd)+'">'+mny(dd)+' ('+(dd>0?'+':'')+f(dd/start*100,1)+'%)</b></div><div class="kcs">'+(open.length?'в сделках $'+f(inPos,0)+' · открыто '+open.length+' из '+c.max_open_positions:'сейчас все деньги свободны')+'</div>')+
-   card('Итог сделок '+plabel,(m.pnl>=0?'+':'')+money(m.pnl),cls(m.pnl),'<div class="kcs">уже с комиссиями и газом'+(n?' · лучшая <span class="good">'+mny(best)+'</span> · худшая <span class="bad">'+mny(worst)+'</span>':' · сделок пока нет')+'</div>')+
+   card('Итог сделок '+plabel,(m.pnl>=0?'+':'')+money(m.pnl),cls(m.pnl),(n?'<div class="kcl">лучшая <b class="good">'+mny(best)+'</b> · худшая <b class="bad">'+mny(worst)+'</b></div>':'')+'<div class="kcs">уже с комиссиями и газом'+(n?'':' · сделок пока нет')+'</div>')+
    card('Сделки',n+'<small>'+(n?' · '+f(m.wr,0)+'% в плюс':'')+'</small>','','<div class="kbar">'+(n?'<i class="g" style="flex:'+wn+'"></i><i class="r" style="flex:'+ls+'"></i>':'<i style="flex:1"></i>')+'</div><div class="kcs"><span class="good">'+wn+' в плюс</span> · <span class="bad">'+ls+' в минус</span> · в среднем '+(Number.isNaN(m.avgHold)?'—':dur(m.avgHold))+'</div>')+
    card('Средняя сделка','','','<div class="kavg"><span>в плюс</span><i><b class="g" style="width:'+(aw/mx*100)+'%"></b></i><em class="good">'+(wn?'+$'+f(aw):'—')+'</em></div><div class="kavg"><span>в минус</span><i><b class="r" style="width:'+(al/mx*100)+'%"></b></i><em class="bad">'+(ls?'−$'+f(al):'—')+'</em></div><div class="kcs">'+pfTxt+(n?' · макс. просадка <span class="'+(m.mdd>20?'bad':'')+'">'+f(m.mdd,1)+'%</span>':'')+'</div>');
   $('#tiles').innerHTML='';$('#tiles').style.display='none';}
@@ -1215,7 +1219,7 @@ let eqStraight=false;let eqByTrade=(()=>{try{return localStorage.getItem('eqAxis
 function eqAxisBtn(){const b=document.getElementById('zaxis');if(!b)return;b.textContent=eqByTrade?'По сделкам':'По времени';b.style.display=chart==='equity'?'':'none';}
 setTimeout(()=>{const b=document.getElementById('zaxis');if(b)b.onclick=()=>{eqByTrade=!eqByTrade;try{localStorage.setItem('eqAxis',eqByTrade?'trade':'time');}catch{}zoom=null;eqAxisBtn();redraw();};eqAxisBtn();},0);
 function eqPulse(x,y){const c=document.getElementById('chart');if(!c)return;let d=document.getElementById('eqPulse');if(!d){d=document.createElement('div');d.id='eqPulse';c.parentNode.insertBefore(d,c.nextSibling);}if(x==null){d.style.display='none';return;}d.style.display='block';d.style.left=(c.offsetLeft+x)+'px';d.style.top=(c.offsetTop+y)+'px';}
-function drawChart(t,m){lastT=t;lastM=m;eqAxisBtn();const byTr=eqByTrade&&chart==='equity';eqStraight=false;
+function drawChart(t,m){if(chart==='trades'||chart==='per'||chart==='dd'){lastT=t;lastM=m;try{drawAlt(t,m);}catch(e){console.error(e);}return;}try{altOff();}catch{}lastT=t;lastM=m;eqAxisBtn();const byTr=eqByTrade&&chart==='equity';eqStraight=false;
  const c=$('#chart'),ctx=c.getContext('2d'),W=c.clientWidth,H=chartBig?Math.max(300,innerHeight-260):(chartAuto?(chartH=fitChartH()):chartH),dpr=devicePixelRatio||1;if(!W)return;c.style.height=H+'px';
  c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
  const P={l:8,r:84,t:14,b:28},PW=W-P.l-P.r,PH=H-P.t-P.b;
@@ -1311,9 +1315,43 @@ function zoomAt(at,k){if(!geom)return;const [a,b]=zoomT||zoom||[geom.x0,geom.x1]
  c.addEventListener('wheel',ev=>{if(!geom)return;ev.preventDefault();const r=c.getBoundingClientRect();if(chart==='equity'&&chartZone(ev.clientX-r.left,ev.clientY-r.top)==='y'){const y=yMan||[geom.y0,geom.y1],k=Math.exp(Math.max(-240,Math.min(240,ev.deltaY))*0.002),cy=(y[0]+y[1])/2,h=(y[1]-y[0])/2*k;yMan=[cy-h,cy+h];redraw();return;}if(Math.abs(ev.deltaX)>Math.abs(ev.deltaY)&&!ev.ctrlKey){const z=zoomT||zoom||[geom.x0,geom.x1],sp=z[1]-z[0],dt=ev.deltaX/geom.PW*sp;clearTimeout(zAnim);zoomT=null;zoom=[z[0]+dt,z[1]+dt];redraw();return;}const at=geom.x0+(ev.clientX-r.left-geom.P.l)/geom.PW*geom.span;const d=Math.max(-240,Math.min(240,ev.deltaMode===1?ev.deltaY*33:ev.deltaY));zoomAt(at,Math.exp(d*(ev.ctrlKey?0.01:0.0022)));},{passive:false});
  c.addEventListener('dblclick',ev=>{if(!geom)return;const r=c.getBoundingClientRect();if(chartZone(ev.clientX-r.left,ev.clientY-r.top)==='y'){yMan=null;redraw();return;}yMan=null;animZoom([geom.full[0],geom.full[1]],true);});
  $('#zauto').onclick=()=>{yMan=null;redraw();};
- let tx=null,pz=null;c.addEventListener('touchstart',e=>{if(!geom)return;clearTimeout(zAnim);zoomT=null;const z=zoom||[geom.x0,geom.x1];if(e.touches.length===2){const r=c.getBoundingClientRect(),a=e.touches[0].clientX,b=e.touches[1].clientX;pz={d:Math.abs(a-b)||1,at:z[0]+((a+b)/2-r.left-geom.P.l)/geom.PW*(z[1]-z[0]),z};tx=null;}else if(e.touches.length===1){tx={x:e.touches[0].clientX,z};}},{passive:true});
- c.addEventListener('touchmove',e=>{if(!geom)return;if(pz&&e.touches.length===2){const d=Math.abs(e.touches[0].clientX-e.touches[1].clientX)||1,fs=geom.full[1]-geom.full[0],sp0=pz.z[1]-pz.z[0],sp=Math.max(Math.min(3e4,fs),Math.min(fs*12,sp0*pz.d/d)),r=(pz.at-pz.z[0])/sp0;zoom=[pz.at-r*sp,pz.at-r*sp+sp];redraw();return;}if(!tx)return;const dx=e.touches[0].clientX-tx.x;const sp=tx.z[1]-tx.z[0];zoom=[tx.z[0]-dx/geom.PW*sp,tx.z[1]-dx/geom.PW*sp];redraw();},{passive:true});
- c.addEventListener('touchend',e=>{if(e.touches.length<2)pz=null;if(!e.touches.length)tx=null;});
+ (()=>{let T=null,pz=null,lp=null,lastTap=0,lastTapX=0,iner=null;const tip=$('#tip');
+  const clampSp=sp=>{const fs=geom.full[1]-geom.full[0];return Math.max(Math.min(3e4,fs),Math.min(fs*12,sp));};
+  const tAt=cx=>{const r=c.getBoundingClientRect(),z=zoom||[geom.x0,geom.x1];return z[0]+(cx-r.left-geom.P.l)/geom.PW*(z[1]-z[0]);};
+  const stopIner=()=>{if(iner){clearTimeout(iner);iner=null;}};
+  const hideTip=()=>{hov=null;tip.style.display='none';};
+  c.addEventListener('touchstart',e=>{if(!geom)return;stopIner();clearTimeout(zAnim);zoomT=null;clearTimeout(lp);
+   if(e.touches.length>=2){e.preventDefault();drag=null;T=null;hideTip();const a=e.touches[0],b=e.touches[1],z=zoom||[geom.x0,geom.x1],y=yMan||[geom.y0,geom.y1];const dx=Math.abs(a.clientX-b.clientX),dy=Math.abs(a.clientY-b.clientY);
+    pz={dx:Math.max(dx,1),dy:Math.max(dy,1),vert:chart==='equity'&&dy>dx*1.6,mid:(a.clientX+b.clientX)/2,midY:(a.clientY+b.clientY)/2,at:tAt((a.clientX+b.clientX)/2),z,y};redraw();return;}
+   const t=e.touches[0],r=c.getBoundingClientRect(),mx=t.clientX-r.left,my=t.clientY-r.top;const zn=chartZone(mx,my);
+   T={x:t.clientX,y:t.clientY,t0:performance.now(),zn,dir:zn==='plot'?null:(zn==='y'&&chart==='equity'?'y':zn==='x'?'x':null),scrub:false,hist:[[performance.now(),t.clientX]],z:zoom||[geom.x0,geom.x1],yy:yMan||[geom.y0,geom.y1]};
+   if(T.dir){e.preventDefault();drag={mode:T.dir,mx,my,z:T.z,y:T.yy,moved:false};}
+   else lp=setTimeout(()=>{if(T&&!T.dir){T.scrub=true;T.dir='scrub';drag=null;chartHover({clientX:T.x,clientY:T.y});try{navigator.vibrate&&navigator.vibrate(8);}catch{}}},320);},{passive:false});
+  c.addEventListener('touchmove',e=>{if(!geom)return;
+   if(pz&&e.touches.length>=2){e.preventDefault();const a=e.touches[0],b=e.touches[1];
+    if(pz.vert){const d=Math.max(Math.abs(a.clientY-b.clientY),1),k=pz.dy/d,cy=(pz.y[0]+pz.y[1])/2,h=(pz.y[1]-pz.y[0])/2*k;yMan=[cy-h,cy+h];}
+    else{const d=Math.max(Math.abs(a.clientX-b.clientX),1),sp0=pz.z[1]-pz.z[0],sp=clampSp(sp0*pz.dx/d),mid=(a.clientX+b.clientX)/2,r=(pz.at-pz.z[0])/sp0,shift=-(mid-pz.mid)/geom.PW*sp;const s0=pz.at-r*sp+shift;zoom=[s0,s0+sp];
+     if(chart==='equity'&&yMan){const yr=pz.y[1]-pz.y[0],dv=((a.clientY+b.clientY)/2-pz.midY)/geom.PH*yr;yMan=[pz.y[0]+dv,pz.y[1]+dv];}}
+    redraw();return;}
+   if(!T)return;const t=e.touches[0],dx=t.clientX-T.x,dy=t.clientY-T.y;
+   if(!T.dir){if(Math.abs(dx)+Math.abs(dy)<8)return;clearTimeout(lp);if(Math.abs(dy)>Math.abs(dx)){T=null;return;}T.dir='pan';hideTip();}
+   e.preventDefault();
+   if(T.dir==='scrub'){chartHover({clientX:t.clientX,clientY:t.clientY});return;}
+   if(T.dir==='pan'){const sp=T.z[1]-T.z[0],dt=-dx/geom.PW*sp;zoom=[T.z[0]+dt,T.z[1]+dt];T.hist.push([performance.now(),t.clientX]);if(T.hist.length>6)T.hist.shift();redraw();return;}
+   const r=c.getBoundingClientRect();chartHover({clientX:t.clientX,clientY:t.clientY});},{passive:false});
+  c.addEventListener('touchend',e=>{clearTimeout(lp);if(pz){if(e.touches.length<2){pz=null;const t=e.touches[0];if(t){T={x:t.clientX,y:t.clientY,t0:performance.now(),dir:'pan',hist:[[performance.now(),t.clientX]],z:zoom||[geom.x0,geom.x1],yy:yMan||[geom.y0,geom.y1]};}}e.preventDefault();return;}
+   if(!T||e.touches.length)return;const u=e.changedTouches[0],now=performance.now();
+   if(T.dir==='pan'){const h=T.hist;if(h.length>1){const [t0,x0]=h[0],[t1,x1]=h[h.length-1];let v=(x1-x0)/Math.max(t1-t0,1);if(now-t1<80&&Math.abs(v)>0.25){const go=()=>{v*=0.93;if(Math.abs(v)<0.02||!geom){iner=null;return;}const z=zoom||[geom.x0,geom.x1],sp=z[1]-z[0],dt=-v*16/geom.PW*sp;zoom=[z[0]+dt,z[1]+dt];redraw();iner=setTimeout(go,16);};iner=setTimeout(go,16);}}e.preventDefault();}
+   else if(T.dir==='x'||T.dir==='y'){drag=null;e.preventDefault();}
+   else if(T.dir==='scrub'){e.preventDefault();}
+   else if(!T.dir&&now-T.t0<350){e.preventDefault();
+    if(now-lastTap<320&&Math.abs(u.clientX-lastTapX)<30){lastTap=0;hideTip();yMan=null;animZoom([geom.full[0],geom.full[1]],true);}
+    else{lastTap=now;lastTapX=u.clientX;const was=hov&&hov.mark;chartHover({clientX:u.clientX,clientY:u.clientY});if(hov&&hov.mark&&was&&was===hov.mark)openTrade(hov.mark.tr);}}
+   T=null;},{passive:false});
+  c.addEventListener('touchcancel',()=>{clearTimeout(lp);T=null;pz=null;drag=null;});
+  document.addEventListener('touchstart',e=>{if(hov&&e.target!==c&&!tip.contains(e.target)){hideTip();redraw();}},{passive:true});
+  const mz=$('#mzb');if(mz){mz.querySelector('[data-z="in"]').onclick=()=>geom&&zoomAt((geom.x0+geom.x1)/2,0.5);mz.querySelector('[data-z="out"]').onclick=()=>geom&&zoomAt((geom.x0+geom.x1)/2,2);mz.querySelector('[data-z="all"]').onclick=()=>{yMan=null;hideTip();if(geom)animZoom([geom.full[0],geom.full[1]],true);};}
+ })();
  $('#zin').onclick=()=>geom&&zoomAt((geom.x0+geom.x1)/2,0.5);
  $('#zout').onclick=()=>geom&&zoomAt((geom.x0+geom.x1)/2,2);
  $('#zreset').onclick=()=>{yMan=null;if(geom)animZoom([geom.full[0],geom.full[1]],true);};
@@ -1529,8 +1567,12 @@ function drawBotBars(){const v=$('#v-net');const c=$('#btCv');if(!c||!v||!v.clas
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.109';
+const APP_VERSION='2.113';
 const CHANGELOG=[
+ ['2.113','24.09.2026',['Обзор: у графика четыре вида — «Депозит» (линия), «Каждая сделка» (столбик на каждую сделку, пунктир — средняя сделка, клик — подробности), «По времени» (итог по часам или дням), «Просадка» (насколько депозит ниже своего максимума, отмечена самая глубокая). Над каждым видом — короткая сводка, выбранный вид запоминается']],
+ ['2.112','24.09.2026',['Обзор: лучшая и худшая сделка снова видны прямо в карточке «Итог сделок», без наведения']],
+ ['2.111','24.09.2026',['Обзор: над графиком убрана сумма депозита — она уже есть в карточке «Депозит» сверху']],
+ ['2.110','24.09.2026',['График на телефоне: сдвиг одним пальцем с инерцией, масштаб двумя пальцами (разводить по горизонтали — время, по вертикали — цена), удержание пальца — точные значения, двойной тап — весь период, тап по точке сделки — карточка; под графиком кнопки − / + / «Весь период»; вертикальный свайп по-прежнему прокручивает страницу']],
  ['2.109','24.09.2026',['Сайт открывается сразу на панели реальных денег: адрес симуляции (порт 8787) без явного выбора перекидывает на живого бота; «Симуляция» в шапке по-прежнему открывает тестовую панель']],
  ['2.108','24.09.2026',['Обзор: убран заголовок «Обзор» — строка начинается сразу с робота']],
  ['2.107','24.09.2026',['Телефон: шапка не висит над экраном и занимает меньше места; карточки показателей 2×2; «Все сделки» — карточками (монета, итог, дата, причина); подписи на графиках объёмов читаемые; короткая кнопка звука']],
@@ -2231,6 +2273,71 @@ function hstFresh(){const el=$('#hfresh');if(!el)return;const t=el.querySelector
  t.innerHTML=st==='ok'?'онлайн<span class="t2"> · обновлено '+(age<3?'только что':ag+' назад')+'</span>':st==='warn'?'данные запаздывают<span class="t2"> · '+ag+'</span>':'нет связи с ботом<span class="t2"> · '+ag+'</span>';
  el.title=(hstTime?'Последние данные от бота: '+new Date(hstTime).toLocaleTimeString('ru-RU')+'. ':'')+'Страница сама обновляется каждые 5 секунд.'+(st!=='ok'?' Если надпись не становится зелёной несколько минут — бот или сервер не отвечает.':'');}
 setInterval(()=>{try{hstFresh();}catch{}},1000);
+
+// ---- другие виды графика: каждая сделка, по времени, просадка ----
+let altG=null,altHov=-1;
+try{const c=localStorage.getItem('ovChart');if(['equity','trades','per','dd'].includes(c))chart=c;}catch{}
+document.addEventListener('click',e=>{const b=e.target.closest('#chartTabs .pill');if(!b)return;try{localStorage.setItem('ovChart',b.dataset.c);}catch{}},true);
+function altTabsSync(){document.querySelectorAll('#chartTabs .pill').forEach(x=>x.classList.toggle('on',x.dataset.c===chart));}
+function altOff(){altG=null;altHov=-1;const s=$('#altSum');if(s)s.innerHTML='';}
+function altMoney(v){const a=Math.abs(v);return (v<0?'−':'')+'$'+(a>=1000?f(a/1000,1)+'k':a>=100?f(a,0):f(a,2));}
+function drawAlt(t,m){altTabsSync();geom=null;try{eqPulse(null);}catch{}const mw=$('#marksWrap');if(mw)mw.style.display='none';
+ const c=$('#chart'),ctx=c.getContext('2d'),W=c.clientWidth,H=chartBig?Math.max(300,innerHeight-260):(chartAuto?(chartH=fitChartH()):chartH),dpr=devicePixelRatio||1;if(!W)return;c.style.height=H+'px';
+ c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+ const P={l:8,r:84,t:14,b:28},PW=W-P.l-P.r,PH=H-P.t-P.b;const GD='#5fd3a0',RD='#ff7676',LN='#7cc4ff';
+ const sum=$('#altSum');ctx.font='12px Inter,sans-serif';
+ if(!t.length){altG=null;sum.innerHTML='';ctx.fillStyle='#8f938a';ctx.textAlign='center';ctx.fillText('Сделок пока нет',W/2,H/2);return;}
+ let items=[],y0=0,y1=0,kind=chart;
+ if(kind==='trades'){items=t.map((x,i)=>({i,v:+x.pnl_usd,tr:x}));for(const it of items){y0=Math.min(y0,it.v);y1=Math.max(y1,it.v);}
+  const w=items.filter(i=>i.v>0),l=items.filter(i=>i.v<=0),avg=items.reduce((a,i)=>a+i.v,0)/items.length;
+  const best=items.reduce((a,b)=>b.v>a.v?b:a),worst=items.reduce((a,b)=>b.v<a.v?b:a);
+  sum.innerHTML='<span>сделок <b>'+items.length+'</b></span><span>в плюс <b class="good">'+w.length+'</b> · в минус <b class="bad">'+l.length+'</b></span><span>средняя <b class="'+cls(avg)+'">'+mny(avg)+'</b></span><span>лучшая <b class="good">'+mny(best.v)+'</b> '+esc(best.tr.symbol||'')+'</span><span>худшая <b class="bad">'+mny(worst.v)+'</b> '+esc(worst.tr.symbol||'')+'</span>';}
+ else if(kind==='per'){const t0=+new Date(t[0].closed),t1=+new Date(t[t.length-1].closed);const step=(t1-t0)>2*864e5?864e5:36e5;const tz=new Date().getTimezoneOffset()*6e4;
+  const map=new Map();for(const x of t){const ts=+new Date(x.closed);const k=Math.floor((ts-tz)/step)*step+tz;const o=map.get(k)||{t:k,step,v:0,n:0,w:0};o.v+= +x.pnl_usd;o.n++;if(+x.pnl_usd>0)o.w++;map.set(k,o);}
+  const a=[...map.values()].sort((p,q)=>p.t-q.t);const first=a[0].t,last=a[a.length-1].t;for(let k=first;k<=last;k+=step){if(!map.has(k))map.set(k,{t:k,step,v:0,n:0,w:0});}
+  items=[...map.values()].sort((p,q)=>p.t-q.t).map((o,i)=>({...o,i}));for(const it of items){y0=Math.min(y0,it.v);y1=Math.max(y1,it.v);}
+  const pos=items.filter(i=>i.v>0).length,neg=items.filter(i=>i.v<0).length,bestp=items.reduce((a,b)=>b.v>a.v?b:a),worstp=items.reduce((a,b)=>b.v<a.v?b:a);const u=step===36e5?'час':'день';
+  sum.innerHTML='<span>по '+(step===36e5?'часам':'дням')+'</span><span>'+(step===36e5?'часов':'дней')+' в плюс <b class="good">'+pos+'</b> · в минус <b class="bad">'+neg+'</b></span><span>лучший '+u+' <b class="good">'+mny(bestp.v)+'</b></span><span>худший '+u+' <b class="bad">'+mny(worstp.v)+'</b></span>';}
+ else{const S=D.state||{};const wl=D.mode==='live'&&S.wallet_bnb!=null&&+S.balance_usd>0;const tot=t.reduce((a,x)=>a+ +x.pnl_usd,0);let eq=wl?eqNow()-tot:D.config.paper_start_balance_usd;let peak=eq;
+  items=[{i:0,ts:+new Date(t[0].opened),eq,peak,dd:0,ddu:0}];for(const x of t){eq+= +x.pnl_usd;peak=Math.max(peak,eq);items.push({i:items.length,ts:+new Date(x.closed),eq,peak,dd:peak>0?(eq-peak)/peak*100:0,ddu:eq-peak,tr:x});}
+  for(const it of items)y0=Math.min(y0,it.dd);y1=0;const mx=items.reduce((a,b)=>b.dd<a.dd?b:a),cur=items[items.length-1];
+  let longest=0,run=0;for(const it of items){if(it.dd<0)run++;else run=0;longest=Math.max(longest,run);}
+  sum.innerHTML='<span>сейчас <b class="'+(cur.dd<0?'bad':'good')+'">'+(cur.dd<0?f(cur.dd,1)+'%':'на максимуме')+'</b>'+(cur.dd<0?' ('+altMoney(cur.ddu)+' от пика)':'')+'</span><span>самая глубокая <b class="bad">'+f(mx.dd,1)+'%</b> ('+altMoney(mx.ddu)+')</span><span>самый длинный провал <b>'+longest+'</b> '+(longest%10===1&&longest%100!==11?'сделка':longest%10>=2&&longest%10<=4&&(longest%100<10||longest%100>=20)?'сделки':'сделок')+' подряд ниже пика</span>';}
+ const pad=(y1-y0)*.12||1;y1+=kind==='dd'?pad*.35:pad;y0-=pad;if(kind==='dd'&&y1<1)y1=Math.max(y1,1);
+ const N=items.length,Y=v=>P.t+(1-(v-y0)/(y1-y0))*PH,slot=PW/Math.max(1,N),X=i=>P.l+slot*(i+.5);
+ // сетка и шкала
+ ctx.textBaseline='middle';ctx.textAlign='left';const NY=Math.max(4,Math.min(9,Math.round(PH/70)));
+ for(let i=0;i<=NY;i++){const v=y0+(y1-y0)*i/NY,y=Y(v);ctx.strokeStyle='#ffffff0d';ctx.beginPath();ctx.moveTo(P.l,y);ctx.lineTo(W-P.r+6,y);ctx.stroke();ctx.fillStyle='#8f938a';ctx.fillText(kind==='dd'?f(v,1)+'%':altMoney(v),W-P.r+14,y);}
+ const base=Y(0);ctx.setLineDash([3,6]);ctx.strokeStyle='#ffffff40';ctx.beginPath();ctx.moveTo(P.l,base);ctx.lineTo(P.l+PW,base);ctx.stroke();ctx.setLineDash([]);
+ // подписи времени
+ ctx.textBaseline='alphabetic';const tsOf=it=>kind==='trades'?+new Date(it.tr.closed):kind==='per'?it.t:it.ts;const span=Math.max(6e4,tsOf(items[N-1])-tsOf(items[0]));
+ const NX=Math.max(2,Math.min(8,Math.round(PW/150))),st=Math.max(1,Math.ceil(N/NX));let prev='',pr=-1e9;ctx.fillStyle='#8f938a';
+ for(let i=0;i<N;i+=st){const it=items[i];const lbl=kind==='per'&&it.step===864e5?new Date(it.t).toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'}):fmtT(tsOf(it),span);if(lbl===prev)continue;const tw=ctx.measureText(lbl).width,x=Math.max(P.l,Math.min(P.l+PW-tw,X(i)-tw/2));if(x<pr+16)continue;prev=lbl;pr=x+tw;ctx.fillText(lbl,x,H-8);}
+ ctx.save();ctx.beginPath();ctx.rect(P.l-4,P.t-8,PW+8,PH+16);ctx.clip();
+ if(kind==='dd'){const pts=items.map(it=>({x:X(it.i),y:Y(it.dd)}));const g=ctx.createLinearGradient(0,base,0,P.t+PH);g.addColorStop(0,RD+'10');g.addColorStop(1,RD+'55');
+  ctx.beginPath();ctx.moveTo(pts[0].x,base);pts.forEach(p=>ctx.lineTo(p.x,p.y));ctx.lineTo(pts[pts.length-1].x,base);ctx.closePath();ctx.fillStyle=g;ctx.fill();
+  ctx.lineJoin='round';ctx.shadowColor=RD+'99';ctx.shadowBlur=10;ctx.strokeStyle=RD;ctx.lineWidth=2;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();ctx.shadowBlur=0;
+  const mx=items.reduce((a,b)=>b.dd<a.dd?b:a);if(mx.dd<0){const x=X(mx.i),y=Y(mx.dd);ctx.beginPath();ctx.arc(x,y,5,0,7);ctx.fillStyle=RD;ctx.fill();ctx.strokeStyle='#141414';ctx.lineWidth=2;ctx.stroke();
+   const lbl='макс. '+f(mx.dd,1)+'%';ctx.font='600 12px Inter,sans-serif';const tw=ctx.measureText(lbl).width;const lx=Math.max(P.l+4,Math.min(P.l+PW-tw-12,x-tw/2-6)),ly=Math.min(P.t+PH-24,y+12);ctx.fillStyle='#2a1616';ctx.beginPath();ctx.roundRect(lx,ly,tw+12,20,6);ctx.fill();ctx.fillStyle=RD;ctx.textBaseline='middle';ctx.fillText(lbl,lx+6,ly+10);ctx.font='12px Inter,sans-serif';}
+  if(altHov>=0&&items[altHov]){const x=X(altHov),y=Y(items[altHov].dd);ctx.strokeStyle='#ffffff38';ctx.setLineDash([2,4]);ctx.beginPath();ctx.moveTo(x,P.t);ctx.lineTo(x,P.t+PH);ctx.stroke();ctx.setLineDash([]);ctx.beginPath();ctx.arc(x,y,4.5,0,7);ctx.fillStyle='#ffe8e8';ctx.fill();}}
+ else{const bw=Math.max(2,Math.min(30,slot*.68));
+  if(kind==='trades'){const avg=items.reduce((a,i)=>a+i.v,0)/N,ya=Y(avg);ctx.setLineDash([6,5]);ctx.strokeStyle=avg>=0?GD+'aa':RD+'aa';ctx.beginPath();ctx.moveTo(P.l,ya);ctx.lineTo(P.l+PW,ya);ctx.stroke();ctx.setLineDash([]);
+   ctx.fillStyle=avg>=0?GD:RD;ctx.textBaseline='bottom';ctx.textAlign='left';ctx.fillText('средняя '+mny(avg),P.l+4,ya-3);ctx.textBaseline='alphabetic';}
+  items.forEach(it=>{if(it.v===0&&kind==='per'){ctx.fillStyle='#2a2a2a';ctx.fillRect(X(it.i)-bw/2,base-1,bw,2);return;}const y=Y(it.v),top=Math.min(y,base),h=Math.max(2,Math.abs(base-y)),col=it.v>0?GD:RD;
+   const g=ctx.createLinearGradient(0,top,0,top+h);if(it.v>0){g.addColorStop(0,col);g.addColorStop(1,col+'55');}else{g.addColorStop(0,col+'55');g.addColorStop(1,col);}
+   ctx.globalAlpha=altHov>=0&&altHov!==it.i?.45:1;ctx.fillStyle=g;ctx.beginPath();ctx.roundRect(X(it.i)-bw/2,top,bw,h,Math.min(bw/2,5));ctx.fill();ctx.globalAlpha=1;});}
+ ctx.restore();altG={kind,items,X,slot,P,PW,PH};}
+(()=>{const c=$('#chart');if(!c)return;const tip=()=>$('#tip');
+ c.addEventListener('mousemove',ev=>{if(!altG)return;const r=c.getBoundingClientRect(),mx=ev.clientX-r.left;const i=Math.floor((mx-altG.P.l)/altG.slot);const T=tip();
+  if(i<0||i>=altG.items.length||mx>altG.P.l+altG.PW){if(altHov!==-1){altHov=-1;T.style.display='none';redraw();}return;}
+  const it=altG.items[i];let html='';
+  if(altG.kind==='trades'){html=tradeCard(it.tr);T.classList.add('tipcard');c.style.cursor='pointer';}
+  else if(altG.kind==='per'){T.classList.remove('tipcard');const d=new Date(it.t),e=new Date(it.t+it.step);html='<b>'+(it.step===864e5?d.toLocaleDateString('ru-RU',{day:'2-digit',month:'long'}):d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+', '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+'–'+e.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}))+'</b><br>'+(it.n?'итог <b class="'+cls(it.v)+'">'+mny(it.v)+'</b><br>'+it.n+' '+sdl(it.n)+': '+it.w+' в плюс, '+(it.n-it.w)+' в минус':'сделок не было');c.style.cursor='crosshair';}
+  else{T.classList.remove('tipcard');const d=new Date(it.ts);html='<b>'+d.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+', '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+'</b><br>'+(it.dd<0?'ниже пика на <b class="bad">'+f(it.dd,1)+'%</b> ('+altMoney(it.ddu)+')':'<b class="good">депозит на максимуме</b>')+'<br>депозит $'+f(it.eq)+' · пик $'+f(it.peak)+(it.tr?'<br>после сделки '+esc(it.tr.symbol||''):'');c.style.cursor='crosshair';}
+  T.innerHTML=html;T.style.display='block';const tw=T.offsetWidth;T.style.left=Math.min(ev.clientX+14,innerWidth-tw-12)+'px';T.style.top=(ev.clientY+16)+'px';
+  if(altHov!==i){altHov=i;redraw();}});
+ c.addEventListener('mouseleave',()=>{if(!altG)return;altHov=-1;tip().style.display='none';redraw();});
+ c.addEventListener('click',()=>{if(!altG||altG.kind!=='trades'||altHov<0)return;const it=altG.items[altHov];if(it&&it.tr)try{openTrade(it.tr);}catch{}});})();
 async function tick(){try{const d=await (await fetch(window.DATA_URL||'/api',{cache:'no-store'})).json();D=d;
  $('#mode').className='badge '+d.mode;$('#mode').innerHTML='<span class="dot"></span><b>'+(d.mode==='paper'?'симуляция':'live')+'</b> '+d.chain.toUpperCase();
  $('#upd').textContent='данные от '+new Date(d.now).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});try{hstOk=Date.now();hstFail=false;hstTime=d.now||Date.now();hstRender();hstFresh();}catch(e){console.error(e);}hypBadge();render();}
