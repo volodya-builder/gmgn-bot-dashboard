@@ -945,6 +945,20 @@ main{padding-bottom:45vh!important}
 .hprofm{position:absolute;right:0;top:calc(100% + 8px);min-width:240px;background:#141414;border:1px solid #262626;border-radius:14px;padding:6px;box-shadow:0 20px 50px -12px #000;z-index:60}
 .hpu{display:flex;align-items:center;gap:10px;padding:10px 10px 12px;border-bottom:1px solid #222;margin-bottom:6px}.hpu b{display:block;font-size:14px;color:#ededea;font-weight:600}.hpu span{font-size:12px;color:#8f938a}.hav2{width:34px;height:34px;font-size:14px}
 .hpout{display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;border:0;border-radius:9px;background:none;color:#ff9a9a;font:500 13.5px Inter,system-ui,sans-serif;cursor:pointer;text-align:left}.hpout:hover{background:#2a1414}
+
+/* hvm: гипотеза на весь экран */
+body.hvm #v-overview .ovttl,body.hvm #opCard,body.hvm #ovHyp{display:none!important}
+.hvbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:4px 0 16px;padding:14px 18px;border:1px solid var(--border);border-radius:16px;background:#101010}
+.hvbar .hvback{flex:none}
+.hvt{min-width:0;flex:1 1 320px}.hvh{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.hvh b{font-size:20px;font-weight:600;color:#e8e9e4}
+.hvn{color:#9a9e96;font-size:13.5px;margin-top:3px;line-height:1.45}
+.hvs{color:#7d8179;font-size:12.5px;flex:0 1 auto;text-align:right}
+.hvlive{display:inline-flex;align-items:center;gap:6px;color:#5fd3a0;font-size:12.5px}.hvlive .ondot{margin:0}
+.hvinfo{margin-top:22px}.hvinfo:empty{display:none}
+.hvinfo #raceDet{margin:0}
+.hvxbtn{display:block;width:100%;margin:6px 0 14px;padding:11px}
+body.hvm .hvxbtn{display:none}
+@media(max-width:700px){.hvbar{padding:12px 14px;gap:10px}.hvs{text-align:left;flex-basis:100%}.hvh b{font-size:18px}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -955,6 +969,7 @@ main{padding-bottom:45vh!important}
 <div class="subnav" id="subnav"></div>
 <section class="view on" id="v-overview">
   <div class="titlebar"><div class="ovttl"><div class="rbw" id="rbw" title=""><div class="rb" id="rb"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="rb-body"><line x1="32" y1="6" x2="32" y2="13" class="rb-str"/><circle cx="32" cy="5" r="3.2" class="rb-ant"/><rect x="13" y="13" width="38" height="27" rx="9" class="rb-head"/><rect x="18" y="19" width="28" height="15" rx="6" class="rb-face"/><g class="rb-eyes"><circle cx="26" cy="26.5" r="3" class="rb-eye"/><circle cx="38" cy="26.5" r="3" class="rb-eye"/></g><g class="rb-x"><path d="M23 23.5l6 6M29 23.5l-6 6M35 23.5l6 6M41 23.5l-6 6" class="rb-str2"/></g><rect x="9" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="51" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="20" y="43" width="24" height="14" rx="5" class="rb-torso"/><circle cx="32" cy="50" r="2.6" class="rb-core"/></g><g class="rb-zz"><text x="50" y="14">z</text><text x="56" y="8">z</text></g><g class="rb-sp"><path d="M8 10l3 3M56 42l3 3M6 44l3-2" class="rb-str2"/></g></svg></div><div class="rbt"><b id="rbTitle">…</b><span id="rbSub"></span></div></div><div class="ovhw" id="ovHyp" style="display:none"></div></div><div class="pills small" id="period"><button class="pill" data-p="24h">24ч</button><button class="pill" data-p="7d">Неделя</button><button class="pill" data-p="30d">Месяц</button><button class="pill on" data-p="all">Всё время</button></div></div>
+  <div class="hvbar" id="hvBar" style="display:none"></div>
   <div class="hero" id="hero"></div>
   <div class="tiles kstrip" id="tiles"></div>
   <div class="ovgrid">
@@ -964,6 +979,7 @@ main{padding-bottom:45vh!important}
   </div>
   <div class="card ovside"><div class="ovsh"><h2>История сделок</h2><span class="note" id="ovTrSum"></span></div><div class="ovtr" id="ovTr"></div><div class="resz resz2" id="resz2" title="Потяни вниз, чтобы растянуть график и историю сделок"><span></span></div></div>
   </div>
+  <div class="hvinfo" id="hvInfo"></div>
   <div class="card opc" id="opCard"><div class="oph"><h2>Открытые сделки <span class="note" id="opCnt"></span></h2><button class="mini wide" id="sndBtn"></button></div><div id="openLive"></div><div style="display:none"><table id="open"></table></div></div>
 </section>
 <section class="view" id="v-net">
@@ -1068,7 +1084,7 @@ const esc=s=>String(s??'').replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp
 const rs=r=>({take_profit:'<span class="tag tp">тейк-профит</span>',stop_loss:'<span class="tag sl">стоп-лосс</span>',trailing:'<span class="tag tr">трейлинг</span>',timeout:'<span class="tag">по времени</span>'})[r]||'<span class="tag">'+esc(r)+'</span>';
 let D=null,period='all',chart='equity';
 const PERIOD_MS={'24h':864e5,'7d':7*864e5,'30d':30*864e5};
-function ptrades(){if(!D)return[];const t=D.trades;if(period==='all')return t;const from=Date.now()-PERIOD_MS[period];return t.filter(x=>+new Date(x.closed)>=from);}
+function ptrades(){if(!D)return[];const t=window.HVM?HVM.trades:D.trades;if(period==='all')return t;const from=Date.now()-PERIOD_MS[period];return t.filter(x=>+new Date(x.closed)>=from);}
 function metrics(t){const wins=t.filter(x=>+x.pnl_usd>0),loss=t.filter(x=>+x.pnl_usd<=0);const gw=wins.reduce((a,x)=>a+ +x.pnl_usd,0),gl=Math.abs(loss.reduce((a,x)=>a+ +x.pnl_usd,0));
  const pnl=gw-gl;let peak=0,eq=0,mdd=0;for(const x of t){eq+= +x.pnl_usd;peak=Math.max(peak,eq);mdd=Math.max(mdd,(peak-eq)/(D.config.paper_start_balance_usd+peak)*100);}
  return{wins,loss,gw,gl,pnl,mdd,pf:gl?gw/gl:(gw?Infinity:NaN),wr:t.length?wins.length/t.length*100:NaN,avgHold:t.length?t.reduce((a,x)=>a+ +x.hold_min,0)/t.length:NaN};}
@@ -1109,10 +1125,10 @@ function renderOvHyp(){const rl=$('#raceCurLbl');if(rl)rl.textContent=D&&D.mode=
  bt.onclick=()=>{nh=!nh;try{localStorage.setItem('ovNoHist',nh?'1':'0');}catch{}ap();try{redraw();}catch{}};})();
 // депозит = свободные деньги на кошельке + текущая стоимость открытых позиций (по последней цене)
 function eqBnb(){const s=(D&&D.state)||{};if(!(+s.wallet_bnb>0&&+s.balance_usd>0))return null;return eqNow()/(s.balance_usd/s.wallet_bnb);}
-const bnbTag=(cl)=>{const b=eqBnb();return b==null?'':'<small class="'+(cl||'kbnb')+'"> ('+f(b,4)+' BNB)</small>';};
-function eqNow(){const s=(D&&D.state)||{};let v=+s.balance_usd||0;for(const p of Object.values(s.positions||{}))v+=(+p.size_usd||0);return v;} // открытая сделка — по вложенной сумме: депозит меняется только когда сделка закрыта
+const bnbTag=(cl)=>{if(window.HVM)return '';const b=eqBnb();return b==null?'':'<small class="'+(cl||'kbnb')+'"> ('+f(b,4)+' BNB)</small>';};
+function eqNow(){if(window.HVM&&D&&D.config)return D.config.paper_start_balance_usd+HVM.trades.reduce((a,x)=>a+ +x.pnl_usd,0);const s=(D&&D.state)||{};let v=+s.balance_usd||0;for(const p of Object.values(s.positions||{}))v+=(+p.size_usd||0);return v;} // открытая сделка — по вложенной сумме: депозит меняется только когда сделка закрыта
 function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{renderOvHyp();}catch(e){console.error(e);}const s=D.state,c=D.config,t=ptrades(),m=metrics(t);const start=c.paper_start_balance_usd;
- const open=Object.values(s.positions||{});const inPos=open.reduce((a,p)=>a+p.size_usd,0);
+ const open=window.HVM?[]:Object.values(s.positions||{});const inPos=open.reduce((a,p)=>a+p.size_usd,0);
  const plabel={'24h':'за 24 часа','7d':'за неделю','30d':'за месяц','all':'за всё время'}[period];
  {const bal=eqNow(),dd=bal-start,wn=m.wins.length,ls=m.loss.length,n=t.length,aw=wn?m.gw/wn:0,al=ls?m.gl/ls:0,mx=Math.max(aw,al)||1;
   const best=n?Math.max(...t.map(x=>+x.pnl_usd)):0,worst=n?Math.min(...t.map(x=>+x.pnl_usd)):0;
@@ -1298,7 +1314,7 @@ function drawChart(t,m){if(chart==='candles'){lastT=t;lastM=m;try{drawCandles(t,
  const P={l:8,r:84,t:14,b:28},PW=W-P.l-P.r,PH=H-P.t-P.b;
  const pl=({'24h':'24 часа','7d':'неделя','30d':'месяц','all':'всё время'})[period];
  let full,series=[],bars=[];
- if(chart==='equity'){const start=D.config.paper_start_balance_usd;const S=D.state||{};const wl=D.mode==='live'&&S.wallet_bnb!=null&&+S.balance_usd>0;let eq=wl?eqNow()-t.reduce((a,x)=>a+ +x.pnl_usd,0):start;series.push({t:t.length?+new Date(t[0].opened):Date.now()-36e5,v:eq});for(const x of t){eq+= +x.pnl_usd;series.push({t:+new Date(x.closed),v:eq,tr:x});}
+ if(chart==='equity'){const start=D.config.paper_start_balance_usd;const S=D.state||{};const wl=!window.HVM&&D.mode==='live'&&S.wallet_bnb!=null&&+S.balance_usd>0;let eq=wl?eqNow()-t.reduce((a,x)=>a+ +x.pnl_usd,0):start;series.push({t:t.length?+new Date(t[0].opened):Date.now()-36e5,v:eq});for(const x of t){eq+= +x.pnl_usd;series.push({t:+new Date(x.closed),v:eq,tr:x});}
   if(eqByTrade){const B=series[0].t;series.forEach((p,i)=>{p.rt=p.t;p.t=B+i*EQ_STEP;});}else{const lt=series[series.length-1].t,nw=Date.now();if(nw>lt+6e4)series.push({t:nw,v:eq,now:true});}
   full=[series[0].t,Math.max(series[series.length-1].t,series[0].t+6e4)];
   $('#chartBig').innerHTML='$'+f(eq)+(wl?bnbTag('kbnb2'):'');if(wl){const oth=eqNow()-start-(+S.pnl_usd||0);$('#chartSub').textContent='Кошелёк, как в GMGN (BNB по курсу сейчас), '+pl+(period==='all'&&Math.abs(oth)>=0.01?' · от старта $'+f(start,0)+': сделки '+mny(+S.pnl_usd||0)+', курс BNB и газ '+mny(oth):'');$('#chartSub').title='Линия заканчивается ровно на текущем балансе кошелька (BNB × курс BNB), как показывает GMGN. Шаги линии — результаты сделок после всех комиссий (сверены с GMGN). Разница со стартом, не объяснённая сделками, — это изменение курса BNB к доллару и газ за неудачные транзакции.';}else $('#chartSub').textContent='Депозит по закрытым сделкам, '+pl;}
@@ -1645,8 +1661,9 @@ function drawBotBars(){const v=$('#v-net');const bx=$('#btSvg');if(!bx||!v||!v.c
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.128';
+const APP_VERSION='2.129';
 const CHANGELOG=[
+ ['2.129','24.09.2026',['Гонка гипотез: в карточке гипотезы кнопка «Расширенная версия» — открывает гипотезу на весь экран — тот же график депозита, что на «Обзоре» (по сделкам гипотезы в симуляции), карточки показателей, история сделок с логотипами и все правила ниже; «← К гонке» или Esc — назад']],
  ['2.128','24.09.2026',['В карточке гипотезы из «Гонки» — кнопка «Включить эту гипотезу на живом боте» (нажать дважды); если живой бот уже торгует по ней — так и написано']],
  ['2.127','24.09.2026',['Гипотезы → «Выбрать гипотезу»: пароль больше не стирается после первого нажатия (из-за этого приходило «неверный пароль панели»); неверный сохранённый пароль сбрасывается, и поле пароля появляется снова']],
  ['2.126','24.09.2026',['Гонка гипотез: рядом с кнопками «Воспроизвести гонку» и «Выбрать гипотезу» видно, по какой гипотезе сейчас торгует живой бот']],
@@ -2402,7 +2419,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('#chartTabs .pill
 const CD_TF=[['trade','Сделка',0],['15m','15м',9e5],['1h','1ч',36e5],['4h','4ч',144e5],['1d','1д',864e5]];
 function cdOff(){const w=$('#tvWrap');if(w)w.style.display='none';const c=$('#chart');if(c)c.style.display='';const b=$('#cdBar');if(b)b.innerHTML='';}
 // свеча на сделку: открытие — депозит до сделки, закрытие — после; тени — лучший и худший момент сделки (пик и провал цены × размер)
-function cdTradeCandles(t){const S=D.state||{};const wl=D.mode==='live'&&S.wallet_bnb!=null&&+S.balance_usd>0;const tot=t.reduce((a,x)=>a+ +x.pnl_usd,0);let eq=wl?eqNow()-tot:D.config.paper_start_balance_usd;
+function cdTradeCandles(t){const S=D.state||{};const wl=!window.HVM&&D.mode==='live'&&S.wallet_bnb!=null&&+S.balance_usd>0;const tot=t.reduce((a,x)=>a+ +x.pnl_usd,0);let eq=wl?eqNow()-tot:D.config.paper_start_balance_usd;
  const out=[];let lastT=0;for(const x of t){const o=eq,p=+x.pnl_usd,c=o+p,sz=+x.size_usd||20;const pk=+x.peak_pct,tr=+x.trough_pct;
   let h=Math.max(o,c),l=Math.min(o,c);if(isFinite(pk)&&pk>0)h=Math.max(h,o+sz*pk/100);if(isFinite(tr)&&tr<0)l=Math.min(l,o+sz*tr/100);
   let ts=Math.floor(+new Date(x.closed)/1000);if(ts<=lastT)ts=lastT+1;lastT=ts;out.push({ts,o,h,l,c,n:1,w:p>0?1:0,v:sz,trs:[x]});eq=c;}return out;}
@@ -2596,8 +2613,40 @@ let hgHov=false;
   for(const F of (typeof FIELDS!=='undefined'?FIELDS:[])){const v=get(def,F.k);if(v===undefined)continue;if(F.g!==g0){g0=F.g;html+='<div class="drg">'+esc(F.g)+'</div>';}const cv=cur?get(cur,F.k):undefined;const ch=cv!==undefined&&JSON.stringify(cv)!==JSON.stringify(v);html+='<div class="drr'+(ch?' ch':'')+'"><span>'+esc(F.l)+'</span><b>'+esc(fv(v,F.u))+'</b></div>';}
   html+='</div>';det.querySelector('.drp')?.remove();det.insertAdjacentHTML('beforeend',html);}
  new MutationObserver(()=>{if(busy)return;if(det.style.display==='none'||!det.innerHTML.trim())return;busy=true;
-  if(det.parentNode!==document.body)document.body.appendChild(det);det.classList.add('hdrawer');if(!det.querySelector('.drx')){det.insertAdjacentHTML('afterbegin','<button class="drx" title="Закрыть (Esc)">×</button>');det.querySelector('.drx').onclick=close;}
+  const hvI=document.getElementById('hvInfo');if(window.HVM&&hvI){if(det.parentNode!==hvI)hvI.appendChild(det);det.classList.remove('hdrawer');det.querySelector('.drx')?.remove();}else{if(det.parentNode!==document.body)document.body.appendChild(det);det.classList.add('hdrawer');if(!det.querySelector('.drx')){det.insertAdjacentHTML('afterbegin','<button class="drx" title="Закрыть (Esc)">×</button>');det.querySelector('.drx').onclick=close;}}if(!window.HVM&&raceSel&&!det.querySelector('[data-hvopen]')){const ch=det.querySelector('.chead');if(ch)ch.insertAdjacentHTML('afterend','<button class="btn primary hvxbtn" data-hvopen="'+raceSel+'">Расширенная версия — на весь экран</button>');}
   const id=raceSel;if(id&&id!==lastId){lastId=id;det.scrollTop=0;}if(id&&!det.querySelector('.drp'))params(id);busy=false;}).observe(det,{childList:true,attributes:true,attributeFilter:['style']});})();
+
+// ---- гипотеза на весь экран: клик по гипотезе в гонке → Обзор с её сделками (симуляция), тот же график ----
+window.HVM=null;
+(function(){let navProg=false,home=null;
+ const det=()=>document.getElementById('raceDet');
+ const conv=(t,sz)=>({address:t.addr,symbol:t.symbol,launchpad:t.launchpad,opened:new Date(t.entryT*1000).toISOString(),closed:new Date((t.exitT||t.entryT)*1000).toISOString(),pnl_usd:+t.pnl,pnl_pct:+t.pct,reason:t.reason,hold_min:t.hold_min,age_min:t.age_min,size_usd:sz,entry_usd:t.entry,exit_usd:t.exit,mode:'симуляция',sim:1});
+ function bar(){const b=$('#hvBar');if(!b||!HVM)return;const r=HVM.r,L=D&&D.liveHyp;const live=r&&L&&r.num&&L.num===r.num;const m=r&&r.win&&r.win[raceW];
+  const ttl=r.id==='current'?'Текущие правила':'Гипотеза #'+(r.num||'');
+  b.innerHTML='<button class="btn hvback" id="hvBack">← К гонке</button><div class="hvt"><div class="hvh"><b>'+esc(ttl)+'</b>'+(m?relTag(m.rel):'')+(live?'<span class="hvlive"><i class="ondot"></i>живой бот торгует по ней</span>':'')+'</div><div class="hvn">'+esc(HVM.name||r.name||'')+'</div></div>'+
+   '<div class="hvs">'+(HVM.loading?'загружаю сделки…':HVM.err?'<span class="bad">'+esc(HVM.err)+'</span>':'симуляция: '+HVM.trades.length+' сделок по $'+f(HVM.size||20,0)+', старт $'+f(D.config.paper_start_balance_usd,0)+' · комиссии и газ учтены')+'</div>';
+  $('#hvBack').onclick=()=>close(true);}
+ function place(){const d=det(),hv=$('#hvInfo');if(d&&hv&&d.style.display!=='none'&&d.parentNode!==hv){hv.appendChild(d);d.classList.remove('hdrawer');d.querySelector('.drx')?.remove();}}
+ async function open(id){const R=raceIds;const r=R&&R.list.find(x=>x.id===id);if(!r)return;
+  const d=det();if(d&&!home)home={p:d.parentNode,n:d.nextSibling};
+  window.HVM={id,r,name:r.id==='current'?'':r.name,trades:[],loading:true};document.body.classList.add('hvm');place();
+  navProg=true;try{const b=document.querySelector('nav .pill[data-view="overview"]');if(b)b.click();}finally{navProg=false;}
+  scrollTo(0,0);bar();$('#hvBar').style.display='';try{render();}catch(e){console.error(e);}setTimeout(place,0);
+  try{const q=await fetch('/api/hyp?id='+encodeURIComponent(id)+'&w=all',{cache:'no-store'});const j=await q.json();if(!q.ok)throw new Error(j.error||('HTTP '+q.status));
+   if(!window.HVM||HVM.id!==id)return;HVM.size=j.size;HVM.name=HVM.name||j.name;HVM.trades=(j.trades||[]).map(t=>conv(t,j.size)).sort((a,b)=>+new Date(a.closed)-+new Date(b.closed));HVM.loading=false;}
+  catch(e){if(window.HVM){HVM.loading=false;HVM.err='Не удалось загрузить сделки: '+e.message;}}
+  if(!window.HVM||HVM.id!==id)return;bar();try{zoom=null;yMan=null;}catch{}try{render();}catch(e){console.error(e);}place();}
+ function close(toRace){if(!window.HVM)return;window.HVM=null;document.body.classList.remove('hvm');$('#hvBar').style.display='none';$('#hvBar').innerHTML='';
+  const d=det();if(d){d.style.display='none';d.classList.remove('hdrawer');if(home&&home.p)home.p.insertBefore(d,home.n&&home.n.parentNode===home.p?home.n:null);}
+  try{raceSel=null;}catch{}try{zoom=null;yMan=null;}catch{}
+  if(toRace){navProg=true;try{const b=document.querySelector('nav .pill[data-view="hyp"]');if(b)b.click();try{setHypTab('race');}catch{}}finally{navProg=false;}scrollTo(0,0);}
+  try{render();}catch(e){console.error(e);}}
+ window.hvOpen=open;window.hvClose=close;
+ // клик по дорожке в гонке (ловим до обработчика дорожки, чтобы панель сразу легла под график)
+ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-hvopen]');if(!b)return;e.preventDefault();e.stopPropagation();const id=b.dataset.hvopen||raceSel;if(id)open(id);});
+ // уход на другую вкладку — выходим из режима гипотезы
+ document.addEventListener('click',e=>{if(navProg||!window.HVM)return;const t=e.target.closest&&e.target.closest('nav .pill,#subnav .pill,#logoHome');if(t)close(false);},true);
+ addEventListener('keydown',e=>{if(e.key==='Escape'&&window.HVM&&!document.querySelector('.drawer.on,.drawer.open'))close(true);});})();
 
 // ---- мини-арена рядом с роботом: упрощённая воронка отбора (4 ворот + финиш) по монетам последнего скана ----
 (function(){const G=[['возраст',[0]],['рынок',[1,2,3,4]],['безопасность',[5,6,7,8,9]],['активность',[10,11,12]]];
