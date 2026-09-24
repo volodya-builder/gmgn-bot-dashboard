@@ -813,6 +813,22 @@ main{padding-bottom:45vh!important}
   #v-overview .kc .kcs{display:none;position:absolute;left:8px;right:8px;top:calc(100% - 6px);margin:0;background:#161616;border:1px solid var(--border2);border-radius:10px;padding:8px 12px;font-size:12.5px;line-height:1.45;color:#b9bdb5;z-index:40;box-shadow:0 12px 30px #000a}
   #v-overview .kc:hover .kcs{display:block}
 }
+
+/* hyp-chip: номер гипотезы у робота, по клику — правила и «сменить» */
+.ovhw{position:relative;display:flex;align-items:center}
+.ovhb{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 12px 0 11px;border:1px solid var(--border);border-radius:14px;background:#101010;color:#9a9e96;font:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
+.ovhb b{color:#e8e9e4;font-weight:600}
+.ovhb .ondot{margin:0}
+.ovhb svg{opacity:.6;transition:transform .15s}
+.ovhb:hover,.ovhw.open .ovhb{border-color:var(--border2);color:#e8e9e4}
+.ovhw.open .ovhb svg{transform:rotate(180deg)}
+.ovhp{position:absolute;left:0;top:calc(100% + 8px);z-index:60;width:min(460px,calc(100vw - 32px));background:#141414;border:1px solid var(--border2);border-radius:14px;padding:14px 16px;box-shadow:0 16px 40px #000c;font-size:13px;line-height:1.45}
+.ovhh{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}.ovhh b{font-size:15px;color:#e8e9e4}.ovhh span{color:#7d8179;font-size:12px}
+.ovhn{color:#b9bdb5;margin-bottom:8px}
+.ovhs{color:#9a9e96;margin-bottom:10px}
+#ovHyp .ovhp .ovrules{margin:0;padding:10px 0 0;border-top:1px solid var(--border)}
+.ovhf{display:flex;justify-content:flex-end;margin-top:12px}
+@media(max-width:700px){.ovhp{position:fixed;left:16px;right:16px;top:auto;width:auto}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -822,10 +838,9 @@ main{padding-bottom:45vh!important}
 <main>
 <div class="subnav" id="subnav"></div>
 <section class="view on" id="v-overview">
-  <div class="titlebar"><div class="ovttl"><h1 class="h1">Обзор</h1><div class="rbw" id="rbw" title=""><div class="rb" id="rb"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="rb-body"><line x1="32" y1="6" x2="32" y2="13" class="rb-str"/><circle cx="32" cy="5" r="3.2" class="rb-ant"/><rect x="13" y="13" width="38" height="27" rx="9" class="rb-head"/><rect x="18" y="19" width="28" height="15" rx="6" class="rb-face"/><g class="rb-eyes"><circle cx="26" cy="26.5" r="3" class="rb-eye"/><circle cx="38" cy="26.5" r="3" class="rb-eye"/></g><g class="rb-x"><path d="M23 23.5l6 6M29 23.5l-6 6M35 23.5l6 6M41 23.5l-6 6" class="rb-str2"/></g><rect x="9" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="51" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="20" y="43" width="24" height="14" rx="5" class="rb-torso"/><circle cx="32" cy="50" r="2.6" class="rb-core"/></g><g class="rb-zz"><text x="50" y="14">z</text><text x="56" y="8">z</text></g><g class="rb-sp"><path d="M8 10l3 3M56 42l3 3M6 44l3-2" class="rb-str2"/></g></svg></div><div class="rbt"><b id="rbTitle">…</b><span id="rbSub"></span></div></div></div><div class="pills small" id="period"><button class="pill" data-p="24h">24ч</button><button class="pill" data-p="7d">Неделя</button><button class="pill" data-p="30d">Месяц</button><button class="pill on" data-p="all">Всё время</button></div></div>
+  <div class="titlebar"><div class="ovttl"><h1 class="h1">Обзор</h1><div class="rbw" id="rbw" title=""><div class="rb" id="rb"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="rb-body"><line x1="32" y1="6" x2="32" y2="13" class="rb-str"/><circle cx="32" cy="5" r="3.2" class="rb-ant"/><rect x="13" y="13" width="38" height="27" rx="9" class="rb-head"/><rect x="18" y="19" width="28" height="15" rx="6" class="rb-face"/><g class="rb-eyes"><circle cx="26" cy="26.5" r="3" class="rb-eye"/><circle cx="38" cy="26.5" r="3" class="rb-eye"/></g><g class="rb-x"><path d="M23 23.5l6 6M29 23.5l-6 6M35 23.5l6 6M41 23.5l-6 6" class="rb-str2"/></g><rect x="9" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="51" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="20" y="43" width="24" height="14" rx="5" class="rb-torso"/><circle cx="32" cy="50" r="2.6" class="rb-core"/></g><g class="rb-zz"><text x="50" y="14">z</text><text x="56" y="8">z</text></g><g class="rb-sp"><path d="M8 10l3 3M56 42l3 3M6 44l3-2" class="rb-str2"/></g></svg></div><div class="rbt"><b id="rbTitle">…</b><span id="rbSub"></span></div></div><div class="ovhw" id="ovHyp" style="display:none"></div></div><div class="pills small" id="period"><button class="pill" data-p="24h">24ч</button><button class="pill" data-p="7d">Неделя</button><button class="pill" data-p="30d">Месяц</button><button class="pill on" data-p="all">Всё время</button></div></div>
   <div class="hero" id="hero"></div>
   <div class="tiles kstrip" id="tiles"></div>
-  <div class="ovstrip" id="ovHyp" style="display:none"></div>
   <div class="ovgrid">
   <div class="card ovchart">
     <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity">Депозит</button></div></div>
@@ -947,19 +962,24 @@ function rulesSummary(c){const e=c.entry||{},x=c.exit||{};const k=v=>v>=1e6?'$'+
  if(e.max_sniper_count<9999)a.push('снайперов до '+e.max_sniper_count);if(e.max_bundler_rate<1)a.push('бандлеры до '+Math.round(e.max_bundler_rate*100)+'%');if(e.max_insider_rate<1)a.push('инсайдеры до '+Math.round(e.max_insider_rate*100)+'%');
  const b=['тейк +'+x.take_profit_pct+'%','стоп −'+x.stop_loss_pct+'%'];if(x.trailing_activate_pct<1e5)b.push('трейлинг после +'+x.trailing_activate_pct+'%, откат '+x.trailing_drawdown_pct+'%');b.push('не дольше '+x.max_hold_min+' мин');
  return {entry:a,exit:b};}
-let ovRulesOpen=false;try{ovRulesOpen=localStorage.getItem('ovRules')==='1';}catch{}
+let ovHypOpen=false;
+document.addEventListener('click',e=>{if(ovHypOpen&&!e.target.closest('#ovHyp')){ovHypOpen=false;renderOvHyp();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ovHypOpen){ovHypOpen=false;renderOvHyp();}});
 function renderOvHyp(){const rl=$('#raceCurLbl');if(rl)rl.textContent=D&&D.mode==='live'?'Правила бота-симуляции (для сравнения)':'Текущие правила';const el=$('#ovHyp');if(!el||!D||!D.config)return;const c=D.config,L=D.liveHyp,H=D.hypotheses;const live=D.mode==='live';
  const list=H&&H.list||[];const r=L?list.find(x=>x.id===L.id||x.num===L.num):list.find(x=>x.id==='current');const w=r&&r.win&&r.win['7d']&&r.win['7d'].n?'7d':'all';const m=r&&r.win?r.win[w]:null;
  const R=rulesSummary(c);el.style.display='';
  const nm=L?(L.name||''):'гипотеза не выбрана — работают правила из вкладки «Правила»';
- const tt=L?'выбрана '+dt(L.selected_at*1000)+(L.previous?' · до этого '+L.previous:''):'';
- const simT=m&&m.n?' · в симуляции '+WLBL[w].replace('за ','')+': '+mny(m.exp)+' на сделку, '+m.n+' '+sdl(m.n):'';
- el.innerHTML='<span class="osn2" title="'+esc((live?'Реальные деньги · ':'Симуляция · ')+tt+simT)+'"><i class="ondot"></i>'+(L?'#'+L.num:esc(c.rules_version||'правила'))+'</span>'+
-  '<span class="osd2" title="'+esc(nm)+'">'+esc(nm)+'</span>'+
-  '<span class="osb2"><a id="ovRulesT">'+(ovRulesOpen?'скрыть правила':'правила')+'</a><a id="ovHypGo">'+(D.hypSelect?'сменить':'гипотезы')+'</a></span>'+
-  (ovRulesOpen?'<div class="ovrules"><div><span class="clbl">Вход</span>'+R.entry.map(t=>'<span class="hchip">'+esc(t)+'</span>').join('')+'</div><div><span class="clbl">Выход</span>'+R.exit.map(t=>'<span class="hchip">'+esc(t)+'</span>').join('')+'</div></div>':'');
- $('#ovRulesT').onclick=()=>{ovRulesOpen=!ovRulesOpen;try{localStorage.setItem('ovRules',ovRulesOpen?'1':'0');}catch{}renderOvHyp();};
- $('#ovHypGo').onclick=()=>{const t=document.querySelector('nav .pill[data-view="hyp"]');if(t)t.click();try{setHypTab('race');}catch{}scrollTo(0,0);};}
+ const lbl=L?'#'+L.num:esc(c.rules_version||'правила');
+ const meta=[live?'реальные деньги':'симуляция'];if(L)meta.push('выбрана '+dt(L.selected_at*1000));if(L&&L.previous)meta.push('до этого '+esc(L.previous));
+ const simT=m&&m.n?'В симуляции '+WLBL[w].replace('за ','')+': <b class="'+(m.exp>=0?'pos':'neg')+'">'+mny(m.exp)+'</b> на сделку · '+m.n+' '+sdl(m.n):'';
+ el.className='ovhw'+(ovHypOpen?' open':'');
+ el.innerHTML='<button type="button" class="ovhb" id="ovHypB" title="Гипотеза, по которой торгует бот — нажми, чтобы посмотреть правила"><i class="ondot"></i><span>Гипотеза</span><b>'+lbl+'</b><svg viewBox="0 0 10 6" width="9" height="6"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>'+
+  (ovHypOpen?'<div class="ovhp"><div class="ovhh"><b>Гипотеза '+lbl+'</b><span>'+meta.join(' · ')+'</span></div>'+
+   (nm?'<div class="ovhn">'+esc(nm)+'</div>':'')+(simT?'<div class="ovhs">'+simT+'</div>':'')+
+   '<div class="ovrules"><div><span class="clbl">Вход</span>'+R.entry.map(t=>'<span class="hchip">'+esc(t)+'</span>').join('')+'</div><div><span class="clbl">Выход</span>'+R.exit.map(t=>'<span class="hchip">'+esc(t)+'</span>').join('')+'</div></div>'+
+   '<div class="ovhf"><button type="button" class="btn" id="ovHypGo">'+(D.hypSelect?'Сменить гипотезу':'Открыть гипотезы')+'</button></div></div>':'');
+ $('#ovHypB').onclick=e=>{e.stopPropagation();ovHypOpen=!ovHypOpen;renderOvHyp();};
+ const g=$('#ovHypGo');if(g)g.onclick=()=>{ovHypOpen=false;renderOvHyp();const t=document.querySelector('nav .pill[data-view="hyp"]');if(t)t.click();try{setHypTab('race');}catch{}scrollTo(0,0);};}
 (()=>{let nh=false;const g=document.querySelector('.ovgrid'),bt=$('#zhist');if(!g||!bt)return;
  const ap=()=>{g.classList.toggle('nohist',nh);bt.textContent=nh?'Показать историю':'На всю ширину';bt.title=nh?'Вернуть колонку «История сделок» справа':'Спрятать колонку «История сделок» — график станет на всю ширину';};ap();
  bt.onclick=()=>{nh=!nh;try{localStorage.setItem('ovNoHist',nh?'1':'0');}catch{}ap();try{redraw();}catch{}};})();
@@ -1460,8 +1480,9 @@ function drawBotBars(){const v=$('#v-net');const c=$('#btCv');if(!c||!v||!v.clas
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.105';
+const APP_VERSION='2.106';
 const CHANGELOG=[
+ ['2.106','24.09.2026',['Обзор: номер гипотезы теперь рядом с роботом; по нажатию на него открываются правила и кнопка «Сменить гипотезу». Отдельная строка над графиком убрана']],
  ['2.105','24.09.2026',['Обзор: в карточках показателей остались только главные цифры; мелкие подписи (свободные деньги, лучшая/худшая сделка, комиссии, число плюсов/минусов, просадка) показываются подсказкой при наведении на карточку. На телефоне — как раньше']],
  ['2.104','24.09.2026',['Обзор: плашка гипотезы (#номер · правила · сменить) убрана с графика — теперь отдельной строкой между карточками показателей и графиком']],
  ['2.103','24.09.2026',['Обзор: робот-статус и мини-воронка возвращены на место, рядом с заголовком']],
