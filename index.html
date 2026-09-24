@@ -959,6 +959,11 @@ body.hvm #v-overview .ovttl,body.hvm #opCard,body.hvm #ovHyp{display:none!import
 .hvxbtn{display:block;width:100%;margin:6px 0 14px;padding:11px}
 body.hvm .hvxbtn{display:none}
 @media(max-width:700px){.hvbar{padding:12px 14px;gap:10px}.hvs{text-align:left;flex-basis:100%}.hvh b{font-size:18px}}
+
+/* trustb: «можно ли ей верить» в карточке гипотезы */
+#raceDet.hdrawer .trustb .cklist{grid-template-columns:1fr}
+#raceDet .trustb{margin-top:6px}
+#raceDet .trustb .lcmp{margin-top:18px}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -1661,8 +1666,10 @@ function drawBotBars(){const v=$('#v-net');const bx=$('#btSvg');if(!bx||!v||!v.c
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.129';
+const APP_VERSION='2.131';
 const CHANGELOG=[
+ ['2.131','24.09.2026',['«Можно ли ей верить» в карточке гипотезы: для гипотез не из топ-40 раньше показывались пустые/неверные пункты (например «0 из 100 проверочных» красным). Теперь сервер считает эти проверки для всех гипотез; не посчитанное помечается серым, а не красным']],
+ ['2.130','24.09.2026',['Карточка гипотезы в гонке и её расширенная версия: сравнение с текущими правилами («лучше/хуже на $ на каждой сделке») и чек-лист «Можно ли ей верить» — как во вкладке «Лучшая сейчас»']],
  ['2.129','24.09.2026',['Гонка гипотез: в карточке гипотезы кнопка «Расширенная версия» — открывает гипотезу на весь экран — тот же график депозита, что на «Обзоре» (по сделкам гипотезы в симуляции), карточки показателей, история сделок с логотипами и все правила ниже; «← К гонке» или Esc — назад']],
  ['2.128','24.09.2026',['В карточке гипотезы из «Гонки» — кнопка «Включить эту гипотезу на живом боте» (нажать дважды); если живой бот уже торгует по ней — так и написано']],
  ['2.127','24.09.2026',['Гипотезы → «Выбрать гипотезу»: пароль больше не стирается после первого нажатия (из-за этого приходило «неверный пароль панели»); неверный сохранённый пароль сбрасывается, и поле пароля появляется снова']],
@@ -1846,14 +1853,21 @@ const sdl=n=>n%10===1&&n%100!==11?'сделка':n%10>=2&&n%10<=4&&(n%100<10||n%
 // проверки «можно ли верить»: ok=true/false, null — пока нечем проверить
 function hypChecks(m,nz,fresh,vs){if(!m||!m.n)return [];const C=[];const add=(ok,t,v,k)=>C.push({ok,t,v,k});
  const vn=fresh?m.n:(m.holdout?.n||0);
- add(vn>=100,'Хватает проверочных сделок',vn+' из 100 нужных','n');
+ const hoK=fresh||!!m.holdout;add(hoK?vn>=100:null,'Хватает проверочных сделок',hoK?vn+' из 100 нужных':'ещё не посчитано — будет после пересчёта','n');
  add(m.expLB>0,'В плюсе даже при осторожной оценке','нижняя граница '+mny(m.expLB)+' на сделку','lb');
  const v=vs||m.vs_noise;add(v==='better'?true:v==='within'?false:null,'Лучше, чем случайный перебор',nz?'случайность даёт до '+mny(nz.p95)+' на сделку':'пока не посчитано','noise');
  if(!fresh){add(m.holdout?.n?m.holdout.exp>0:null,'Работает на новых данных',m.holdout?.n?'последние 30%: '+mny(m.holdout.exp)+' на '+m.holdout.n+' '+sdl(m.holdout.n):'новых сделок ещё нет','new');
   add(m.no_top3?m.no_top3.exp>0:null,'Не держится на трёх удачных сделках',m.no_top3?'без них '+mny(m.no_top3.exp)+' на сделку':'мало сделок','top3');
   add(m.neigh?Math.abs(m.neigh.exp-m.exp)<Math.max(1,Math.abs(m.exp)*0.5):null,'Не зависит от точных тейка и стопа',m.neigh?'тейк/стоп ±10%: в среднем '+mny(m.neigh.exp):'не посчитано','neigh');}
- add(m.days&&m.days.n>=3?m.days.pos_pct>60:null,'Больше 60% дней в плюсе',m.days?m.days.pos_pct+'% из '+m.days.n+' дн.'+(m.days.n<3?' — дней пока мало':''):'—','days');
+ add(m.days&&m.days.n>=3?m.days.pos_pct>60:null,'Больше 60% дней в плюсе',m.days?f(m.days.pos_pct,0)+'% из '+m.days.n+' дн.'+(m.days.n<3?' — дней пока мало':''):'—','days');
  return C;}
+
+// «сравнение с текущими правилами» + «Можно ли ей верить» — для карточки гипотезы в гонке и расширенной версии
+function trustBlock(r,w,H){try{const m=r&&r.win&&r.win[w];if(!m||!m.n)return '';const list=(H&&H.list)||[];const cur=list.find(x=>x.id==='current');const cm=cur&&cur.win&&cur.win[w];
+ const nz=H&&H.noise?H.noise[w]:null;const C=hypChecks(m,nz);const pass=C.filter(c=>c.ok===true).length;const dlt=r.id!=='current'&&cm&&cm.n?m.exp-cm.exp:null;
+ const cmp=r.id==='current'?'':dlt==null?'<div class="lcmp">По текущим правилам '+WLBL[w]+' сделок в симуляции нет — сравнивать не с чем.</div>':'<div class="lcmp">'+(Math.abs(dlt)<0.01?'Результат <b>такой же, как у текущих правил</b> ('+mny(cm.exp)+' на сделку).':'Текущие правила: '+mny(cm.exp)+' на сделку на '+cm.n+' '+sdl(cm.n)+'. Гипотеза '+(dlt>0?'<b class="good">лучше на '+mny(dlt).replace('+','')+'</b>':'<b class="bad">хуже на '+mny(dlt).replace('−','')+'</b>')+' на каждой сделке.')+'</div>';
+ const na=C.filter(c=>c.ok==null).length;
+ return '<div class="trustb">'+cmp+'<div class="h4" style="margin-top:20px">Можно ли ей верить <span>пройдено '+pass+' из '+C.length+' '+WLBL[w]+'</span></div>'+ckList(C)+(r.compact&&!m.neigh?'<div class="note" style="margin:-8px 0 12px">«Не зависит от точных тейка и стопа» сервер считает только для 40 лучших вариантов — это долгая проверка.</div>':'')+'</div>';}catch(e){console.error(e);return '';}}
 const ckState=c=>c.ok===true?'ok':c.ok===false?'no':'na';
 function ckList(C){return '<div class="cklist">'+C.map(c=>'<div class="ck '+ckState(c)+'">'+CKI[ckState(c)]+'<div><div class="t">'+c.t+'</div><div class="v">'+c.v+'</div></div></div>').join('')+'</div>';}
 function ckDots(C){const p=C.filter(c=>c.ok===true).length;return '<span class="cks" title="'+esc(C.map(c=>(c.ok===true?'да':c.ok===false?'нет':'—')+': '+c.t).join('\n'))+'">'+C.map(c=>'<i class="'+ckState(c)+'"></i>').join('')+'</span> <span class="note">'+p+'/'+C.length+'</span>';}
@@ -2286,7 +2300,7 @@ function renderRace(force){const R=raceList();
   return '<div class="lane'+(r.id==='current'?' curl':'')+(crown?' crown':'')+(isNew?' enter':'')+(raceSel===r.id?' sel':'')+'" data-id="'+r.id+'" style="top:'+rank*56+'px"><span class="lrank" title="место в гонке">'+(rank+1)+'</span><div class="lname"><div class="lnm" title="'+esc(r.diff.map(d=>d.text).join(' · '))+'">'+(isLive(r)?'<i class="ondot"></i>':'')+(r.num&&r.id!=='current'?'<b class="hnum">#'+r.num+'</b> ':'')+(r.id==='current'?CURL():laneShort(r))+'</div><div class="lmeta">'+relTag(m.rel)+(isLive(r)?onTag('включена'):'')+'</div></div><div class="track"><i class="zero" style="left:'+z+'%"></i><i class="trail'+(m.pnl<0?' b':'')+'" style="left:'+Math.min(z,P(m.pnl))+'%;width:'+Math.abs(P(m.pnl)-z)+'%"></i><i class="car" style="left:'+P(m.pnl)+'%"></i></div><span class="lcol">'+m.n+'</span><span class="lcol '+cls(m.exp)+'">'+(m.n?mny(m.exp):'—')+'</span><span class="lcol lt" title="'+(rLast(m)?new Date(rLast(m)*1000).toLocaleString('ru-RU'):'')+'">'+rLastTxt(m)+'</span><b class="lpnl '+cls(m.pnl)+'">'+mny(m.pnl)+'</b></div>';}).join('');
  racePrev=ids;
  $('#race').querySelectorAll('.lane').forEach(l=>l.onclick=()=>{raceSel=l.dataset.id;const r=list.find(x=>x.id===raceSel);$('#race').querySelectorAll('.lane').forEach(x=>x.classList.toggle('sel',x===l));
-  const canApply=D.editable&&!window.DATA_URL&&r.diff.length&&!r.compact;const rsolid=r.win[raceW].rel==='solid';$('#raceDet').style.display='';$('#raceDet').innerHTML='<div class="chead"><div class="big" style="font-size:22px">'+(r.id==='current'?CURL():'Гипотеза #'+(r.num||(order.indexOf(r)+1)))+'</div>'+relTag(r.win[raceW].rel)+'</div>'+(r.compact?detailCompact(r,raceW):detail(r,H.noise?.[raceW],H.walkforward?.[raceW],raceW))+'<div class="cbtns" style="margin-top:16px"><button class="btn primary" data-hyptrades="'+r.id+'" data-w="'+raceW+'" data-name="'+esc(r.id==='current'?CURL():r.name)+'">Сделки на графиках</button><span class="note">все монеты этой гипотезы: вход, выход и что было дальше</span></div>'+raceLiveBtn(r)+(canApply?'<div class="cbtns" style="margin-top:16px"><button class="btn'+(rsolid?' primary':'')+'" id="raceApply"'+(rsolid?'':' disabled')+'>Применить к боту</button><span class="note" id="raceNote">'+(rsolid?'Кнопка сработает со второго нажатия — защита от случайного клика.':'Кнопка неактивна: '+esc((r.win[raceW].why||[]).join('; ')))+'</span></div>':'');
+  const canApply=D.editable&&!window.DATA_URL&&r.diff.length&&!r.compact;const rsolid=r.win[raceW].rel==='solid';$('#raceDet').style.display='';$('#raceDet').innerHTML='<div class="chead"><div class="big" style="font-size:22px">'+(r.id==='current'?CURL():'Гипотеза #'+(r.num||(order.indexOf(r)+1)))+'</div>'+relTag(r.win[raceW].rel)+'</div>'+(r.compact?detailCompact(r,raceW):detail(r,H.noise?.[raceW],H.walkforward?.[raceW],raceW))+trustBlock(r,raceW,H)+'<div class="cbtns" style="margin-top:16px"><button class="btn primary" data-hyptrades="'+r.id+'" data-w="'+raceW+'" data-name="'+esc(r.id==='current'?CURL():r.name)+'">Сделки на графиках</button><span class="note">все монеты этой гипотезы: вход, выход и что было дальше</span></div>'+raceLiveBtn(r)+(canApply?'<div class="cbtns" style="margin-top:16px"><button class="btn'+(rsolid?' primary':'')+'" id="raceApply"'+(rsolid?'':' disabled')+'>Применить к боту</button><span class="note" id="raceNote">'+(rsolid?'Кнопка сработает со второго нажатия — защита от случайного клика.':'Кнопка неактивна: '+esc((r.win[raceW].why||[]).join('; ')))+'</span></div>':'');
   const b=$('#raceApply');if(b){let armed=false;b.onclick=async()=>{if(!armed){armed=true;b.textContent='Точно применить? Нажми ещё раз';b.classList.add('danger');return;}b.disabled=true;$('#raceNote').textContent='Применяю…';try{const pw=(()=>{try{return localStorage.getItem('dash_pwd')||'';}catch{return '';}})();const res=await fetch('/api/config',{method:'POST',headers:{'Content-Type':'application/json','X-Password':pw},body:JSON.stringify({entry:r.entry,exit:r.exit})});const j=await res.json();if(!res.ok)throw new Error(j.error||res.status);$('#raceNote').textContent='Готово: '+j.changes.length+' изменений, бот перезапускается.';$('#raceNote').className='note ok';}catch(e){$('#raceNote').textContent='Не удалось: '+e.message;$('#raceNote').className='note err';b.disabled=false;}};}});
  raceIds={list,P,z,mn,mx};}
 function raceReplay(){const R=raceIds;if(!R)return;if(raceAnim)cancelAnimationFrame(raceAnim);const ts=R.list.flatMap(r=>r.win[raceW].curve.map(p=>p[0]));if(!ts.length)return;const t0=Math.min(...ts),t1=Math.max(...ts);const dur=RM?1:12000,start=performance.now();$('#raceGo').textContent='Идёт гонка…';
