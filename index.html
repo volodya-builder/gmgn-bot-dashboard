@@ -805,8 +805,8 @@ main{padding-bottom:45vh!important}
 /* описание гипотезы над графиком убрано по просьбе (оно есть в «правила») */
 #ovHyp .osd2{display:none!important}
 #ovHyp .osb2{margin-left:auto}
-/* v-right: робот-статус и мини-воронка — справа от заголовка «Обзор» */
-@media(min-width:701px){#v-overview .ovttl{width:100%!important;flex-wrap:nowrap}#v-overview .ovttl>.h1{margin-right:auto}}
+/* ovHyp-move: плашка гипотезы вынесена с графика в отдельную строку между карточками и графиком */
+#v-overview>#ovHyp{margin:0}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -819,9 +819,9 @@ main{padding-bottom:45vh!important}
   <div class="titlebar"><div class="ovttl"><h1 class="h1">Обзор</h1><div class="rbw" id="rbw" title=""><div class="rb" id="rb"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="rb-body"><line x1="32" y1="6" x2="32" y2="13" class="rb-str"/><circle cx="32" cy="5" r="3.2" class="rb-ant"/><rect x="13" y="13" width="38" height="27" rx="9" class="rb-head"/><rect x="18" y="19" width="28" height="15" rx="6" class="rb-face"/><g class="rb-eyes"><circle cx="26" cy="26.5" r="3" class="rb-eye"/><circle cx="38" cy="26.5" r="3" class="rb-eye"/></g><g class="rb-x"><path d="M23 23.5l6 6M29 23.5l-6 6M35 23.5l6 6M41 23.5l-6 6" class="rb-str2"/></g><rect x="9" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="51" y="22" width="4" height="9" rx="2" class="rb-ear"/><rect x="20" y="43" width="24" height="14" rx="5" class="rb-torso"/><circle cx="32" cy="50" r="2.6" class="rb-core"/></g><g class="rb-zz"><text x="50" y="14">z</text><text x="56" y="8">z</text></g><g class="rb-sp"><path d="M8 10l3 3M56 42l3 3M6 44l3-2" class="rb-str2"/></g></svg></div><div class="rbt"><b id="rbTitle">…</b><span id="rbSub"></span></div></div></div><div class="pills small" id="period"><button class="pill" data-p="24h">24ч</button><button class="pill" data-p="7d">Неделя</button><button class="pill" data-p="30d">Месяц</button><button class="pill on" data-p="all">Всё время</button></div></div>
   <div class="hero" id="hero"></div>
   <div class="tiles kstrip" id="tiles"></div>
+  <div class="ovstrip" id="ovHyp" style="display:none"></div>
   <div class="ovgrid">
   <div class="card ovchart">
-    <div class="ovstrip" id="ovHyp" style="display:none"></div>
     <div class="head"><div><div class="big" id="chartBig">—</div><div class="sub" id="chartSub"></div></div><div class="pills small" id="chartTabs"><button class="pill on" data-c="equity">Депозит</button></div></div>
     <div class="ctools ctmin"><label class="check" id="marksWrap"><input type="checkbox" id="marks"><span class="box"></span>Сделки на графике</label><div class="zbtns"><button class="mini" id="zout" title="Отдалить">−</button><button class="mini" id="zin" title="Приблизить">+</button><button class="mini wide" id="zaxis" title="По сделкам — точки идут подряд, без пустых промежутков между сделками. По времени — настоящая шкала времени">По сделкам</button><button class="mini wide" id="zreset">Весь период</button><button class="mini wide" id="zauto" style="display:none" title="Вернуть автоматический масштаб по вертикали">Авто</button><button class="mini wide" id="zhist" title="Спрятать колонку «История сделок» — график станет на всю ширину">На всю ширину</button><button class="mini wide" id="zbig">Развернуть</button></div><span class="hint">колесо — масштаб · тяни график — сдвиг · тяни шкалу цены или времени — растянуть · двойной клик — сброс</span></div><canvas id="chart"></canvas><div class="axis" id="axis"></div><div class="resz" id="resz" title="Потяни, чтобы изменить высоту графика"><span></span></div>
   </div>
@@ -1454,8 +1454,10 @@ function drawBotBars(){const v=$('#v-net');const c=$('#btCv');if(!c||!v||!v.clas
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.102';
+const APP_VERSION='2.104';
 const CHANGELOG=[
+ ['2.104','24.09.2026',['Обзор: плашка гипотезы (#номер · правила · сменить) убрана с графика — теперь отдельной строкой между карточками показателей и графиком']],
+ ['2.103','24.09.2026',['Обзор: робот-статус и мини-воронка возвращены на место, рядом с заголовком']],
  ['2.102','24.09.2026',['Обзор: робот-статус и мини-воронка отбора сдвинуты к правому краю строки заголовка']],
  ['2.101','24.09.2026',['Обзор: над графиком убрано длинное описание гипотезы — остались номер, «правила» и «сменить»']],
  ['2.100','24.09.2026',['Обзор: над графиком остался только «Депозит»; «PnL по сделкам» и «Сделки» переехали во вкладку «Объёмы» отдельной панелью со столбиками по часам/дням']],
