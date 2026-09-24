@@ -1,8 +1,3 @@
-[2026-09-22 18:38:25] скан: 205 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:186 liq:6; возраст мин/медиана/макс: 1/755/504510 мин
-[2026-09-22 18:38:26] история цен: запрошено 1, получено 1
-[2026-09-22 18:39:24] гипотезы: проверено сейчас 157, всего 300; токенов с историей 85; лучшая за 7 дней: покупок/продаж от 0, тейк +200% (n=15, PF 7.61, $9.02/сделку)
-[2026-09-22 18:42:56] CANDIDATE sPL.001 (flap) age 2.5m | liq 9366 | mcap 16821 | holders 58 | swaps 127 | vol 9569 | top10 0.30 | bundler 0.23 | snipers 0 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 85/42 | creator  | wash | smart 2 | renowned 3 | viewers 86 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 277 | source rank | launchpad flap
-[2026-09-22 18:42:56] BUY paper sPL.001 @0.0000177620 $20 | mcap 16821 liq 9366 holders 58
 [2026-09-22 18:43:27] история цен: запрошено 2, получено 2
 [2026-09-22 18:43:38] скан: 202 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:185 liq:3; возраст мин/медиана/макс: 1/744/503735 мин
 [2026-09-22 18:44:38] SELL paper sPL.001 stop_loss pnl -9.72$ (-47.1%) hold 2m | balance 941.88
@@ -2998,3 +2993,8 @@
 [2026-09-24 13:45:07] SELL paper $1 stop_loss pnl -5.47$ (-25.8%) hold 0m | balance 830.08
 [2026-09-24 13:48:31] история цен: запрошено 6, получено 6
 [2026-09-24 13:49:05] скан: 205 токенов (из них trenches: 119), 0 прошли фильтр; отсев: age:179 liq:5 mcap:2 bundler:2; возраст мин/медиана/макс: 1/1346/61974 мин
+[2026-09-24 13:51:55] CANDIDATE $1 (flap) age 7.7m | liq 16852 | mcap 33209 | holders 185 | swaps 497 | vol 31185 | top10 0.18 | bundler 0.21 | snipers 2 | tax 1/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 272/225 | creator creator_close | wash | smart 5 | renowned 6 | viewers 337 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 185 | chg1m 156 | viewers/holders 1.82 | source rank | launchpad flap | launchpad flap
+[2026-09-24 13:51:55] BUY paper $1 @0.0000346712 $20 | mcap 33209 liq 16852 holders 185
+[2026-09-24 13:52:10] SELL paper $1 stop_loss pnl -5.09$ (-24.0%) hold 0m | balance 824.68
+[2026-09-24 13:53:31] история цен: запрошено 5, получено 5
+[2026-09-24 13:54:05] скан: 205 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:175 liq:7 mcap:2 bundler:2; возраст мин/медиана/макс: 1/1350/78124 мин
