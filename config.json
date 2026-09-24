@@ -54,7 +54,8 @@
     "launchpads": [],
     "min_viewers_per_holder": 0.2,
     "min_chg1m": -100000,
-    "max_top1_holder_rate": 1
+    "max_top1_holder_rate": 1,
+    "launchpad_only": ""
   },
   "exit": {
     "take_profit_pct": 200,

@@ -767,6 +767,7 @@ main{padding-bottom:45vh!important}
 .logo#logoHome{cursor:pointer;border-radius:10px;transition:opacity .15s}.logo#logoHome:hover{opacity:.8}
 .kbnb{font-size:17px;color:#9a9e96;font-weight:400;letter-spacing:0}
 .kbnb2{font-size:15px;color:#9a9e96;font-weight:400;letter-spacing:0}
+.lpt td,.lpt th{padding:9px 12px}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
@@ -826,7 +827,8 @@ main{padding-bottom:45vh!important}
    <div class="htoc"><span>Разделы:</span><a href="#labMin">Когда покупать</a><a href="#labReal">Симуляция против реальности</a><a href="#hypUselessCard">Какие метрики не помогают</a><a href="#labDays">Итоги по дням</a></div>
    <div class="card" id="labMin"><div class="head"><div><div class="big" style="font-size:22px">Когда покупать</div><div class="sub">Что происходит через 30 минут, если купить монету на N-й минуте её жизни. Столбики — типичный результат на сделку $<span id="minSize">20</span> после издержек.</div></div></div><canvas id="minChart" style="height:280px"></canvas><div class="note" style="text-align:center;margin-top:2px">минута входа (n — сколько монет в оценке)</div><div class="hleg" id="minLegend" style="margin-top:10px"></div><div id="minNote" class="hnote"></div></div>
    <div class="card" id="labReal"><div class="head"><div><div class="big" style="font-size:22px">Симуляция против реальности</div><div class="sub">Насколько расчёт по минутным свечам расходится с реальными сделками бота и какая поправка вносится.</div></div></div><div id="hypReal"></div></div>
-   <details class="card fold" id="hypUselessCard"><summary><span class="big" style="font-size:22px">Какие метрики не помогают</span><span class="sub" id="hypUselessSub"></span></summary><div id="hypUseless" style="margin-top:16px"></div></details>
+   <div class="card" id="lpCard"><div class="head"><div><div class="big" style="font-size:22px">Площадки: где монеты успешнее</div><div class="sub">Проверка теории «на площадке с большим объёмом больше успешных монет». Все монеты в окне возраста текущих правил, продажа — по правилам выхода; остальные фильтры входа не применяются. Объём площадки — из вкладки «Арена → Объёмы» за 24 часа.</div></div></div><div id="lpTbl"></div></div>
+<details class="card fold" id="hypUselessCard"><summary><span class="big" style="font-size:22px">Какие метрики не помогают</span><span class="sub" id="hypUselessSub"></span></summary><div id="hypUseless" style="margin-top:16px"></div></details>
    <div class="card" id="labDays"><div class="head"><div><div class="big" style="font-size:22px">Итоги по дням</div><div class="sub">Лучшая гипотеза, зафиксированная каждую ночь. Если лидер меняется каждый день — перебор ловит случайность.</div></div></div><div id="hypReports"></div></div>
   </div>
   <div class="hpane" data-p="help">
@@ -1385,8 +1387,9 @@ function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label
  const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
  if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
 // ---- версия ----
-const APP_VERSION='2.87';
+const APP_VERSION='2.88';
 const CHANGELOG=[
+ ['2.88','24.09.2026',['Гипотезы: новый параметр «площадка» (любая / только flap / только four.meme / только genius.fun) — перебор проверяет, где торговать выгоднее; в «Аналитике» — таблица «Площадки: где монеты успешнее»: сколько монет, средний итог, доля в плюс и доля выросших на +50% рядом с объёмом площадки за 24 часа']],
  ['2.87','24.09.2026',['Депозит: рядом с суммой в долларах — сумма в BNB в скобках (кошелёк + открытые сделки); курс BNB теперь берётся прямо из пула WBNB/USDT на PancakeSwap — цена WBNB у GMGN «замерзла» на $760,73, из-за чего депозит в долларах был занижен']],
  ['2.86','24.09.2026',['Клик по логотипу BOT в левом верхнем углу открывает «Обзор»']],
  ['2.85','24.09.2026',['«Объёмы»: к торгам на кривой four.meme и flap добавлены торги этих монет на PancakeSwap после выхода с площадки — во всех парах (BNB, доллары, другие токены), всё в долларах; у объёма показана доля PancakeSwap; исправлен подсчёт монет flap, торгующихся не за BNB']],
@@ -2306,4 +2309,15 @@ setInterval(()=>{try{if(hypTab==='help')faqLive();}catch{}},3000);document.addEv
 
 // клик по логотипу — на «Обзор» (подвкладка «Сводка»), наверх страницы
 (function(){const l=document.getElementById('logoHome');if(!l)return;const go=()=>{const b=document.querySelector('nav .pill.hid[data-view="overview"]')||document.querySelector('nav .pill[data-view="overview"]');if(b)b.click();scrollTo({top:0,behavior:'smooth'});};l.addEventListener('click',go);l.addEventListener('keydown',e=>{if(e.key==='Enter')go();});})();
+
+// ---- Гипотезы → Аналитика: успешность монет по площадке создания + объём площадки ----
+(function(){let NV=null,nvAt=0;const NM={fourmeme:'four.meme',flap:'flap',geniusfun:'genius.fun',pool_pancake:'PancakeSwap (без площадки)',lunafun:'luna.fun',openfour:'openfour'};
+ async function vol(){if(Date.now()-nvAt<60e3||window.DATA_URL)return;nvAt=Date.now();try{const r=await fetch('/api/net',{cache:'no-store'});if(r.ok){const j=await r.json();const from=Date.now()/1000-86400;const v={fourmeme:0,flap:0};let any=false;for(const [h,fm,fl] of j.hours){if(h+3600<from)continue;any=true;v.fourmeme+=(fm.v||0)+(fm.pv||0);v.flap+=(fl.v||0)+(fl.pv||0);}NV=any?v:null;}}catch{}}
+ function draw(){const el=document.getElementById('lpTbl');if(!el||!D||!D.hypotheses)return;vol();const P=(D.hypotheses.features||{}).platforms;
+  if(!P||!P.length){el.innerHTML='<div class="note">Появится после следующего пересчёта гипотез (раз в 10 минут).</div>';return;}
+  const k$=v=>v>=1e6?'$'+f(v/1e6,1)+'M':v>=1e3?'$'+f(v/1e3,0)+'k':'$'+f(v,0);
+  el.innerHTML='<div class="tablewrap"><table class="lpt"><tr><th>Площадка</th><th class="num">Монет</th><th class="num">Средний итог сделки</th><th class="num">В плюс</th><th class="num">Выросли на +50% и больше</th><th class="num">Объём площадки, 24 ч</th></tr>'+
+   P.map(p=>'<tr><td><b>'+esc(NM[p.lp]||p.lp)+'</b></td><td class="num">'+f(p.n,0)+'</td><td class="num '+cls(p.exp)+'">'+mny(p.exp)+'</td><td class="num">'+p.win_pct+'%</td><td class="num">'+p.big_pct+'%</td><td class="num">'+(NV&&NV[p.lp]!=null?k$(NV[p.lp]):'—')+'</td></tr>').join('')+'</table></div>'+
+   '<div class="note" style="margin-top:10px">Площадка теперь ещё и параметр гипотез («площадка: любая / только flap / только four.meme / только genius.fun») — перебор сам проверяет, выгоднее ли торговать монеты только одной площадки. Мало монет (меньше 30) — вывод пока ненадёжный.</div>';}
+ setInterval(()=>{try{if(typeof hypTab!=='undefined'&&hypTab==='lab')draw();}catch{}},3000);document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#hypTabs .pill[data-t="lab"]'))setTimeout(()=>{try{draw();}catch{}},0);});})();
 </script></body></html>
