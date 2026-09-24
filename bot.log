@@ -2959,3 +2959,9 @@
 [2026-09-24 09:06:37] CANDIDATE 算命 (flap) age 0.9m | liq 25366 | mcap 67189 | holders 325 | swaps 1389 | vol 107057 | top10 0.16 | bundler 0.30 | snipers 1 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 695/694 | creator creator_close | wash | smart 14 | renowned 7 | viewers 599 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 1179 | chg1m 166 | viewers/holders 1.84 | source rank | launchpad flap | launchpad flap
 [2026-09-24 09:06:38] BUY paper 算命 @0.0000657442 $20 | mcap 67189 liq 25366 holders 325
 [2026-09-24 09:06:46] SELL paper 算命 stop_loss pnl -5.99$ (-28.4%) hold 0m | balance 860.91
+[2026-09-24 09:09:48] CANDIDATE everything (flap) age 3.4m | liq 15565 | mcap 30283 | holders 127 | swaps 444 | vol 39023 | top10 0.21 | bundler 0.19 | snipers 5 | tax 0/1 | honeypot | lock/burn 1.00 | renounced | open_source | rug 0.00 | buys/sells 257/187 | creator creator_close | wash | smart 7 | renowned 6 | viewers 188 | tg 0 | x 0 | insider 0.00 | fresh 0.00 | chg5m 567 | chg1m 169 | viewers/holders 1.48 | source rank | launchpad flap | launchpad flap
+[2026-09-24 09:09:48] BUY paper everything @0.0000300041 $20 | mcap 30283 liq 15565 holders 127
+[2026-09-24 09:10:13] история цен: запрошено 15, получено 15
+[2026-09-24 09:10:16] секундные свечи: докачано монет 144 (свечей 17264), в очереди 0, всего файлов 2294
+[2026-09-24 09:10:18] SELL paper everything stop_loss pnl -8.09$ (-38.9%) hold 1m | balance 852.53
+[2026-09-24 09:10:49] скан: 206 токенов (из них trenches: 120), 0 прошли фильтр; отсев: age:172 liq:15 mcap:1; возраст мин/медиана/макс: 0/1256/50840 мин
