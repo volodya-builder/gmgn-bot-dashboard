@@ -1678,8 +1678,9 @@ function drawBotBars(){const v=$('#v-net');const bx=$('#btSvg');if(!bx||!v||!v.c
 document.querySelectorAll('nav .pill, .subnav .pill, [data-view], #netPer .seg-btn').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{try{drawBotBars();}catch{}},50)));
 addEventListener('resize',()=>{try{drawBotBars();}catch{}});
 // ---- версия ----
-const APP_VERSION='2.137';
+const APP_VERSION='2.138';
 const CHANGELOG=[
+ ['2.138','24.09.2026',['График гипотез: каждая гипотеза стартует с депозита $100 — линия показывает, сколько стало бы на счёте (при наведении — сумма и прибыль)']],
  ['2.137','24.09.2026',['«Объёмы»: график «PnL по сделкам / Сделки» построен в том же окне, что и объёмы — 24 узких столбика по часам (неделя и месяц — по дням), пустые часы плоскими полосками; период переключается кнопками над объёмами']],
  ['2.136','24.09.2026',['Безопасность: имена и адреса монет, строки журнала и пояснения гипотез экранируются полностью (включая кавычки) — монета с «ядовитым» именем больше не может выполнить код в панели']],
  ['2.135','24.09.2026',['Расширенная версия гипотезы: реальные сделки больше не дублируются в истории']],
@@ -2024,24 +2025,25 @@ function drawMinutes(E){const c=$('#minChart');if(!c)return;const ctx=c.getConte
 const hypZ={},hypHv={},hypDrag={};
 function hypName(r,i){return r.id==='current'?CURL():((r.num?'#'+r.num:'Вариант '+(i+1))+(r.id===H_champ()?' · лучшая':''));}
 function hypValAt(pts,t){if(!pts.length||t<pts[0].t)return null;let v=pts[0].v;for(const p of pts){if(p.t>t)break;v=p.v;}return v;}
+const HSTART=100; // график гипотез: старт каждой гипотезы — депозит $100
 function drawHyp(list,cSel='#hypChart',legSel='#hypLegend',ids=[...hypSel]){const c=$(cSel);if(!c)return;c._args=[list,cSel,legSel,ids];
  const ctx=c.getContext('2d'),W=c.clientWidth,H=340,dpr=devicePixelRatio||1;if(!W)return;c.style.height=H+'px';c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
  const sel=ids.map((id,i)=>({r:list.find(x=>x.id===id),i})).filter(o=>o.r&&o.r.win[hypW]&&hcurve(o.r,hypW).length);
  const leg=$(legSel);if(leg)leg.innerHTML=ids.map((id,i)=>{const r=list.find(x=>x.id===id);if(!r)return '';return '<span><span class="sw" style="background:'+HCOL[i%HCOL.length]+'"></span>'+esc(hypName(r,i))+'</span>';}).join('');
  if(!sel.length){ctx.fillStyle='#8f938a';ctx.font='14px Inter,sans-serif';ctx.textBaseline='middle';ctx.fillText('Нет сделок '+WLBL[hypW]+' у выбранных вариантов',16,40);c._g=null;return;}
  const P={l:8,r:96,t:18,b:30},PW=W-P.l-P.r,PH=H-P.t-P.b;
- const series=sel.map(o=>{const cv=o.r.win[hypW].curve;const pts=[{t:cv[0][0]*1000-1,v:0}].concat(cv.map(p=>({t:p[0]*1000,v:p[1]})));return {r:o.r,i:o.i,col:HCOL[o.i%HCOL.length],pts,name:hypName(o.r,o.i)};});
+ const series=sel.map(o=>{const cv=o.r.win[hypW].curve;const pts=[{t:cv[0][0]*1000-1,v:HSTART}].concat(cv.map(p=>({t:p[0]*1000,v:HSTART+p[1]})));return {r:o.r,i:o.i,col:HCOL[o.i%HCOL.length],pts,name:hypName(o.r,o.i)};});
  let xf0=Infinity,xf1=-Infinity;series.forEach(s=>{xf0=Math.min(xf0,s.pts[0].t);xf1=Math.max(xf1,s.pts[s.pts.length-1].t);});if(xf1-xf0<6e4)xf1=xf0+6e4;
  let x0,x1;const z=hypZ[cSel];if(z){const sp=Math.min(z[1]-z[0],(xf1-xf0)*4);x0=Math.max(xf0-(xf1-xf0)*.02-sp*.5,Math.min(z[0],xf1-sp*.5));x1=x0+sp;hypZ[cSel]=[x0,x1];}else{x0=xf0;x1=xf1+(xf1-xf0)*.02;}
  const span=(x1-x0)||1,X=t=>P.l+(t-x0)/span*PW;
- let ys=[0];series.forEach(s=>{s.pts.forEach((p,k)=>{if(p.t>=x0&&p.t<=x1)ys.push(p.v);});const a=hypValAt(s.pts,x0),b=hypValAt(s.pts,x1);if(a!=null)ys.push(a);if(b!=null)ys.push(b);});
+ let ys=[HSTART];series.forEach(s=>{s.pts.forEach((p,k)=>{if(p.t>=x0&&p.t<=x1)ys.push(p.v);});const a=hypValAt(s.pts,x0),b=hypValAt(s.pts,x1);if(a!=null)ys.push(a);if(b!=null)ys.push(b);});
  let y0=Math.min(...ys),y1=Math.max(...ys);const pad=(y1-y0)*.14||1;y0-=pad;y1+=pad;const Y=v=>P.t+(1-(v-y0)/(y1-y0))*PH;
  // сетка и подписи
  ctx.font='12px Inter,sans-serif';ctx.textBaseline='middle';ctx.textAlign='left';const NY=Math.max(4,Math.min(8,Math.round(PH/60)));
- for(let i=0;i<=NY;i++){const v=y0+(y1-y0)*i/NY,y=Y(v);ctx.strokeStyle='#ffffff0d';ctx.beginPath();ctx.moveTo(P.l,y);ctx.lineTo(W-P.r+6,y);ctx.stroke();ctx.fillStyle='#8f938a';ctx.fillText(Math.abs(v)>=100?(v<0?'−':'+')+'$'+f(Math.abs(v),0):mny(v),W-P.r+14,y);}
+ for(let i=0;i<=NY;i++){const v=y0+(y1-y0)*i/NY,y=Y(v);ctx.strokeStyle='#ffffff0d';ctx.beginPath();ctx.moveTo(P.l,y);ctx.lineTo(W-P.r+6,y);ctx.stroke();ctx.fillStyle='#8f938a';ctx.fillText((v<0?'−':'')+'$'+f(Math.abs(v),0),W-P.r+14,y);}
  ctx.textBaseline='alphabetic';const NX=Math.max(3,Math.min(8,Math.round(PW/150)));for(let i=0;i<=NX;i++){const tv=x0+span*i/NX;ctx.fillStyle='#8f938a';ctx.textAlign=i===0?'left':i===NX?'right':'center';ctx.fillText(fmtT(tv,span),X(tv),H-8);}
  ctx.save();ctx.beginPath();ctx.rect(P.l-8,P.t-8,PW+16,PH+16);ctx.clip();
- const zy=Y(0);if(zy>P.t&&zy<P.t+PH){ctx.setLineDash([2,6]);ctx.strokeStyle='#ffffff30';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(P.l,zy);ctx.lineTo(P.l+PW,zy);ctx.stroke();ctx.setLineDash([]);}
+ const zy=Y(HSTART);if(zy>P.t&&zy<P.t+PH){ctx.setLineDash([2,6]);ctx.strokeStyle='#ffffff30';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(P.l,zy);ctx.lineTo(P.l+PW,zy);ctx.stroke();ctx.setLineDash([]);}
  const vis=s=>{let a=s.pts.findIndex(p=>p.t>=x0);if(a<0)a=s.pts.length-1;let b=s.pts.length-1;for(let k=s.pts.length-1;k>=0;k--)if(s.pts[k].t<=x1){b=k;break;}return s.pts.slice(Math.max(0,a-1),Math.min(s.pts.length,b+2)).map(p=>({x:X(p.t),y:Y(p.v)}));};
  // мягкая заливка под лучшей (или единственной не текущей) линией
  const fo=series.find(s=>s.r.id===H_champ())||series.find(s=>s.r.id!=='current')||series[0];
@@ -2060,7 +2062,7 @@ function drawHyp(list,cSel='#hypChart',legSel='#hypLegend',ids=[...hypSel]){cons
  // подписи значений справа (без наложения)
  const tags=(hvVals||series.map(s=>({s,v:s.pts[s.pts.length-1].v}))).map(o=>({col:o.s.col,v:o.v,y:Math.max(P.t,Math.min(P.t+PH,Y(o.v)))})).sort((a,b)=>a.y-b.y);
  for(let k=1;k<tags.length;k++)if(tags[k].y-tags[k-1].y<24)tags[k].y=tags[k-1].y+24;const over=tags.length?tags[tags.length-1].y-(P.t+PH):0;if(over>0)tags.forEach(t=>t.y-=over);
- tags.forEach(t=>eqPill(ctx,W-P.r+8,t.y,(t.v>=0?'+$':'−$')+f(Math.abs(t.v)),t.col,'#0b0b0b'));
+ tags.forEach(t=>eqPill(ctx,W-P.r+8,t.y,(t.v<0?'−$':'$')+f(Math.abs(t.v)),t.col,'#0b0b0b'));
  if(hv&&hv.t&&!hypDrag[cSel]){const lbl=new Date(hv.t).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});ctx.font='600 11.5px Inter,sans-serif';const tw=ctx.measureText(lbl).width+14;eqPill(ctx,Math.max(P.l+tw/2,Math.min(P.l+PW-tw/2,hv.x)),H-12,lbl,'#2a2d31','#f1f2ed','center');}
  c._g={X,P,PW,PH,x0,x1,span,full:[xf0,xf1],series,hvVals};
  if(!c._ev){c._ev=1;const again=()=>{if(c._args)drawHyp(...c._args);};
@@ -2068,7 +2070,7 @@ function drawHyp(list,cSel='#hypChart',legSel='#hypLegend',ids=[...hypSel]){cons
    if(hypDrag[cSel]){const d=hypDrag[cSel],dt=-(mx-d.mx)/g.PW*(d.z[1]-d.z[0]);hypZ[cSel]=[d.z[0]+dt,d.z[1]+dt];c.style.cursor='grabbing';tip.style.display='none';again();return;}
    if(mx<g.P.l||mx>g.P.l+g.PW){hypHv[cSel]=null;tip.style.display='none';again();return;}
    hypHv[cSel]={x:mx};c.style.cursor='crosshair';again();const vals=(c._g.hvVals||[]).slice().sort((a,b)=>b.v-a.v);
-   if(vals.length){tip.classList.remove('tipcard');tip.innerHTML='<b>'+new Date(hypHv[cSel].t).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</b>'+vals.map(o=>'<div style="display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:3px"><span><span class="sw" style="background:'+o.s.col+';display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px"></span>'+esc(o.s.name)+'</span><b class="'+cls(o.v)+'">'+mny(o.v)+'</b></div>').join('');tip.style.display='block';const tw=tip.offsetWidth;tip.style.left=Math.min(e.clientX+14,innerWidth-tw-12)+'px';tip.style.top=(e.clientY+16)+'px';}else tip.style.display='none';});
+   if(vals.length){tip.classList.remove('tipcard');tip.innerHTML='<b>'+new Date(hypHv[cSel].t).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</b>'+vals.map(o=>'<div style="display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:3px"><span><span class="sw" style="background:'+o.s.col+';display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px"></span>'+esc(o.s.name)+'</span><b>'+(o.v<0?'−$':'$')+f(Math.abs(o.v))+' <span class="'+cls(o.v-HSTART)+'" style="font-weight:500">'+mny(o.v-HSTART)+'</span></b></div>').join('');tip.style.display='block';const tw=tip.offsetWidth;tip.style.left=Math.min(e.clientX+14,innerWidth-tw-12)+'px';tip.style.top=(e.clientY+16)+'px';}else tip.style.display='none';});
   c.addEventListener('mouseleave',()=>{hypHv[cSel]=null;hypDrag[cSel]=null;$('#tip').style.display='none';again();});
   c.addEventListener('mousedown',e=>{const g=c._g;if(!g)return;hypDrag[cSel]={mx:e.clientX-c.getBoundingClientRect().left,z:[g.x0,g.x1]};});
   addEventListener('mouseup',()=>{if(hypDrag[cSel]){hypDrag[cSel]=null;c.style.cursor='crosshair';again();}});
