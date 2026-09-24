@@ -920,7 +920,7 @@ function renderOvHyp(){const rl=$('#raceCurLbl');if(rl)rl.textContent=D&&D.mode=
 // депозит = свободные деньги на кошельке + текущая стоимость открытых позиций (по последней цене)
 function eqBnb(){const s=(D&&D.state)||{};if(!(+s.wallet_bnb>0&&+s.balance_usd>0))return null;return eqNow()/(s.balance_usd/s.wallet_bnb);}
 const bnbTag=(cl)=>{const b=eqBnb();return b==null?'':'<small class="'+(cl||'kbnb')+'"> ('+f(b,4)+' BNB)</small>';};
-function eqNow(){const s=(D&&D.state)||{};let v=+s.balance_usd||0;for(const p of Object.values(s.positions||{})){const k=+p.last>0&&+p.entry>0?p.last/p.entry:1;v+=(+p.size_usd||0)*k;}return v;}
+function eqNow(){const s=(D&&D.state)||{};let v=+s.balance_usd||0;for(const p of Object.values(s.positions||{}))v+=(+p.size_usd||0);return v;} // открытая сделка — по вложенной сумме: депозит меняется только когда сделка закрыта
 function render(){if(!D)return;try{renderBot();}catch(e){console.error(e);}try{renderOvHyp();}catch(e){console.error(e);}const s=D.state,c=D.config,t=ptrades(),m=metrics(t);const start=c.paper_start_balance_usd;
  const open=Object.values(s.positions||{});const inPos=open.reduce((a,p)=>a+p.size_usd,0);
  const plabel={'24h':'за 24 часа','7d':'за неделю','30d':'за месяц','all':'за всё время'}[period];
@@ -1387,8 +1387,9 @@ function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label
  const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
  if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
 // ---- версия ----
-const APP_VERSION='2.88';
+const APP_VERSION='2.89';
 const CHANGELOG=[
+ ['2.89','24.09.2026',['Депозит (карточка, график, сумма в BNB) больше не меняется, пока сделка открыта: открытая сделка считается по вложенной сумме, результат попадает в депозит только после закрытия; текущая стоимость сделки по-прежнему видна в скобках «в сделке $…» и в блоке «Открытые сделки»']],
  ['2.88','24.09.2026',['Гипотезы: новый параметр «площадка» (любая / только flap / только four.meme / только genius.fun) — перебор проверяет, где торговать выгоднее; в «Аналитике» — таблица «Площадки: где монеты успешнее»: сколько монет, средний итог, доля в плюс и доля выросших на +50% рядом с объёмом площадки за 24 часа']],
  ['2.87','24.09.2026',['Депозит: рядом с суммой в долларах — сумма в BNB в скобках (кошелёк + открытые сделки); курс BNB теперь берётся прямо из пула WBNB/USDT на PancakeSwap — цена WBNB у GMGN «замерзла» на $760,73, из-за чего депозит в долларах был занижен']],
  ['2.86','24.09.2026',['Клик по логотипу BOT в левом верхнем углу открывает «Обзор»']],
