@@ -17,6 +17,7 @@ header{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:auto 
 nav{justify-self:start}
 .badges{display:flex;gap:8px;align-items:center;justify-self:end}
 .hst{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
+.hnet a .cd{display:inline-block;width:9px;height:9px;border-radius:50%;flex:none;opacity:.55}.hnet a.on .cd,.hnet a:hover .cd{opacity:1}.hnet a.on i{display:none}.cd.bsc{background:#f0b90b}.cd.sol{background:linear-gradient(135deg,#9945ff,#14f195)}.cd.robinhood{background:#ccff00}.hnet:empty{display:none}
 .hseg{display:inline-flex;align-items:center;padding:3px;border:1px solid var(--border2);border-radius:12px;background:#101010}
 .hseg a{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:9px;font:500 13px var(--font-ui);color:var(--muted);text-decoration:none;white-space:nowrap;transition:background .15s,color .15s}
 .hseg a[href]:hover{color:var(--text);background:#1a1a1a}
@@ -768,11 +769,16 @@ main{padding-bottom:45vh!important}
 .kbnb{font-size:17px;color:#9a9e96;font-weight:400;letter-spacing:0}
 .kbnb2{font-size:15px;color:#9a9e96;font-weight:400;letter-spacing:0}
 .lpt td,.lpt th{padding:9px 12px}
+.rbw{position:relative;overflow:visible}.rbpop{display:none;position:absolute;top:calc(100% + 8px);left:0;width:min(440px,calc(100vw - 32px));background:#141414;border:1px solid var(--border2);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.45;color:#c9ccc4;z-index:70;box-shadow:0 16px 40px #000b;white-space:normal;cursor:default}
+.rbw:hover .rbpop{display:block}.rbpop .rbh{font-weight:600;color:var(--text);margin-bottom:4px}.rbpop .rbl{font:12px var(--font-mono);color:#e0b85a;overflow-wrap:anywhere;margin:6px 0}.rbpop .rbe{color:#c9ccc4;margin-top:6px}.rbpop .rbn{color:var(--muted);font-size:12px;margin-top:6px}
+.rbw.r .rbpop{border-color:#5a2b2b}.rbw.y .rbpop{border-color:#5a4b2b}
+.calg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:6px}
+@media(max-width:800px){.calg{grid-template-columns:1fr}}
 </style></head><body>
 <header>
   <div class="brand"><div class="logo" id="logoHome" role="link" tabindex="0" title="На главную — Обзор"><i></i>bot</div><button class="ver" id="ver" title="Что нового">v</button><div class="verpop" id="verpop"></div></div>
   <nav class="pills"><button class="pill on" data-view="overview">Обзор</button><button class="pill hid" data-view="trending">В тренде</button><button class="pill hid" data-view="net">Объёмы</button><button class="pill" data-view="hyp">Гипотезы</button><button class="pill" data-view="arena">Арена</button><button class="pill" data-view="rules" data-group="bot">Бот</button><button class="pill hid" data-view="trades">Сделки</button><button class="pill hid" data-view="rules">Правила</button><button class="pill hid" data-view="log">Журнал</button><button class="pill hid" data-view="sys">Сервер</button></nav>
-  <div class="badges"><div class="hst" id="hst"><div class="hseg" id="hseg" role="group" aria-label="Какой бот показан"></div><button class="hchipx" id="hhyp" type="button" style="display:none"></button><span class="hfresh" id="hfresh" role="status" aria-live="polite"><i></i><span class="t">подключаюсь…</span></span></div><div class="hstold" hidden><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span><a id="modeSwitch" class="badge" style="display:none"></a><span id="hypBadge" class="badge"></span></div></div>
+  <div class="badges"><div class="hst" id="hst"><div class="hseg hnet" id="hnet" role="group" aria-label="Сеть"></div><div class="hseg" id="hseg" role="group" aria-label="Какой бот показан"></div><button class="hchipx" id="hhyp" type="button" style="display:none"></button><span class="hfresh" id="hfresh" role="status" aria-live="polite"><i></i><span class="t">подключаюсь…</span></span></div><div class="hstold" hidden><span id="mode" class="badge"><span class="dot"></span><b>…</b></span><span id="upd" class="badge">обновление…</span><a id="modeSwitch" class="badge" style="display:none"></a><span id="hypBadge" class="badge"></span></div></div>
 </header>
 <main>
 <div class="subnav" id="subnav"></div>
@@ -827,7 +833,8 @@ main{padding-bottom:45vh!important}
    <div class="htoc"><span>Разделы:</span><a href="#labMin">Когда покупать</a><a href="#labReal">Симуляция против реальности</a><a href="#hypUselessCard">Какие метрики не помогают</a><a href="#labDays">Итоги по дням</a></div>
    <div class="card" id="labMin"><div class="head"><div><div class="big" style="font-size:22px">Когда покупать</div><div class="sub">Что происходит через 30 минут, если купить монету на N-й минуте её жизни. Столбики — типичный результат на сделку $<span id="minSize">20</span> после издержек.</div></div></div><canvas id="minChart" style="height:280px"></canvas><div class="note" style="text-align:center;margin-top:2px">минута входа (n — сколько монет в оценке)</div><div class="hleg" id="minLegend" style="margin-top:10px"></div><div id="minNote" class="hnote"></div></div>
    <div class="card" id="labReal"><div class="head"><div><div class="big" style="font-size:22px">Симуляция против реальности</div><div class="sub">Насколько расчёт по минутным свечам расходится с реальными сделками бота и какая поправка вносится.</div></div></div><div id="hypReal"></div></div>
-   <div class="card" id="lpCard"><div class="head"><div><div class="big" style="font-size:22px">Площадки: где монеты успешнее</div><div class="sub">Проверка теории «на площадке с большим объёмом больше успешных монет». Все монеты в окне возраста текущих правил, продажа — по правилам выхода; остальные фильтры входа не применяются. Объём площадки — из вкладки «Арена → Объёмы» за 24 часа.</div></div></div><div id="lpTbl"></div></div>
+   <div class="card" id="calCard"><div class="head"><div><div class="big" style="font-size:22px">Реальность против симуляции</div><div class="sub">Каждая сделка живого бота пересчитана симуляцией — та же монета, то же время входа, те же правила выхода, с комиссиями GMGN (1% на покупку и 1% на продажу) и налогами монеты. Средняя разница по типу выхода автоматически вносится поправкой во все гипотезы, чтобы их цифры были ближе к реальности.</div></div></div><div id="calBox"></div></div>
+<div class="card" id="lpCard"><div class="head"><div><div class="big" style="font-size:22px">Площадки: где монеты успешнее</div><div class="sub">Проверка теории «на площадке с большим объёмом больше успешных монет». Все монеты в окне возраста текущих правил, продажа — по правилам выхода; остальные фильтры входа не применяются. Объём площадки — из вкладки «Арена → Объёмы» за 24 часа.</div></div></div><div id="lpTbl"></div></div>
 <details class="card fold" id="hypUselessCard"><summary><span class="big" style="font-size:22px">Какие метрики не помогают</span><span class="sub" id="hypUselessSub"></span></summary><div id="hypUseless" style="margin-top:16px"></div></details>
    <div class="card" id="labDays"><div class="head"><div><div class="big" style="font-size:22px">Итоги по дням</div><div class="sub">Лучшая гипотеза, зафиксированная каждую ночь. Если лидер меняется каждый день — перебор ловит случайность.</div></div></div><div id="hypReports"></div></div>
   </div>
@@ -1387,8 +1394,11 @@ function laneShort(r){const D2=(r.diff||[]).map(d=>d.k?d:{...d,k:laneKey(d.label
  const n=D2.length,ne=D2.filter(d=>EX.has(d.k)).length,ni=n-ne;const w=(k,a,b,c)=>k%10===1&&k%100!==11?a:k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?b:c;
  if(!n)return 'как текущие правила';return '<span class="lmore">'+n+' '+w(n,'условие','условия','условий')+(ne||ni?' <i>(вход '+ni+' · выход '+ne+')</i>':'')+'</span>';}
 // ---- версия ----
-const APP_VERSION='2.89';
+const APP_VERSION='2.92';
 const CHANGELOG=[
+ ['2.92','24.09.2026',['Новые сети: Solana и Robinhood — такой же сбор монет и перебор гипотез, как для BSC, без реальных денег','В шапке переключатель сетей «BSC | Solana | Robinhood»: открывает панель нужной сети']],
+ ['2.91','24.09.2026',['Гипотезы стали ближе к реальности: в симуляцию добавлены комиссия GMGN (1% на покупку и 1% на продажу) и налоги каждой монеты; каждая живая сделка пересчитывается симуляцией, и средняя разница отдельно для тейков, стопов и остальных выходов автоматически вносится поправкой во все гипотезы; в «Аналитике» — карточка «Реальность против симуляции» со всеми живыми сделками']],
+ ['2.90','24.09.2026',['Робот-статус: при наведении — окошко с объяснением состояния; для ошибки — время, строка журнала и что это значит простыми словами. «Продажа не прошла: токенов уже нет» больше не считается ошибкой, если монету продал запасной ордер GMGN и сделка закрыта']],
  ['2.89','24.09.2026',['Депозит (карточка, график, сумма в BNB) больше не меняется, пока сделка открыта: открытая сделка считается по вложенной сумме, результат попадает в депозит только после закрытия; текущая стоимость сделки по-прежнему видна в скобках «в сделке $…» и в блоке «Открытые сделки»']],
  ['2.88','24.09.2026',['Гипотезы: новый параметр «площадка» (любая / только flap / только four.meme / только genius.fun) — перебор проверяет, где торговать выгоднее; в «Аналитике» — таблица «Площадки: где монеты успешнее»: сколько монет, средний итог, доля в плюс и доля выросших на +50% рядом с объёмом площадки за 24 часа']],
  ['2.87','24.09.2026',['Депозит: рядом с суммой в долларах — сумма в BNB в скобках (кошелёк + открытые сделки); курс BNB теперь берётся прямо из пула WBNB/USDT на PancakeSwap — цена WBNB у GMGN «замерзла» на $760,73, из-за чего депозит в долларах был занижен']],
@@ -2045,10 +2055,17 @@ function openLive(p){const el=$('#openLive');if(!el||!D)return;const x=(D.config
 
 // ---- шапка: режим, гипотеза живого бота, свежесть данных ----
 let hstOk=0,hstFail=false,hstTime=0;
-function hstRender(){const d=D;if(!d)return;const live=d.mode==='live';const p=location.port;const other=window.DATA_URL?null:(p==='8787'?'8788':p==='8788'?'8787':null);
- const url=other?location.protocol+'//'+location.hostname+':'+other+'/':null;const liveUrl=live?null:url,paperUrl=live?url:null;
+
+const NETS=[['bsc','BSC',8787],['sol','Solana',8793],['robinhood','Robinhood',8794]];
+function hnetRender(){const el=$('#hnet');const d=D;if(!el||!d)return;const p=+location.port;const known=[8787,8788,8793,8794].includes(p)&&!window.DATA_URL;const ch=d.chain||'bsc';
+ const k=ch+'|'+known;if(el.dataset.k===k)return;el.dataset.k=k;
+ el.innerHTML=NETS.map(([id,nm,port])=>{const on=id===ch;const href=!on&&known?location.protocol+'//'+location.hostname+':'+port+'/':'';
+  return '<a class="'+(on?'on':'')+'"'+(href?' href="'+href+'"':'')+' title="'+(on?'Открыта сеть '+nm:'Открыть исследование гипотез в сети '+nm)+'"><span class="cd '+id+'"></span>'+nm+'</a>';}).join('');
+ try{const nm=(NETS.find(n=>n[0]===ch)||[0,'BSC'])[1];if(!document.title.includes(nm))document.title=nm+' · '+document.title.replace(/^(BSC|Solana|Robinhood) · /,'');}catch{}}
+function hstRender(){const d=D;if(!d)return;try{hnetRender();}catch(e){console.error(e);}const live=d.mode==='live';const p=location.port;const other=window.DATA_URL?null:(p==='8787'?'8788':p==='8788'?'8787':null);
+ const url=other&&(d.chain||'bsc')==='bsc'?location.protocol+'//'+location.hostname+':'+other+'/':null;const nonBsc=(d.chain||'bsc')!=='bsc';const liveUrl=live?null:url,paperUrl=live?url:null;
  const seg=$('#hseg');if(seg){const a=(on,cls,txt,href,tip)=>'<a class="'+(on?'on '+cls:'')+'"'+(!on&&href?' href="'+href+'"':'')+' title="'+tip+'"><i></i>'+txt+'</a>';
-  const k=(live?'L':'P')+'|'+(url||'')+'|'+(d.chain||'');if(seg.dataset.k!==k){seg.dataset.k=k;
+  const k=(live?'L':'P')+'|'+(url||'')+'|'+(d.chain||'');if(seg.dataset.k!==k){seg.dataset.k=k;if(nonBsc){seg.innerHTML='<a class="on paper" title="В этой сети бот только собирает данные и проверяет гипотезы — без реальных денег"><i></i>Исследование</a>';return;}
    seg.innerHTML=a(live,'live','Реальные деньги',liveUrl,live?'Сейчас открыта панель живого бота — он торгует реальными деньгами':(liveUrl?'Открыть панель живого бота (реальные деньги)':'Панель живого бота недоступна отсюда'))+
     a(!live,'paper','Симуляция',paperUrl,!live?'Сейчас открыта панель бота-симуляции — он торгует понарошку, без денег':(paperUrl?'Открыть панель бота-симуляции (без денег)':'Панель симуляции недоступна отсюда'))+
     '<span class="ch" title="Сеть">'+esc(String(d.chain||'').toUpperCase())+'</span>';}}
@@ -2111,21 +2128,34 @@ setInterval(loadSys,2000);document.querySelectorAll('nav .pill').forEach(b=>b.ad
 
 // ---- робот-статус: зелёный — работает, жёлтый — пауза, красный — сломан ----
 let rbRecv=0,rbDnow=0;
+// пояснения к известным ошибкам в журнале — простыми словами
+const RB_EXPL=[[/GEvmInsufficientTokenBalance/,'Токенов на кошельке уже не было: монету раньше бота продал запасной ордер GMGN (тейк или стоп). Сделка закрыта штатно, деньги получены.'],[/state\.json повреждён/,'Файл состояния был повреждён — бот восстановил его из копии.'],[/HTTP 429|rate limit/i,'GMGN ограничил частоту запросов; бот подождёт и повторит.'],[/HTTP 5\d\d|UnknownInternalError/,'Ошибка на стороне GMGN; бот повторит запрос.'],[/gas_level/,'Неверный параметр газа в запросе к GMGN.']];
+function rbExplain(l){for(const [re,t] of RB_EXPL)if(re.test(l))return t;return '';}
+function rbCrit(){const L=D.log||[];const out=[];const tOf=l=>{const m=l.match(/^\[([^\]]+)\]/);return m?new Date(m[1].replace(' ','T')+'Z').getTime():0;};
+ for(let i=Math.max(0,L.length-120);i<L.length;i++){const l=L[i];if(!/КРИТИЧ|LIVE SELL FAILED|state\.json повреждён/.test(l))continue;const t=tOf(l);if(!t||Date.now()-t>15*60e3)continue;
+  const m=l.match(/LIVE SELL FAILED (\S+)/);const sym=m?m[1]:null;let resolved='';
+  if(sym){for(let k=i+1;k<L.length;k++){const x=L[k];if(x.includes('SELL live '+sym)||x.includes('SELL paper '+sym)||(x.includes(sym)&&/уже продал запасной ордер/.test(x))){resolved=x.replace(/^\[[^\]]+\]\s*/,'');break;}}}
+  if(/GEvmInsufficientTokenBalance/.test(l)&&resolved)continue; // это не ошибка: монету продал запасной ордер GMGN
+  out.push({t,text:l.replace(/^\[[^\]]+\]\s*/,''),resolved,expl:rbExplain(l)});}
+ return out.filter(x=>!x.resolved);}
+let rbPopHtml='';
 function renderBot(){const w=document.getElementById('rbw');if(!w||!D)return;if(D.now!==rbDnow){rbDnow=D.now;rbRecv=Date.now();}
  const s=D.state||{},c=D.config||{},nowS=Date.now()/1000,stat=window.DATA_URL?900:30;
  const since=(Date.now()-rbRecv)/1000,scanAge=D.lastScan&&D.lastScan.at?(D.now-D.lastScan.at)/1000+since:null;
  const open=Object.values(s.positions||{}),lim=c.risk&&c.risk.daily_loss_limit_usd,dayPnl=s.day&&s.day.pnl;
- const crit=(D.log||[]).slice(-80).filter(l=>/КРИТИЧ|LIVE SELL FAILED|state\.json повреждён/.test(l)).filter(l=>{const m=l.match(/^\[([^\]]+)\]/);return m&&(Date.now()-new Date(m[1].replace(' ','T')+'Z'))<15*60e3;});
- let st='g',title='Бот работает',sub='';const ago=x=>x<60?Math.round(x)+' с назад':Math.round(x/60)+' мин назад';
- if(since>stat){st='r';title='Нет связи с ботом';sub='нет данных уже '+(since<60?Math.round(since)+' с':Math.round(since/60)+' мин');}
- else if(scanAge!=null&&scanAge>(window.DATA_URL?900:120)){st='r';title='Бот завис';sub='последняя проверка монет '+ago(scanAge);}
- else if(crit.length){st='r';title='Ошибка в работе';sub=crit[crit.length-1].replace(/^\[[^\]]+\]\s*/,'').slice(0,90);}
- else if(s.paused_until&&s.paused_until>nowS){st='y';title='Пауза';sub='до '+new Date(s.paused_until*1000).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}
- else if(lim&&dayPnl!=null&&dayPnl<=-lim){st='y';title='Пауза до завтра';sub='дневной лимит убытка $'+f(lim,0)+' исчерпан';}
- else if(s.no_funds_until&&s.no_funds_until>nowS){st='y';title='Пауза: мало BNB';sub='пополни кошелёк — бот проверит снова';}
- else if(open.length){title='В сделке';sub=open.map(p=>p.symbol).join(', ')+(scanAge!=null?' · проверка '+ago(scanAge):'');}
- else{title='Бот работает';sub='ищет вход'+(D.lastScan&&D.lastScan.tokens?' · '+D.lastScan.tokens.length+' монет':'')+(scanAge!=null?' · '+ago(scanAge):'');}
- w.className='rbw '+st+(st==='g'&&open.length?' busy':'');document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub;w.title=title+(sub?' — '+sub:'');}
+ let crit=[];try{crit=rbCrit();}catch{}
+ let st='g',title='Бот работает',sub='',pop='';const ago=x=>x<60?Math.round(x)+' с назад':Math.round(x/60)+' мин назад';const tm=t=>new Date(t).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+ if(since>stat){st='r';title='Нет связи с ботом';sub='нет данных уже '+(since<60?Math.round(since)+' с':Math.round(since/60)+' мин');pop='Панель не получает данные от бота. Обычно это перезапуск (10–20 с) или пропала связь с сервером.';}
+ else if(scanAge!=null&&scanAge>(window.DATA_URL?900:120)){st='r';title='Бот завис';sub='последняя проверка монет '+ago(scanAge);pop='Бот давно не проверял монеты — возможно, ждёт ответа GMGN или завис. Если не пройдёт за пару минут, перезапусти его.';}
+ else if(crit.length){const e=crit[crit.length-1];st='r';title='Ошибка в работе';sub=e.text.slice(0,90);pop='<b>'+tm(e.t)+' · '+ago((Date.now()-e.t)/1000)+'</b><div class="rbl">'+esc(e.text)+'</div>'+(e.expl?'<div class="rbe">'+esc(e.expl)+'</div>':'')+(crit.length>1?'<div class="rbn">Ещё ошибок за 15 мин: '+(crit.length-1)+'</div>':'')+'<div class="rbn">Полный журнал — вкладка «Бот → Журнал»</div>';}
+ else if(s.paused_until&&s.paused_until>nowS){st='y';title='Пауза';sub='до '+new Date(s.paused_until*1000).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});pop='Риск-пауза после серии убыточных сделок. Новых входов не будет до '+sub.slice(3)+'.';}
+ else if(lim&&dayPnl!=null&&dayPnl<=-lim){st='y';title='Пауза до завтра';sub='дневной лимит убытка $'+f(lim,0)+' исчерпан';pop='Сегодня потеряно больше дневного лимита $'+f(lim,0)+' — бот не покупает до 03:00 МСК.';}
+ else if(s.no_funds_until&&s.no_funds_until>nowS){st='y';title='Пауза: мало BNB';sub='пополни кошелёк — бот проверит снова';pop='На кошельке не хватает BNB на сделку и газ.';}
+ else if(open.length){title='В сделке';sub=open.map(p=>p.symbol).join(', ')+(scanAge!=null?' · проверка '+ago(scanAge):'');pop='Открыто: '+esc(open.map(p=>p.symbol).join(', '))+'. Бот следит за ценой каждые несколько секунд.';}
+ else{title='Бот работает';sub='ищет вход'+(D.lastScan&&D.lastScan.tokens?' · '+D.lastScan.tokens.length+' монет':'')+(scanAge!=null?' · '+ago(scanAge):'');pop='Всё в порядке: бот сканирует монеты и ждёт, когда какая-то пройдёт фильтр.';}
+ w.className='rbw '+st+(st==='g'&&open.length?' busy':'');document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub;w.title='';
+ let P=document.getElementById('rbPop');if(!P){P=document.createElement('div');P.id='rbPop';P.className='rbpop';w.appendChild(P);}
+ const html='<div class="rbh">'+esc(title)+'</div>'+pop;if(html!==rbPopHtml){rbPopHtml=html;P.innerHTML=html;}}
 setInterval(()=>{try{renderBot();}catch(e){}},1000);
 
 // ---- группы вкладок: верхнее меню короче, остальное — подвкладками ----
@@ -2320,5 +2350,16 @@ setInterval(()=>{try{if(hypTab==='help')faqLive();}catch{}},3000);document.addEv
   el.innerHTML='<div class="tablewrap"><table class="lpt"><tr><th>Площадка</th><th class="num">Монет</th><th class="num">Средний итог сделки</th><th class="num">В плюс</th><th class="num">Выросли на +50% и больше</th><th class="num">Объём площадки, 24 ч</th></tr>'+
    P.map(p=>'<tr><td><b>'+esc(NM[p.lp]||p.lp)+'</b></td><td class="num">'+f(p.n,0)+'</td><td class="num '+cls(p.exp)+'">'+mny(p.exp)+'</td><td class="num">'+p.win_pct+'%</td><td class="num">'+p.big_pct+'%</td><td class="num">'+(NV&&NV[p.lp]!=null?k$(NV[p.lp]):'—')+'</td></tr>').join('')+'</table></div>'+
    '<div class="note" style="margin-top:10px">Площадка теперь ещё и параметр гипотез («площадка: любая / только flap / только four.meme / только genius.fun») — перебор сам проверяет, выгоднее ли торговать монеты только одной площадки. Мало монет (меньше 30) — вывод пока ненадёжный.</div>';}
+ setInterval(()=>{try{if(typeof hypTab!=='undefined'&&hypTab==='lab')draw();}catch{}},3000);document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#hypTabs .pill[data-t="lab"]'))setTimeout(()=>{try{draw();}catch{}},0);});})();
+
+// ---- Аналитика: реальность против симуляции (калибровка по живым сделкам) ----
+(function(){const RN={take_profit:'тейк',stop_loss:'стоп',trailing:'трейлинг',timeout:'по времени',manual:'вручную',sell_failed:'ошибка продажи'};const GN={take:'Тейк',stop:'Стоп',other:'Трейлинг и по времени'};
+ function draw(){const el=document.getElementById('calBox');if(!el||!D||!D.hypotheses)return;const c=(D.hypotheses.execution||{}).calib;
+  if(!c||!c.n){el.innerHTML='<div class="note">Появится после следующего пересчёта гипотез (раз в 10 минут), когда у живого бота будут сделки с сохранённой историей цены.</div>';return;}
+  const pp=v=>(v>0?'+':'')+f(v,1)+' п.п.';
+  el.innerHTML='<div class="calg">'+['take','stop','other'].map(g=>{const q=c.groups[g]||{n:0};return '<div class="kc"><div class="kct">'+GN[g]+'</div><div class="kcb '+(q.n?cls(q.median_diff):'')+'" style="font-size:28px">'+(q.n?pp(q.median_diff):'—')+'</div><div class="kcl">реальность минус симуляция · сделок '+q.n+'</div><div class="kcs">поправка в гипотезах: <b>'+(q.n>=2?pp(q.corr):'нет (мало сделок)')+'</b></div></div>';}).join('')+'</div>'+
+   '<div class="note" style="margin:10px 0 6px">Тип выхода совпал в '+(c.match_pct??'—')+'% сделок. Чем больше живых сделок, тем точнее поправка: при 2–3 сделках она берётся с запасом (уменьшенной).</div>'+
+   '<div class="tablewrap"><table class="lpt"><tr><th>Монета</th><th>Закрыта</th><th>Выход: реально / симуляция</th><th class="num">Реально</th><th class="num">Симуляция</th><th class="num">Разница</th></tr>'+
+   [...c.rows].reverse().map(r=>'<tr><td><b>'+esc(r.symbol)+'</b> <span class="note">'+esc(r.rules||'')+'</span></td><td>'+new Date(r.closed).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+'</td><td>'+(RN[r.real_reason]||esc(r.real_reason))+' / '+(RN[r.sim_reason]||esc(r.sim_reason))+(r.same?'':' <span class="bad">≠</span>')+'</td><td class="num '+cls(r.real_pct)+'">'+(r.real_pct>0?'+':'')+f(r.real_pct,1)+'% · '+mny(r.real_usd)+'</td><td class="num '+cls(r.sim_pct)+'">'+(r.sim_pct>0?'+':'')+f(r.sim_pct,1)+'% · '+mny(r.sim_usd)+'</td><td class="num '+cls(r.real_pct-r.sim_pct)+'">'+pp(r.real_pct-r.sim_pct)+'</td></tr>').join('')+'</table></div>';}
  setInterval(()=>{try{if(typeof hypTab!=='undefined'&&hypTab==='lab')draw();}catch{}},3000);document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#hypTabs .pill[data-t="lab"]'))setTimeout(()=>{try{draw();}catch{}},0);});})();
 </script></body></html>
